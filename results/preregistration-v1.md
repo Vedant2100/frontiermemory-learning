@@ -215,3 +215,22 @@ What each arm shows the model, by count of topic entries:
 - Alongside it, we also report a lower bound computed from recorded counts: `cases_passed_lb = max(0, passed − max(0, collected − cases_total))`.
 - Conclusions from the secondary metric require both values to agree in direction.
 - The primary metric (strict reward from the official verifier) is unchanged.
+
+## Amendment A6 (2026-10-31): Word2Vec mechanism ablation. Exploratory, added before any of its trials
+
+**Why.** On build-word2vec-pipeline, both memory arms pass 5/5 against A0 0/5 (job 303281), and every memory trial searched the memory folder. Two questions are open: did the help come through the injected window or through agent search, and is it the Word2Vec-specific content or memory in general? This amendment adds a separate exploratory job. It changes nothing in the confirmatory matrix, its Holm family or its analysis.
+
+**Arms.** All three are built from frozen M3 (`4a2eb528…`) by a deterministic script. Each derived memory is frozen by digest before its first trial.
+- **M3** (control, rerun in the same job).
+- **M3-S (search only).** The memory folder adds a fixed one-line `memory_summary.md`: "Index of past-run notes: MEMORY.md in this folder; topic files are in topics/." Codex injects this file instead of `MEMORY.md`, so the injected window contains no topic content. `MEMORY.md` and all topic files are unchanged and remain searchable.
+- **M3-W (minus Word2Vec).** Remove every topic file whose name or content contains "word2vec" (case-insensitive), and every `MEMORY.md` line that contains it. Everything else is unchanged.
+
+**Design.** One job on build-word2vec-pipeline, k=5 per arm, order `M3 S W S W M3 W M3 S M3 S W S W M3` (the frozen Latin pattern with A0→M3, R25→M3-S, M3→M3-W). Same runner, model, prompt, timeout and grader as the confirmatory matrix. It runs only after the confirmatory matrix has finished. The runner changes needed for the new arms are made only then, because queued confirmatory jobs read the live runner.
+
+**Predictions, stated now. Descriptive; no tests.**
+1. M3-S ≥ 4/5 strict: search alone carries the effect.
+2. M3-W ≤ 1/5 strict: the effect depends on Word2Vec-specific content.
+
+If prediction 2 fails, the effect comes from memory that does not name Word2Vec, for example a general output-format convention. That outcome is reported as is.
+
+**Limitation.** The M3-W rule removes only content that literally names Word2Vec. Related content under other names stays.
