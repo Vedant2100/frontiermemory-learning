@@ -1,0 +1,70 @@
+% Draft 2026-10-31. Interim: 4 of 7 tasks. Rows marked \todo are filled from results/matrix-v1-interim.md.
+\section{Results}
+\label{sec:results}
+
+\begin{table}[t]
+\centering
+\caption{Strict pass (of 5) and mean verifier cases passed per arm. For patch tasks, the case mean is followed by the conservative lower bound that discounts agent-added tests.}
+\label{tab:main}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccc ccc}
+\toprule
+& \multicolumn{3}{c}{Strict pass} & \multicolumn{3}{c}{Cases (mean)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Task & A0 & R25 & M3 & A0 & R25 & M3 \\
+\midrule
+Word2Vec (/6) & 0 & \textbf{5} & \textbf{5} & 0.0 & 6.0 & 6.0 \\
+DAPT (/37) & 0 & 1 & 0 & 26.4 & 31.4 & 20.0 \\
+awilix-impl.\ (/184) & 0 & 0 & 0 & 138/135 & 175/169 & 169/165 \\
+awilix-expl.\ (/184) & 0 & 0 & 0 & 170/163 & 138/132 & 134/130 \\
+customer-deliv. & \todo{} & & & & & \\
+cattrs & \todo{} & & & & & \\
+cookie-store & \todo{} & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ1: Does memory beat no memory?}
+Table~\ref{tab:main} gives the per-task outcomes.
+All trials so far are valid: no infrastructure failures, and each memory trial's seeded memory matches its frozen hash.
+\begin{itemize}
+  \item \textbf{Word2Vec.} Memory turns 0/5 into 5/5 in both memory arms. Every no-memory trial fails the task's output-artifact contract, and every memory trial meets it.
+  \item \textbf{DAPT.} No arm solves the task reliably. The smaller R25 memory scores highest on cases and the full M3 memory lowest.
+  \item \textbf{awilix (both tiers).} No arm passes. Most trials pass the functional tests and all 30 fail the user-preference check. The case differences point in opposite directions in the two tiers, and each is driven by single trials in which the agent's patch broke the build.
+\end{itemize}
+The preregistered tests, H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 (sign-flip over tasks, Holm-corrected), give \todo{p-values and effect sizes}.
+With one task separating the arms on strict pass, the primary test has little power; we therefore emphasise per-task effects.
+
+\subsection{RQ2: Shown or sought?}
+Codex injects only the first and last 5{,}000 characters of the memory index.
+In M3 this window shows 83 of 324 topic entries, none of them about Word2Vec.
+Before any confirmatory trial we predicted that M3 would therefore not beat A0 on Word2Vec by more than 1/5.
+The prediction failed (5/5 vs.\ 0/5).
+Every Word2Vec memory trial searched the memory folder itself (e.g., \texttt{grep} on the index) and opened Word2Vec topic files.
+Agent search depends on the task:
+
+\begin{center}
+\footnotesize
+\begin{tabular}{lcccc}
+\toprule
+& Word2Vec & DAPT & awilix-impl. & awilix-expl. \\
+\midrule
+R25 opened memory & 5/5 & 4/5 & 1/5 & 0/5 \\
+M3 opened memory & 5/5 & 1/5 & 2/5 & 0/5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+On DAPT, the R25 agents opened the network-traffic topic in 4 of 5 trials, and the M3 agents in 1 of 5.
+This matches their ordering on cases.
+Under the preregistered name-based scope rule, no harmful memory trial opened a topic from another task family (0/11).
+That rule, however, classifies the network-traffic topic as out of family for DAPT, so it understates relevant reuse.
+\todo{A6 ablation: search-only vs.\ minus-Word2Vec memory, after Nov 2.}
+
+\subsection{RQ3: Is the memory trustworthy?}
+\begin{itemize}
+  \item \textbf{Grounding audit.} We checked every technical unit in the frozen memories deterministically: 8{,}055 in M3 and 2{,}637 in R25. Only 21--24\% carry a citation that resolves to a corpus step. Of the cited units, 40\% (M3) and 47\% (R25) have their concrete identifiers and values present in the cited steps. M3 also contains 27 large copied code blocks, and R25 11.
+  \item \textbf{Automatic filtering.} Two local LLM judges and the grounding rule all failed their preregistered validation gates, so we dropped the planned filtered-memory arms.
+  \item \textbf{Preference signal.} The v1.0 corpus contains 35 curated user-feedback messages, all in one network-traffic family and all on failed runs. For the awilix tasks, it holds 6 related runs, none passing and none with feedback. Where feedback exists, its distinctive terms survive into topic files at 39--58\% but appear in neither injected window.
+\end{itemize}

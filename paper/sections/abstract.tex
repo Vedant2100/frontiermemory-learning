@@ -1,0 +1,9 @@
+% Draft 2026-10-31. Bracketed numbers are filled when the matrix completes.
+Memory benchmarks for coding agents rank memory systems against each other but rarely ask whether memory beats no memory.
+We run a preregistered no-memory baseline on FrontierMemory with a local open-weights agent: 7 tasks, 3 arms (no memory, memory from 25\% of the corpus, memory from the full corpus), 5 trials each.
+Agent-written memory turns one task from 0/5 to 5/5. \todo{final summary of the other tasks}; no arm passes any task that checks a user preference.
+Three mechanisms explain the pattern.
+First, the agent's harness shows the model only the first and last 5{,}000 characters of the memory index, so most memory reaches the agent only when the agent searches for it, which it does when the task cues it.
+Second, about half of the memory's cited technical claims are not supported by the runs they cite, and three automatic filters failed validation.
+Third, the corpus holds no passing run or user feedback for the preference-gated tasks we failed, and where feedback exists none of it reaches the injected window.
+We release our harness adaptations, preregistration and analysis code.

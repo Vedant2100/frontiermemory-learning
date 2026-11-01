@@ -1,0 +1,25 @@
+% Draft 2026-10-31.
+\section{Discussion and Threats to Validity}
+\label{sec:discussion}
+
+\textbf{Implications for memory benchmarks.}
+\begin{itemize}
+  \item A leaderboard without a no-memory row cannot tell memory gains from agent ability. On our tasks the gain is concentrated in one task.
+  \item Truncation in the harness decides much of what ``memory'' means. A memory system is evaluated jointly with how the harness exposes it, and two systems with the same content can differ only in what lands in the injected window.
+  \item Preference-gated tasks test whether the corpus carries the preference, not only the memory system. Benchmarks should report per-task corpus coverage.
+\end{itemize}
+
+\textbf{Implications for memory builders.}
+\begin{itemize}
+  \item Put task-routing information inside the injected window.
+  \item Keep the full index searchable.
+  \item Do not assume summarisation preserves user feedback or provenance: most claims are ungrounded, and checking them automatically is itself unreliable with a local model.
+\end{itemize}
+
+\textbf{Threats to validity.}
+\begin{itemize}
+  \item \emph{Internal.} Five trials per arm and seven tasks give low power. Effects on DAPT and awilix hinge on single trials. A trial's order position is balanced but not randomised.
+  \item \emph{Construct.} We count agent-caused failures (timeouts, empty or uncommitted patches) as zero. Case counts can include agent-added tests, which the lower bound discounts.
+  \item \emph{External.} The study uses one local 27B model and one harness (Codex CLI), and 7 of 15 tasks. Results may differ for the leaderboard's frontier models, whose larger contexts and stronger tool use could change both exposure and search.
+  \item \emph{Deviations.} The deviations from the official protocol are listed in \S\ref{sec:method}. The corpus moved to v1.1 during the study. Our audit shows that no removed metadata reached our memories.
+\end{itemize}
