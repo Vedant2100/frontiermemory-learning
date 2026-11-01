@@ -1,31 +1,55 @@
-<section id="build" data-transition="fade" style="background:#E9E4D8;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<p style="font-size:24px;color:#B4471A;letter-spacing:2px;text-transform:uppercase;font-weight:600">How the memory is built</p>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">No human writes it. The same local model does, in four steps.</h2>
-<div style="display:flex;align-items:center;gap:20px">
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
-<p style="font-size:24px;color:#B4471A;font-weight:600">1</p>
-<h3 style="font-size:44px;font-weight:600">Notes</h3>
-<p style="font-size:28px;color:#4A5568;line-height:1.4">One per past run: what was tried, what worked.</p>
-</div>
-<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
-<p style="font-size:24px;color:#B4471A;font-weight:600">2</p>
-<h3 style="font-size:44px;font-weight:600">Group</h3>
-<p style="font-size:28px;color:#4A5568;line-height:1.4">Notes on the same topic go together.</p>
-</div>
-<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
-<p style="font-size:24px;color:#B4471A;font-weight:600">3</p>
-<h3 style="font-size:44px;font-weight:600">Topics</h3>
-<p style="font-size:28px;color:#4A5568;line-height:1.4">One file of lessons per group, citing its sources.</p>
-</div>
-<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
-<p style="font-size:24px;color:#B4471A;font-weight:600">4</p>
-<h3 style="font-size:44px;font-weight:600">Index</h3>
-<p style="font-size:28px;color:#4A5568;line-height:1.4">MEMORY.md points to all topic files.</p>
-</div>
-</div>
-<p style="font-size:32px;color:#4A5568">Every model call gets the official FrontierMemory instruction, unchanged. Each memory is frozen by hash before use.</p>
-<aside>The full-corpus memory has 324 topic files. The smaller one, R25, is built the same way from a random 25% of the past runs.</aside>
+<section id="build" data-transition="fade" style="background:#E9E4D8;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<p style="font-size:24px;color:#B4471A;letter-spacing:2px;text-transform:uppercase;font-weight:600">Memory flow at task time</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">How memory reaches the agent</h2>
+<svg aria-label="Flowchart: the task prompt and the memory folder go into the agent. MEMORY.md head and tail are shown in its instructions; other memory files are sought by the agent with shell commands. The agent leaves files, a hidden verifier in a separate container runs the tests, and the score is 1 if all pass, else 0." width="1664" height="600" viewBox="0 0 1664 600" xmlns="http://www.w3.org/2000/svg" style="width:1664px;height:600px" font-family="IBM Plex Sans, Arial, sans-serif">
+<rect x="0" y="170" width="420" height="110" rx="20" fill="#FBFAF6" stroke="#DCD6C8" stroke-width="2"/>
+<text x="28" y="212" font-size="24" font-weight="600" fill="#B4471A" letter-spacing="2">TASK PROMPT</text>
+<text x="28" y="252" font-size="24" fill="#4A5568">instruction.md, verbatim</text>
+<rect x="0" y="330" width="420" height="260" rx="20" fill="#FBFAF6" stroke="#DCD6C8" stroke-width="2"/>
+<text x="28" y="372" font-size="24" font-weight="600" fill="#B4471A" letter-spacing="2">MEMORY FOLDER</text>
+<text x="28" y="412" font-size="28" fill="#1C2433">MEMORY.md (index)</text>
+<text x="28" y="450" font-size="28" fill="#1C2433">+ 324 topic files</text>
+<text x="28" y="494" font-size="24" fill="#4A5568">built from 674 past runs</text>
+<text x="28" y="526" font-size="24" fill="#4A5568">by our 4-step pipeline</text>
+<text x="28" y="566" font-size="24" fill="#4A5568">A0 control: no folder</text>
+<line x1="420" y1="225" x2="744" y2="225" stroke="#4A5568" stroke-width="4"/>
+<polygon points="760,225 740,214 740,236" fill="#4A5568"/>
+<text x="444" y="210" font-size="24" fill="#4A5568">prompt</text>
+<text x="444" y="300" font-size="24" font-weight="600" fill="#2F5D8A">SHOWN · instructions</text>
+<text x="444" y="332" font-size="24" fill="#1C2433">MEMORY.md head+tail</text>
+<text x="444" y="364" font-size="24" fill="#1C2433">83 of 324 topics</text>
+<line x1="420" y1="400" x2="744" y2="400" stroke="#2F5D8A" stroke-width="5"/>
+<polygon points="760,400 740,388 740,412" fill="#2F5D8A"/>
+<text x="444" y="452" font-size="24" font-weight="600" fill="#B4471A">SOUGHT · on disk</text>
+<text x="444" y="484" font-size="24" fill="#1C2433">agent opens files</text>
+<text x="444" y="516" font-size="24" fill="#1C2433">via shell commands</text>
+<polyline points="420,548 940,548 940,488" fill="none" stroke="#B4471A" stroke-width="5" stroke-dasharray="14 10"/>
+<polygon points="940,472 928,492 952,492" fill="#B4471A"/>
+<rect x="760" y="170" width="360" height="300" rx="20" fill="#1C2433"/>
+<text x="788" y="214" font-size="24" font-weight="600" fill="#F0A070" letter-spacing="2">AGENT</text>
+<text x="788" y="262" font-size="36" font-weight="700" fill="#F4F1EA">Codex CLI</text>
+<text x="788" y="300" font-size="28" fill="#F4F1EA">+ Qwen3.8-27B</text>
+<text x="788" y="352" font-size="24" fill="#BFC8D6">in task container</text>
+<text x="788" y="390" font-size="24" fill="#BFC8D6">shell · no web</text>
+<text x="788" y="428" font-size="24" fill="#BFC8D6">one attempt, timed</text>
+<line x1="1120" y1="230" x2="1204" y2="230" stroke="#4A5568" stroke-width="4"/>
+<polygon points="1220,230 1200,219 1200,241" fill="#4A5568"/>
+<rect x="1220" y="170" width="444" height="120" rx="20" fill="#FBFAF6" stroke="#DCD6C8" stroke-width="2"/>
+<text x="1248" y="210" font-size="24" font-weight="600" fill="#B4471A" letter-spacing="2">OUTPUT</text>
+<text x="1248" y="246" font-size="28" fill="#1C2433">files the agent leaves</text>
+<text x="1248" y="276" font-size="24" fill="#4A5568">e.g. /workspace/solution.py</text>
+<line x1="1442" y1="290" x2="1442" y2="326" stroke="#4A5568" stroke-width="4"/>
+<polygon points="1442,340 1431,322 1453,322" fill="#4A5568"/>
+<rect x="1220" y="340" width="444" height="120" rx="20" fill="#FBFAF6" stroke="#DCD6C8" stroke-width="2"/>
+<text x="1248" y="380" font-size="24" font-weight="600" fill="#B4471A" letter-spacing="2">HIDDEN VERIFIER</text>
+<text x="1248" y="416" font-size="28" fill="#1C2433">separate container</text>
+<text x="1248" y="446" font-size="24" fill="#4A5568">runs the task’s tests</text>
+<line x1="1442" y1="460" x2="1442" y2="486" stroke="#4A5568" stroke-width="4"/>
+<polygon points="1442,500 1431,482 1453,482" fill="#4A5568"/>
+<rect x="1220" y="500" width="444" height="90" rx="20" fill="#FBE7DA"/>
+<text x="1248" y="538" font-size="24" font-weight="600" fill="#B4471A" letter-spacing="2">SCORE</text>
+<text x="1248" y="572" font-size="24" fill="#1C2433">1 if all tests pass, else 0</text>
+</svg>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#4A5568">Per FrontierMemory’s Codex adapter: the folder is copied to ~/.codex/memories before the run and deleted after</p>
+<aside>Two paths from the same folder in the same run. Shown: Codex puts memory_summary.md (a copy of our MEMORY.md) into its developer instructions, truncated to the first and last 5,000 characters, which covers 83 of 324 M3 topics. Sought: every other file sits on disk and the agent can open it with shell commands; on Word2Vec all 10 memory runs did. The no-memory control runs the same Codex with the memories feature on but no folder, so the folder is the only difference. Memory is built beforehand by our 4-step pipeline (notes, groups, topic files, index) using the official FrontierMemory instruction; rules at github.com/letta-ai/frontiermemory/blob/main/docs/rules.md.</aside>
 </section>

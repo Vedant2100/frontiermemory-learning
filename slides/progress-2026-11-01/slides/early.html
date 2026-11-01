@@ -1,22 +1,26 @@
-<section id="early" data-transition="fade" style="background:#E9E4D8;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<section id="early" data-transition="fade" style="background:#E9E4D8;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
 <p style="font-size:24px;color:#B4471A;letter-spacing:2px;text-transform:uppercase;font-weight:600">First runs (exploratory)</p>
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">One striking result, one that didn’t hold</h2>
 <div style="display:flex;gap:40px">
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
+<div style="flex:0.7;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
 <p style="font-size:32px;color:#4A5568">Smaller models, other agents</p>
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:80px;font-weight:700;color:#4A5568;line-height:1">0</p>
 <p style="font-size:32px;color:#4A5568;line-height:1.4">Everything failed, so we moved to Codex + a 27B model.</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
+<div style="flex:1.3;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
 <p style="font-size:32px;color:#4A5568">Word2Vec task</p>
+<p style="font-size:24px;color:#4A5568;line-height:1.4">Write one Python function: clean texts, drop stop words, return a gensim Word2Vec model. 6 hidden tests.</p>
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:80px;font-weight:700;color:#B4471A;line-height:1">0/3 → 3/3</p>
 <p style="font-size:32px;color:#4A5568;line-height:1.4">Without memory vs. with memory.</p>
+<p style="font-size:28px;color:#1C2433;line-height:1.4"><b>Why:</b> all 10 memory runs in the main study searched the folder and found the Word2Vec notes.</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
+<div style="flex:1.3;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:44px">
 <p style="font-size:32px;color:#4A5568">DAPT task</p>
+<p style="font-size:24px;color:#4A5568;line-height:1.4">From a packet capture, fill a CSV with 37 network stats and attack flags.</p>
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:80px;font-weight:700;color:#4A5568;line-height:1">gone</p>
 <p style="font-size:32px;color:#4A5568;line-height:1.4">An early gain vanished when re-run.</p>
+<p style="font-size:28px;color:#1C2433;line-height:1.4"><b>Why:</b> memory raised tests passed (18.7 → 30.3 of 37), but a run only counts if all 37 pass. Main study: 0, 1, 0 of 5.</p>
 </div>
 </div>
-<aside>These early runs shaped the design: a single small A/B can mislead, so we preregistered a bigger study before running it.</aside>
+<aside>DAPT numbers: first A/B (3 runs each) averaged 18.7 vs 30.3 tests of 37; a repeat with the same memory reversed it (23.7 without vs 20.7 with). These early runs shaped the design: a single small A/B can mislead, so we preregistered a bigger study before running it. DAPT details from the public SkillsBench task (tasks/dapt-intrusion-detection): the agent gets packets.pcap (DAPT2020 subset) and a template CSV, and must compute protocol counts, packets per minute, packet sizes, IP/port entropies, IP-graph stats, inter-arrival times, producer/consumer counts, 5-tuple flow counts, and true/false flags for benign traffic, port scan, DoS and beaconing. Counts must be within 1%, entropies within 5%, flags exact; any miss fails the run. FrontierMemory's version (dapt-intrusion-detection-workflow-learning) is adapted from this. Word2Vec details: harbor-index tasks/build-word2vec-pipeline.</aside>
 </section>
