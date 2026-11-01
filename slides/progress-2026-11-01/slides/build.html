@@ -1,0 +1,31 @@
+<section id="build" data-transition="fade" style="background:#E9E4D8;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<p style="font-size:24px;color:#B4471A;letter-spacing:2px;text-transform:uppercase;font-weight:600">How the memory is built</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">No human writes it. The same local model does, in four steps.</h2>
+<div style="display:flex;align-items:center;gap:20px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
+<p style="font-size:24px;color:#B4471A;font-weight:600">1</p>
+<h3 style="font-size:44px;font-weight:600">Notes</h3>
+<p style="font-size:28px;color:#4A5568;line-height:1.4">One per past run: what was tried, what worked.</p>
+</div>
+<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
+<p style="font-size:24px;color:#B4471A;font-weight:600">2</p>
+<h3 style="font-size:44px;font-weight:600">Group</h3>
+<p style="font-size:28px;color:#4A5568;line-height:1.4">Notes on the same topic go together.</p>
+</div>
+<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
+<p style="font-size:24px;color:#B4471A;font-weight:600">3</p>
+<h3 style="font-size:44px;font-weight:600">Topics</h3>
+<p style="font-size:28px;color:#4A5568;line-height:1.4">One file of lessons per group, citing its sources.</p>
+</div>
+<x-shape kind="arrow-right" style="background:#2F5D8A;width:48px;height:28px"></x-shape>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#FBFAF6;border-radius:20px;padding:36px">
+<p style="font-size:24px;color:#B4471A;font-weight:600">4</p>
+<h3 style="font-size:44px;font-weight:600">Index</h3>
+<p style="font-size:28px;color:#4A5568;line-height:1.4">MEMORY.md points to all topic files.</p>
+</div>
+</div>
+<p style="font-size:32px;color:#4A5568">Every model call gets the official FrontierMemory instruction, unchanged. Each memory is frozen by hash before use.</p>
+<aside>The full-corpus memory has 324 topic files. The smaller one, R25, is built the same way from a random 25% of the past runs.</aside>
+</section>

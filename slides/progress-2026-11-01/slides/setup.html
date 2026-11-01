@@ -1,0 +1,22 @@
+<section id="setup" data-transition="fade" style="background:#F4F1EA;color:#1C2433;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<p style="font-size:24px;color:#B4471A;letter-spacing:2px;text-transform:uppercase;font-weight:600">Setup</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">Free, local, and checked before trusted</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#FBFAF6;border:2px solid #DCD6C8;border-radius:20px;padding:44px">
+<x-icon name="Code" style="color:#2F5D8A;width:64px;height:64px"></x-icon>
+<h3 style="font-size:44px;font-weight:600">Agent</h3>
+<p style="font-size:32px;color:#4A5568;line-height:1.4">Codex CLI driving Qwen3.8-27B on the university GPU cluster. No paid APIs.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#FBFAF6;border:2px solid #DCD6C8;border-radius:20px;padding:44px">
+<x-icon name="Database" style="color:#2F5D8A;width:64px;height:64px"></x-icon>
+<h3 style="font-size:44px;font-weight:600">Containers</h3>
+<p style="font-size:32px;color:#4A5568;line-height:1.4">Apptainer instead of Docker, which the cluster doesn’t allow.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#FBFAF6;border:2px solid #DCD6C8;border-radius:20px;padding:44px">
+<x-icon name="Verified" style="color:#2F5D8A;width:64px;height:64px"></x-icon>
+<h3 style="font-size:44px;font-weight:600">Grading</h3>
+<p style="font-size:32px;color:#4A5568;line-height:1.4">Every task’s reference solution must pass our setup before any score counts. 7 tasks qualify.</p>
+</div>
+</div>
+<aside>Docker isn't available, so we run the official task images in Apptainer. Because that is a deviation, every task's grading path is validated with the reference solution first.</aside>
+</section>
