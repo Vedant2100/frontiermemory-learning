@@ -1,6 +1,6 @@
 # Progress deck (2026-11-01)
 
-An 11-slide progress update covering the question, an example task, setup, early exploratory runs, how the memory is built, the preregistered study, interim results (4 of 7 tasks), and next steps.
+A 12-slide progress update covering the question, an example task, setup, early exploratory runs, how the memory is built, the preregistered study, interim results (4 of 7 tasks), the gaps we found, and the path forward for the paper and the leaderboard.
 
 - Live version (private): https://claude.ai/artifact/9USb45MCJwqySx6NMiVKhK
 - Source: `deck.json` (slide order and fonts) and `slides/*.html`, one file per slide, with speaker notes in each `<aside>`.
