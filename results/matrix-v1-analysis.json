@@ -1,0 +1,216 @@
+{
+ "tasks_complete": 5,
+ "tasks_listed": 7,
+ "per_task": {
+  "build-word2vec-pipeline": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 0.0
+    },
+    "R25": {
+     "n": 5,
+     "pass": 5,
+     "hidden_mean": 6.0
+    },
+    "M3": {
+     "n": 5,
+     "pass": 5,
+     "hidden_mean": 6.0
+    }
+   },
+   "complete": true,
+   "total_hidden": 6
+  },
+  "dapt-intrusion-detection-workflow-learning": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 26.4
+    },
+    "R25": {
+     "n": 5,
+     "pass": 1,
+     "hidden_mean": 31.4
+    },
+    "M3": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 20.0
+    }
+   },
+   "complete": true,
+   "total_hidden": 37
+  },
+  "awilix-release-tier-implicit": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 138.0
+    },
+    "R25": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 174.8
+    },
+    "M3": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 168.8
+    }
+   },
+   "complete": true,
+   "total_hidden": 184
+  },
+  "awilix-release-tier-explicit": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 170.2
+    },
+    "R25": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 137.8
+    },
+    "M3": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 133.4
+    }
+   },
+   "complete": true,
+   "total_hidden": 184
+  },
+  "customer-delivery-contextual-preferences": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 148.4
+    },
+    "R25": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 111.6
+    },
+    "M3": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 36.8
+    }
+   },
+   "complete": true,
+   "total_hidden": 188
+  }
+ },
+ "pooled": {
+  "A0": {
+   "pass": 0,
+   "n": 25,
+   "ci95": [
+    0.0,
+    0.1371851715307124
+   ]
+  },
+  "R25": {
+   "pass": 6,
+   "n": 25,
+   "ci95": [
+    0.09356443933174285,
+    0.45128801781668626
+   ]
+  },
+  "M3": {
+   "pass": 5,
+   "n": 25,
+   "ci95": [
+    0.068311464012484,
+    0.40703743227867717
+   ]
+  }
+ },
+ "tests": {
+  "strict": {
+   "H0": {
+    "tasks": 5,
+    "mean_diff": 0.2,
+    "ci95": [
+     null,
+     null
+    ],
+    "per_task": [
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "p_one_sided": 0.5,
+    "p_holm": 1.0
+   },
+   "H1": {
+    "tasks": 5,
+    "mean_diff": -0.04,
+    "ci95": [
+     null,
+     null
+    ],
+    "per_task": [
+     0.0,
+     -0.2,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "p_one_sided": 1.0,
+    "p_holm": 1.0
+   }
+  },
+  "hidden_fraction": {
+   "H0": {
+    "tasks": 5,
+    "mean_diff": 0.04016026201965151,
+    "ci95": [
+     null,
+     null
+    ],
+    "per_task": [
+     1.0,
+     -0.17297297297297293,
+     0.16739130434782615,
+     -0.1999999999999999,
+     -0.5936170212765958
+    ],
+    "p_one_sided": 0.46875,
+    "p_holm": 0.9375
+   },
+   "H1": {
+    "tasks": 5,
+    "mean_diff": -0.15250043753281495,
+    "ci95": [
+     null,
+     null
+    ],
+    "per_task": [
+     0.0,
+     -0.30810810810810807,
+     -0.03260869565217391,
+     -0.0239130434782609,
+     -0.3978723404255319
+    ],
+    "p_one_sided": 1.0,
+    "p_holm": 1.0
+   }
+  }
+ },
+ "flags": [
+  "cattrs-compositional-changelog: no trials yet",
+  "cookie-store-compositional-changelog: no trials yet"
+ ],
+ "note": "Interim unless tasks_complete == 7. Holm family: H0, H1 (prereg A3)."
+}

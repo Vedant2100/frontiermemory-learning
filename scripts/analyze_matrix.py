@@ -67,7 +67,12 @@ def patch_touches_tests(tdir: Path) -> bool:
 
 def hidden_passed(task: str, tdir: Path, rec: dict, total: int | None) -> int | None:
     if rec["failure_category"] in ("NO_ARTIFACT",) or not rec.get("verifier_collected"):
-        return 0
+        return 0  # D5'/D43: an agent failure scores 0, even if the untouched base suite would pass
+    rw = tdir / "grading/harbor-trial/verifier/reward.json"
+    j = json.loads(rw.read_text()) if rw.exists() else {}
+    if "p2p_total" in j and "f2p_total" in j:  # grader reports official-suite counts itself (customer-delivery)
+        assert total is None or j["p2p_total"] + j["f2p_total"] == total, f"{tdir}: official total mismatch"
+        return j["p2p_passed"] + j["f2p_passed"]
     if not patch_touches_tests(tdir):
         return rec["verifier_passed"]  # the agent added or edited no test file: every counted test is hidden
     if task.startswith("awilix"):
