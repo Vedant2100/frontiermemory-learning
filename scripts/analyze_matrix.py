@@ -31,8 +31,8 @@ JOBS = {
     "awilix-release-tier-implicit": (R / "awilix-release-tier-implicit-codex-ollama/job-303363", 184),
     "awilix-release-tier-explicit": (R / "awilix-release-tier-explicit-codex-ollama/job-303383", 184),
     "customer-delivery-contextual-preferences": (R / "customer-delivery-codex-ollama/job-304910", 188),
-    "cattrs-compositional-changelog": (R / "cattrs-codex-ollama/job-304911", None),
-    "cookie-store-compositional-changelog": (R / "cookie-store-codex-ollama/job-304912", None),
+    "cattrs-compositional-changelog": (R / "cattrs-codex-ollama/job-304911", 77),
+    "cookie-store-compositional-changelog": (R / "cookie-store-codex-ollama/job-304912", 1400),
 }
 
 AWILIX_BASE_FILES = {"function-tokenizer", "param-parser.bugs", "param-parser", "utils", "list-modules",
