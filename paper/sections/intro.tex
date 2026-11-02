@@ -1,11 +1,11 @@
-% Draft 2026-10-31.
+% Draft 2026-11-01.
 \section{Introduction}
 \label{sec:intro}
 Coding agents increasingly carry \emph{memory} between sessions: notes distilled from earlier runs that are meant to save the next run from repeating mistakes.
 FrontierMemory~\cite{frontiermemory} makes this measurable.
 It provides a corpus of prior agent trajectories, a fixed instruction for turning them into memory, and held-out tasks graded by hidden verifiers.
 Its leaderboard ranks memory systems by the solve rate of a fixed task agent that reads the memory.
-It does not report how the same agent does \emph{without} memory, so a leaderboard gain cannot be separated from what the agent would have done anyway.
+Its protocol defines a no-memory control, but the leaderboard does not report how the same agent does \emph{without} memory, so a leaderboard gain cannot be separated from what the agent would have done anyway.
 Recent work finds that persistent memory often fails to beat no memory on executable repository tasks~\cite{vibemembench} and that lessons applied outside their scope can harm unrelated tasks~\cite{scopebefore}.
 
 We ask three questions:
@@ -20,6 +20,6 @@ We answer them with a preregistered experiment that uses only a local open-weigh
 \begin{enumerate}
   \item A preregistered no-memory baseline on 7 FrontierMemory tasks: 3 arms, 105 trials, with every task's grading path validated against the reference solution (\S\ref{sec:method}).
   \item Evidence that the benefit is task-specific: large where a task depends on conventions from earlier runs, \todo{null or mixed} elsewhere, and absent on preference-gated tasks (\S\ref{sec:results}).
-  \item A measurement of memory exposure. The harness truncates the memory index to 10{,}000 characters, and agents fall back on search only when cued. Our own preregistered prediction about this was falsified, and we report it as such.
+  \item A measurement of memory exposure. Codex truncates the memory index to 10{,}000 bytes, and agents fall back on search only when cued; two preregistered probes manipulate what is shown and what can be sought. Our own preregistered prediction about search was falsified, and we report it as such. Across five harnesses, the share of the same memory shown at start ranges from 21\% to 100\%, so leaderboard harness comparisons mix memory quality with exposure.
   \item A quality audit. Only 40--47\% of cited technical claims are grounded in the steps they cite, and three automatic filters failed validation. A corpus trace shows why preference checks are failed.
 \end{enumerate}

@@ -1,4 +1,4 @@
-% Draft 2026-10-31. Citations taken from our 2026-10-17 reading list; verify every entry before submission.
+% Draft 2026-11-01. Every citation verified against arXiv on 2026-11-01.
 \section{Related Work}
 \label{sec:related}
 \textbf{Experience memory for agents.}
@@ -7,11 +7,11 @@ Several systems gate admission or retention of such lessons with evidence or ver
 Our audit asks the prior question of whether the generated lessons are grounded in their cited evidence at all, and shows that simple automatic checks fail validation on a local model.
 
 \textbf{Evaluating memory.}
-VibeMemBench~\cite{vibemembench} finds that most memory configurations fail to beat no memory on repository tasks.
+VibeMemBench~\cite{vibemembench} finds that 11 of 12 pairings of solver and existing memory system fail to beat a memory-off baseline on repository tasks.
 Scope Before You Persist~\cite{scopebefore} shows that lessons can harm tasks outside their scope.
 FrontierMemory~\cite{frontiermemory} standardises corpus, instruction and verifiers but omits a no-memory row.
 We add that row under preregistration, and we separate memory that the harness shows from memory that the agent seeks.
 
 \textbf{Organisational memory.}
-Shared memory across agents and teams is studied as organisational learning~\cite{survey-collective,enterprise-memory}.
+Shared memory across agents and teams is studied as organisational learning~\cite{enterprise-memory}.
 The FrontierMemory corpus is an instance of it: prior runs, often by other agents, distilled for a new one.
