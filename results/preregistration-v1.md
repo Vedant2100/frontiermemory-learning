@@ -234,3 +234,25 @@ What each arm shows the model, by count of topic entries:
 If prediction 2 fails, the effect comes from memory that does not name Word2Vec, for example a general output-format convention. That outcome is reported as is.
 
 **Limitation.** The M3-W rule removes only content that literally names Word2Vec. Related content under other names stays.
+
+## Amendment A7 (2026-11-01): DAPT exposure probe. Exploratory, added before any of its trials
+
+**Why.** A6 tests whether *searching* alone carries the Word2Vec effect. The other half of "shown vs. sought" is whether *showing* helps where agents rarely search. On DAPT, the M3 agents opened the one DAPT-related topic in 1 of 5 trials (R25: 4 of 5) and M3 averaged 20.0 of 37 hidden tests (R25 31.4). This amendment adds a separate exploratory job. It changes nothing in the confirmatory matrix, its Holm family, its analysis, or A6.
+
+**Arms.** Both are built from frozen M3 (`4a2eb528…`) by a deterministic script. Each derived memory is frozen by digest before its first trial.
+- **M3** (control, rerun in the same job). Codex injects `MEMORY.md` (head + tail, 10,000 bytes), which does not contain the DAPT topic.
+- **M3-D (DAPT shown).** The memory folder adds `memory_summary.md` = the topic file `topics/g224-…md` byte for byte (5,931 bytes). That is the only M3 topic matching `\bdapt\b|pcap|intrusion|network_stats` (case-insensitive). Codex injects this file instead of `MEMORY.md`. At 5,931 bytes it is under the 2,500-token cap (≈10,000 bytes), so it is shown in full. `MEMORY.md` and all 324 topic files are unchanged and remain searchable.
+
+**Design.** One job on dapt-intrusion-detection-workflow-learning, k=5 per arm, order `M3 D D M3 D M3 M3 D M3 D`. Same runner, model, prompt, timeout and grader as the confirmatory matrix. It runs only after the confirmatory matrix and A6 have finished. **Cutoff:** if the job has not finished by 2026-11-07 23:59 local time, it is stopped. Completed trials are reported as partial, and no conclusion is drawn from them.
+
+**Predictions, stated now. Descriptive; no tests.**
+1. Mean hidden tests passed: M3-D > M3 (same job).
+2. Strict pass: M3-D ≥ 1/5.
+
+If both fail, showing the one DAPT topic does not help at this model and scale, and that outcome is reported as is.
+
+**Measures.** Strict pass; hidden tests passed (agent-written tests excluded, as in D58); whether the agent opened `g224` or searched `MEMORY.md`.
+
+**Limitations.**
+- M3-D uses knowledge of the target task to choose what is shown. It is an *oracle exposure probe* of the mechanism, not a valid memory system, and it is never reported as one.
+- M3-D also removes the index window (the pointers to 83 topics), so it changes two things. None of those 83 topics matches the DAPT rule.
