@@ -1,6 +1,11 @@
-% Draft 2026-10-31.
+% Draft 2026-11-02. Interim: 5 of 7 tasks; confirm every number at 7/7.
 \section{Discussion and Threats to Validity}
 \label{sec:discussion}
+
+\textbf{Reading the primary result.}
+The preregistered test does not show that memory beats no memory \todo{confirm at 7/7}.
+This is not evidence that memory is useless. With seven tasks the sign-flip test has few possible outcomes, and a large gain on a single task cannot reach significance, so the test can only detect a gain shared across tasks.
+That is itself the finding: the memories we built help where they supply a missing interface detail (Word2Vec), and we see no consistent gain elsewhere, including from the full memory over the 25\% one.
 
 \textbf{Implications for memory benchmarks.}
 \begin{itemize}
@@ -19,7 +24,8 @@
 \textbf{Threats to validity.}
 \begin{itemize}
   \item \emph{Internal.} Five trials per arm and seven tasks give low power. Effects on DAPT and awilix hinge on single trials. A trial's order position is balanced but not randomised.
-  \item \emph{Construct.} We count agent-caused failures (timeouts, empty or uncommitted patches) as zero. Case counts can include agent-added tests, which the lower bound discounts.
+  \item \emph{Construct.} We count agent-caused failures (timeouts, empty or uncommitted patches) as zero. Hidden-test counts exclude agent-added tests, but each grader defines its own cases, so counts are comparable only within a task.
+  \item \emph{Early stops.} Some repository trials end cleanly on a very long reasoning item with no tool call, often mid-sentence and often with no patch. These occur in all arms \todo{per-arm counts at 7/7; interim 3, 4 and 7 of 15 for A0, R25 and M3}. We suspect the model's context limit but did not log the stop reason. We score them as agent failures and cannot say whether memory raises their rate. A different model or context size could change the means they dominate.
   \item \emph{External.} The study uses one local 27B model and one harness (Codex CLI), and 7 of 15 tasks. Results may differ for the leaderboard's frontier models, whose larger contexts and stronger tool use could change both exposure and search.
   \item \emph{Deviations.} The deviations from the official protocol are listed in \S\ref{sec:method}. The corpus moved to v1.1 during the study. Our audit shows that no removed metadata reached our memories.
 \end{itemize}

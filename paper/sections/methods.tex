@@ -39,7 +39,9 @@ Each task runs as one job of 15 trials (5 per arm) in a balanced Latin order.
 The primary outcome is strict pass (verifier reward~1).
 The contrasts H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 are tested by exact paired sign-flip permutation over tasks on the per-task difference in strict pass rate, Holm-corrected, with effect sizes and exact intervals.
 The secondary outcome is hidden tests passed.
-Agents sometimes add their own test files, which the verifier then also runs; we count only the tests in the official suite, from the verifier's per-file output.
+Agents sometimes add their own test files, which the verifier then also runs; we count only the tests in the official suite, from the verifier's per-file output or its own official counts.
+A trial with no patch scores zero, even though the untouched base suite would pass.
+Each task's total is its grader's own case count, and whether preference checks are included differs by task, so we compare the fraction passed within a task.
 
 \subsection{Shown versus sought memory}
 \label{sec:method-exposure}
