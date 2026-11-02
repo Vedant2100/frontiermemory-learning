@@ -1,0 +1,27 @@
+{
+ "source": {
+  "folder": "frozen-v5-fullindex",
+  "memory_sha256": "4a2eb5286366d650260af0b873a91be9f99b2891a327f0ae73ba8c2e8ef0517a"
+ },
+ "arms": {
+  "M3S": {
+   "summary_bytes": 79,
+   "folder": "frozen-m3-s",
+   "memory_sha256": "69bc7113e701881be5a058d4b2c6c022b3cadd1a526ab3f4e4df6b185b6a5509",
+   "topic_files": 324
+  },
+  "M3W": {
+   "topics_dropped": 5,
+   "index_lines_dropped": 8,
+   "folder": "frozen-m3-w",
+   "memory_sha256": "2f1e2e8f0c3992b704d7a57c44d7162932e37e9e8df7e1d90bb0b0271898b4c4",
+   "topic_files": 319
+  },
+  "M3D": {
+   "summary_bytes": 5931,
+   "folder": "frozen-m3-d",
+   "memory_sha256": "57b0207596ff1c40a3452b6b1f6d001977d4695e212c47718f2ba0c998559c5f",
+   "topic_files": 324
+  }
+ }
+}
