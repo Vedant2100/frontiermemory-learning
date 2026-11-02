@@ -1,23 +1,23 @@
-% Draft 2026-10-31. Interim: 4 of 7 tasks. Rows marked \todo are filled from results/matrix-v1-interim.md.
+% Draft 2026-11-01. Interim: 4 of 7 tasks. Hidden-test means from D58; rows marked \todo filled when the matrix completes.
 \section{Results}
 \label{sec:results}
 
 \begin{table}[t]
 \centering
-\caption{Strict pass (of 5) and mean verifier cases passed per arm. For patch tasks, the case mean is followed by the conservative lower bound that discounts agent-added tests.}
+\caption{Strict pass (of 5) and mean hidden tests passed per arm (official suite only; tests the agent wrote are excluded).}
 \label{tab:main}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lccc ccc}
 \toprule
-& \multicolumn{3}{c}{Strict pass} & \multicolumn{3}{c}{Cases (mean)} \\
+& \multicolumn{3}{c}{Strict pass} & \multicolumn{3}{c}{Hidden tests (mean)} \\
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
 Task & A0 & R25 & M3 & A0 & R25 & M3 \\
 \midrule
 Word2Vec (/6) & 0 & \textbf{5} & \textbf{5} & 0.0 & 6.0 & 6.0 \\
 DAPT (/37) & 0 & 1 & 0 & 26.4 & 31.4 & 20.0 \\
-awilix-impl.\ (/184) & 0 & 0 & 0 & 138/135 & 175/169 & 169/165 \\
-awilix-expl.\ (/184) & 0 & 0 & 0 & 170/163 & 138/132 & 134/130 \\
+awilix-impl.\ (/184) & 0 & 0 & 0 & 138.0 & 174.8 & 168.8 \\
+awilix-expl.\ (/184) & 0 & 0 & 0 & 170.2 & 137.8 & 133.4 \\
 customer-deliv. & \todo{} & & & & & \\
 cattrs & \todo{} & & & & & \\
 cookie-store & \todo{} & & & & & \\
@@ -37,7 +37,7 @@ The preregistered tests, H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 (sign-flip over ta
 With one task separating the arms on strict pass, the primary test has little power; we therefore emphasise per-task effects.
 
 \subsection{RQ2: Shown or sought?}
-Codex injects only the first and last 5{,}000 characters of the memory index.
+Codex injects only the first and last 5{,}000 bytes of the memory index (\S\ref{sec:method-exposure}).
 In M3 this window shows 83 of 324 topic entries, none of them about Word2Vec.
 Before any confirmatory trial we predicted that M3 would therefore not beat A0 on Word2Vec by more than 1/5.
 The prediction failed (5/5 vs.\ 0/5).
@@ -60,7 +60,30 @@ On DAPT, the R25 agents opened the network-traffic topic in 4 of 5 trials, and t
 This matches their ordering on cases.
 Under the preregistered name-based scope rule, no harmful memory trial opened a topic from another task family (0/11).
 That rule, however, classifies the network-traffic topic as out of family for DAPT, so it understates relevant reuse.
-\todo{A6 ablation: search-only vs.\ minus-Word2Vec memory, after Nov 2.}
+\todo{A6 (M3S, M3W on Word2Vec) and A7 (M3D on DAPT) results.}
+
+\begin{table}[t]
+\centering
+\caption{The same memory (M3, 46{,}651-byte index, 324 topics) under each harness's loading rule. Shown: what is in the model's context at start; the rest must be sought.}
+\label{tab:exposure}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llcc}
+\toprule
+Harness & Shown at start & Topics & Word2Vec \\
+\midrule
+Codex (ours) & 2{,}500 tok., head+tail & 83 & 0/4 \\
+Claude Code & 200 lines or 25\,KB & 129 & 4/4 \\
+OpenAI Agents SDK & 15{,}000 tok., head+tail & 324 & 4/4 \\
+Hermes & whole index & 324 & 4/4 \\
+Letta Code & root files; loader not public & ? & ? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+What a memory shows is a property of the harness as much as of the memory (Table~\ref{tab:exposure}).
+Our offline Codex count (83) equals the count measured in the logged requests.
+Under Claude Code, the same M3 would have shown all four Word2Vec topics that our agents had to search for.
 
 \subsection{RQ3: Is the memory trustworthy?}
 \begin{itemize}
