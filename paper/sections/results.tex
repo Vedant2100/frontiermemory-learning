@@ -1,4 +1,4 @@
-% Draft 2026-11-02. Interim: 5 of 7 tasks. Values from scripts/analyze_matrix.py; rows marked \todo filled when the matrix completes.
+% Draft 2026-11-02. Interim: 6 of 7 tasks. Values from scripts/analyze_matrix.py; rows marked \todo filled when the matrix completes.
 \section{Results}
 \label{sec:results}
 
@@ -19,7 +19,7 @@ DAPT (/37) & 0 & 1 & 0 & 26.4 & 31.4 & 20.0 \\
 awilix-impl.\ (/184) & 0 & 0 & 0 & 138.0 & 174.8 & 168.8 \\
 awilix-expl.\ (/184) & 0 & 0 & 0 & 170.2 & 137.8 & 133.4 \\
 customer-deliv.\ (/188) & 0 & 0 & 0 & 148.4 & 111.6 & 36.8 \\
-cattrs & \todo{} & & & & & \\
+cattrs (/77) & 0 & 0 & 0 & 75.4 & 74.6 & 75.0 \\
 cookie-store & \todo{} & & & & & \\
 \bottomrule
 \end{tabular}
@@ -32,6 +32,7 @@ All trials so far are valid: no infrastructure failures, and each memory trial's
   \item \textbf{Word2Vec.} Memory turns 0/5 into 5/5 in both memory arms. Every no-memory trial fails the task's output-artifact contract, and every memory trial meets it.
   \item \textbf{DAPT.} No arm solves the task reliably. The smaller R25 memory scores highest on cases and the full M3 memory lowest.
   \item \textbf{Customer delivery.} No arm passes. Trials that produce a patch miss only 2--4 of the 188 cases, but 1, 2 and 4 of 5 trials in A0, R25 and M3 produce no patch and score zero, which sets the means.
+  \item \textbf{cattrs.} No arm passes. Every trial fails the user-preference check, and the arms do not differ on hidden tests.
   \item \textbf{awilix (both tiers).} No arm passes. Most trials pass the functional tests and all 30 fail the user-preference check. The case differences point in opposite directions in the two tiers, and each is driven by single trials in which the agent's patch broke the build.
 \end{itemize}
 The preregistered tests, H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 (sign-flip over tasks, Holm-corrected), give \todo{p-values and effect sizes}.

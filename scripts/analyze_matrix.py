@@ -104,7 +104,7 @@ def signflip_p(d: list[float]) -> float:
 def signflip_ci(d: list[float], alpha: float = 0.05) -> tuple[float, float]:
     """Two-sided exact interval for the mean difference by test inversion over a grid of shifts."""
     lo_b, hi_b = min(d) - 1, max(d) + 1
-    grid = [lo_b + i * (hi_b - lo_b) / 2000 for i in range(2001)]
+    grid = sorted({lo_b + i * (hi_b - lo_b) / 2000 for i in range(2001)} | {0.0, *d})  # ties: exact points matter
     keep = []
     for delta in grid:
         x = [v - delta for v in d]

@@ -1,5 +1,5 @@
 {
- "tasks_complete": 5,
+ "tasks_complete": 6,
  "tasks_listed": 7,
  "per_task": {
   "build-word2vec-pipeline": {
@@ -106,45 +106,67 @@
    },
    "complete": true,
    "total_hidden": 188
+  },
+  "cattrs-compositional-changelog": {
+   "arms": {
+    "A0": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 75.4
+    },
+    "R25": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 74.6
+    },
+    "M3": {
+     "n": 5,
+     "pass": 0,
+     "hidden_mean": 75.0
+    }
+   },
+   "complete": true,
+   "total_hidden": 77
   }
  },
  "pooled": {
   "A0": {
    "pass": 0,
-   "n": 25,
+   "n": 30,
    "ci95": [
     0.0,
-    0.1371851715307124
+    0.11570330822202779
    ]
   },
   "R25": {
    "pass": 6,
-   "n": 25,
+   "n": 30,
    "ci95": [
-    0.09356443933174285,
-    0.45128801781668626
+    0.07713551200106561,
+    0.3856665109966071
    ]
   },
   "M3": {
    "pass": 5,
-   "n": 25,
+   "n": 30,
    "ci95": [
-    0.068311464012484,
-    0.40703743227867717
+    0.05642169646807149,
+    0.3472116988341438
    ]
   }
  },
  "tests": {
   "strict": {
    "H0": {
-    "tasks": 5,
-    "mean_diff": 0.2,
+    "tasks": 6,
+    "mean_diff": 0.16666666666666666,
     "ci95": [
-     null,
-     null
+     0.0,
+     1.0
     ],
     "per_task": [
      1.0,
+     0.0,
      0.0,
      0.0,
      0.0,
@@ -154,15 +176,16 @@
     "p_holm": 1.0
    },
    "H1": {
-    "tasks": 5,
-    "mean_diff": -0.04,
+    "tasks": 6,
+    "mean_diff": -0.03333333333333333,
     "ci95": [
-     null,
-     null
+     -0.2,
+     0.0
     ],
     "per_task": [
      0.0,
      -0.2,
+     0.0,
      0.0,
      0.0,
      0.0
@@ -173,43 +196,44 @@
   },
   "hidden_fraction": {
    "H0": {
-    "tasks": 5,
-    "mean_diff": 0.04016026201965151,
+    "tasks": 6,
+    "mean_diff": 0.03260108415057538,
     "ci95": [
-     null,
-     null
+     -0.5936170212765958,
+     1.0
     ],
     "per_task": [
      1.0,
      -0.17297297297297293,
      0.16739130434782615,
      -0.1999999999999999,
-     -0.5936170212765958
+     -0.5936170212765958,
+     -0.0051948051948052685
     ],
     "p_one_sided": 0.46875,
     "p_holm": 0.9375
    },
    "H1": {
-    "tasks": 5,
-    "mean_diff": -0.15250043753281495,
+    "tasks": 6,
+    "mean_diff": -0.1262178970782116,
     "ci95": [
-     null,
-     null
+     -0.3978723404255319,
+     0.0051948051948052685
     ],
     "per_task": [
      0.0,
      -0.30810810810810807,
      -0.03260869565217391,
      -0.0239130434782609,
-     -0.3978723404255319
+     -0.3978723404255319,
+     0.0051948051948052685
     ],
-    "p_one_sided": 1.0,
-    "p_holm": 1.0
+    "p_one_sided": 0.96875,
+    "p_holm": 0.96875
    }
   }
  },
  "flags": [
-  "cattrs-compositional-changelog: no trials yet",
   "cookie-store-compositional-changelog: no trials yet"
  ],
  "note": "Interim unless tasks_complete == 7. Holm family: H0, H1 (prereg A3)."
