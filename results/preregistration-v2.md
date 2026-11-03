@@ -1,6 +1,6 @@
 # Preregistration v2: official setup, local model
 
-**Status: DRAFT, 2026-11-02.** Items marked [smoke] are fixed after the smoke test. Tag `prereg-v2` goes on this file before the first counted trial. Smoke trials are never counted.
+**Status: LOCKED, 2026-11-03, tag `prereg-v2`,** before any counted trial. Smoke and gate trials are never counted. Later changes are dated amendments below.
 
 Setup: `results/protocol-v4-official.md`. The earlier study is a pilot (`pilot-v1`). It informed this design, and its data are never pooled here.
 
@@ -15,6 +15,7 @@ With the official public Hermes pipeline and a local open-weights model, does ge
 - **Order:** A0, then HM run 1, run 2, run 3, each with its own fresh generation. Any stopping point leaves complete, reportable sets.
 - **Model:** `qwen3.8:27b-mtp-q4_K_M` on Ollama, context 262,144 (the model's own limit; fits on 2 RTX 3090s), effort requested `max`. Hermes sends `xhigh` for a model it doesn't recognize; this is stock Hermes behaviour, disclosed and not patched.
 - **Hardware:** one task-and-arm set stays on one GPU type. Any move is disclosed.
+- **Execution:** one allocation runs the sets in the order above, one trial at a time (`official/vm/run-all.sbatch`).
 - **Environment:** all arms use one frozen VM disk and Docker build cache, validated by the reference solutions on all 15 tasks, so floating installs in task builds can't differ between arms.
 - **Generation that fails or times out:** the 6-hour limit stands. If no valid memory results, that is reported, and that run's task trials aren't run.
 

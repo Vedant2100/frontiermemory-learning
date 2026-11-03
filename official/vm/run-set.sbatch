@@ -75,5 +75,5 @@ print('judge status', dict(collections.Counter(json.loads(l).get('judge_status')
 [ "$SET" = control ] && [ "$SMOKE" != 1 ] || G "$ENV; frontier-memory bundle --memory-job jobs/$GENJOB --task-job jobs/$TASKJOB --out $TASKJOB-bundle.tar.gz 2>&1 | tail -14 | cut -c1-170"
 mkdir -p "$REPO/results/official"; "${SCP[@]}" "fm@127.0.0.1:summary-$TASKJOB.jsonl" "$REPO/results/official/"
 G "cut -d' ' -f2- ~/key-audit-$SET.log | sort | uniq -c | sort -rn | head -14 | cut -c1-100; echo \"saved files holding the key: \$(sudo grep -rlF \"\$(cat ~/.judge-key)\" ~/official/frontiermemory/jobs/$TASKJOB 2>/dev/null | wc -l)\"; sudo docker system df | grep -E 'Build Cache' | cut -c1-70; df -h / | tail -1"
-kill $OLLAMA_PID 2>/dev/null; rm -rf "${OLOG:?}/tmp"
+vm_stop; trap - EXIT; kill $OLLAMA_PID 2>/dev/null; pkill -u "$USER" -x ollama; rm -rf "${OLOG:?}/tmp"
 step "$SET: SET_DONE"
