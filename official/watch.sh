@@ -3,7 +3,7 @@
 # Events: job state changes, new step markers and failure lines in job logs, finished trials, and no model traffic for 45 min.
 cd /home/csgrad/vbork001/frontiermemory-experiment-20261024 || exit 1
 S=$HOME/.cache/fm-watch; mkdir -p "$S"
-PAT='^=== |ORACLE_|^BAD |_FAILED|_MISSING|NO_VALID_MEMORY|SET_DONE|PROVISION_DONE|GATE_COMPLIANT_DONE|Traceback|error:|CANCELLED|DUE TO|no space left|No space left|SSH never|Killed|oom'
+PAT='^=== |ORACLE_|^BAD |_FAILED|_MISSING|NO_VALID_MEMORY|SET_DONE|PROVISION_DONE|FREEZE_DONE|BUILD_CACHE_GC_NOT_OFF|Traceback|error:|CANCELLED|DUE TO|no space left|No space left|SSH never|Killed|oom'
 probe() {  # runs on the job's node, inside its allocation; counts only
   cat <<'EOF'
 Q=$(pgrep -u $USER -f qemu-kvm | head -1); [ -n "$Q" ] || { echo "vm=down"; exit 0; }

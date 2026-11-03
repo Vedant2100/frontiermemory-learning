@@ -8,9 +8,7 @@
 #SBATCH --output=official/logs/provision-%j.log
 set -uo pipefail
 REPO=$PWD; source official/vm/lib.sh
-step() { echo; echo "=== $(date +%m-%d\ %H:%M:%S) $*"; }
 vm_boot 6 20G || exit 1
-G() { "${SSH[@]}" "$@"; }
 step "official tools at upstream 9af28c2"
 G 'set -e; sudo apt-get -qq update; sudo apt-get -qq -y install python3-venv git >/dev/null 2>&1; mkdir -p ~/official; cd ~/official; git clone -q https://github.com/letta-ai/frontiermemory; cd frontiermemory; git checkout -q 9af28c2f8210779f442aa36a1d73553630441af5; git log --oneline -1; python3 -m venv ~/boot; ~/boot/bin/pip -q install uv==0.11.21; ~/boot/bin/uv -q venv --python 3.12; . .venv/bin/activate; ~/boot/bin/uv -q pip install -e .; python --version; harbor --version' || { echo PROVISION_FAILED; exit 1; }
 step "corpus v1.1"
@@ -39,7 +37,7 @@ PY
 diff -r data/tasks/frontier-memory data/tasks-fm; true'
 step "Word2Vec image from the unmodified task (D71)"
 G 'cd ~/official/frontiermemory; S=$(date +%s); sudo docker build -q -t fm-w2v-cache data/tasks/frontier-memory/build-word2vec-pipeline/environment 2>&1 | tail -1 | cut -c1-90; echo "build took $(( $(date +%s)-S )) s"; sudo docker images fm-w2v-cache --format "{{.ID}} {{.Size}}"; df -h / | tail -1'
-G 'for i in 1 2 3 4 5 6; do sudo docker pull -q alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11 && break; sleep 20; done'
+G 'for i in 1 2 3 4 5 6; do sudo docker pull -q '"$PROBE_IMAGE"' && break; sleep 20; done'
 step "reference solution on Word2Vec"
 G "$ENV; sudo env PATH=\$PATH harbor run -p data/tasks-fm -a oracle -e docker -n 1 -i 'build-word2vec*' --jobs-dir jobs --job-name oracle-w2v -y 2>&1 | tail -1 | cut -c1-100; sudo chown -R fm:fm jobs; python3 -c \"
 import json,glob

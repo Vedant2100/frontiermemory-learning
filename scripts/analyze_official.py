@@ -65,19 +65,19 @@ def task_name(row: dict) -> str:
 
 
 def tally(rows: list[dict]) -> dict[str, list[int]]:
-    """task -> [passes, valid trials]. Passing is reward >= 1, as in the official scorer."""
+    """task -> [passes, valid trials], from the official scorer's `valid` and `passed` fields in each summary row."""
     out: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for row in rows:
-        if row.get("reward") is None:
+        if not row.get("valid"):
             continue
-        out[task_name(row)][0] += int(float(row["reward"]) >= 1.0)
+        out[task_name(row)][0] += int(row["passed"])
         out[task_name(row)][1] += 1
     return out
 
 
 def check_set(name: str, rows: list[dict]) -> list[str]:
     flags = []
-    if bad := [r for r in rows if r.get("reward") is None]:
+    if bad := [r for r in rows if not r.get("valid")]:
         flags.append(f"{name}: {len(bad)} trial(s) with no reward")
     counts = tally(rows)
     if len(counts) != N_TASKS:
@@ -123,7 +123,7 @@ def analyse(sets: dict[str, list[dict]]) -> dict:
 
 def self_test() -> None:
     def rows(job, passes, digest=None, attempts=3):
-        return [{"task": f"letta-ai/t{i}", "reward": float(a < p), "memory_sha256": digest}
+        return [{"task": f"letta-ai/t{i}", "valid": True, "passed": a < p, "memory_sha256": digest}
                 for i, p in enumerate(passes) for a in range(attempts)]
     n = N_TASKS
     a0 = rows(CONTROL, [0] * n)
@@ -137,7 +137,7 @@ def self_test() -> None:
     r = analyse({CONTROL: a0, RUNS[0]: rows(RUNS[0], [1] * n, "abc"), RUNS[1]: rows(RUNS[1], [0] * n, "abc"), RUNS[2]: rows(RUNS[2], [0] * n, "abc")})
     assert abs(r["primary"]["mean_diff"] - 1 / 9) < 1e-12  # pooled over runs: 1 pass of 9 per task
     assert not [f for f in r["flags"] if "attempts" in f or "digest" in f]
-    bad = a0[:-1] + [{**a0[-1], "reward": None}]
+    bad = a0[:-1] + [{**a0[-1], "valid": False}]
     assert any("no reward" in f for f in check_set(CONTROL, bad)) and any("attempts differ" in f for f in check_set(CONTROL, bad))
     assert any("digest" in f for f in check_set(RUNS[0], rows(RUNS[0], [0] * n, None)))
     assert any("control trial" in f for f in check_set(CONTROL, rows(CONTROL, [0] * n, "abc")))

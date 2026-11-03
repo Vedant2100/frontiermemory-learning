@@ -8,7 +8,7 @@
 #SBATCH --time=06:00:00
 #SBATCH --output=official/logs/oracle-all-%j.log
 source official/vm/lib.sh; vm_boot 7 28G || exit 1
-"${SSH[@]}" 'sudo docker ps -aq | xargs -r sudo docker rm -f >/dev/null 2>&1; sudo docker network prune -f >/dev/null 2>&1; rm -f ~/.judge-key ~/key-audit-gate.log; for i in 1 2 3 4 5 6; do sudo docker pull -q alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11 >/dev/null && break; sleep 20; done'
+"${SSH[@]}" 'sudo docker ps -aq | xargs -r sudo docker rm -f >/dev/null 2>&1; sudo docker network prune -f >/dev/null 2>&1; rm -f ~/.judge-key ~/key-audit-gate.log; for i in 1 2 3 4 5 6; do sudo docker pull -q '"$PROBE_IMAGE"' >/dev/null && break; sleep 20; done'
 "${SSH[@]}" 'umask 077; cat > ~/.judge-key' < "$HOME/.config/frontiermemory/anthropic-api-key"
 "${SSH[@]}" 'cd ~/official/frontiermemory; export PATH=$PWD/.venv/bin:$PATH JUDGE_ANTHROPIC_KEY=$(cat ~/.judge-key); sudo env PATH=$PATH JUDGE_ANTHROPIC_KEY=$JUDGE_ANTHROPIC_KEY harbor run -p data/tasks-fm -a oracle -e docker -n 2 --ve GRADING_MODEL=anthropic/claude-opus-5-5 --ve "ANTHROPIC_API_KEY=\${JUDGE_ANTHROPIC_KEY}" --jobs-dir jobs --job-name oracle-all -y 2>&1 | tail -1 | cut -c1-120; sudo chown -R fm:fm jobs/oracle-all; rm -f ~/.judge-key
 python3 - <<PY
