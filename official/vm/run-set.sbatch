@@ -9,7 +9,7 @@
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=12
 #SBATCH --mem=64G
-#SBATCH --time=7-00:00:00
+#SBATCH --time=4-00:00:00
 #SBATCH --output=official/logs/set-%j.log
 : "${SET:?set SET=control|run1|run2|run3}"; SMOKE="${SMOKE:-0}"
 case "$SET" in control|run1|run2|run3) ;; *) echo "bad SET"; exit 2 ;; esac

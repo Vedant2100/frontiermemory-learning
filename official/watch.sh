@@ -35,7 +35,7 @@ while true; do
       echo "$cur" > "$k"
     fi
   done
-  if [ $((tick % 5)) = 0 ]; then
+  if [ $((tick % 15)) = 0 ]; then
     J=$(squeue -u "$USER" -h -t R -n fm-serial -o %i | head -1)
     if [ -n "$J" ]; then
       R=$(probe | timeout 60 srun --jobid="$J" --overlap -n1 -c1 --mem=100M bash /dev/stdin 2>/dev/null)
