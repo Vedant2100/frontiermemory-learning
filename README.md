@@ -80,9 +80,8 @@ Closest work: [VibeMemBench](https://arxiv.org/abs/2609.23570), [MERIT](https://
 - **Leaderboard:** a submission needs a harness PR and 135 trials on Opus 5.5 or GPT-6 Sol, about $460 plus judge costs. Our budget is zero, so it needs funding or Letta's help.
 - **Next paper idea:** stale memory in coding agents. [STALE](https://arxiv.org/abs/2605.06527) and [Memory Trust Gap](https://arxiv.org/abs/2609.01852) test it outside coding.
 
-## Needed from people
+## Needed
 
 1. **APEX judge key:** 3 tasks are graded by an official OpenAI judge, at a few dollars. Without a key, those 3 stay ungraded. Task outputs go to OpenAI; no corpus data does.
-2. **Letta email:** send it, and also ask for no-memory rows, per-task results, a Dream memory folder, and how to run Hermes on an open model.
 3. **Optional insurance:** apply for [Modal academic credits](https://modal.com/pricing) in case the VM route fails.
 4. **Cluster check:** consider mentioning the VM to the admin. It stays within our allocation, and we haven't seen a policy on it.
