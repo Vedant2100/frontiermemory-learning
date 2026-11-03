@@ -18,6 +18,7 @@ Findings from running the public pipeline. **Holds for any model** unless marked
 | Cookie-store's verifier build doesn't pin `anyio`, while `test.sh` requires 4.15.1 with `--no-index`. Since `anyio` 4.16.0 (2026-11-01), a fresh build writes no reward | Observed; PyPI dates; fixed by one added line (D72) | Reproduced |
 | Word2Vec's image installs from a floating GitHub branch, so identical task files build different images | Hashes `888df…` and `b4023…` a day apart | Observed |
 | Word2Vec's build took 978–1,069 s here against its own 600 s limit | Our VM; a faster host may fit | Host-dependent |
+| Harbor rebuilds images per trial, and 12 of 15 tasks have install commands in their build files, so results can depend on when, and with what cache, a task is built | `docker.py` (`build`, `down --rmi local`); task Dockerfiles counted | Read in source; install commands not checked one by one for pinning |
 
 ## Corpus
 
@@ -28,6 +29,12 @@ Script: `scripts/corpus_coverage.py`.
 | Totals match: v1.0 184/490, v1.1 256/494 | Our parser | Verified |
 | v1.0 has 9 duplicate files (665 distinct of 674) | Hashes | Verified |
 | Runs resembling each task's prompt are very uneven: 8 of 15 tasks have none in either version; DAPT has 35, none passing | `results/corpus-coverage.json` | Approximate: misses same-repo runs with different prompts |
+
+## Submission checks
+
+| Finding | Evidence | Status |
+|---|---|---|
+| `bundle` records the corpus digest but doesn't compare it to the release, and doesn't check task or attempt counts, though `docs/rules.md` lists these among its checks. Our 1-task, v1.1 bundle reported no problems | `bundle.py`; our run | Observed; the rules also describe a human review |
 
 ## Reporting
 
@@ -47,7 +54,8 @@ Script: `scripts/corpus_coverage.py`.
 
 | Finding | Evidence | Status |
 |---|---|---|
-| Effort: `max` requested, `xhigh` on the wire in 70 of 70 audited requests | Request bodies | Cause in Hermes not yet read |
+| Effort: `max` requested, `xhigh` on the wire in 70 of 70 audited requests | Request bodies | Hermes per-model ladders; an unrecognized model tops out at `xhigh` (`agent/reasoning_effort.py`) |
 | Generation used 33 minutes of 6 hours and 67 model calls, and gave 8 files, 54 KB | Compliant pass | One run |
+| Word2Vec, no memory and memory: 0/3 each in the gate. Memory loaded and the skill was opened; one memory trial reached the right function name with a wrong keyword. Most failures wrote no `/workspace/solution.py`; the official prompt gives no path | Gate trials | Uncounted, 3 attempts each |
 | Tool output totalled 290 KB from a 126 MB corpus, about 0.2%. All 750 run IDs appear in output, but only 40 are named in commands | Trajectory counts | One run; scripts may have processed more than they printed |
 | 3 HTTP 500s at 15 s each during generation, which recovered | Ollama log | Cause unknown |

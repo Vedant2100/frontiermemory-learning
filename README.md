@@ -33,10 +33,10 @@ Dates after Nov 4 are estimates.
 
 | When | What |
 |---|---|
-| Nov 2–3 | Records and docs (this file). Build the VM and Docker. CPU only |
-| Nov 3–4 | Network probe. Reference-solution check on all 15 tasks |
-| About Nov 4–5 | Old jobs finish. **End-to-end gate on Word2Vec,** with a full 6-hour generation: no full run starts until it passes. Lock the preregistration |
-| Nov 5–14 | Counted runs, in order: no-memory control, then run 1, run 2, run 3 |
+| Nov 2–3 | **Done:** records and docs. VM and Docker built, reproducibly, from scripts |
+| Nov 3 | **Done:** network probe; reference solutions on all 15 tasks match the maintainers; full-setting generation and Word2Vec gate |
+| Nov 3 | Smoke-test the final run script. Lock the preregistration |
+| From Nov 3 | Counted runs, in order: no-memory control, then run 1, run 2, run 3 |
 | Nov 5–11 | Audit of the real pipeline. Draft on incoming data |
 | **Nov 11** | **Go/no-go:** submit with the runs finished, stating the shortfall, or move to EASE (Jan 22) |
 | Nov 12–14 | Full draft review, 4-page fit, anonymized artifact |
