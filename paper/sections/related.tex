@@ -1,17 +1,17 @@
-% Draft 2026-11-01. Every citation verified against arXiv on 2026-11-01.
+% Draft 2026-11-03. Citations checked on arXiv abstract pages; read the full papers before submission.
 \section{Related Work}
 \label{sec:related}
-\textbf{Experience memory for agents.}
-Coding and general agents accumulate procedures, skills and lessons across tasks~\cite{survey-selfevolving,sepm,chronos}.
-Several systems gate admission or retention of such lessons with evidence or verifier signals~\cite{grounding-memory,memguard,sedm,aecg}.
-Our audit asks the prior question of whether the generated lessons are grounded in their cited evidence at all, and shows that simple automatic checks fail validation on a local model.
-
-\textbf{Evaluating memory.}
+\textbf{Evaluating agent memory.}
 VibeMemBench~\cite{vibemembench} finds that 11 of 12 pairings of solver and existing memory system fail to beat a memory-off baseline on repository tasks.
+MERIT~\cite{merit} measures memory's marginal value per dollar on tool-using tasks and finds that changing a memory's implementation can shift task success substantially.
 Scope Before You Persist~\cite{scopebefore} shows that lessons can harm tasks outside their scope.
-FrontierMemory~\cite{frontiermemory} standardises corpus, instruction and verifiers but omits a no-memory row.
-We add that row under preregistration, and we separate memory that the harness shows from memory that the agent seeks.
+These studies build their own benchmarks; we audit an existing one, by running its own pipeline.
 
-\textbf{Organisational memory.}
-Shared memory across agents and teams is studied as organisational learning~\cite{enterprise-memory}.
-The FrontierMemory corpus is an instance of it: prior runs, often by other agents, distilled for a new one.
+\textbf{Delivery and harness effects.}
+Saha~\cite{deliverynotstorage} argues that delivery is what matters, reporting no voluntary memory use in one controlled coding task, whereas we observe agents opening memory files.
+A harness comparison~\cite{harnessormodel} treats truncation policy as part of the harness and recommends logging when it fires, as we do for memory exposure.
+We add a reading of how each harness loads the same memory.
+
+\textbf{Experience memory for agents.}
+Coding and general agents accumulate procedures, skills and lessons across tasks~\cite{survey-selfevolving,sepm,chronos}, and some systems gate those lessons with evidence or verifier signals~\cite{grounding-memory,memguard,sedm,aecg}.
+Shared memory across agents and teams is studied as organisational learning~\cite{enterprise-memory}; the FrontierMemory corpus is an instance of it.
