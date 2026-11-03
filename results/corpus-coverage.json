@@ -1,0 +1,442 @@
+{
+ "v1.0": {
+  "totals": {
+   "FAIL": 490,
+   "PASS": 184
+  },
+  "tasks": {
+   "apex-brightpath-market-share": {
+    "0.3": {
+     "PASS": 1,
+     "FAIL": 1
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "apex-brightpath-seat-surplus": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "apex-eurogrid-curtailment": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "automationbench-marketing-content-gap-analysis": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 3,
+     "FAIL": 12
+    }
+   },
+   "automationbench-sales-chatgpt-proposal-customization": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 15
+    }
+   },
+   "automationbench-sales-partnership-contract": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 3,
+     "FAIL": 42
+    }
+   },
+   "awilix-release-tier-explicit": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "awilix-release-tier-implicit": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "build-word2vec-pipeline": {
+    "0.3": {
+     "PASS": 17,
+     "FAIL": 169
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 9
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 9
+    }
+   },
+   "cattrs-compositional-changelog": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "cookie-store-compositional-changelog": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "customer-delivery-contextual-preferences": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "dapt-intrusion-detection-workflow-learning": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 35
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 35
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 35
+    }
+   },
+   "enterpriseops-csm-26d1b04a": {
+    "0.3": {
+     "PASS": 5,
+     "FAIL": 38
+    },
+    "0.5": {
+     "PASS": 4,
+     "FAIL": 13
+    },
+    "0.7": {
+     "PASS": 4,
+     "FAIL": 13
+    }
+   },
+   "enterpriseops-teams-2725d17f": {
+    "0.3": {
+     "PASS": 1,
+     "FAIL": 25
+    },
+    "0.5": {
+     "PASS": 1,
+     "FAIL": 25
+    },
+    "0.7": {
+     "PASS": 1,
+     "FAIL": 25
+    }
+   }
+  },
+  "distinct_files": 665,
+  "files": 674
+ },
+ "v1.1": {
+  "totals": {
+   "FAIL": 494,
+   "PASS": 256
+  },
+  "tasks": {
+   "apex-brightpath-market-share": {
+    "0.3": {
+     "PASS": 2,
+     "FAIL": 1
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "apex-brightpath-seat-surplus": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 1
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "apex-eurogrid-curtailment": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "automationbench-marketing-content-gap-analysis": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 3,
+     "FAIL": 12
+    }
+   },
+   "automationbench-sales-chatgpt-proposal-customization": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 15
+    }
+   },
+   "automationbench-sales-partnership-contract": {
+    "0.3": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.5": {
+     "PASS": 3,
+     "FAIL": 42
+    },
+    "0.7": {
+     "PASS": 3,
+     "FAIL": 42
+    }
+   },
+   "awilix-release-tier-explicit": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "awilix-release-tier-implicit": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "build-word2vec-pipeline": {
+    "0.3": {
+     "PASS": 5,
+     "FAIL": 60
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 9
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 9
+    }
+   },
+   "cattrs-compositional-changelog": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "cookie-store-compositional-changelog": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 1
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "customer-delivery-contextual-preferences": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 0
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 0
+    }
+   },
+   "dapt-intrusion-detection-workflow-learning": {
+    "0.3": {
+     "PASS": 0,
+     "FAIL": 35
+    },
+    "0.5": {
+     "PASS": 0,
+     "FAIL": 35
+    },
+    "0.7": {
+     "PASS": 0,
+     "FAIL": 35
+    }
+   },
+   "enterpriseops-csm-26d1b04a": {
+    "0.3": {
+     "PASS": 16,
+     "FAIL": 64
+    },
+    "0.5": {
+     "PASS": 9,
+     "FAIL": 25
+    },
+    "0.7": {
+     "PASS": 8,
+     "FAIL": 17
+    }
+   },
+   "enterpriseops-teams-2725d17f": {
+    "0.3": {
+     "PASS": 7,
+     "FAIL": 37
+    },
+    "0.5": {
+     "PASS": 6,
+     "FAIL": 28
+    },
+    "0.7": {
+     "PASS": 6,
+     "FAIL": 28
+    }
+   }
+  },
+  "distinct_files": 750,
+  "files": 750
+ }
+}
