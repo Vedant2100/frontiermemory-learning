@@ -22,6 +22,8 @@ With the official public Hermes pipeline and a local open-weights model, does ge
 
 As in the official rules: a trial with a verifier reward is valid, even after an agent timeout or crash, and counts as a failed attempt if it doesn't pass. A trial with no reward is an infrastructure failure and is rerun. No other exclusions.
 
+A trial whose LLM judge failed (`grading_run_status` other than `completed`) gets reward 0 from the official grader, but it says nothing about the agent. Such trials are regraded from saved outputs with `harbor trials regrade` and the regrade is reported. This is the one place we depart from counting every rewarded trial as it stands.
+
 ## Outcomes
 
 - **Primary:** strict pass (`reward >= 1`), via `frontier-memory score`.

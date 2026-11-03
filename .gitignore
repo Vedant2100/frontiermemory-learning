@@ -56,3 +56,4 @@ results/awilix-*-oracle-check-[0-9]*/
 results/customer-delivery-oracle-check-[0-9]*/
 official/logs/
 official/jobs/
+.nfs*

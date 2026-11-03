@@ -79,6 +79,8 @@ def check_set(name: str, rows: list[dict]) -> list[str]:
     flags = []
     if bad := [r for r in rows if not r.get("valid")]:
         flags.append(f"{name}: {len(bad)} trial(s) with no reward")
+    if failed := [r for r in rows if r.get("judge_status") not in (None, "completed")]:
+        flags.append(f"{name}: {len(failed)} trial(s) where the LLM judge failed: regrade them (prereg)")
     counts = tally(rows)
     if len(counts) != N_TASKS:
         flags.append(f"{name}: {len(counts)} tasks, expected {N_TASKS}")
@@ -140,6 +142,8 @@ def self_test() -> None:
     bad = a0[:-1] + [{**a0[-1], "valid": False}]
     assert any("no reward" in f for f in check_set(CONTROL, bad)) and any("attempts differ" in f for f in check_set(CONTROL, bad))
     assert any("digest" in f for f in check_set(RUNS[0], rows(RUNS[0], [0] * n, None)))
+    assert any("judge failed" in f for f in check_set(CONTROL, a0[:-1] + [{**a0[-1], "judge_status": "error"}]))
+    assert not any("judge failed" in f for f in check_set(CONTROL, a0[:-1] + [{**a0[-1], "judge_status": "completed"}]))
     assert any("control trial" in f for f in check_set(CONTROL, rows(CONTROL, [0] * n, "abc")))
     import analyze_matrix  # the fast interval must equal the slow, already-reviewed one where that is feasible
     for d in ([0.5, 0.2, -0.1, 0.3, 0.0, 0.4, 0.1], [1, 0, 0, 0, 0, 0], [0.1, -0.2, 0.3, 0.05, 0.2, 0.4, 0.15, 0.25]):

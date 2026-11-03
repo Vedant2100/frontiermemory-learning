@@ -2,6 +2,7 @@
 # One set under preregistration v2. Safe to resubmit after an interruption: finished trials are kept.
 #   sbatch --dependency=singleton --export=ALL,SET=control|run1|run2|run3 official/vm/run-set.sbatch
 #   SMOKE=1 runs one Word2Vec attempt under a scratch name and also exercises the rerun path. Never counted.
+#   SMOKE=apex with SET=control runs one APEX attempt, cut off after about 2 minutes, to exercise the judge path. Never counted.
 # Agents get a placeholder key. The judge key reaches only verifiers, through a template, so it is never on a command line or in saved configs.
 #SBATCH --job-name=fm-serial
 #SBATCH --partition=vcggpu
@@ -24,7 +25,8 @@ G 'umask 077; cat > ~/.judge-key' < "$HOME/.config/frontiermemory/anthropic-api-
 ENV="cd ~/official/frontiermemory; export PATH=\$PWD/.venv/bin:\$PATH PYTHONPATH=\$HOME/official FM_LOCAL_BASE_URL=http://10.0.2.2:$PORT/v1 OPENAI_API_KEY=local-placeholder; unset OPENAI_BASE_URL ANTHROPIC_API_KEY"
 H="sudo env PATH=\$PATH PYTHONPATH=\$PYTHONPATH FM_LOCAL_BASE_URL=\$FM_LOCAL_BASE_URL OPENAI_API_KEY=\$OPENAI_API_KEY bash \$HOME/official/fm_local/with_judge_key.sh"
 COMMON="-m openai/$MODEL -e docker --allow-host 10.0.2.2"
-if [ "$SMOKE" = 1 ]; then ATTEMPTS=1; FILTER="-i 'build-word2vec*'"; TASKJOB=fm-smoke-tasks; GENJOB=compliant-gen; else ATTEMPTS=3; FILTER=""; TASKJOB=fm-tasks-$SET; GENJOB=fm-gen-$SET; fi
+if [ "$SMOKE" = apex ]; then ATTEMPTS=1; FILTER="-i 'apex-eurogrid*' --agent-timeout-multiplier 0.01"; TASKJOB=fm-smoke-apex
+elif [ "$SMOKE" = 1 ]; then ATTEMPTS=1; FILTER="-i 'build-word2vec*'"; TASKJOB=fm-smoke-tasks; GENJOB=compliant-gen; else ATTEMPTS=3; FILTER=""; TASKJOB=fm-tasks-$SET; GENJOB=fm-gen-$SET; fi
 # One model server, so one trial at a time; agent time limits would otherwise include queueing.
 HARBOR_EXTRA="-n 1 $FILTER --ve GRADING_MODEL=$JUDGE --ve 'ANTHROPIC_API_KEY=\${JUDGE_ANTHROPIC_KEY}'"
 
@@ -67,7 +69,9 @@ if [ "$SMOKE" = 1 ]; then
 fi
 
 step "$SET: score and archive"
-G "$ENV; frontier-memory score jobs/$TASKJOB 2>&1 | tail -22 | cut -c1-110; python3 ~/official/fm_local/set_tools.py summary jobs/$TASKJOB > ~/summary-$TASKJOB.jsonl; wc -l < ~/summary-$TASKJOB.jsonl"
+G "$ENV; frontier-memory score jobs/$TASKJOB 2>&1 | tail -22 | cut -c1-110; python3 ~/official/fm_local/set_tools.py summary jobs/$TASKJOB > ~/summary-$TASKJOB.jsonl; wc -l < ~/summary-$TASKJOB.jsonl; python3 -c \"
+import collections,json,sys
+print('judge status', dict(collections.Counter(json.loads(l).get('judge_status') for l in open(sys.argv[1]))))\" ~/summary-$TASKJOB.jsonl"
 [ "$SET" = control ] && [ "$SMOKE" != 1 ] || G "$ENV; frontier-memory bundle --memory-job jobs/$GENJOB --task-job jobs/$TASKJOB --out $TASKJOB-bundle.tar.gz 2>&1 | tail -14 | cut -c1-170"
 mkdir -p "$REPO/results/official"; "${SCP[@]}" "fm@127.0.0.1:summary-$TASKJOB.jsonl" "$REPO/results/official/"
 G "cut -d' ' -f2- ~/key-audit-$SET.log | sort | uniq -c | sort -rn | head -14 | cut -c1-100; echo \"saved files holding the key: \$(sudo grep -rlF \"\$(cat ~/.judge-key)\" ~/official/frontiermemory/jobs/$TASKJOB 2>/dev/null | wc -l)\"; sudo docker system df | grep -E 'Build Cache' | cut -c1-70; df -h / | tail -1"
