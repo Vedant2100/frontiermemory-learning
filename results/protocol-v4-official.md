@@ -44,7 +44,10 @@ The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm
 1. VM boots, `docker run hello-world` works, and outbound access works.
 2. The official network probe shows the model host reachable and others blocked.
 3. Oracle on all 15 tasks matches the maintainers' list (`docs/maintainers.md`): 10 score 1, Eurogrid about 0.83, cattrs, cookie store and both EnterpriseOps score 0.
-4. Smoke test on Word2Vec: tool calls, effort and memory loading work. Smoke trials are not counted.
+4. **End-to-end gate on one small task (Word2Vec). No full run starts until every check passes.** Nothing from this gate is counted.
+   - **Plumbing pass:** a short generation time limit, to catch failures cheaply. Qwen must drive Hermes tools, and effort must reach the model.
+   - **Compliant pass, with nothing changed from the full-run settings:** `generate-memory` on the full corpus under the real 6-hour limit, then `check-memory`, then `run-tasks` on Word2Vec with that memory and with no memory, then `score` and `bundle`.
+   - **Checks:** the commands are unmodified; during generation only the model host is reachable; logs show the memory loaded (memory trial), absent (control), the same digest, and the requested effort; the verifier wrote a reward; a diff against upstream shows only the base-URL subclass. `bundle` will report the 14 tasks not run; any other problem must be explained.
 
 ## After each run
 
