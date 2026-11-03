@@ -10,7 +10,7 @@
 source official/vm/lib.sh; vm_boot 6 24G || exit 1
 "${SSH[@]}" 'cd ~/official/frontiermemory; T=$(dirname $(dirname $(find data/tasks -name task.toml | head -1)))
 sudo env PATH=$PWD/.venv/bin:$PATH harbor run -p $T -a oracle -e docker -n 2 \
-  --include-task-name "letta-ai/awilix*" --include-task-name "letta-ai/customer*" --include-task-name "letta-ai/cattrs*" --include-task-name "letta-ai/cookie*" --include-task-name "letta-ai/build-word2vec*" \
+  --include-task-name "awilix*" --include-task-name "customer*" --include-task-name "cattrs*" --include-task-name "cookie*" --include-task-name "build-word2vec*" \
   --ve GRADING_MODEL=openai/gpt-5.6-sol --jobs-dir jobs --job-name oracle-retest -y 2>&1 | tail -3 | cut -c1-160
 sudo chown -R fm:fm jobs/oracle-retest
 python3 - <<PY
