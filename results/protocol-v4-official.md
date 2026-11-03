@@ -61,7 +61,7 @@ The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm
 4. **End-to-end gate on one small task (Word2Vec). No full run starts until every check passes.** Nothing from this gate is counted.
    - **Plumbing pass:** a short generation time limit, to catch failures cheaply. Qwen must drive Hermes tools, and effort must reach the model.
    - **Compliant pass, with nothing changed from the full-run settings:** `generate-memory` on the full corpus under the real 6-hour limit, then `check-memory`, then `run-tasks` on Word2Vec with that memory and with no memory, then `score` and `bundle`.
-   - **APEX judge check:** one APEX grading confirms the judge still calls OpenAI, while the agent's base-URL override reaches only the agent. Inspecting the agent container confirms it holds only the placeholder key, and trial logs show no use of the real one.
+   - **APEX judge check:** one APEX grading confirms the judge still works (Claude for now; OpenAI when available), while the agent's base-URL override reaches only the agent. Inspecting the agent container confirms it holds only the placeholder key, and trial logs show no use of the real one.
    - **Checks:** the commands are unmodified; during generation only the model host is reachable; logs show the memory loaded (memory trial), absent (control), the same digest, and the requested effort; the verifier wrote a reward; a diff against upstream shows only the base-URL subclass. `bundle` will report the 14 tasks not run; any other problem must be explained.
 
 ## After each run
