@@ -1,25 +1,25 @@
-% Draft 2026-11-01.
+% Draft 2026-11-03: restart on the official setup. The pilot's text is at tag pilot-v1. Numbers marked \todo{} come from the runs.
 \section{Introduction}
 \label{sec:intro}
 Coding agents increasingly carry \emph{memory} between sessions: notes distilled from earlier runs that are meant to save the next run from repeating mistakes.
-FrontierMemory~\cite{frontiermemory} makes this measurable.
-It provides a corpus of prior agent trajectories, a fixed instruction for turning them into memory, and held-out tasks graded by hidden verifiers.
-Its leaderboard ranks memory systems by the solve rate of a fixed task agent that reads the memory.
-Its protocol defines a no-memory control, but the leaderboard does not report how the same agent does \emph{without} memory, so a leaderboard gain cannot be separated from what the agent would have done anyway.
-Recent work finds that persistent memory often fails to beat no memory on executable repository tasks~\cite{vibemembench} and that lessons applied outside their scope can harm unrelated tasks~\cite{scopebefore}.
+FrontierMemory~\cite{frontiermemory} makes this measurable and says it measures the quality of memory.
+It provides a corpus of prior agent trajectories, a fixed memory-generation task, and 15 held-out tasks graded by hidden verifiers, and it ranks models and harnesses by the agent's solve rate.
 
-We ask three questions:
+But memory must survive a chain before it can raise a score: the corpus must hold the knowledge, generation must capture it, the harness must deliver it, the agent must use it, and the grader must be able to credit it.
+A solve rate alone can't say which link is responsible.
+We audit that chain by running the benchmark's public pipeline unchanged except for the task and memory model, a local open-weights model.
+
+We ask what a FrontierMemory score can and cannot tell us:
 \begin{itemize}
-  \item \textbf{RQ1.} Does agent-written memory beat no memory on FrontierMemory tasks?
-  \item \textbf{RQ2.} How does memory reach the agent: through what the harness injects (\emph{shown}) or through what the agent looks up (\emph{sought})?
-  \item \textbf{RQ3.} Is the memory itself trustworthy, and can its quality be checked automatically?
+  \item \textbf{RQ1.} With the official pipeline, does generated memory beat no memory?
+  \item \textbf{RQ2.} Where along the chain can memory's value be lost?
+  \item \textbf{RQ3.} What does the published leaderboard let a reader conclude?
 \end{itemize}
-We answer them with a preregistered experiment that uses only a local open-weights model and no paid API.
 
 \textbf{Contributions.}
 \begin{enumerate}
-  \item A preregistered no-memory baseline on 7 FrontierMemory tasks: 3 arms, 105 trials, with every task's grading path validated against the reference solution (\S\ref{sec:method}).
-  \item Evidence that the benefit is task-specific: large where a task depends on conventions from earlier runs, \todo{null or mixed} elsewhere, and absent on preference-gated tasks (\S\ref{sec:results}).
-  \item A measurement of memory exposure. Codex truncates the memory index to 10{,}000 bytes, and agents fall back on search only when cued; two preregistered probes manipulate what is shown and what can be sought. Our own preregistered prediction about search was falsified, and we report it as such. Across five harnesses, the share of the same memory shown at start ranges from 21\% to 100\%, so leaderboard harness comparisons mix memory quality with exposure.
-  \item A quality audit. Only 40--47\% of cited technical claims are grounded in the steps they cite, and three automatic filters failed validation. A corpus trace shows why preference checks are failed.
+  \item A preregistered no-memory comparison on all 15 tasks through the official commands and containers: \todo{result}.
+  \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution can't pass or that score a judge failure as an agent failure, a task that broke when a dependency released, and fixed memory caps that differ across harnesses.
+  \item A separate account of what holds only for our local model, including how much of the corpus generation actually read.
 \end{enumerate}
+We make no claim that leaderboard scores are wrong: we don't run the leaderboard's models.

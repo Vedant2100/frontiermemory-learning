@@ -13,7 +13,8 @@ With the official public Hermes pipeline and a local open-weights model, does ge
 - **Arms:** A0, the Hermes task agent with no memory. HM, the same agent with memory from Hermes `/learn` on corpus v1.1.
 - **Runs:** HM has 3 independent memory generations, each with 3 attempts on each of the 15 tasks (135 trials). A0 has 3 attempts per task (45 trials).
 - **Order:** A0, then HM run 1, run 2, run 3, each with its own fresh generation. Any stopping point leaves complete, reportable sets.
-- **Model:** `qwen3.8:27b-mtp-q4_K_M` on Ollama, context [smoke], effort `max`.
+- **Model:** `qwen3.8:27b-mtp-q4_K_M` on Ollama, context 262,144 (the model's own limit; fits on 2 RTX 3090s), effort requested `max`. Hermes sends `xhigh` for a model it doesn't recognize; this is stock Hermes behaviour, disclosed and not patched.
+- **Hardware:** one task-and-arm set stays on one GPU type. Any move is disclosed.
 - **Generation that fails or times out:** the 6-hour limit stands. If no valid memory results, that is reported, and that run's task trials aren't run.
 
 ## Validity

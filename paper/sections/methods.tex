@@ -1,71 +1,40 @@
-% Methods draft (2026-11-01). FORGE 2027, IEEEtran, double-anonymous: no repo URLs, names or cluster identifiers.
-% Numbers marked \todo{} are filled in once the confirmatory matrix completes.
+% Draft 2026-11-03: official setup, only the model differs. FORGE 2027, IEEEtran, double-anonymous: no repo URLs, names or cluster identifiers.
 \section{Method}
 \label{sec:method}
 
-\subsection{Benchmark, tasks and agent}
-FrontierMemory v1.0~\cite{frontiermemory} provides a gated corpus of 674 prior agent trajectories (184 pass, 490 fail), a fixed memory-generation instruction, and 15 held-out tasks graded by hidden verifiers.
-Its protocol defines a no-memory control, but the public leaderboard reports only memory-system scores: no no-memory row, no per-task results.
-We run the 7 tasks whose official images and verifiers we could execute without Docker: a Word2Vec pipeline, a network-intrusion workflow (DAPT), and five repository tasks that require a patch to an open-source library (cattrs, a cookie store, two dependency-injection release tiers, and a customer-delivery service).
-Several repository tasks include a \emph{user-preference} check that only knowledge carried over from earlier runs can satisfy.
+\subsection{Setup}
+We run FrontierMemory's public release~\cite{frontiermemory} through its own commands (\texttt{generate-memory}, \texttt{run-tasks}, \texttt{score}, \texttt{bundle}) and task containers, on Docker.
+The leaderboard's default generator and loader are not public, so we use Hermes, a published leaderboard row whose generator and task agent are both in the public repository at a pinned commit.
+All 15 tasks are run on corpus v1.1, as used on the leaderboard, although the public code still pins v1.0.
+A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task; we do 3 runs (135 trials), plus a no-memory control of the same agent with 3 attempts per task (45 trials).
+Official timeouts apply.
 
-The task agent is the Codex CLI with its native memory mechanism, as in the benchmark's own adapter, driving a local Qwen3.8-27B model (4-bit, 65{,}536-token context, reasoning effort \emph{medium}) served by Ollama.
-The memory feature is on in every trial, including the no-memory control, so the memory folder is the only difference between arms.
-The prompt is the official task instruction plus one header line per output file the task metadata declares (e.g.\ \texttt{/workspace/solution.py}), which our runner needs to collect the artifact.
-Each trial gets a fresh workspace and agent home, one attempt, and the task's official time limit.
-Web search is off and the local model is the only endpoint; no paid API is used.
+\subsection{What differs from official runs}
+\paragraph{Model} Generation and tasks both use Qwen3.8-27B (4-bit) served by Ollama, at its full 262{,}144-token context. A thin adapter, loaded through the official custom-harness hook, changes only the model URL. Effort is requested at the highest level; Hermes sends a model it doesn't recognize \emph{xhigh}.
+\paragraph{Docker host} The cluster has no Docker, so the official Docker Engine runs in a virtual machine, with the model on the host GPUs. The official network probe and reference solutions behave as the maintainers report (\S\ref{sec:method-validity}).
+\paragraph{One task repair} Cookie-store's verifier cannot be built as published since a dependency released on Nov 1 (\S\ref{sec:results}). We add the version its own test script requires, one line in the verifier's build.
+\paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol. \todo{We use Claude Opus 5.5, or regraded results if the documented judge becomes available.} It reproduced the reference scores exactly; agreement on wrong answers is untested.
+\paragraph{Image} Word2Vec's image installs from a floating branch, so we pre-build it once, unmodified, and reuse it for every trial.
 
-\subsection{Memory construction}
-No memory is written or edited by a person.
-A four-stage pipeline, run by the same local model, gives the official instruction verbatim to every call:
-(i)~one note per trajectory;
-(ii)~grouping of notes by topic label;
-(iii)~one topic file per group, with step-level citations into the corpus;
-(iv)~an index file, \texttt{MEMORY.md}, that summarises and points to the topic files.
-Each memory passes the benchmark's format check and is frozen by content hash before any trial.
-We compare three arms:
-\textbf{A0}, no memory;
-\textbf{M3}, memory from the whole corpus (324 topic files), whose index was completed with a mechanically appended topic list because the generated one covered only 106 topics;
-\textbf{R25}, the same pipeline on a stratified random 25\% of trajectories (168; 116 topic files).
+\subsection{Validity}
+\label{sec:method-validity}
+Before any counted trial, every task's reference solution was run and matched the maintainers' reported scores: 10 tasks at 1, one at about 0.83 and 4 at 0.
+The official network probe shows only the model host reachable during generation.
+One small task then ran end to end at full settings, not counted.
 
-\subsection{Grading validity}
-Because we replace Docker with Apptainer, every task's grading path is validated before use: with the unmodified verifier, the reference solution must pass the functional and regression tests and an empty submission must score zero.
-All 7 tasks meet this. On cattrs and the cookie store the reference solution still fails the hidden preference checks, as the benchmark's maintainers document, so no reference demonstrates a strict pass on those two tasks.
-A trial is invalid only if the infrastructure fails; agent failures (timeouts, missing artifacts, broken builds) score zero.
+\subsection{Analysis}
+Design and analysis were preregistered before any counted trial.
+The primary outcome is strict pass.
+We test memory against no memory by exact one-sided paired sign-flip over tasks, pooling a task's memory attempts across runs, and report effect sizes with exact intervals.
+With this test, $p<.05$ needs at least 5 tasks moving the same way with none opposing, so a null is not evidence of no effect.
 
-\subsection{Design and analysis}
-Design, arms, memory hashes, trial order and analysis were preregistered before any confirmatory trial; amendments are dated and precede the outcomes they could affect.
-Each task runs as one job of 15 trials (5 per arm) in a balanced Latin order.
-The primary outcome is strict pass (verifier reward~1).
-The contrasts H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 are tested by exact paired sign-flip permutation over tasks on the per-task difference in strict pass rate, Holm-corrected, with effect sizes and exact intervals.
-The secondary outcome is hidden tests passed.
-Agents sometimes add their own test files, which the verifier then also runs; we count only the tests in the official suite, from the verifier's per-file output or its own official counts.
-A trial with no patch scores zero, even though the untouched base suite would pass.
-Each task's total is its grader's own case count, and whether preference checks are included differs by task, so we compare the fraction passed within a task.
-
-\subsection{Shown versus sought memory}
-\label{sec:method-exposure}
-Codex places \texttt{memory\_summary.md} (a copy of \texttt{MEMORY.md}) in the model's instructions, truncated to 2{,}500 tokens: at the harness's estimate of 4~bytes per token, the first and last 5{,}000 bytes.
-The same constant holds in the version we ran and in the one the benchmark pins.
-Every other file is reachable only if the agent opens it with its shell.
-For each memory trial we log (a)~which index entries fall inside the injected window, reproduced offline and matched against every logged model request, and (b)~which memory files the agent read.
-
-\paragraph{Other harnesses}
-To see whether this is specific to Codex, we read the memory-loading code or documentation of the harnesses the benchmark supports or uses, at the versions it pins: Claude Code (first 200 lines or 25\,KB of \texttt{MEMORY.md}), the OpenAI Agents SDK (15{,}000 tokens, head and tail), Hermes (the whole file) and Letta Code (root files; its benchmark loader is not public).
-Applying each rule to the same frozen memory gives the share of the memory each harness would show (Table~\ref{tab:exposure}).
-
-\paragraph{Mechanism probes}
-Two exploratory jobs, preregistered as amendments, manipulate exposure while holding the agent fixed.
-Both derive memories from frozen M3 by script and run 5 trials per arm in a fixed balanced order, with M3 rerun as the control.
-On Word2Vec, \textbf{M3S} replaces the injected file with a one-line pointer to the folder, so nothing is shown but everything can be sought, and \textbf{M3W} removes every topic and index line that names Word2Vec.
-On DAPT, \textbf{M3D} injects the one DAPT-related topic in full (5{,}931 bytes, inside the window), leaving the folder unchanged.
-M3D chooses its content with knowledge of the target task: it probes the mechanism and is not a valid memory system.
-
-\subsection{Memory quality}
-On each frozen memory we measure, without feeding anything back, the share of units with resolvable citations and a deterministic grounding rate: whether a lesson's concrete identifiers and values occur in the steps it cites.
-We also report our preregistered attempts to \emph{filter} memory automatically, with two LLM judges and the grounding rule.
-All three failed their validation gates, so the planned governed-memory arms were dropped.
-
-\subsection{Deviations}
-From the official protocol: a local task model instead of the leaderboard models; 7 of the 15 tasks; about 7\,h of memory generation instead of 6\,h; network modes staged as \texttt{public} because the container backend rejects \texttt{no-network}; and the output-path header above.
-The corpus was revised to v1.1 during the study to remove metadata that could enable reward hacking; our evidence pipeline passes only message text, tool calls and tool outputs, and an audit found none of the removed metadata in our memories.
+\subsection{Audit}
+For each link we report what we can establish and how: from source and documentation, by measurement, or by inference.
+\begin{description}
+  \item[Corpus] Per-task coverage, from prompt similarity and from repository keywords, for both corpus versions.
+  \item[Generation] What each memory contains and how much of the corpus the generator read, from its trace.
+  \item[Harness] The rule each harness uses to load memory, and the share of a memory it would show.
+  \item[Agent] Whether trials open memory files, from traces.
+  \item[Grader] Reference-solution behaviour, judge identity, handling of judge failure, and build reproducibility.
+\end{description}
+Findings about construction apply to any model; those about gains from memory, and generation quality, apply to this model only.
