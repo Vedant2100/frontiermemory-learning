@@ -19,7 +19,7 @@ Requirement: conform to official runs in everything except that the model is loc
 | Limits | 6-hour generation; official task timeouts; multiplier 1.0 | `docs/rules.md` | ☐ |
 | Effort | `max` for generation and tasks, as the leaderboard states; confirm it reaches model calls | leaderboard, `docs/rules.md` | ☐ |
 | Web tools | Off, as the Hermes adapter sets them | `hermes_dream.py` | ☐ |
-| Grader | Unmodified verifiers. APEX uses `openai/gpt-5.6-sol` | `cli.py` | ☐ needs an API key |
+| Grader | Unmodified verifiers. APEX documented judge is `openai/gpt-5.6-sol` | `cli.py` | ☐ no valid OpenAI key yet |
 | Infrastructure failures | Trials with no reward are rerun and not counted as failures | `docs/rules.md` | ☐ |
 
 ## Corpus
@@ -43,6 +43,10 @@ These are not model differences. Each is a repair of a task that can't otherwise
 | Task | Defect | Repair |
 |---|---|---|
 | Cookie store | The verifier build downloads the newest `anyio`, while `test.sh` requires `anyio==4.15.1` from that download. `anyio` 4.16.0 came out 2026-11-01, so a fresh build writes no reward | Add `anyio==4.15.1` to the verifier's download, in a copy of the tasks (D72) |
+
+## Deviation pending an OpenAI key
+
+The APEX judge is `anthropic/claude-opus-5-5` until a valid OpenAI key is available. On the saved reference trials it gave the maintainers' scores exactly (1, 1, 0.833), through `harbor trials regrade`, which also means the trials can be regraded later with the documented judge. That shows agreement on correct answers only, not on wrong ones.
 
 ## Host setup (not part of the protocol)
 

@@ -82,6 +82,6 @@ Closest work: [VibeMemBench](https://arxiv.org/abs/2609.23570), [MERIT](https://
 
 ## Needed
 
-1. **APEX judge key:** 3 tasks are graded by an official OpenAI judge, at a few dollars. Without a key, those 3 stay ungraded. Task outputs go to OpenAI; no corpus data does.
+1. **OpenAI key (optional, later):** 3 APEX tasks use a documented OpenAI judge. For now they use a Claude judge, a disclosed deviation that reproduced the reference scores. With a valid OpenAI key, we regrade the saved trials without rerunning the agent, and those results become primary.
 3. **Optional insurance:** apply for [Modal academic credits](https://modal.com/pricing) in case the VM route fails.
 4. **Cluster check:** consider mentioning the VM to the admin. It stays within our allocation, and we haven't seen a policy on it.
