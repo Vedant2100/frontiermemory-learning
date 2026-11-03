@@ -34,6 +34,7 @@ v1.1 (750 runs). The leaderboard labels its tables v1.1, while the public code p
 | Base URL points at our server | The Hermes adapters hard-code the OpenAI and Anthropic URLs | Thin subclass through the official `--harness module:Class` hook; nothing else overridden |
 | Context size | Set by GPU memory | Largest that fits, found in the smoke test and recorded. No compaction setting of ours |
 | API key value | A local server needs none | Placeholder value |
+| Trials run one at a time (`-n 1`; Harbor's default is 4) | One model server serving 4 trials would count queueing against each agent's time limit | Harbor option through the official command; no effect on task content |
 | Judge key reaches only the verifier | No spend limit is available, and the task files would otherwise expose the key to the agent | Host `OPENAI_API_KEY` is the placeholder, so agent containers get that. The real key goes through Harbor's verifier-only `--ve`, as `GRADING_MODEL` already does. Grading is unchanged |
 
 ## Deviations caused by defects in the official tasks

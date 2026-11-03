@@ -19,13 +19,15 @@ apptainer exec --fakeroot --nv --bind /home/csgrad/vbork001/shared-mem-gov-pilot
   "$REPO/containers/ollama.sif" ollama serve >>"$OLOG/server.log" 2>&1 & OLLAMA_PID=$!
 for _ in $(seq 1 60); do curl -fs -m 3 "http://127.0.0.1:$PORT/api/version" >/dev/null && break; sleep 2; done
 vm_boot 8 40G || exit 1
+"${SSH[@]}" 'for i in 1 2 3 4 5 6; do sudo docker pull -q alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11 && break; sleep 20; done'  # Harbor's kernel probe image: an uncached slow pull reads as "no-network unsupported"
 "${SSH[@]}" 'umask 077; cat > ~/.judge-key' < "$HOME/.config/frontiermemory/anthropic-api-key"
 "${SCP[@]}" "$REPO/official/fm_local" fm@127.0.0.1:official/
 ENV="cd ~/official/frontiermemory; export PATH=\$PWD/.venv/bin:\$PATH PYTHONPATH=\$HOME/official FM_LOCAL_BASE_URL=http://10.0.2.2:$PORT/v1 OPENAI_API_KEY=local-placeholder JUDGE_ANTHROPIC_KEY=\$(cat ~/.judge-key); unset OPENAI_BASE_URL"
 H="sudo env PATH=\$PATH PYTHONPATH=\$PYTHONPATH FM_LOCAL_BASE_URL=\$FM_LOCAL_BASE_URL OPENAI_API_KEY=\$OPENAI_API_KEY JUDGE_ANTHROPIC_KEY=\$JUDGE_ANTHROPIC_KEY"
 COMMON="-m openai/$MODEL -e docker --allow-host 10.0.2.2"
 TASK_ARGS="--tasks data/tasks-fm -k 3 --effort max --jobs-dir jobs"
-JUDGE_ARGS="--ve GRADING_MODEL=$JUDGE --ve 'ANTHROPIC_API_KEY=\${JUDGE_ANTHROPIC_KEY}'"
+# One model server, so one trial at a time; agent time limits would otherwise include queueing.
+JUDGE_ARGS="-n 1 --ve GRADING_MODEL=$JUDGE --ve 'ANTHROPIC_API_KEY=\${JUDGE_ANTHROPIC_KEY}'"
 
 # Log, every minute, whether any agent container holds the real key. Counts only.
 "${SSH[@]}" 'nohup bash -c "while true; do for c in \$(sudo docker ps -q); do n=\$(sudo docker inspect --format \"{{.Name}} {{range .Config.Env}}{{println .}}{{end}}\" \$c); h=\$(printf %s \"\$n\" | grep -cF \"\$(cat ~/.judge-key)\"); echo \"\$(date +%H:%M) \$(printf %s \"\$n\" | head -1 | cut -d\" \" -f1) key_lines=\$h\"; done; sleep 60; done" >> ~/key-audit-'"$SET"'.log 2>&1 &'
