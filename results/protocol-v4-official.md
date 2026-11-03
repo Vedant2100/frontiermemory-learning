@@ -49,3 +49,12 @@ The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm
 ## After each run
 
 `frontier-memory check-memory`, `score`, `bundle`. Bundle problems must be empty apart from the disclosed v1.1 digest.
+
+## Shared-cluster limits
+
+This is a shared cluster. They apply to every job and are not part of the comparison.
+
+- **GPUs:** never more than 2 in total at any moment, across all our jobs. Every GPU job uses `--job-name=fm-serial --dependency=singleton`, so GPU jobs run one at a time. Two single-GPU model servers count as 2, and only in place of the 2-GPU job.
+- **CPU and memory:** request what the job needs and scale to its concurrency: about 2 CPUs and 8 GB per concurrent task, plus the VM's overhead. Release the allocation when idle; no VM stays up between jobs.
+- **Disk on `/scratch` (local to `nodevcggpu01`, shared):** the guest disk is sparse. Check its real size at each step. Investigate at 250 GB and stop to prune at 350 GB. Remove the guest's unused Docker images, build caches and failed trial data once archived.
+- **Home (NFS, hit its quota on Nov 1, D56):** only scripts, small tools and summaries. Trial workspaces stay in the guest; copy back only what the paper needs.
