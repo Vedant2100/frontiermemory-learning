@@ -29,8 +29,8 @@ We compare three arms:
 \textbf{R25}, the same pipeline on a stratified random 25\% of trajectories (168; 116 topic files).
 
 \subsection{Grading validity}
-Because we replace Docker with Apptainer, every task's grading path is validated before use: with the unmodified verifier, the reference solution must pass and an empty submission must score zero.
-All 7 tasks pass.
+Because we replace Docker with Apptainer, every task's grading path is validated before use: with the unmodified verifier, the reference solution must pass the functional and regression tests and an empty submission must score zero.
+All 7 tasks meet this. On cattrs and the cookie store the reference solution still fails the hidden preference checks, as the benchmark's maintainers document, so no reference demonstrates a strict pass on those two tasks.
 A trial is invalid only if the infrastructure fails; agent failures (timeouts, missing artifacts, broken builds) score zero.
 
 \subsection{Design and analysis}
