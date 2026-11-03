@@ -36,6 +36,14 @@ v1.1 (750 runs). The leaderboard labels its tables v1.1, while the public code p
 | API key value | A local server needs none | Placeholder value |
 | Judge key reaches only the verifier | No spend limit is available, and the task files would otherwise expose the key to the agent | Host `OPENAI_API_KEY` is the placeholder, so agent containers get that. The real key goes through Harbor's verifier-only `--ve`, as `GRADING_MODEL` already does. Grading is unchanged |
 
+## Deviations caused by defects in the official tasks
+
+These are not model differences. Each is a repair of a task that can't otherwise produce a valid result, and we disclose it.
+
+| Task | Defect | Repair |
+|---|---|---|
+| Cookie store | The verifier build downloads the newest `anyio`, while `test.sh` requires `anyio==4.15.1` from that download. `anyio` 4.16.0 came out 2026-11-01, so a fresh build writes no reward | Add `anyio==4.15.1` to the verifier's download, in a copy of the tasks (D72) |
+
 ## Host setup (not part of the protocol)
 
 The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm job, and the harness runs `-e docker` in that guest. Ollama runs on the host with the GPUs, reached at `10.0.2.2`. This is our way of providing a Docker host, like any machine would; the guest kernel is the only thing specific to it. We record the versions of the guest OS and Docker.
