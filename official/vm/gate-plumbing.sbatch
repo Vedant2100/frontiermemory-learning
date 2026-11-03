@@ -36,11 +36,12 @@ echo "CONTEXT=$CTX"; curl -s "http://127.0.0.1:$PORT/api/show" -d "{\"name\":\"$
 vm_boot 8 32G || exit 1
 "${SSH[@]}" 'mkdir -p ~/official'; "${SCP[@]}" "$REPO/official/fm_local" fm@127.0.0.1:official/
 ENV="cd ~/official/frontiermemory; export PATH=\$PWD/.venv/bin:\$PATH PYTHONPATH=\$HOME/official FM_LOCAL_BASE_URL=http://10.0.2.2:$PORT/v1 OPENAI_API_KEY=local-placeholder; unset OPENAI_BASE_URL"
-H="sudo -E env PATH=\$PATH"
+H="sudo env PATH=\$PATH PYTHONPATH=\$PYTHONPATH FM_LOCAL_BASE_URL=\$FM_LOCAL_BASE_URL OPENAI_API_KEY=\$OPENAI_API_KEY"  # sudo drops PYTHON* and others even with -E
 COMMON="-m openai/$MODEL -e docker --allow-host 10.0.2.2"
 
 step "model reachable from the guest"
 "${SSH[@]}" "curl -s -m 30 -o /dev/null -w 'HTTP %{http_code}\n' http://10.0.2.2:$PORT/v1/models"
+"${SSH[@]}" "$ENV; $H python -c 'import fm_local.hermes_local as h; print(\"adapter under sudo OK\", h.base_url())'" || { echo ADAPTER_IMPORT_FAILED; exit 1; }
 
 step "Word2Vec, no memory, one attempt"
 "${SSH[@]}" "$ENV; $H frontier-memory run-tasks --harness fm_local.hermes_local:LocalHermes $COMMON --tasks data/tasks-fm -k 1 --effort max --job-name gate-w2v-nomem --jobs-dir jobs -- -i 'build-word2vec*' 2>&1 | tail -4 | cut -c1-170; sudo chown -R fm:fm jobs/gate-w2v-nomem; frontier-memory score jobs/gate-w2v-nomem 2>&1 | tail -3 | cut -c1-120"
