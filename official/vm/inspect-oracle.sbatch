@@ -1,15 +1,16 @@
 #!/bin/bash
-# Read oracle failures in the guest. Read-only apart from booting the VM. Key-like strings are scrubbed.
+# Read oracle failures in the guest. Read-only apart from booting the VM. Key-like strings and preference-check lines are filtered.
 #SBATCH --job-name=fm-inspect
 #SBATCH --partition=vcggpu
 #SBATCH --nodelist=nodevcggpu01
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=6G
-#SBATCH --time=00:15:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --time=00:20:00
 #SBATCH --output=official/logs/inspect-%j.log
-source official/vm/lib.sh; vm_boot 2 4G || exit 1
-"${SSH[@]}" 'cd ~/official/frontiermemory/jobs/oracle-tasks; ls | head -4
-for t in awilix-release-tier-implicit customer-delivery build-word2vec; do d=$(ls -d ${t}*__* | head -1); echo "##### $d"; ls $d; python3 -c "
-import json,sys;d=json.load(open(sys.argv[1]));e=d.get(\"exception_info\") or {};print(e.get(\"exception_type\"));print(e.get(\"exception_message\",\"\")[:400]);print(e.get(\"exception_traceback\",\"\")[-900:])" $d/result.json; done
-for t in apex-eurogrid apex-brightpath-market; do d=$(ls -d ${t}*__* | head -1); echo "##### $d"; find $d/verifier -maxdepth 1 -type f | head; tail -25 $d/verifier/test-stdout.txt 2>/dev/null | cut -c1-220; cat $d/verifier/reward.json 2>/dev/null | cut -c1-300; done
-ls -ld ~/official/frontiermemory/jobs/oracle-tasks/*/* | head -4; id; df -h / | tail -1' 2>&1 | sed -E 's/sk-[A-Za-z0-9_-]{8,}/sk-REDACTED/g'
+source official/vm/lib.sh; vm_boot 4 6G || exit 1
+"${SSH[@]}" 'cd ~/official/frontiermemory; T=data/tasks/frontier-memory/build-word2vec-pipeline; echo "### word2vec env files"; ls $T/environment; grep -nE "^FROM|apt-get|pip install|HEALTHCHECK" $T/environment/Dockerfile | cut -c1-140; sed -n "/^\[environment\]/,/^$/p" $T/task.toml | cut -c1-100
+d=$(ls -d jobs/oracle-retest/build-word2vec*__* | head -1); echo "### word2vec trial.log"; sudo tail -25 $d/trial.log | cut -c1-200
+echo "### pull/build timing"; sudo docker images | grep -iE "word2vec|hb__" | cut -c1-100 | head; timeout 60 sudo docker pull hello-world 2>&1 | tail -1 | cut -c1-200; F=$(grep -m1 -E "^FROM" $T/environment/Dockerfile | cut -d" " -f2); echo "base: $F"; time (timeout 120 sudo docker pull $F 2>&1 | tail -1 | cut -c1-200)
+d=$(ls -d jobs/oracle-retest/cookie-store*__* | head -1); echo "### cookie"; sudo ls $d/verifier; sudo tail -30 $d/verifier/test-stdout.txt | grep -viE "preference" | cut -c1-200; sudo tail -12 $d/trial.log | grep -viE "preference" | cut -c1-220; python3 -c "
+import json,sys;e=json.load(open(sys.argv[1])).get(\"exception_info\") or {};print(e.get(\"exception_type\"));print(e.get(\"exception_traceback\",\"\")[-500:])" $d/result.json
+free -g | sed -n 2p' 2>&1 | sed -E 's/sk-[A-Za-z0-9_-]{8,}/sk-REDACTED/g'
