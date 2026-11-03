@@ -13,8 +13,9 @@ Official timeouts apply.
 \paragraph{Model} Generation and tasks both use Qwen3.8-27B (4-bit) served by Ollama, at its full 262{,}144-token context. A thin adapter, loaded through the official custom-harness hook, changes only the model URL. Effort is requested at the highest level; Hermes sends a model it doesn't recognize \emph{xhigh}.
 \paragraph{Docker host} The cluster has no Docker, so the official Docker Engine runs in a virtual machine, with the model on the host GPUs. The official network probe and reference solutions behave as the maintainers report (\S\ref{sec:method-validity}).
 \paragraph{One task repair} Cookie-store's verifier cannot be built as published since a dependency released on Nov 1 (\S\ref{sec:results}). We add the version its own test script requires, one line in the verifier's build.
-\paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol. \todo{We use Claude Opus 5.5, or regraded results if the documented judge becomes available.} It reproduced the reference scores exactly; agreement on wrong answers is untested.
-\paragraph{Image} Word2Vec's image installs from a floating branch, so we pre-build it once, unmodified, and reuse it for every trial.
+\paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol. \todo{We use Claude Opus 5.5, or regraded results if the documented judge becomes available.} It reproduced the reference scores exactly; agreement on wrong answers is untested. Trials where the judge fails are regraded, not counted as agent failures.
+\paragraph{Execution} With one model server, trials run one at a time rather than Harbor's default of 4, so that queueing doesn't count against agent time limits.
+\paragraph{Frozen builds} Task builds include floating installs, so we keep one Docker build cache, validated by all 15 reference solutions, across every arm. Word2Vec's image exceeds its own 600-second build limit on this host, so it is pre-built once, unmodified.
 
 \subsection{Validity}
 \label{sec:method-validity}

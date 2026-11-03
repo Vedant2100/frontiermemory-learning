@@ -1,96 +1,40 @@
-% STALE: pilot results (custom generator, Codex, Apptainer). Replace with official-setup results; do not cite as they stand.
-% Draft 2026-11-02. Interim: 6 of 7 tasks. Values from scripts/analyze_matrix.py; rows marked \todo filled when the matrix completes.
+% Draft 2026-11-03: official setup. \todo{} values come from results/official/analysis.json. The pilot's text is at tag pilot-v1.
 \section{Results}
 \label{sec:results}
 
+\subsection{RQ1: Does generated memory beat no memory?}
+\todo{Table: per-task strict passes, no memory vs memory, over 3 runs. Primary test: $p$, mean difference and exact interval. Sensitivity without the 4 tasks whose reference solution scores 0. Run-to-run variation.}
+
+\subsection{RQ2: Where can memory's value be lost?}
+Table~\ref{tab:chain} summarises each link. Unless marked, a finding comes from the public code, documentation or task files, or from running them, and doesn't depend on our model.
+
 \begin{table}[t]
 \centering
-\caption{Strict pass (of 5) and mean hidden tests passed per arm (official suite only; tests the agent wrote are excluded).}
-\label{tab:main}
+\caption{Where memory's value can be lost. S: source or documentation. O: observed by running the official pipeline. L: only for our local model.}
+\label{tab:chain}
 \footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{lccc ccc}
+\begin{tabular}{@{}p{0.13\columnwidth}p{0.74\columnwidth}c@{}}
 \toprule
-& \multicolumn{3}{c}{Strict pass} & \multicolumn{3}{c}{Hidden tests (mean)} \\
-\cmidrule(lr){2-4}\cmidrule(lr){5-7}
-Task & A0 & R25 & M3 & A0 & R25 & M3 \\
+Link & Finding & Basis \\
 \midrule
-Word2Vec (/6) & 0 & \textbf{5} & \textbf{5} & 0.0 & 6.0 & 6.0 \\
-DAPT (/37) & 0 & 1 & 0 & 26.4 & 31.4 & 20.0 \\
-awilix-impl.\ (/184) & 0 & 0 & 0 & 138.0 & 174.8 & 168.8 \\
-awilix-expl.\ (/184) & 0 & 0 & 0 & 170.2 & 137.8 & 133.4 \\
-customer-deliv.\ (/188) & 0 & 0 & 0 & 148.4 & 111.6 & 36.8 \\
-cattrs (/77) & 0 & 0 & 0 & 75.4 & 74.6 & 75.0 \\
-cookie-store & \todo{} & & & & & \\
+Corpus & Runs with prompts resembling a target task are very uneven: none for 8 of 15 tasks, 35 for DAPT with none passing; v1.1 doesn't change this. Same-repository runs with different prompts aren't counted. & O \\
+Generation & Memory is exported only when generation ends, so a timeout leaves none. & S, O \\
+Generation & Generation used \todo{33} minutes of 6 hours and printed about 0.2\% of the corpus to itself: 290\,KB of 126\,MB. & L \\
+Harness & Index caps are fixed, not scaled to the context window: 2{,}500 tokens in Codex and 200 lines or 25\,KB in Claude Code. The same memory is 21--100\% visible at start, depending on the harness. & S \\
+Agent & \todo{Share of memory trials opening a memory file, per task.} & L \\
+Grader & The reference solution scores 0 on 4 of 15 tasks, so for those no reference shows a strict pass is possible. & S, O \\
+Grader & A failed LLM judge yields reward 0 and a valid trial, indistinguishable from an agent failing. The judge's identity isn't reported, and task files and the CLI name different judges. & S, O \\
+Build & Harbor rebuilds images per trial, and 12 of 15 tasks have install commands in their builds. One task broke without any change on the benchmark's side when a dependency released on Nov 1; another built to a different image from identical files. & S, O \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{RQ1: Does memory beat no memory?}
-Table~\ref{tab:main} gives the per-task outcomes.
-All trials so far are valid: no infrastructure failures, and each memory trial's seeded memory matches its frozen hash.
-\begin{itemize}
-  \item \textbf{Word2Vec.} Memory turns 0/5 into 5/5 in both memory arms. Every no-memory trial fails the task's output-artifact contract, and every memory trial meets it.
-  \item \textbf{DAPT.} No arm solves the task reliably. The smaller R25 memory scores highest on cases and the full M3 memory lowest.
-  \item \textbf{Customer delivery.} No arm passes. Trials that produce a patch miss only 2--4 of the 188 cases, but 1, 2 and 4 of 5 trials in A0, R25 and M3 produce no patch and score zero, which sets the means.
-  \item \textbf{cattrs.} No arm passes. Every trial fails the user-preference check, and the arms do not differ on hidden tests.
-  \item \textbf{awilix (both tiers).} No arm passes. Most trials pass the functional tests and all 30 fail the user-preference check. The case differences point in opposite directions in the two tiers, and each is driven by single trials in which the agent's patch broke the build.
-\end{itemize}
-The preregistered tests, H0: M3\,$>$\,A0 and H1: M3\,$>$\,R25 (sign-flip over tasks, Holm-corrected), give \todo{p-values and effect sizes}.
-With one task separating the arms on strict pass, the primary test has little power; we therefore emphasise per-task effects.
-
-\subsection{RQ2: Shown or sought?}
-Codex injects only the first and last 5{,}000 bytes of the memory index (\S\ref{sec:method-exposure}).
-In M3 this window shows 83 of 324 topic entries, none of them about Word2Vec.
-Before any confirmatory trial we predicted that M3 would therefore not beat A0 on Word2Vec by more than 1/5.
-The prediction failed (5/5 vs.\ 0/5).
-Every Word2Vec memory trial searched the memory folder itself (e.g., \texttt{grep} on the index) and opened Word2Vec topic files.
-Agent search depends on the task:
-
-\begin{center}
-\footnotesize
-\begin{tabular}{lcccc}
-\toprule
-& Word2Vec & DAPT & awilix-impl. & awilix-expl. \\
-\midrule
-R25 opened memory & 5/5 & 4/5 & 1/5 & 0/5 \\
-M3 opened memory & 5/5 & 1/5 & 2/5 & 0/5 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-On DAPT, the R25 agents opened the network-traffic topic in 4 of 5 trials, and the M3 agents in 1 of 5.
-This matches their ordering on cases.
-Under the preregistered name-based scope rule, no harmful memory trial opened a topic from another task family (0/11).
-That rule, however, classifies the network-traffic topic as out of family for DAPT, so it understates relevant reuse.
-\todo{A6 (M3S, M3W on Word2Vec) and A7 (M3D on DAPT) results.}
-
-\begin{table}[t]
-\centering
-\caption{The same memory (M3, 46{,}651-byte index, 324 topics) under each harness's loading rule. Shown: what is in the model's context at start; the rest must be sought.}
-\label{tab:exposure}
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{llcc}
-\toprule
-Harness & Shown at start & Topics & Word2Vec \\
-\midrule
-Codex (ours) & 2{,}500 tok., head+tail & 83 & 0/4 \\
-Claude Code & 200 lines or 25\,KB & 129 & 4/4 \\
-OpenAI Agents SDK & 15{,}000 tok., head+tail & 324 & 4/4 \\
-Hermes & whole index & 324 & 4/4 \\
-Letta Code & root files; loader not public & ? & ? \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-What a memory shows is a property of the harness as much as of the memory (Table~\ref{tab:exposure}).
-Our offline Codex count (83) equals the count measured in the logged requests.
-Under Claude Code, the same M3 would have shown all four Word2Vec topics that our agents had to search for.
-
-\subsection{RQ3: Is the memory trustworthy?}
-\begin{itemize}
-  \item \textbf{Grounding audit.} We checked every technical unit in the frozen memories deterministically: 8{,}055 in M3 and 2{,}637 in R25. Only 21--24\% carry a citation that resolves to a corpus step. Of the cited units, 40\% (M3) and 47\% (R25) have their concrete identifiers and values present in the cited steps. M3 also contains 27 large copied code blocks, and R25 11.
-  \item \textbf{Automatic filtering.} Two local LLM judges and the grounding rule all failed their preregistered validation gates, so we dropped the planned filtered-memory arms.
-  \item \textbf{Preference signal.} The v1.0 corpus contains 35 curated user-feedback messages, all in one network-traffic family and all on failed runs. For the awilix tasks, it holds 6 related runs, none passing and none with feedback. Where feedback exists, its distinctive terms survive into topic files at 39--58\% but appear in neither injected window.
-\end{itemize}
+\subsection{RQ3: What can a reader conclude from the leaderboard?}
+The leaderboard reports score and task cost.
+It doesn't report a no-memory row, per-task results, latency, tokens, memory size or the judge, although the rules refer to no-memory rows.
+All 15 published scores are multiples of 1/45, which fits one attempt per task in each of 3 runs, while submissions require 3 attempts; on that grid, ranks 1 and 2 differ by one trial.
+This is our inference.
+Without per-task results, a reader can't test such a gap.
+With a sign-flip over tasks, $p<.05$ needs at least 5 tasks moving the same way with none opposing.
+The submission tool records the corpus digest but doesn't compare it, nor does it check task or attempt counts; a 1-task bundle on a different corpus version reported no problems.
+The rules also describe human review, which we didn't observe.
