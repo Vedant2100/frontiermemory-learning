@@ -1,10 +1,14 @@
 #!/bin/bash
-# HOLD (2026-11-04, D93): the running all-sets job calls this file at the start of each set. The setup is being fixed,
-# so instead of starting the next set it waits here, keeping the GPUs, until official/vm/NEXT exists, then runs that script.
-# The previous run script is official/vm/run-set-v1.sbatch.
+# HOLD (D93): the all-sets job (run-all.sbatch) calls this for each remaining set. It keeps the GPUs and runs each
+# driver named in official/vm/NEXT, one at a time, until a driver writes official/vm/DRIVER_DONE (touch it to release).
+# Drivers always exit 0 and report pass or fail through their own markers, so the job never ends by accident.
 cd /home/csgrad/vbork001/frontiermemory-experiment-20261024 || exit 1
-[ -f official/vm/DRIVER_DONE ] && { echo "=== ${SET:-?}: driver finished; nothing to do"; exit 0; }
-echo "=== $(date +%m-%d\ %H:%M:%S) ${SET:-?}: HOLD, waiting for official/vm/NEXT"
-while [ ! -f official/vm/NEXT ]; do sleep 60; done
-echo "=== $(date +%m-%d\ %H:%M:%S) HOLD released: running $(cat official/vm/NEXT)"
-N=$(cat official/vm/NEXT); rm -f official/vm/NEXT; bash "$N"
+while :; do
+  [ -f official/vm/DRIVER_DONE ] && { echo "=== ${SET:-?}: driver finished; nothing to do"; exit 0; }
+  echo "=== $(date +%m-%d\ %H:%M:%S) ${SET:-?}: HOLD, waiting for official/vm/NEXT"
+  while [ ! -f official/vm/NEXT ] && [ ! -f official/vm/DRIVER_DONE ]; do sleep 60; done
+  [ -f official/vm/NEXT ] || continue
+  N=$(cat official/vm/NEXT); rm -f official/vm/NEXT
+  echo "=== $(date +%m-%d\ %H:%M:%S) HOLD released: running $N"
+  bash "$N"; echo "=== $(date +%m-%d\ %H:%M:%S) HOLD: $N exited $?"
+done

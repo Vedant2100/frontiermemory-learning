@@ -26,16 +26,22 @@ vm_boot() {
 vm_stop() {
   "${SSH[@]}" 'rm -f ~/.judge-key; sudo poweroff' 2>/dev/null || true
   for _ in $(seq 1 12); do kill -0 "$QEMU_PID" 2>/dev/null || break; sleep 5; done
-  kill "$QEMU_PID" "$SEED_PID" 2>/dev/null || true
+  kill "$QEMU_PID" "$SEED_PID" ${RELAY_PID:+"$RELAY_PID"} 2>/dev/null || true
 }
 
-# Serve the model on the host GPUs, at the model's full context. Sets PORT, OLLAMA_PID, OLOG.
+# Serve the model on the host GPUs, at the model's full context, behind the relay (fm_local/model_relay.py), which
+# answers before Harbor's egress proxy cuts a response with no first byte at 15 s (D93).
+# Sets PORT (Ollama), RELAY_PORT (what the guest uses), OLLAMA_PID, RELAY_PID, OLOG.
 model_up() {
   local repo=$1; PORT=$(free_port); OLOG=$ROOT/ollama-$SLURM_JOB_ID; mkdir -p "$OLOG/tmp"
   apptainer exec --fakeroot --nv --bind /home/csgrad/vbork001/shared-mem-gov-pilot/models:/models --bind "$OLOG:/ollama-logs" \
     --env OLLAMA_MODELS=/models --env OLLAMA_HOST=127.0.0.1:$PORT --env OLLAMA_CONTEXT_LENGTH=262144 --env OLLAMA_KEEP_ALIVE=30m \
     --env OLLAMA_MAX_LOADED_MODELS=1 --env OLLAMA_NUM_PARALLEL=1 --env TMPDIR=/ollama-logs/tmp \
     "$repo/containers/ollama.sif" ollama serve >>"$OLOG/server.log" 2>&1 & OLLAMA_PID=$!
-  for _ in $(seq 1 60); do curl -fs -m 3 "http://127.0.0.1:$PORT/api/version" >/dev/null && return 0; sleep 2; done
-  echo "MODEL_SERVER_FAILED"; return 1
+  local up=; for _ in $(seq 1 60); do curl -fs -m 3 "http://127.0.0.1:$PORT/api/version" >/dev/null && { up=1; break; }; sleep 2; done
+  [ -n "$up" ] || { echo "MODEL_SERVER_FAILED"; return 1; }
+  RELAY_PORT=$(free_port)
+  python3 "$repo/official/fm_local/model_relay.py" "$RELAY_PORT" "$PORT" "$OLOG/relay.log" >>"$OLOG/relay.err" 2>&1 & RELAY_PID=$!
+  for _ in $(seq 1 15); do curl -fs -m 3 "http://127.0.0.1:$RELAY_PORT/api/version" >/dev/null && return 0; sleep 1; done
+  echo "MODEL_RELAY_FAILED"; return 1
 }

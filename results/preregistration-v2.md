@@ -56,3 +56,19 @@ Results describe this pipeline with this local model. They don't describe Letta 
 
 **A1 clarification (2026-11-04, 07:50, before any memory trial):** Hermes reports this in two wordings: "didn't respond in time on any of 3 attempts" and "Provider has been unresponsive … for 5 consecutive stale attempts". Both mean it stopped because the model server didn't answer, and both set `model_unavailable`.
 
+## Amendment A2 (2026-11-04, before any counted trial of the restarted study)
+
+**What happened:** Harbor's egress proxy cuts a model response whose first byte takes over 15 s (D94). Cloud APIs answer sooner; our local model sometimes didn't, so the first control ran under conditions that official runs never see: 420 cut requests and 3 of 41 trials given up.
+
+**Changes, fixed now:**
+- **The first control is discarded.** It is reported as pilot data (job folder `fm-tasks-control-pilot2`) and never pooled.
+- **A relay is added** in front of the model server (D95). It passes fast responses through unchanged and keeps slow ones alive so the proxy doesn't cut them. Model output is untouched.
+- **Restart in the original order:** control, then runs 1–3, as in the design above, after an uncounted gate at full settings with the relay. The gate includes the longest task (awilix, no memory) run to its full limit, a memory task and an APEX task, and must show 0 cut requests and 0 `model_unavailable` trials.
+- **A1 stays as a safeguard:** `model_unavailable` is still recorded per trial, with its sensitivity analysis. We expect 0 such trials.
+
+**Exploratory exposure arms (not part of the primary test).** After run 3, two further sets of 45 trials (3 attempts × 15 tasks) use run 1's memory (`fm-gen-run1`) with the HM task agent. Only what memory is placed in context at start changes:
+- **None shown:** no memory block and no memory-skills index. Every memory file stays on disk and can be opened with tools.
+- **All shown:** HM's loading, plus the full text of every memory file, injected through Hermes's `agent.system_prompt` setting in sorted path order. It is refused above 100,000 estimated tokens.
+
+The order is none shown, then all shown. Model, relay, timeouts, one trial at a time, judge and validity rules are the same as HM. Each arm is first checked end to end on one uncounted Word2Vec attempt. Results are reported descriptively per task against HM run 1 and the control, with the same sign-flip statistic labelled exploratory. Each trial logs the memory digest and the shown and injected byte and token counts. If time runs out, an unfinished arm is reported as such.
+

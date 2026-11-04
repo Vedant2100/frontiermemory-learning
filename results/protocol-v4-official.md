@@ -35,6 +35,7 @@ v1.1 (750 runs). The leaderboard labels its tables v1.1, while the public code p
 | Context size | Set by GPU memory | Largest that fits, found in the smoke test and recorded. No compaction setting of ours |
 | API key value | A local server needs none | Placeholder value |
 | Trials run one at a time (`-n 1`; Harbor's default is 4) | One model server serving 4 trials would count queueing against each agent's time limit | Harbor option through the official command; no effect on task content |
+| A relay in front of the model server answers slow calls at once (`fm_local/model_relay.py`, D95) | Harbor's egress proxy cuts any response with no first byte after 15 s (D94); a local model reading a long prompt can take longer, which cloud APIs never do | Responses that start within 10 s pass through unchanged. Slower ones get `200` plus keepalives the client ignores, then the model's bytes unchanged. Hermes's own timeouts are kept: an error after the early `200`, or no answer in 1800 s, drops the connection as a read timeout would |
 | Judge key reaches only the verifier | No spend limit is available, and the task files would otherwise expose the key to the agent | Host `OPENAI_API_KEY` is the placeholder, so agent containers get that. The real key goes through Harbor's verifier-only `--ve`, as `GRADING_MODEL` already does. Grading is unchanged |
 
 ## Deviations caused by defects in the official tasks
@@ -49,6 +50,16 @@ These are not model differences. Each is a repair of a task that can't otherwise
 
 The APEX judge is `anthropic/claude-opus-5-5` until a valid OpenAI key is available. On the saved reference trials it gave the maintainers' scores exactly (1, 1, 0.833), through `harbor trials regrade`, which also means the trials can be regraded later with the documented judge. That shows agreement on correct answers only, not on wrong ones.
 
+## Exploratory exposure arms (prereg A2)
+
+| Arm | Memory shown at start | On disk | How |
+|---|---|---|---|
+| None shown | Nothing: memory block off; memory skills not in `$HERMES_HOME/skills` | All memory files in `$HERMES_HOME/memories` | `fm_local.exposure_hermes:ExposureHermes --ak exposure=none` |
+| HM (run 1) | `MEMORY.md` block and skills index (Hermes default) | All | `LocalHermes` |
+| All shown | Hermes default plus every memory file in full, in sorted path order | All | `--ak exposure=all`, through Hermes's `agent.system_prompt` |
+
+Only memory loading differs; everything else is HM's, with run 1's memory. Set script: `official/vm/run-exposure.sh`, derived from `run-set-v1.sbatch` by four exact replacements. Each arm is first checked on one uncounted Word2Vec attempt (`E2E=1`). The Codex and Claude Code caps were dropped, because a Hermes `/learn` `MEMORY.md` (110 bytes in the gate) is far below both (D96).
+
 ## Host setup (not part of the protocol)
 
 The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm job, and the harness runs `-e docker` in that guest. Ollama runs on the host with the GPUs, reached at `10.0.2.2`. This is our way of providing a Docker host, like any machine would; the guest kernel is the only thing specific to it. We record the versions of the guest OS and Docker.
@@ -59,6 +70,7 @@ The cluster has no Docker. Real Docker Engine runs in a KVM guest inside a Slurm
 2. The official network probe shows the model host reachable and others blocked.
 3. Oracle on all 15 tasks matches the maintainers' list (`docs/maintainers.md`): 10 score 1, Eurogrid about 0.83, cattrs, cookie store and both EnterpriseOps score 0.
 4. **End-to-end gate on one small task (Word2Vec). No full run starts until every check passes.** Nothing from this gate is counted.
+   - **Restart gate (A2), with the relay:** a full generation, awilix-implicit with no memory run to its full limit, customer delivery with that memory, and one APEX task. It passes only with 0 cut requests ("client closing the connection") and 0 HTTP 500s in the Ollama log, 0 `model_unavailable` trials, all trials valid, keepalives in the relay log and a valid generation. **Rule from D93: every gate includes the longest task, run to its full limit.**
    - **Plumbing pass:** a short generation time limit, to catch failures cheaply. Qwen must drive Hermes tools, and effort must reach the model.
    - **Compliant pass, with nothing changed from the full-run settings:** `generate-memory` on the full corpus under the real 6-hour limit, then `check-memory`, then `run-tasks` on Word2Vec with that memory and with no memory, then `score` and `bundle`.
    - **APEX judge check:** one APEX grading confirms the judge still works (Claude for now; OpenAI when available), while the agent's base-URL override reaches only the agent. Inspecting the agent container confirms it holds only the placeholder key, and trial logs show no use of the real one.
