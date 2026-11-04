@@ -7,6 +7,7 @@ We run FrontierMemory's public release~\cite{frontiermemory} through its own com
 The leaderboard's default generator and loader are not public, so we use Hermes, a published leaderboard row whose generator and task agent are both in the public repository at a pinned commit.
 All 15 tasks are run on corpus v1.1, as used on the leaderboard, although the public code still pins v1.0.
 A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task; we do 3 runs (135 trials), plus a no-memory control of the same agent with 3 attempts per task (45 trials).
+Two exploratory arms reuse run 1's memory and change only what the agent sees of it at start: \emph{none shown}, with every memory file still on disk for the agent to open, and \emph{all shown}, with every file placed in context (45 trials each).
 Official timeouts apply.
 
 \subsection{What differs from official runs}
@@ -15,6 +16,7 @@ Official timeouts apply.
 \paragraph{One task repair} Cookie-store's verifier cannot be built as published since a dependency released on Nov 1 (\S\ref{sec:results}). We add the version its own test script requires, one line in the verifier's build.
 \paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol. \todo{We use Claude Opus 5.5, or regraded results if the documented judge becomes available.} It reproduced the reference scores exactly; agreement on wrong answers is untested. Trials where the judge fails are regraded, not counted as agent failures.
 \paragraph{Execution} With one model server, trials run one at a time rather than Harbor's default of 4, so that queueing doesn't count against agent time limits.
+\paragraph{Relay} Harbor's egress proxy, which enforces the tasks' no-network policy, drops any model response that hasn't started within 15 seconds. Cloud APIs start sooner; a local model reading a long prompt may not. A first control run under these conditions lost 3 of 41 trials to the agent giving up, and we discarded it (preregistered amendment). A relay in front of the model server now passes responses that start within 10 seconds through unchanged and keeps slower ones alive with keepalive bytes the client ignores; the model's output is untouched, and the agent's own timeouts still apply.
 \paragraph{Frozen builds} Task builds include floating installs, so we keep one Docker build cache, validated by all 15 reference solutions, across every arm. Word2Vec's image exceeds its own 600-second build limit on this host, so it is pre-built once, unmodified.
 
 \subsection{Validity}
@@ -35,7 +37,8 @@ For each link we report what we can establish and how: from source and documenta
   \item[Corpus] Per-task coverage, from prompt similarity and from repository keywords, for both corpus versions.
   \item[Generation] What each memory contains and how much of the corpus the generator read, from its trace.
   \item[Harness] The rule each harness uses to load memory, and the share of a memory it would show.
-  \item[Agent] Whether trials open memory files, from traces.
+  \item[Agent] Whether and when trials open memory files, from tool calls in traces, against what was shown at start.
+  \item[Recency] Whether any task needs newer corpus evidence over older, from timestamps and the versions tasks pin.
   \item[Grader] Reference-solution behaviour, judge identity, handling of judge failure, and build reproducibility.
 \end{description}
 Findings about construction apply to any model; those about gains from memory, and generation quality, apply to this model only.

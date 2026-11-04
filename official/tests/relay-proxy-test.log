@@ -1,0 +1,11 @@
+{"t": "11-04 08:30:50", "method": "GET", "path": "/first/5", "stream": false, "committed": false, "keepalives": 0, "wait_s": 5.0, "upstream_status": 200, "bytes": 2, "total_s": 5.0}
+{"t": "11-04 08:30:55", "method": "GET", "path": "/first/20", "stream": false, "committed": true, "keepalives": 2, "wait_s": 20.0, "upstream_status": 200, "bytes": 2, "total_s": 20.0}
+{"t": "11-04 08:31:15", "method": "GET", "path": "/first/40", "stream": false, "committed": true, "keepalives": 6, "wait_s": 40.0, "upstream_status": 200, "bytes": 2, "total_s": 40.0}
+{"t": "11-04 08:31:55", "method": "GET", "path": "/first/70", "stream": false, "committed": true, "keepalives": 12, "wait_s": 70.0, "upstream_status": 200, "bytes": 2, "total_s": 70.0}
+{"t": "11-04 08:33:05", "method": "GET", "path": "/idle/40", "stream": false, "committed": false, "keepalives": 0, "wait_s": 0.0, "upstream_status": 200, "bytes": 2, "total_s": 40.0}
+{"t": "11-04 08:33:45", "method": "GET", "path": "/idle/70", "stream": false, "committed": false, "keepalives": 0, "wait_s": 0.0, "upstream_status": 200, "bytes": 2, "total_s": 70.0}
+{"t": "11-04 08:34:55", "method": "POST", "path": "/first/20/v1/responses", "stream": true, "committed": true, "keepalives": 3, "wait_s": 20.0, "upstream_status": 200, "bytes": 376, "total_s": 20.0}
+{"t": "11-04 08:35:16", "method": "POST", "path": "/first/70/v1/responses", "stream": true, "committed": true, "keepalives": 12, "wait_s": 70.0, "upstream_status": 200, "bytes": 376, "total_s": 70.0}
+{"t": "11-04 08:36:26", "method": "POST", "path": "/first/70/v1/responses", "stream": false, "committed": true, "keepalives": 12, "wait_s": 70.0, "upstream_status": 200, "bytes": 245, "total_s": 70.0}
+{"t": "11-04 08:37:36", "method": "POST", "path": "/err/3/v1/responses", "stream": true, "committed": false, "keepalives": 0, "wait_s": 3.0, "upstream_status": 500, "bytes": 69, "total_s": 3.0}
+{"t": "11-04 08:37:39", "method": "POST", "path": "/err/20/v1/responses", "stream": true, "committed": true, "keepalives": 3, "wait_s": 20.0, "upstream_status": 500, "upstream_error": "status after commit", "total_s": 20.0}
