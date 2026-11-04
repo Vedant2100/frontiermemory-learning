@@ -1,9 +1,13 @@
 """Serving checks for one stretch of a run (gate or set), from the host logs. Counts only.
 Fails on any client abort or HTTP 5xx in the Ollama log, or any relay upstream error, max-wait drop or client close.
+One exception (D99): a client close is expected, not a fault, when it happens as a trial's agent stops. Hermes starts its
+post-turn background memory review on a daemon thread; when the agent process exits, that call is cut. Such a close is
+excused only if the relay had not committed (no keepalive, so not a proxy cut), the upstream answered 200, and some trial's
+agent_finished (results/official/summary-*.jsonl) falls 2 s before to 10 s after the close. Every other close still fails.
 
-    python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive]
+    python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive] [--summaries DIR]
 """
-import json, re, sys
+import datetime as dt, glob, json, os, re, sys
 
 olog, s0, r0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 bad = []
@@ -21,6 +25,22 @@ print(f"relay: {len(relay)} requests ({len(posts)} POST), {c['committed']} kept 
       f"{c['upstream_error']} upstream errors, {c['max_wait_drop']} max-wait drops, {c['client_closed']} client closes")
 bad += ["no relay traffic"] * (not posts)
 bad += ["no keepalive used"] * ("--need-keepalive" in sys.argv and not ka)
+summ = sys.argv[sys.argv.index("--summaries") + 1] if "--summaries" in sys.argv else \
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "results", "official")
+ends = []
+for f in glob.glob(f"{summ}/summary-*.jsonl"):
+    for l in open(f):
+        a = json.loads(l).get("agent_finished")
+        if a: ends.append(dt.datetime.fromisoformat(a.replace("Z", "+00:00")).timestamp())
+year = dt.date.today().year
+def at_agent_end(r):  # relay "t" is the request start in local time, 1 s resolution
+    if r.get("committed") or r.get("upstream_status") != 200: return False
+    t = dt.datetime.strptime(f"{year}-{r['t']}", "%Y-%m-%d %H:%M:%S").timestamp() + r.get("total_s", 0)
+    return any(-2 <= e - t <= 10 for e in ends)
+closes = [r for r in relay if r.get("client_closed")]
+excused = sum(map(at_agent_end, closes))
+print(f"relay: {excused} of {len(closes)} client closes at an agent's end (expected: background review cut, D99)")
+c["client_closed"] = len(closes) - excused
 bad += [k for k in ("upstream_error", "max_wait_drop", "client_closed") if c[k]]
 print("SERVING:", "ok" if not bad else "FAIL: " + "; ".join(bad))
 sys.exit(1 if bad else 0)
