@@ -41,7 +41,7 @@ for t in sorted(p for p in job.iterdir() if p.is_dir()):
     gd = t / "verifier" / "grade_details.json"
     judge = json.loads(gd.read_text()).get("grading_run_status") if gd.exists() else None
     log = t / "agent" / "hermes.txt"
-    gave = log.exists() and "didn't respond in time" in log.read_text(errors="ignore")
+    gave = log.exists() and any(m in log.read_text(errors="ignore") for m in ("didn't respond in time", "Provider has been unresponsive"))
     c["trials"] += 1; c[f"exception={exc}"] += 1; c[f"effort={eff}"] += 1; c[f"memory_enabled={mem_on}"] += 1; c[f"model={model}"] += 1
     if judge: c[f"judge={judge}"] += 1
     if gave: c["gave_up"] += 1

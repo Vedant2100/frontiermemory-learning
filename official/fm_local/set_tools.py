@@ -13,6 +13,9 @@ from pathlib import Path
 
 from frontier_memory.score import read_trial  # the official scorer's rule for reward, validity and pass
 
+# What Hermes prints when it stops because the model server didn't answer (prereg amendment A1).
+MODEL_UNAVAILABLE = ("didn't respond in time", "Provider has been unresponsive")
+
 
 def trials(job: Path):
     return sorted(p for p in job.iterdir() if p.is_dir())
@@ -40,8 +43,8 @@ def summary(job: Path) -> None:
         agent, run = r.get("agent_result") or {}, r.get("agent_execution") or {}
         details = trial / "verifier" / "grade_details.json"  # only tasks graded by an LLM judge write this
         judge = json.loads(details.read_text()).get("grading_run_status") if details.exists() else None
-        log = trial / "agent" / "hermes.txt"  # Hermes prints this when it gives up on the model server
-        gave_up = log.exists() and "didn't respond in time" in log.read_text(errors="ignore")
+        log = trial / "agent" / "hermes.txt"
+        gave_up = log.exists() and any(m in log.read_text(errors="ignore") for m in MODEL_UNAVAILABLE)
         print(json.dumps({**read_trial(trial), "finished": True, "judge_status": judge, "model_unavailable": gave_up, "input_tokens": agent.get("n_input_tokens"), "output_tokens": agent.get("n_output_tokens"),
                           "agent_started": run.get("started_at"), "agent_finished": run.get("finished_at")}))
 

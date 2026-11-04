@@ -54,3 +54,5 @@ Results describe this pipeline with this local model. They don't describe Letta 
 - A sensitivity analysis repeats the primary test with those trials excluded.
 - No rerun and no change to serving, so all arms keep identical conditions (D85).
 
+**A1 clarification (2026-11-04, 07:50, before any memory trial):** Hermes reports this in two wordings: "didn't respond in time on any of 3 attempts" and "Provider has been unresponsive … for 5 consecutive stale attempts". Both mean it stopped because the model server didn't answer, and both set `model_unavailable`.
+
