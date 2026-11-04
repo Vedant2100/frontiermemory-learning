@@ -22,7 +22,9 @@ while true; do
   if [ "$now" != "$(cat "$S/q" 2>/dev/null)" ]; then
     comm -13 <(sort "$S/q" 2>/dev/null) <(echo "$now") | sed '/^$/d; s/^/JOB /'
     for j in $(comm -23 <(cut -d' ' -f1 "$S/q" 2>/dev/null | sort -u) <(echo "$now" | cut -d' ' -f1 | sort -u)); do
-      [ -n "$j" ] && echo "JOB_ENDED $j $(sacct -j "$j" -X -n -o State%14,Elapsed,ExitCode 2>/dev/null | tr -s ' ')"
+      [ -n "$j" ] || continue
+      st=$(sacct -j "$j" -X -n -o State%14,Elapsed,ExitCode 2>/dev/null | tr -s ' ')
+      case "$st" in *RUNNING*|*PENDING*) now=$(printf '%s\n%s' "$now" "$(grep "^$j " "$S/q")" | sed '/^$/d' | sort) ;; *) echo "JOB_ENDED $j $st" ;; esac  # squeue sometimes drops a live job
     done
     echo "$now" > "$S/q"
   fi
