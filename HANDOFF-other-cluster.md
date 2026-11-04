@@ -8,6 +8,10 @@ You are setting up and running a set of **exploratory memory-harness experiments
 
 **Bender shares the home directory with the main study's cluster** (the same NFS mount). The main study runs from `~/frontiermemory-experiment-20261024`, and replacing a file there over NFS has already cut short a running script once. So read the repo there, but never write into it and never run anything from it. Work in your own clone (see *Bender setup*).
 
+## Updates from the main study
+
+Fixes and findings from the main study arrive as numbered entries in `HANDOFF-updates.md` on `main`. **Before every step, run `git fetch origin` and read `git show origin/main:HANDOFF-updates.md`.** Apply each new entry exactly as it says, and log it in your decisions log.
+
 ## Context to read first
 
 Read these in your own clone (`~/frontiermemory-cluster2`, branch `cluster2`); the paths are the same.
