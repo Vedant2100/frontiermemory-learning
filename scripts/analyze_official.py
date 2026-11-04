@@ -115,9 +115,18 @@ def analyse(sets: dict[str, list[dict]]) -> dict:
             memory[task][0] += k
             memory[task][1] += n
     tasks = sorted(t for t in control if memory[t][1] and control[t][1])
+    gave_up = {name: sum(bool(r.get("model_unavailable")) for r in rows) for name, rows in sets.items()}
+    clean = {name: [r for r in rows if not r.get("model_unavailable")] for name, rows in sets.items()}
+    ctrl_c = tally(clean[CONTROL]); mem_c: dict[str, list[int]] = defaultdict(lambda: [0, 0])
+    for r in runs:
+        for task, (k, n) in tally(clean[r]).items():
+            mem_c[task][0] += k
+            mem_c[task][1] += n
+    tasks_c = sorted(t for t in ctrl_c if mem_c[t][1] and ctrl_c[t][1])
     pooled = {arm: (sum(v[0] for v in d.values()), sum(v[1] for v in d.values())) for arm, d in (("A0", control), ("HM", memory))}
     return {"runs_used": runs, "flags": flags, "primary": compare(control, memory, tasks),
             "sensitivity_without_no_reference_tasks": compare(control, memory, [t for t in tasks if t not in NO_REFERENCE_PASS]),
+            "sensitivity_without_model_unavailable": compare(ctrl_c, mem_c, tasks_c), "model_unavailable_per_set": gave_up,
             "pooled": {arm: {"pass": k, "n": n, "ci95": list(clopper_pearson(k, n)) if n else None} for arm, (k, n) in pooled.items()},
             "per_task": {t: {"A0": control[t], "HM": memory[t]} for t in tasks},
             "per_run_pass": {r: sum(v[0] for v in tally(sets[r]).values()) for r in runs}}
@@ -165,7 +174,8 @@ def main() -> None:
     out = analyse(sets)
     (args.dir / "analysis.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps({k: out.get(k) for k in ("runs_used", "flags", "pooled", "per_run_pass")}, indent=1))
-    for k in ("primary", "sensitivity_without_no_reference_tasks"):
+    print("model_unavailable_per_set", out.get("model_unavailable_per_set"))
+    for k in ("primary", "sensitivity_without_no_reference_tasks", "sensitivity_without_model_unavailable"):
         if k in out:
             print(k, {x: out[k][x] for x in ("tasks", "mean_diff", "ci95", "p_one_sided", "tasks_up", "tasks_down")})
 

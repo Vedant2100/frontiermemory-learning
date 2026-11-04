@@ -43,3 +43,14 @@ A trial whose LLM judge failed (`grading_run_status` other than `completed`) get
 ## Scope of claims
 
 Results describe this pipeline with this local model. They don't describe Letta Dream, Letta Code or frontier models. Findings about the benchmark's construction (corpus, graders, reporting, caps) rest on source inspection and hold for any model.
+
+## Amendment A1 (2026-11-03, 22:45, during the control set, before any memory trial)
+
+**Observed:** in 1 of 23 control trials so far, Hermes stopped with "OpenAI API didn't respond in time on any of 3 attempts". The trial got reward 0 and is valid under the official rules. The cause is our single-slot model server: while one long call runs, Hermes's further requests wait and are dropped after 15 s. It isn't the agent failing the task.
+
+**Rule, fixed now, without having seen any memory-arm trial:**
+- The primary analysis is unchanged: these trials count as the official rules count them, as valid failed attempts.
+- Each trial records `model_unavailable`. We report its count per arm.
+- A sensitivity analysis repeats the primary test with those trials excluded.
+- No rerun and no change to serving, so all arms keep identical conditions (D85).
+

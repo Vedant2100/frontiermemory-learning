@@ -40,7 +40,9 @@ def summary(job: Path) -> None:
         agent, run = r.get("agent_result") or {}, r.get("agent_execution") or {}
         details = trial / "verifier" / "grade_details.json"  # only tasks graded by an LLM judge write this
         judge = json.loads(details.read_text()).get("grading_run_status") if details.exists() else None
-        print(json.dumps({**read_trial(trial), "finished": True, "judge_status": judge, "input_tokens": agent.get("n_input_tokens"), "output_tokens": agent.get("n_output_tokens"),
+        log = trial / "agent" / "hermes.txt"  # Hermes prints this when it gives up on the model server
+        gave_up = log.exists() and "didn't respond in time" in log.read_text(errors="ignore")
+        print(json.dumps({**read_trial(trial), "finished": True, "judge_status": judge, "model_unavailable": gave_up, "input_tokens": agent.get("n_input_tokens"), "output_tokens": agent.get("n_output_tokens"),
                           "agent_started": run.get("started_at"), "agent_finished": run.get("finished_at")}))
 
 
