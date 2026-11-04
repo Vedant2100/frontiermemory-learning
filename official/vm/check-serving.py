@@ -4,6 +4,8 @@ One exception (D99): a client close is expected, not a fault, when it happens as
 post-turn background memory review on a daemon thread; when the agent process exits, that call is cut. Such a close is
 excused only if the relay had not committed (no keepalive, so not a proxy cut), the upstream answered 200, and some trial's
 agent_finished (results/official/summary-*.jsonl) falls 2 s before to 10 s after the close. Every other close still fails.
+Retries (D100): when the relay cancels a call that a byte-identical retry superseded, Ollama logs that as a client abort.
+Aborts up to the number of superseded calls are those cancels; any abort beyond them fails. Superseded calls are reported.
 
     python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive] [--summaries DIR]
 """
@@ -15,8 +17,10 @@ server = open(f"{olog}/server.log", errors="replace").read().splitlines()[s0:]
 aborts = sum("client closing the connection" in l for l in server)
 s5xx = sum(bool(re.search(r"\|\s*5\d\d\s*\|", l)) for l in server)
 print(f"ollama: {len(server)} new lines, {aborts} client aborts, {s5xx} HTTP 5xx")
-bad += ["client aborts"] * bool(aborts) + ["HTTP 5xx"] * bool(s5xx)
 relay = [json.loads(l) for l in open(f"{olog}/relay.log").read().splitlines()[r0:]]
+superseded = sum(bool(r.get("superseded")) for r in relay)
+print(f"relay: {superseded} calls superseded by an identical retry and cancelled (D100)")
+bad += ["client aborts"] * (aborts > superseded) + ["HTTP 5xx"] * bool(s5xx)
 posts = [r for r in relay if r["method"] == "POST"]
 c = {k: sum(bool(r.get(k)) for r in relay) for k in ("committed", "upstream_error", "max_wait_drop", "client_closed")}
 ka = sum(r.get("keepalives", 0) for r in relay)

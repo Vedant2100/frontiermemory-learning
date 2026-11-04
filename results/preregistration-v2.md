@@ -72,3 +72,12 @@ Results describe this pipeline with this local model. They don't describe Letta 
 
 The order is none shown, then all shown. Model, relay, timeouts, one trial at a time, judge and validity rules are the same as HM. Each arm is first checked end to end on one uncounted Word2Vec attempt. Results are reported descriptively per task against HM run 1 and the control, with the same sign-flip statistic labelled exploratory. Each trial logs the memory digest and the shown and injected byte and token counts. If time runs out, an unfinished arm is reported as such.
 
+
+## Amendment A3 (2026-11-04, before any counted trial of the restarted study)
+
+The first restart gate (job 305865) failed: customer delivery with memory ended `model_unavailable` ("unresponsive for 5 consecutive stale attempts"). At effort `max`, Hermes cancels a model call after 300 s without a stream event and gives up after 5 such calls in a row. The cancels didn't stop the model, so each retry queued behind the abandoned calls (waits 155, 322, 565 s). One pilot cookie-store trial gave up the same way. Two changes, both in our serving layer and adapter, with no change to Hermes's code, the tasks, the model or the effort:
+
+1. **Watchdog settings** (`official/fm_local/hermes_local.py`): `HERMES_CODEX_TTFB_TIMEOUT_SECONDS=900` and `HERMES_CODEX_EVENT_STALE_TIMEOUT_SECONDS=900` (what Hermes gives local servers for the first event), and `HERMES_API_CALL_STALE_TIMEOUT=1800` (Hermes's own per-call socket timeout). They apply to the task agent and the generator. This is a disclosed deviation from default Hermes settings, made for local serving only.
+2. **Retry supersede in the relay** (`official/fm_local/model_relay.py`): a POST byte-identical to one still in flight cancels the older call at Ollama.
+
+The serving check counts Ollama aborts caused by these cancels as expected, and still fails any other abort. A second gate (`official/vm/next-gate-2.sh`: a fresh generation, customer delivery and APEX with that memory, then awilix with no memory to its full limit) must pass before the control starts. Everything else in A2 is unchanged, including the order, the `model_unavailable` flag and the sensitivity analysis. The first gate is reported as an uncounted infrastructure check.
