@@ -1,32 +1,30 @@
-% STALE in part: written for the pilot. Rewrite around the audit once results exist.
-% Draft 2026-11-02. Interim: 6 of 7 tasks; confirm every number at 7/7.
-\section{Discussion and Threats to Validity}
+% Draft 2026-11-03, official setup. No claim here about memory gains until results/official/analysis.json exists; \todo{} marks them.
+\section{Discussion}
 \label{sec:discussion}
 
-\textbf{Reading the primary result.}
-The preregistered test does not show that memory beats no memory \todo{confirm at 7/7}.
-This is not evidence that memory is useless. With seven tasks the sign-flip test has few possible outcomes, and a large gain on a single task cannot reach significance, so the test can only detect a gain shared across tasks.
-That is itself the finding: the memories we built help where they supply a missing interface detail (Word2Vec), and we see no consistent gain elsewhere, including from the full memory over the 25\% one.
+\textbf{What a FrontierMemory score measures.}
+A solve rate credits memory only if every link holds: the corpus has the knowledge, generation captures it, the harness shows it or the agent finds it, and the grader can reward it.
+Our audit finds a weak point at every link that doesn't depend on the model.
+For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks can't be passed by their own reference solution; and the same memory is 21--100\% visible depending on the harness.
+A score difference between two memory systems therefore mixes memory quality with corpus coverage, harness loading and grader limits, and the leaderboard publishes too little to separate them.
+\todo{One sentence on RQ1 once results exist, stated as this pipeline with this model.}
 
-\textbf{Implications for memory benchmarks.}
+\textbf{Recommendations for the benchmark.}
 \begin{itemize}
-  \item A leaderboard without a no-memory row cannot tell memory gains from agent ability. On our tasks the gain is concentrated in one task.
-  \item Truncation in the harness decides much of what ``memory'' means. A memory system is evaluated jointly with how the harness exposes it, and two systems with the same content can differ only in what lands in the injected window.
-  \item Preference-gated tasks test whether the corpus carries the preference, not only the memory system. Benchmarks should report per-task corpus coverage.
-\end{itemize}
-
-\textbf{Implications for memory builders.}
-\begin{itemize}
-  \item Put task-routing information inside the injected window.
-  \item Keep the full index searchable.
-  \item Do not assume summarisation preserves user feedback or provenance: about half of technical claims cannot be traced to their evidence, and checking them automatically is itself unreliable with a local model.
+  \item Publish the no-memory rows the rules already mention, with per-task results and all attempts, so readers can test score gaps.
+  \item Report per-task corpus coverage, and the judge model for judged tasks.
+  \item Treat a failed LLM judge as an infrastructure failure, not a zero.
+  \item Pin build dependencies, or ship prebuilt images, so a task can't change under a published score.
+  \item Make the submission check compare the corpus digest and the task and attempt counts.
+  \item Report how much of each memory the harness shows at start.
 \end{itemize}
 
 \textbf{Threats to validity.}
 \begin{itemize}
-  \item \emph{Internal.} Five trials per arm and seven tasks give low power. Effects on DAPT and awilix hinge on single trials. A trial's order position is balanced but not randomised.
-  \item \emph{Construct.} We count agent-caused failures (timeouts, empty or uncommitted patches) as zero. Hidden-test counts exclude agent-added tests, but each grader defines its own cases, so counts are comparable only within a task.
-  \item \emph{Early stops.} Some repository trials end cleanly on a very long reasoning item with no tool call, often mid-sentence and often with no patch. These occur in all arms \todo{per-arm counts at 7/7; interim 3, 4 and 7 of 15 for A0, R25 and M3}. We suspect the model's context limit but did not log the stop reason. We score them as agent failures and cannot say whether memory raises their rate. A different model or context size could change the means they dominate.
-  \item \emph{External.} The study uses one local 27B model and one harness (Codex CLI), and 7 of 15 tasks. Results may differ for the leaderboard's frontier models, whose larger contexts and stronger tool use could change both exposure and search.
-  \item \emph{Deviations.} The deviations from the official protocol are listed in \S\ref{sec:method}. The corpus moved to v1.1 during the study. Our audit shows that no removed metadata reached our memories.
+  \item \emph{Model.} One local 27B model generates memory and runs tasks. Our findings about gains from memory, generation quality and agent behaviour apply to it only; findings about corpus, graders, reporting and caps don't depend on it.
+  \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader aren't public. Results may differ for Letta Dream and Letta Code.
+  \item \emph{Serving.} One model slot serves each trial; side calls that wait behind a long main call time out on the client (\todo{rate} of requests), identically in every arm. Hermes sends \emph{xhigh} effort for an unrecognised model.
+  \item \emph{Deviations.} The Docker host is a virtual machine; one task's verifier build is repaired with one line; an Anthropic judge stands in for the documented OpenAI judge on 3 tasks \todo{unless regraded}; trials run one at a time. All are listed in \S\ref{sec:method}.
+  \item \emph{Corpus coverage.} Prompt similarity misses runs on the same repository with different prompts, so a task with no matching run isn't proven unlearnable.
+  \item \emph{Power.} With 15 tasks, $p<.05$ needs 5 tasks moving the same way with none opposing; a null is not evidence of no effect.
 \end{itemize}
