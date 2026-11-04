@@ -37,3 +37,9 @@ If an entry changes how trials run, every counted trial must come after it. Tria
 - In your relay log, look at any call with `superseded` and at the `body_sha` of retries. Report whether retries carry identical bodies: the main study hasn't confirmed that yet.
 
 **Effect on your study:** this changes how trials run. Apply it before your gate and before any counted trial. Your preregistration should list these settings as disclosed deviations, as A3 does.
+
+## U2 (2026-11-04): main-study gate 2 passed with U1's fixes
+
+No new code. With U1 applied, the main study's gate 2 passed: customer delivery with memory and awilix with no memory both finished valid with no `model_unavailable`. The Ollama log had 0 client aborts, and the relay had 0 upstream errors and 1 client close excused at an agent's end. One call ran 415 s and finished, so the 1800 s per-call timeout is what fixed it. No retries happened, so whether retries are byte-identical is still open. Report it if your relay log shows any `superseded` call.
+
+**Effect on your study:** none beyond U1. Gate 1's results without U1 are not representative, so don't treat them as a baseline.
