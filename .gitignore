@@ -57,3 +57,4 @@ results/customer-delivery-oracle-check-[0-9]*/
 official/logs/
 official/jobs/
 .nfs*
+.claude/worktrees/
