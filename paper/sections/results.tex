@@ -3,7 +3,11 @@
 \label{sec:results}
 
 \subsection{RQ1: Does generated memory beat no memory?}
-\todo{Table: per-task strict passes, no memory vs memory, over 3 runs. Primary test: $p$, mean difference and exact interval. Sensitivity without the 4 tasks whose reference solution scores 0. Run-to-run variation.}
+\IfFileExists{sections/generated-results.tex}{\input{sections/generated-results.tex}
+Table~\ref{tab:main} gives strict passes per task.
+Memory changes the per-task pass rate by \resMeanDiff{} on average (exact 95\% interval \resCI), with \resUp{} tasks up and \resDown{} down; the preregistered one-sided test gives $p=\resP$.
+Without the 4 tasks whose reference solution scores 0, $p=\resSensNoRefP$; without trials where the agent gave up on the model server, $p=\resSensUnavailP$.
+\todo{Interpretation, run-to-run variation, and whether memory was opened.}}{\todo{Results table: run scripts/analyze\_official.py, then scripts/results\_table.py.}}
 
 \subsection{RQ2: Where can memory's value be lost?}
 Table~\ref{tab:chain} summarises each link. Unless marked, a finding comes from the public code, documentation or task files, or from running them, and doesn't depend on our model.
