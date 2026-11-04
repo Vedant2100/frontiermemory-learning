@@ -22,7 +22,7 @@ Generation & Memory is exported only when generation ends, so a timeout leaves n
 Generation & Generation used \todo{33} minutes of 6 hours and printed about 0.2\% of the corpus to itself: 290\,KB of 126\,MB. & L \\
 Harness & Index caps are fixed, not scaled to the context window: 2{,}500 tokens in Codex and 200 lines or 25\,KB in Claude Code. The same memory is 21--100\% visible at start, depending on the harness. & S \\
 Agent & \todo{Share of memory trials opening a memory file, per task.} & L \\
-Grader & The reference solution scores 0 on 4 of 15 tasks, so for those no reference shows a strict pass is possible. & S, O \\
+Grader & The reference solution scores 0 on 4 of 15 tasks, so no reference shows that a strict pass is reachable; yet a no-memory agent passed one of them (cattrs, 77/77 checks). Reference scores don't bound what agents can do. & S, O \\
 Grader & A failed LLM judge yields reward 0 and a valid trial, indistinguishable from an agent failing. The judge's identity isn't reported, and task files and the CLI name different judges. & S, O \\
 Build & Harbor rebuilds images per trial, and 12 of 15 tasks have install commands in their builds. One task broke without any change on the benchmark's side when a dependency released on Nov 1; another built to a different image from identical files. & S, O \\
 \bottomrule

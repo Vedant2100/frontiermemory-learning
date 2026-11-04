@@ -8,6 +8,7 @@ Findings from running the public pipeline. **Holds for any model** unless marked
 |---|---|---|
 | Reference solution scores 0 on 4 of 15 tasks, and 0.83 on one | `docs/maintainers.md` | Reproduced here on all 15 |
 | Cattrs and cookie store: the reference passes all tests but not the preference checks, so no reference shows a strict pass is possible | `docs/maintainers.md`; our oracle: cattrs 0, cookie store 115/115 and 1285 tests, reward 0 | Reproduced |
+| A reference solution scoring 0 doesn't make a task unpassable: a no-memory control trial passed cattrs with 77/77 checks, where the reference gets 76/77 | Control trial `HJvLDqW` (counted) | Observed, one trial |
 | A failed LLM judge scores as reward 0 and a valid trial, not an infrastructure failure | Our run with a bad key: `status=error, final_score=0.0`, reward 0 on all 3 APEX tasks | Observed; check against official handling |
 | Judge identity is not reported. Task files default to Gemini 2.5 Flash, the CLI pins GPT-5.6 Sol | `grading_config.json`, `cli.py` | Read in source |
 
