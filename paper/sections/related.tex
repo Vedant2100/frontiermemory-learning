@@ -1,4 +1,4 @@
-% Draft 2026-11-03. Citations checked on arXiv abstract pages; read the full papers before submission.
+% Draft 2026-11-03. VibeMemBench, MERIT and Delivery-Not-Storage claims checked against the full papers; others against abstracts.
 \section{Related Work}
 \label{sec:related}
 \textbf{Evaluating agent memory.}
@@ -8,7 +8,7 @@ Scope Before You Persist~\cite{scopebefore} shows that lessons can harm tasks ou
 These studies build their own benchmarks; we audit an existing one, by running its own pipeline.
 
 \textbf{Delivery and harness effects.}
-Saha~\cite{deliverynotstorage} argues that delivery is what matters, reporting no voluntary memory use in one controlled coding task, whereas we observe agents opening memory files.
+Saha~\cite{deliverynotstorage} argues that delivery is what matters; in a single seeded run of a coding agent on one task, it made no memory calls in 114 turns, whereas the agents in our runs open memory files.
 A harness comparison~\cite{harnessormodel} treats truncation policy as part of the harness and recommends logging when it fires.
 We add a reading of how each harness loads the same memory.
 
