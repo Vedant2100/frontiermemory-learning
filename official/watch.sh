@@ -20,7 +20,7 @@ EOF
 }
 tick=0
 while true; do
-  now=$(squeue -a -u "$USER" -h -t PD,R,CG -o "%i %T %j %r" 2>/dev/null | grep -v fm-held | sort)
+  now=$(squeue -a -u "$USER" -h -t PD,R,CG -o "%i %T %j %r" 2>/dev/null | awk '$3 ~ /^fm-/ && $3 != "fm-held"' | sort)
   if [ "$now" != "$(cat "$S/q" 2>/dev/null)" ]; then
     comm -13 <(sort "$S/q" 2>/dev/null) <(echo "$now") | sed '/^$/d; s/^/JOB /'
     for j in $(comm -23 <(cut -d' ' -f1 "$S/q" 2>/dev/null | sort -u) <(echo "$now" | cut -d' ' -f1 | sort -u)); do
