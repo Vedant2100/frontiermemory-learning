@@ -42,10 +42,11 @@ def set_agent_policy(text: str) -> str:
     for key, value in (("network_mode", '"allowlist"'), ("allowed_hosts", '["10.0.2.2"]')):
         pattern = re.compile(rf"(?m)^[ \t]*{key}\s*=.*$")
         replacement = f"{key} = {value}"
-        if pattern.search(body):
+        matches = list(pattern.finditer(body))
+        if len(matches) > 1:
+            raise ValueError(f"duplicate [agent].{key}")
+        if matches:
             body = pattern.sub(replacement, body, count=1)
-            if pattern.search(body):
-                raise ValueError(f"duplicate [environment].{key}")
         else:
             body = body.rstrip() + "\n" + replacement + "\n"
     return text[:body_start] + body + text[body_end:]
