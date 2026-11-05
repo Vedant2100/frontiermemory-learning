@@ -156,6 +156,7 @@ disk_guard & DISK_WATCH_PID=$!
 G 'grep -q "\"enabled\":false" /etc/docker/daemon.json' || { echo "BUILD_CACHE_GC_NOT_OFF"; exit 1; }
 G 'cd ~/official/frontiermemory/data/corpus/v1.1; test "$(sha256sum SHA256SUMS | cut -d" " -f1)" = 19346a3e46b022ed1def552f8e4f4c50030cefd3250a7a8e10676b46b370b763; sha256sum -c SHA256SUMS >/dev/null 2>&1; echo GUEST_CORPUS_CHECK_OK'
 G 'sudo docker ps -aq | xargs -r sudo docker rm -f >/dev/null 2>&1; sudo docker network prune -f >/dev/null 2>&1; for i in 1 2 3 4 5 6; do sudo docker pull -q '"$PROBE_IMAGE"' >/dev/null && break; sleep 20; done; sudo docker image inspect '"$PROBE_IMAGE"' >/dev/null' || { echo "PROBE_IMAGE_MISSING"; exit 1; }
+G 'sudo docker tag '"$PROBE_IMAGE"' '"$PROBE_IMAGE_TAG"' >/dev/null; sudo docker image inspect '"$PROBE_IMAGE_TAG"' >/dev/null' || { echo "PROBE_IMAGE_ALIAS_MISSING"; exit 1; }
 G 'umask 077; cat > ~/.judge-key' < "$HOME/.config/frontiermemory/anthropic-api-key"
 "${SCP[@]}" "$REPO/official/fm_local" fm@127.0.0.1:official/
 TASK_COPY_EXPECTED_ARG=""

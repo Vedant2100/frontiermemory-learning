@@ -3,6 +3,8 @@
 ROOT=/tmp/fm-c2-$USER
 T=
 PROBE_IMAGE=alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11  # Harbor's kernel probe: an uncached slow pull reads as "no-network unsupported"
+# Harbor may request the tag form; keep it aliased to this pinned digest.
+PROBE_IMAGE_TAG=${PROBE_IMAGE%%@*}
 mkdir -p "$ROOT"
 chmod 700 "$ROOT"
 SSH=(); SCP=(); QEMU_PID=; SEED_PID=; C2_VM_LOCKED=0
