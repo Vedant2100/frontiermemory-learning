@@ -38,6 +38,7 @@ if e2e:
   est=$(G "cd ~/official/frontiermemory; sudo find jobs/$TASKJOB -name exposure-report.json | head -1 | xargs -r sudo python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))[\\"injected_tokens_estimate\\"])'")
   echo "EXPOSURE_CHECK arm=${SET#exposure-} first_prompt_tokens=${first:-none} injected_tokens_estimate=${est:-none}"
   if [ "$SET" = exposure-all ] && { [ -z "$first" ] || [ -z "$est" ] || [ "$first" -lt "$est" ]; }; then echo "EXPOSURE_CHECK_FAILED"; exit 1; fi
+  G "cd ~/official/frontiermemory; sudo python3 ~/official/fm_local/exposure_measure.py jobs/$TASKJOB jobs/fm-gen-run1 ${SET#exposure-}" || { echo "EXPOSURE_CHECK_FAILED"; exit 1; }
 }
 MODEL=qwen3.8:27b-mtp-q4_K_M; JUDGE='''))
 for a, b in pairs:
