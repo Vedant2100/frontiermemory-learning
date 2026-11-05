@@ -92,3 +92,13 @@ Each harness has its own call timeouts. Hermes needed the D100 settings, and the
 **Budget:** 4 more sets, about 4 days or more on the A30s. Tell the user your revised timeline when you send the preregistration.
 
 **Effect on your study:** 4 new arms and their gates. The earlier arms don't change.
+
+## U4 (2026-11-04): `check-serving.py` agent-end rule fixed
+
+**Files:** `official/vm/check-serving.py` only.
+
+**Change:** a relay client close is now excused when the call started 1 s after to 10 s before an agent's finish and closed within 60 s after it. The old rule used the close time, from 2 s before to 10 s after the finish. A container teardown once took 18 s, so a harmless background-review close would have failed a set (D104).
+
+**Check:** run it on your gate logs. Harmless closes should start 3–5 s before an agent's end. Closes from a cancel spiral are committed and much older, and must still fail.
+
+**Effect on your study:** this changes only the set check, not how trials run. Pick it up before your next check.

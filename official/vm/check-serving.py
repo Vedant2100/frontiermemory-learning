@@ -2,8 +2,10 @@
 Fails on any client abort or HTTP 5xx in the Ollama log, or any relay upstream error, max-wait drop or client close.
 One exception (D99): a client close is expected, not a fault, when it happens as a trial's agent stops. Hermes starts its
 post-turn background memory review on a daemon thread; when the agent process exits, that call is cut. Such a close is
-excused only if the relay had not committed (no keepalive, so not a proxy cut), the upstream answered 200, and some trial's
-agent_finished (results/official/summary-*.jsonl) falls 2 s before to 10 s after the close. Every other close still fails.
+excused only if the relay had not committed (no keepalive, so not a proxy cut), the upstream answered 200, and the call
+started 1 s after to 10 s before some trial's agent_finished (results/official/summary-*.jsonl) and closed within 60 s
+after it. The review starts as the final answer lands; the close comes when the container is torn down, which once took
+18 s (D104), so the rule keys on the start. Every other close still fails.
 Retries (D100): when the relay cancels a call that a byte-identical retry superseded, Ollama logs that as a client abort.
 Aborts up to the number of superseded calls are those cancels; any abort beyond them fails. Superseded calls are reported.
 
@@ -39,8 +41,8 @@ for f in glob.glob(f"{summ}/summary-*.jsonl"):
 year = dt.date.today().year
 def at_agent_end(r):  # relay "t" is the request start in local time, 1 s resolution
     if r.get("committed") or r.get("upstream_status") != 200: return False
-    t = dt.datetime.strptime(f"{year}-{r['t']}", "%Y-%m-%d %H:%M:%S").timestamp() + r.get("total_s", 0)
-    return any(-2 <= e - t <= 10 for e in ends)
+    s = dt.datetime.strptime(f"{year}-{r['t']}", "%Y-%m-%d %H:%M:%S").timestamp()
+    return any(-1 <= e - s <= 10 and s + r.get("total_s", 0) - e <= 60 for e in ends)
 closes = [r for r in relay if r.get("client_closed")]
 excused = sum(map(at_agent_end, closes))
 print(f"relay: {excused} of {len(closes)} client closes at an agent's end (expected: background review cut, D99)")
