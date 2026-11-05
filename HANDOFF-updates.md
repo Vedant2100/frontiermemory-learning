@@ -43,3 +43,52 @@ If an entry changes how trials run, every counted trial must come after it. Tria
 No new code. With U1 applied, the main study's gate 2 passed: customer delivery with memory and awilix with no memory both finished valid with no `model_unavailable`. The Ollama log had 0 client aborts, and the relay had 0 upstream errors and 1 client close excused at an agent's end. One call ran 415 s and finished, so the 1800 s per-call timeout is what fixed it. No retries happened, so whether retries are byte-identical is still open. Report it if your relay log shows any `superseded` call.
 
 **Effect on your study:** none beyond U1. Gate 1's results without U1 are not representative, so don't treat them as a baseline.
+
+## U3 (2026-11-04): new arms, harness comparison (Codex and Claude Code), user decision
+
+The user added a harness comparison to your study. Like everything on bender, it is exploratory. It changes **only the task agent**. The memory stays the same: your first HM generation, the one the exposure arms use, with the same digest.
+
+**Arms** (each 45 trials = 3 attempts × 15 tasks, all on bender):
+
+| Arm | Task agent | Memory |
+|---|---|---|
+| C0 | Codex | none (the adapter still turns its memory feature on, as the official code does) |
+| CM | Codex | HM generation 1 |
+| K0 | Claude Code | none |
+| KM | Claude Code | HM generation 1 |
+
+**Order:** A0 and HM, then E-none and E-all, **then C0, CM, K0 and KM**, then the delivery arms (cue-triggered, scoped, categorized), then the generator arms. Update your preregistration draft to match before you ask the user to approve it.
+
+**Adapters:** use the official ones through the `--harness` hook:
+- `frontier_memory.agents.codex:MemoryCodex`
+- `frontier_memory.agents.claude_code:MemoryClaudeCode`
+
+Keep the CLI versions pinned in `frontier_memory/agents/__init__.py` (`DEFAULT_CLI_VERSIONS`: Codex 0.160.1, Claude Code 2.1.284). Write one subclass of each in new files, `fm_local/codex_local.py` and `fm_local/claude_code_local.py`, the way `hermes_local.py` subclasses Hermes. The subclass may change only the model URL, the placeholder key and any timeout settings the gate proves necessary. Test each subclass as `official/tests/test_hermes_local.py` tests Hermes.
+
+**Model connection:** use the same Ollama and `model_relay.py` as every other arm, with the same model and context.
+- **Codex** uses the OpenAI Responses API. Point `OPENAI_BASE_URL` at the relay, as Hermes does.
+- **Claude Code** uses the Anthropic Messages API: `ANTHROPIC_BASE_URL` (Harbor's `claude_code.py` reads it) and `ANTHROPIC_MODEL`. First check whether your Ollama build serves `/v1/messages` with tool use and streaming. **If it doesn't, stop and tell the user.** A translation proxy would be a new component, so it's a deviation that needs their OK first.
+
+**Keys, the main risk here:**
+- Claude Code reads `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN`. The task agent must get only a placeholder value. The real judge key must never reach it, as in every arm.
+- The key audit after each set must show 0 real-key lines in the agent containers.
+- Before any trial, check that no Claude Code or Codex traffic leaves for a vendor host. All model calls must appear in your relay log, and the egress proxy must allow only the relay host.
+- If any call reaches a real API, stop, report it, and don't run more trials. It would cost money and contaminate the arm.
+
+**Effort:** use each harness's highest supported level: Claude Code `--effort max` (Harbor's `reasoning_effort` option) and Codex `reasoning_effort` at its highest value. Record the exact values in the preregistration.
+
+**Gate per harness, before its counted arms:** follow rule 4 of the handoff, with the same parts as the main study's gate 2:
+- awilix with no memory, run to its full limit;
+- customer delivery with memory;
+- one APEX task.
+
+Each harness has its own call timeouts. Hermes needed the D100 settings, and these harnesses may need equivalents. Record any setting you change as a disclosed deviation.
+
+**Analysis (exploratory):**
+- Per harness: memory against its own no-memory control (CM vs C0, KM vs K0, HM vs A0), with the same paired sign-flip over tasks.
+- Across harnesses: the per-task memory effect compared between harnesses, described, not tested for significance.
+- Run `memory_access.py` (shown vs opened) on every trial. Compare the bytes each harness actually shows at the start with the main study's simulated figures (`results/harness-exposure-survey.md`: Codex about 21%, Claude Code about 48%, Hermes 100%).
+
+**Budget:** 4 more sets, about 4 days or more on the A30s. Tell the user your revised timeline when you send the preregistration.
+
+**Effect on your study:** 4 new arms and their gates. The earlier arms don't change.
