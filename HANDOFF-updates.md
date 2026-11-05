@@ -102,3 +102,27 @@ Each harness has its own call timeouts. Hermes needed the D100 settings, and the
 **Check:** run it on your gate logs. Harmless closes should start 3–5 s before an agent's end. Closes from a cancel spiral are committed and much older, and must still fail.
 
 **Effect on your study:** this changes only the set check, not how trials run. Pick it up before your next check.
+
+## U5 (2026-11-05): measured exposure check, and an effort test for you to run
+
+**Files:** new `official/fm_local/exposure_measure.py` and `official/tests/test_exposure_measure.py`, and an edited `official/vm/run-exposure.sh` (its end-to-end step now calls the measure).
+
+**What it does:** for each finished trial, it reads the system prompt saved in `agent/hermes-session.jsonl`. It counts how many memory files appear in that prompt and how many memory skills are indexed. It prints counts only, never text.
+```
+python3 exposure_measure.py <task job> <generation job> none|all|hm
+```
+- **none** needs 0 files shown and 0 skills indexed.
+- **all** needs every file shown.
+- **hm** needs MEMORY.md shown.
+
+**Use it:**
+- On every E-none and E-all trial, not only the end-to-end trial.
+- For the delivery arms (cue-triggered, scoped, categorized), extend it to report what each arm actually showed, and put that in your preregistration. Cue-triggered injects text mid-session, so you'll need to count tool or message injections as well as the system prompt.
+- The Codex and Claude Code arms don't write `hermes-session.jsonl`, so measure their shown memory from their own session logs.
+
+**Effort test (please run, since your GPUs aren't in a counted run):** `docs/rules.md` says "Confirm requested reasoning effort reaches actual model calls". Hermes sends `xhigh` when `max` is requested (D79), but nobody has checked whether Ollama acts on it for Qwen.
+- Before your gate, send the same short reasoning prompt straight to your Ollama several times with low and with high or xhigh effort, through the same API Hermes uses (`/v1/responses`).
+- Compare the reasoning token counts and lengths. Report the numbers to the user, and record them in your decisions log.
+- If effort makes no difference, say so plainly. It's a disclosure for both studies, not something to patch.
+
+**Effect on your study:** a stronger exposure check, plus one verification. No trial behaviour changes.
