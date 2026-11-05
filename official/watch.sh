@@ -1,5 +1,5 @@
 #!/bin/bash
-# Event stream for the study; each stdout line is one event. Read-only: never changes a job. State in $S survives re-arming.
+# Event stream for the study; each stdout line is one event. Read-only: never changes a job. State in $S survives re-arming. squeue needs -a: the job partition is hidden from the default listing (since Nov 5).
 # Events: job state changes, new step markers and failure lines in job logs, finished trials, and no model traffic for 45 min.
 cd /home/csgrad/vbork001/frontiermemory-experiment-20261024 || exit 1
 S=$HOME/.cache/fm-watch; mkdir -p "$S"
@@ -20,7 +20,7 @@ EOF
 }
 tick=0
 while true; do
-  now=$(squeue -u "$USER" -h -t PD,R,CG -o "%i %T %j %r" 2>/dev/null | grep -v fm-held | sort)
+  now=$(squeue -a -u "$USER" -h -t PD,R,CG -o "%i %T %j %r" 2>/dev/null | grep -v fm-held | sort)
   if [ "$now" != "$(cat "$S/q" 2>/dev/null)" ]; then
     comm -13 <(sort "$S/q" 2>/dev/null) <(echo "$now") | sed '/^$/d; s/^/JOB /'
     for j in $(comm -23 <(cut -d' ' -f1 "$S/q" 2>/dev/null | sort -u) <(echo "$now" | cut -d' ' -f1 | sort -u)); do
@@ -41,7 +41,7 @@ while true; do
     fi
   done
   if [ $((tick % 15)) = 0 ]; then
-    J=$(squeue -u "$USER" -h -t R -n fm-serial -o %i | head -1)
+    J=$(squeue -a -u "$USER" -h -t R -n fm-serial -o %i | head -1)
     if [ -n "$J" ]; then
       R=$(probe | timeout 60 srun --jobid="$J" --overlap -n1 -c1 --mem=100M bash /dev/stdin 2>/dev/null)
       while read -r name d n; do
