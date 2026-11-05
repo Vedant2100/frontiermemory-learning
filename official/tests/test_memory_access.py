@@ -87,3 +87,33 @@ def test_output_holds_no_content(tmp_path):
     (t / "agent" / "hermes.txt").write_text("SECRET-MEMORY-TEXT")
     blob = json.dumps(ma.measure(t, None)) + json.dumps(ma.summarise([ma.measure(t, None)]))
     assert "SECRET" not in blob and "task" not in json.dumps(ma.measure(t, None)["open_kinds"])
+
+
+def test_codex_and_claude_tool_paths_and_shown_byte_estimates(tmp_path):
+    mem = tmp_path / "memory"
+    mem.mkdir()
+    (mem / "MEMORY.md").write_bytes(b"a\nb\nc\n")
+    (mem / "topics").mkdir()
+    (mem / "topics" / "note.md").write_bytes(b"secret note")
+    codex = make_trial(tmp_path, "codex__1", [[call("shell_command", command="cat /root/.codex/memories/topics/note.md")]], fmt="atif")
+    r = ma.measure(codex, "CM", "codex", mem)
+    assert r["opened"] and r["opened_paths"] == ["topics/note.md"]
+    assert r["shown_bytes_estimate"] == 6 and r["shown_rule"] == "codex_2500_token_head_tail_4_bytes_per_token"
+    claude = make_trial(tmp_path, "claude__1", [[call("Read", file_path="/root/.claude/projects/p/memory/MEMORY.md")]], fmt="atif")
+    r = ma.measure(claude, "KM", "claude-code", mem)
+    assert r["opened"] and r["opened_paths"] == ["MEMORY.md"]
+    assert r["shown_bytes_estimate"] == 6 and r["shown_rule"] == "claude_first_200_lines_or_25_kib"
+    claude_root = make_trial(tmp_path, "claude-root__1", [[call("Read", file_path="/root/.claude/memory/MEMORY.md")]], fmt="atif")
+    r = ma.measure(claude_root, "KM", "claude-code", mem)
+    assert r["opened"] and r["opened_paths"] == ["MEMORY.md"]
+
+
+def test_exposure_metrics_are_counts_only(tmp_path):
+    mem = tmp_path / "memory"
+    mem.mkdir()
+    (mem / "MEMORY.md").write_bytes(b"synthetic index")
+    r = ma.shown_metrics(mem, "exposure-none", {"exposure": "none"}, {}, {})
+    assert r["shown_bytes_estimate"] == 0 and r["shown_tokens_estimate"] == 0
+    r = ma.shown_metrics(mem, "exposure-all", {"injected_bytes": 321}, {}, {})
+    assert r["shown_bytes_estimate"] == 321
+    assert "synthetic index" not in json.dumps(r)

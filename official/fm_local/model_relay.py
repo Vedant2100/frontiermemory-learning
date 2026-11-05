@@ -11,6 +11,10 @@ Cloud APIs answer sooner; a local model reading a long prompt or waiting for its
     the connection without finishing the body, which the client sees as a connection error and may retry, as it
     would a 5xx. (A 200 can't carry an error the OpenAI SDK understands for non-streaming calls.)
   - A call still unanswered after MAX_WAIT is dropped the same way, so the client's own timeout still applies.
+  - A retry supersedes its original (D100). When Hermes's watchdog cancels a call and retries, the cancel may not
+    reach Ollama through the egress proxy, so the old call keeps the model busy and the retry queues behind it.
+    A POST whose body is byte-identical to one still in flight is a retry: the relay closes the older call's
+    upstream connection (Ollama stops it) and drops the older client connection. Different bodies never interact.
     Hermes's event-based watchdogs (no-event and idle) count parsed events, which keepalive comments are not.
 
 Model output is untouched. The log has one JSON line per request with counts and timings only, never bodies.
@@ -18,8 +22,10 @@ Model output is untouched. The log has one JSON line per request with counts and
     python3 model_relay.py <listen port> <ollama port> <log file>
 """
 
+import hashlib
 import http.client
 import json
+import socket
 import sys
 import threading
 import time
@@ -37,6 +43,8 @@ class Relay(BaseHTTPRequestHandler):
     upstream_port = 0
     log_lock = threading.Lock()
     log_file = None
+    inflight_lock = threading.Lock()
+    inflight = {}  # body digest -> (conn, rec) of the newest call with that body
 
     def log_message(self, *a):
         pass
@@ -75,6 +83,21 @@ class Relay(BaseHTTPRequestHandler):
                "stream": stream, "committed": False, "keepalives": 0}
 
         conn = http.client.HTTPConnection("127.0.0.1", self.upstream_port, timeout=None)
+        key = hashlib.sha256(body).hexdigest() if (self.command == "POST" and body) else None
+        if key:
+            rec["body_sha"] = key[:12]
+            with self.inflight_lock:
+                old = self.inflight.get(key)
+                self.inflight[key] = (conn, rec)
+            if old:
+                old_conn, old_rec = old
+                old_rec["superseded"] = True
+                rec["supersedes"] = True
+                try:
+                    if old_conn.sock:
+                        old_conn.sock.shutdown(socket.SHUT_RDWR)
+                except OSError:
+                    pass
         result, done = {}, threading.Event()
 
         def call():
@@ -107,6 +130,9 @@ class Relay(BaseHTTPRequestHandler):
                     self._chunk(ka)
                     rec["keepalives"] += 1
             rec["wait_s"] = round(time.monotonic() - t0, 1)
+            if rec.get("superseded"):
+                self.close_connection = True  # a retry took over; this client already gave up
+                return
             resp = result.get("resp")
             rec["upstream_status"] = resp.status if resp else None
             if resp is None or (rec["committed"] and resp.status != 200):
@@ -131,17 +157,29 @@ class Relay(BaseHTTPRequestHandler):
                 self.end_headers()
             nbytes = 0
             while True:
-                data = resp.read1(65536)
+                try:
+                    data = resp.read1(65536)
+                except OSError:
+                    if not rec.get("superseded"):
+                        raise
+                    data = b""
                 if not data:
                     break
                 nbytes += len(data)
                 self._chunk(data)
-            self._end()
             rec["bytes"] = nbytes
+            if rec.get("superseded"):
+                self.close_connection = True
+                return
+            self._end()
         except (BrokenPipeError, ConnectionResetError):
             rec["client_closed"] = True
         finally:
             conn.close()  # if the client left, this also tells Ollama to stop
+            if key:
+                with self.inflight_lock:
+                    if self.inflight.get(key, (None,))[0] is conn:
+                        del self.inflight[key]
             rec["total_s"] = round(time.monotonic() - t0, 1)
             self._log(**rec)
 

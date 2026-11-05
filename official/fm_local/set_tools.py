@@ -1,7 +1,7 @@
 """Helpers for one counted set. Run inside the guest. Counts and metadata only; no task, corpus or memory text.
 
   set_tools.py set-aside JOB   move trials with no reward to JOB.no-reward/ (kept, not deleted) and print how many
-  set_tools.py summary JOB     one JSON line per trial, on stdout
+  set_tools.py summary JOB [HARNESS]     one JSON line per trial, on stdout
 """
 
 from __future__ import annotations
@@ -13,12 +13,36 @@ from pathlib import Path
 
 from frontier_memory.score import read_trial  # the official scorer's rule for reward, validity and pass
 
-# What Hermes prints when it stops because the model server didn't answer (prereg amendment A1).
-MODEL_UNAVAILABLE = ("didn't respond in time", "Provider has been unresponsive")
+# Hermes uses the official main-study signal. The other adapters have distinct agent artifacts,
+# so their bounded scan uses the expanded provider/transport markers.
+HERMES_HARNESSES = {"hermes", "exposure-none", "exposure-all", "delivery-cue", "delivery-scoped", "delivery-categorized"}
+HERMES_UNAVAILABLE = ("didn't respond in time", "provider has been unresponsive")
+OTHER_UNAVAILABLE = (*HERMES_UNAVAILABLE, "connection refused", "could not connect", "model_unavailable",
+                     "econnrefused", "socket hang up", "upstream unreachable")
 
 
 def trials(job: Path):
     return sorted(p for p in job.iterdir() if p.is_dir())
+
+
+def model_unavailable(trial: Path, harness: str) -> bool | None:
+    """Scan bounded agent artifacts; unknown fails closed in the host-side set validator."""
+    agent_dir = trial / "agent"
+    if not agent_dir.is_dir():
+        return None
+    files = ([agent_dir / "hermes.txt"] if harness in HERMES_HARNESSES else list(agent_dir.rglob("*")))
+    files = [p for p in files if p.is_file() and p.stat().st_size <= 8 * 1024 * 1024]
+    if not any(p.suffix.casefold() in {".txt", ".log", ".jsonl"} for p in files):
+        return None
+    markers = HERMES_UNAVAILABLE if harness in HERMES_HARNESSES else OTHER_UNAVAILABLE
+    for path in files:
+        try:
+            text = path.read_text(errors="ignore").casefold()
+        except OSError:
+            continue
+        if any(marker in text for marker in markers):
+            return True
+    return False
 
 
 def set_aside(job: Path) -> int:
@@ -33,7 +57,7 @@ def set_aside(job: Path) -> int:
     return moved
 
 
-def summary(job: Path) -> None:
+def summary(job: Path, harness: str) -> None:
     for trial in trials(job):
         path = trial / "result.json"
         if not path.exists():
@@ -43,9 +67,8 @@ def summary(job: Path) -> None:
         agent, run = r.get("agent_result") or {}, r.get("agent_execution") or {}
         details = trial / "verifier" / "grade_details.json"  # only tasks graded by an LLM judge write this
         judge = json.loads(details.read_text()).get("grading_run_status") if details.exists() else None
-        log = trial / "agent" / "hermes.txt"
-        gave_up = log.exists() and any(m in log.read_text(errors="ignore") for m in MODEL_UNAVAILABLE)
-        print(json.dumps({**read_trial(trial), "finished": True, "judge_status": judge, "model_unavailable": gave_up, "input_tokens": agent.get("n_input_tokens"), "output_tokens": agent.get("n_output_tokens"),
+        unavailable = model_unavailable(trial, harness)
+        print(json.dumps({**read_trial(trial), "finished": True, "judge_status": judge, "model_unavailable": unavailable, "input_tokens": agent.get("n_input_tokens"), "output_tokens": agent.get("n_output_tokens"),
                           "agent_started": run.get("started_at"), "agent_finished": run.get("finished_at")}))
 
 
@@ -54,6 +77,8 @@ if __name__ == "__main__":
     if command == "set-aside":
         print(set_aside(job))
     elif command == "summary":
-        summary(job)
+        if len(sys.argv) not in (3, 4):
+            raise SystemExit("usage: set_tools.py summary JOB [HARNESS]")
+        summary(job, sys.argv[3] if len(sys.argv) == 4 else "hermes")
     else:
         raise SystemExit(f"unknown command {command}")

@@ -34,6 +34,9 @@ from fm_local.hermes_local import LocalHermes
 BYTES_PER_TOKEN = 4  # the estimate the harness survey uses (results/harness-exposure-survey.md)
 MAX_INJECTED_TOKENS = 100_000  # "all" must leave most of the 262,144-token context for the task
 SKILLS_TARGET = f"{ACTOR_HOME}/skills"
+MEMORIES_TARGET = f"{ACTOR_HOME}/memories"
+OBSERVER_ID = "fm-delivery-c2"
+OBSERVER_TARGET = f"{ACTOR_HOME}/plugins/{OBSERVER_ID}"
 
 
 class ExposureHermesOptions(MemoryHermesOptions):
@@ -109,7 +112,23 @@ class ExposureHermes(LocalHermes):
 
     def _actor_config(self, model: str) -> str:
         config = yaml.safe_load(super()._actor_config(model))
-        return yaml.safe_dump(apply_exposure(config, self.options.exposure, self._memory_dir))
+        config = apply_exposure(config, self.options.exposure, self._memory_dir)
+        plugins = config.setdefault("plugins", {})
+        enabled = plugins.setdefault("enabled", [])
+        if not isinstance(enabled, list):
+            raise ValueError("Hermes plugins.enabled must be a list")
+        if OBSERVER_ID not in enabled:
+            enabled.append(OBSERVER_ID)
+        return yaml.safe_dump(config)
+
+    async def exec_as_agent(self, environment, command, env=None, **kwargs):
+        local_env = {
+            **(env or {}),
+            "FM_DELIVERY_MODE": "observe",
+            "FM_DELIVERY_MEMORY_SHA256": self._memory_report["memory_sha256"],
+            "FM_DELIVERY_MEMORY_ENABLED": "0" if self.options.exposure == "none" else "1",
+        }
+        return await super().exec_as_agent(environment, command, env=local_env, **kwargs)
 
     async def run(self, instruction, environment, context):
         report_path = self.logs_dir / "exposure-report.json"
@@ -120,7 +139,11 @@ class ExposureHermes(LocalHermes):
         async def filtered_upload_dir(source, target, *args, **kwargs):
             if skip_upload(self.options.exposure, str(target)):
                 return None
-            return await upload_dir(source, target, *args, **kwargs)
+            result = await upload_dir(source, target, *args, **kwargs)
+            if str(target).rstrip("/") == MEMORIES_TARGET:
+                plugin_source = Path(__file__).with_name("delivery_plugin")
+                await upload_dir(plugin_source, OBSERVER_TARGET, *args, **kwargs)
+            return result
 
         environment.upload_dir = filtered_upload_dir  # instance attribute; restored below
         try:

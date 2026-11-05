@@ -58,3 +58,11 @@ official/logs/
 official/jobs/
 .nfs*
 .claude/worktrees/
+/results/official-cluster2/
+/official/logs/cluster2/
+/official/vm/GATE_PASSED_CLUSTER2
+/official/vm/GATE_FAILED_CLUSTER2
+/official/vm/GATE_PASSED_*_CLUSTER2
+/official/vm/GATE_FAILED_*_CLUSTER2
+/official/vm/STUDY_STOPPED_CLUSTER2
+/official/vm/DRIVER_DONE_CLUSTER2
