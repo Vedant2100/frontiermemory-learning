@@ -128,5 +128,5 @@ print('REFERENCE_CHECK_OK tasks=15; expected scores matched; no content copied')
 PY
 G 'sudo docker system df | cut -c1-80; df -h / | tail -1; rm -f ~/.judge-key'
 cleanup_oracle
-trap - EXIT - USR1
+trap - EXIT USR1
 echo ORACLE_ALL_CLUSTER2_OK
