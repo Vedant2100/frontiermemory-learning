@@ -34,12 +34,12 @@ With this test, $p<.05$ needs at least 5 tasks moving the same way with none opp
 
 \subsection{Audit}
 For each link we report what we can establish and how: from source and documentation, by measurement, or by inference.
-\begin{description}
+\begin{IEEEdescription}[\IEEEsetlabelwidth{Generation}]
   \item[Corpus] Per-task coverage, from prompt similarity and from repository keywords, for both corpus versions.
   \item[Generation] What each memory contains and how much of the corpus the generator read, from its trace.
   \item[Harness] The rule each harness uses to load memory, and the share of a memory it would show.
   \item[Agent] Whether and when trials open memory files, from tool calls in traces, against what was shown at start.
   \item[Recency] Whether any task needs newer corpus evidence over older, from timestamps and the versions tasks pin.
   \item[Grader] Reference-solution behaviour, judge identity, handling of judge failure, and build reproducibility.
-\end{description}
+\end{IEEEdescription}
 Findings about construction apply to any model; those about gains from memory, and generation quality, apply to this model only.
