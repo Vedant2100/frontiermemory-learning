@@ -96,6 +96,9 @@ Also reported (no new runs):
 
 ## Approval record
 
-- Arms preregistration: **draft, awaiting user approval**.
-- `prereg-arms` tag: **not created**.
+- Arms preregistration: **approved by the user, 2026-11-06** ("Do it.", with the order below).
+- Order change before approval (main study amendment A5): the main study's none-shown exposure arm runs here, after
+  read-first and before cue, as cue's control; its design and analysis are those of A2. All shown runs in the main job, after run 4.
+- Runs in the main study's held allocation right after all shown (`next-study-2.sh` hands over), so the GPUs are never released between.
+- `prereg-arms` tag: **created with this commit**.
 - First arm trial: **not run**.
