@@ -165,11 +165,12 @@ G 'sudo docker ps -aq | xargs -r sudo docker rm -f >/dev/null 2>&1; sudo docker 
 G 'sudo docker tag '"$PROBE_IMAGE"' '"$PROBE_IMAGE_TAG"' >/dev/null; sudo docker image inspect '"$PROBE_IMAGE_TAG"' >/dev/null' || { echo "PROBE_IMAGE_ALIAS_MISSING"; exit 1; }
 G 'umask 077; cat > ~/.judge-key' < "$HOME/.config/frontiermemory/anthropic-api-key"
 "${SCP[@]}" "$REPO/official/fm_local" fm@127.0.0.1:official/
+"${SCP[@]}" "$REPO/official/sitecustomize.py" fm@127.0.0.1:official/sitecustomize.py
 TASK_COPY_EXPECTED_ARG=""
 [ -z "$EXPECTED_TASK_COPY_SHA256" ] || TASK_COPY_EXPECTED_ARG="--expected-task-copy-sha256 $EXPECTED_TASK_COPY_SHA256"
 G "cd ~/official/frontiermemory; python3 ~/official/fm_local/prepare_cluster2_task_copy.py --source-root data/tasks-fm --output-root data/tasks-fm-cluster2 --manifest data/tasks-fm-cluster2.manifest.json $TASK_COPY_EXPECTED_ARG"
-ENV="cd ~/official/frontiermemory; export PATH=\$PWD/.venv/bin:\$PATH PYTHONPATH=\$HOME/official FM_LOCAL_BASE_URL=http://10.0.2.2:$RELAY_PORT/v1 FM_LOCAL_MODEL=$MODEL OPENAI_API_KEY=local-placeholder; unset OPENAI_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN"
-H="sudo env PATH=\$PATH PYTHONPATH=\$PYTHONPATH FM_LOCAL_BASE_URL=\$FM_LOCAL_BASE_URL FM_LOCAL_MODEL=\$FM_LOCAL_MODEL OPENAI_API_KEY=\$OPENAI_API_KEY bash \$HOME/official/fm_local/with_judge_key.sh"
+ENV="cd ~/official/frontiermemory; export PATH=\$PWD/.venv/bin:\$PATH PYTHONPATH=\$HOME/official FM_C2_HARBOR_EGRESS_COMPAT=1 FM_LOCAL_BASE_URL=http://10.0.2.2:$RELAY_PORT/v1 FM_LOCAL_MODEL=$MODEL OPENAI_API_KEY=local-placeholder; unset OPENAI_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN"
+H="sudo env PATH=\$PATH PYTHONPATH=\$PYTHONPATH FM_C2_HARBOR_EGRESS_COMPAT=\$FM_C2_HARBOR_EGRESS_COMPAT FM_LOCAL_BASE_URL=\$FM_LOCAL_BASE_URL FM_LOCAL_MODEL=\$FM_LOCAL_MODEL OPENAI_API_KEY=\$OPENAI_API_KEY bash \$HOME/official/fm_local/with_judge_key.sh"
 TASK_ENVIRONMENT=docker
 TASK_ROOT=data/tasks-fm-cluster2
 GEN_COMMON="-m openai/$MODEL -e $TASK_ENVIRONMENT --allow-host 10.0.2.2"
