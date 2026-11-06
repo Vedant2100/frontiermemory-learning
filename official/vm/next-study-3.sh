@@ -65,7 +65,8 @@ recency_checked() {  # generation and probe only
   local s0 r0; s0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0); r0=$(wc -l < "$OLOG/relay.log" 2>/dev/null || echo 0)
   step "$arm: start"
   bash official/vm/run-arm.sh "$arm" 2>&1 | tee -a "$LOGF"
-  tail -60 "$LOGF" | grep -q "RECENCY_CORPUS_FAILED\|NO_VALID_MEMORY\|run-set-v1.sbatch changed" && stop "$arm: corpus or generation failed"
+  tail -60 "$LOGF" | grep -q "RECENCY_CORPUS_FAILED\|run-set-v1.sbatch changed" && stop "$arm: corpus build failed"
+  if tail -60 "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$arm: NO_VALID_MEMORY (prereg: reported, no probe)"; return 0; fi
   python3 official/vm/check-serving.py "$OLOG" "$s0" "$r0" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$arm: serving check failed"
   grep -q RECENCY_PROBE "$RES/recency-probe-arm-$arm.txt" 2>/dev/null || stop "$arm: no probe result"
   step "$arm: SET_CHECKED"
@@ -84,8 +85,9 @@ for arm in $ORDER; do
     bash official/vm/next-gate-harness.sh "$h" 2>&1 | tee -a "$LOGF"
     [ -f "official/vm/GATE_PASSED_$g" ] || stop "$h gate failed"
   fi
-  run_checked "arm-$arm e2e" "fm-smoke-arm-$arm" 1 env E2E=1 bash official/vm/run-arm.sh "$arm"
-  run_checked "arm-$arm" "fm-tasks-arm-$arm" 45 bash official/vm/run-arm.sh "$arm"
+  # run_checked returns 1 only for NO_VALID_MEMORY: reported, and that arm's trials are not run (prereg)
+  run_checked "arm-$arm e2e" "fm-smoke-arm-$arm" 1 env E2E=1 bash official/vm/run-arm.sh "$arm" || continue
+  run_checked "arm-$arm" "fm-tasks-arm-$arm" 45 bash official/vm/run-arm.sh "$arm" || continue
   ( python3 -I scripts/analyze_arms.py --dir results/official 2>&1 | tail -5 | cut -c1-170 ) | tee -a "$LOGF"
 done
 

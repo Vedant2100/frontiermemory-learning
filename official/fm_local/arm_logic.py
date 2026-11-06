@@ -106,8 +106,8 @@ def build_skills_dir(memory_dir: Path, out: Path, picks: list[tuple[str, str]], 
     """Copy each (skill rel, target rel) into out; write DESCRIPTION.md category headings. Fails on a target clash."""
     root = memory_dir / "skills"
     all_rels = [s["rel"] for s in skills(memory_dir)]
-    for rel, target in picks:
-        if (out / target).exists():
+    for rel, target in sorted(picks, key=lambda p: p[1]):  # a parent before its nested skill
+        if (out / target / "SKILL.md").exists():
             raise ValueError("two memory skills map to the same indexed folder")
         for f in skill_files(root, rel, all_rels):
             dest = out / target / f.relative_to(root / rel)

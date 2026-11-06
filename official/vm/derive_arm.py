@@ -48,10 +48,16 @@ CHECK_MEMORY = ('G "$ENV; frontier-memory check-memory jobs/$GENJOB 2>&1 | tail 
 
 def generation(corpus: str, harness: str) -> str:
     gen = GEN_LINE.replace("data/corpus/v1.1", corpus).replace("fm_local.hermes_local:LocalHermesLearn", harness)
+    # A generation that finished without valid memory is reported, never redone (prereg; D113). Only one that never
+    # finished (no trial result.json: an interrupted job) is set aside and started again.
     return ('if ! G "$ENV; frontier-memory check-memory jobs/$GENJOB >/dev/null 2>&1"; then\n'
-            '  step "$SET: fresh generation"\n'
-            f'  G "$ENV; [ ! -e jobs/$GENJOB ] || sudo mv jobs/$GENJOB jobs/$GENJOB.failed-\\$(date +%s); $H {gen} 2>&1 | '
+            '  if G "$ENV; ls jobs/$GENJOB/*__*/result.json >/dev/null 2>&1"; then\n'
+            '    step "$SET: generation finished without valid memory; not redone (prereg)"\n'
+            '  else\n'
+            '    step "$SET: fresh generation"\n'
+            f'    G "$ENV; [ ! -e jobs/$GENJOB ] || sudo mv jobs/$GENJOB jobs/$GENJOB.failed-\\$(date +%s); $H {gen} 2>&1 | '
             'tail -1 | cut -c1-140; sudo chown -R fm:fm jobs/$GENJOB"\n'
+            '  fi\n'
             'fi\n'
             f'{CHECK_MEMORY} || {{ step "$SET: NO_VALID_MEMORY: reported, trials not run (prereg)"; exit 0; }}\n')
 

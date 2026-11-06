@@ -47,11 +47,22 @@ def load(p: Path) -> dict | None:
     return json.loads(p.read_text()) if p.is_file() else None
 
 
+def trial_info(trial: Path) -> tuple[str, object]:
+    """(task short name, frontier_memory metadata), read as frontier_memory/score.py read_trial does. Harbor cuts
+    trial folder names to 32 characters, so the task comes from result.json, not the folder name."""
+    result = json.loads((trial / "result.json").read_text())
+    metadata = (result.get("agent_result") or {}).get("metadata") or {}
+    task = (result.get("task_name") or trial.name.split("__")[0]).split("/")[-1]
+    return task, metadata.get("frontier_memory", "missing")
+
+
 def check_trial(arm: str, trial: Path, mem: Path | None, emap: dict) -> list[str]:
     bad = []
-    task = trial.name.split("__")[0]
+    task, memory_meta = trial_info(trial)
     if arm in ("c0", "cm", "k0", "km"):
-        has_memory = "memory_sha256" in (trial / "result.json").read_text()
+        if memory_meta == "missing":
+            return ["no frontier_memory metadata in result.json"]
+        has_memory = isinstance(memory_meta, dict) and bool(memory_meta.get("sha256"))
         if has_memory != (arm in ("cm", "km")):
             bad.append("memory presence differs from the arm")
         return bad
@@ -93,6 +104,8 @@ def check_trial(arm: str, trial: Path, mem: Path | None, emap: dict) -> list[str
         if in_index or MEMORY_HEAD in sp:
             bad.append("memory shown at start in the cue arm")
     if arm in ("raw", "evidence"):
+        if arm == "evidence" and task not in emap:
+            return [f"task {task!r} not in evidence-runs.json"]
         want = len(emap[task]) if arm == "evidence" else len(os.listdir("data/corpus/v1.1/inputs"))
         pointer = arm_logic.POINTER[arm].format(n=want, path=arm_logic.RECORDS_TARGET)
         if report.get("records") != want or (want and pointer not in sp) or (not want and "earlier agent work sessions" in sp):

@@ -311,14 +311,16 @@ class DeriveTests(unittest.TestCase):
 
 
 class ArmCheckTests(unittest.TestCase):
-    def run_check(self, arm: str, prompt: str, report: dict | None, extra: dict | None = None) -> int:
+    def run_check(self, arm: str, prompt: str, report: dict | None, extra: dict | None = None,
+                  task: str = "build-word2vec-pipeline", memory_meta=None) -> int:
         with tempfile.TemporaryDirectory() as tmp:
             cwd = Path(tmp)
             mem = memory(cwd / "jobs/fm-gen-run1/gen__1/artifacts/memory")
             assert mem.is_dir()
-            trial = cwd / "jobs/task" / "build-word2vec-pipeline__abc"
+            trial = cwd / "jobs/task" / f"{task[:32].rstrip('_-')}__abc"  # Harbor's trial name rule
             (trial / "agent").mkdir(parents=True)
-            (trial / "result.json").write_text("{}")
+            (trial / "result.json").write_text(json.dumps({"task_name": f"letta-ai/{task}",
+                                                           "agent_result": {"metadata": {"frontier_memory": memory_meta}}}))
             (trial / "agent/hermes-session.jsonl").write_text(json.dumps({"system_prompt": prompt}) + "\n")
             if report is not None:
                 (trial / "agent/arm-report.json").write_text(json.dumps(report))
@@ -346,10 +348,35 @@ class ArmCheckTests(unittest.TestCase):
         self.assertEqual(self.run_check("cue", "# Learned Hermes skills", {"arm": "cue"}, ok), 1)
 
     def test_evidence(self):
-        n = len(json.loads((REPO / "official/fm_local/evidence-runs.json").read_text())["build-word2vec-pipeline"])
-        sp = arm_logic.POINTER["evidence"].format(n=n, path=arm_logic.RECORDS_TARGET)
-        self.assertEqual(self.run_check("evidence", sp, {"arm": "evidence", "records": n}), 0)
-        self.assertEqual(self.run_check("evidence", sp, {"arm": "evidence", "records": n - 1}), 1)
+        emap = json.loads((REPO / "official/fm_local/evidence-runs.json").read_text())
+        for task in ("build-word2vec-pipeline", "automationbench-marketing-content-gap-analysis"):  # 2nd: name > 32 chars
+            n = len(emap[task])
+            sp = arm_logic.POINTER["evidence"].format(n=n, path=arm_logic.RECORDS_TARGET)
+            self.assertEqual(self.run_check("evidence", sp, {"arm": "evidence", "records": n}, task=task), 0)
+            self.assertEqual(self.run_check("evidence", sp, {"arm": "evidence", "records": n - 1}, task=task), 1)
+        sp = "no pointer"
+        self.assertEqual(self.run_check("evidence", sp, {"arm": "evidence", "records": 0},
+                                        task="customer-delivery-contextual-preferences"), 0)
+
+    def test_api_harness_memory_metadata(self):  # as frontier_memory.agents.memory_metadata writes it
+        with_mem = {"sha256": "ab" * 32, "total_bytes": 1, "files": []}
+        self.assertEqual(self.run_check("cm", "", None, memory_meta=with_mem), 0)
+        self.assertEqual(self.run_check("cm", "", None, memory_meta=None), 1)
+        self.assertEqual(self.run_check("c0", "", None, memory_meta=None), 0)
+        self.assertEqual(self.run_check("k0", "", None, memory_meta=with_mem), 1)
+
+    def test_nested_skill_ranked_before_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            mem = memory(Path(tmp) / "m")
+            arm_logic.build_skills_dir(mem, Path(tmp) / "o", [("deploy-steps/nested", "deploy-steps/nested"),
+                                                              ("deploy-steps", "deploy-steps")], {})
+            self.assertTrue((Path(tmp) / "o/deploy-steps/nested/SKILL.md").is_file())
+            self.assertTrue((Path(tmp) / "o/deploy-steps/SKILL.md").is_file())
+
+    def test_finished_invalid_generation_not_redone(self):
+        out = derive_arm.derive("generator", DeriveTests.SRC, True)
+        self.assertIn("generation finished without valid memory; not redone (prereg)", out)
+        self.assertLess(out.index("ls jobs/$GENJOB/*__*/result.json"), out.index("fresh generation"))
 
 
 if __name__ == "__main__":
