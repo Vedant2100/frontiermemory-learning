@@ -379,5 +379,54 @@ class ArmCheckTests(unittest.TestCase):
         self.assertLess(out.index("ls jobs/$GENJOB/*__*/result.json"), out.index("fresh generation"))
 
 
+class EffortProbeTests(unittest.TestCase):
+    """effort_probe.py against a local fake server: reasoning grows with effort; Codex's "max" can be refused."""
+
+    def serve(self, refuse_max: bool):
+        import http.server
+        import threading
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a):
+                pass
+
+            def do_POST(self):
+                body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                effort = (body.get("reasoning") or {}).get("effort")
+                if refuse_max and effort == "max":
+                    self.send_response(400)
+                    self.end_headers()
+                    return
+                n = {"low": 10, "xhigh": 400, "max": 900}.get(effort, 0)
+                if self.path == "/v1/responses":
+                    doc = {"usage": {"output_tokens_details": {"reasoning_tokens": n}}, "output": []}
+                else:
+                    doc = {"content": [{"type": "thinking", "thinking": "x" * (4000 if "thinking" in body else 0)}]}
+                data = json.dumps(doc).encode()
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+        srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        self.addCleanup(srv.shutdown)
+        return srv.server_address[1]
+
+    def test_probe(self):
+        import effort_probe
+        lines, rejected = effort_probe.summarize(effort_probe.run(self.serve(False), "m"))
+        self.assertFalse(rejected)
+        text = "\n".join(lines)
+        self.assertIn("setting=max used_by='Codex' status=[200] reasoning_mean=900", text)
+        self.assertIn("setting=thinking-16k", text)
+        lines, rejected = effort_probe.summarize(effort_probe.run(self.serve(True), "m"))
+        self.assertTrue(rejected)
+
+    def test_driver_checks_stage(self):
+        src = (REPO / "official/vm/next-study-3.sh").read_text()
+        self.assertIn('[ "${STAGE:-all}" = checks ] && continue  # checks only: no counted set', src)
+        self.assertLess(src.index("effort-check.sh"), src.index("for arm in $ORDER"))
+
+
 if __name__ == "__main__":
     unittest.main()

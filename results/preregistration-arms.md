@@ -59,6 +59,10 @@ Also reported (no new runs):
 
 ## Gates and checks before counting
 
+- **Effort probe, once, before any arm** (`official/vm/effort_probe.py`, run by `effort-check.sh`):
+  - It sends the server the effort settings each harness sends and reports status and reasoning size.
+  - It is reported, not a pass/fail condition, except that a refused Responses setting (Hermes "xhigh", Codex "max") is flagged.
+- **Recommended first:** `STAGE=checks`, which runs only the effort probe, the harness gates and every end-to-end check (about a day), before the counted sets.
 - **End-to-end check per arm:** one uncounted Word2Vec attempt (`E2E=1`) that must pass the arm check, the serving check and the trial check. For the cue arm it must show the plugin ran (`hook_calls ≥ 1`); the number of insertions is reported, not required.
 - **Codex and Claude Code:** before C0/CM or K0/KM, a full uncounted gate as in gate 2 (`next-gate-harness.sh`): memory customer delivery plus one APEX task, then no-memory awilix-implicit to its full limit. It must show:
   - serving ok with keepalives;

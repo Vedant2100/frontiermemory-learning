@@ -86,8 +86,9 @@ Below, "turn 0" is what the model sees in its first request.
 
 **Lineage.**
 - Du et al., "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval", Findings of EMNLP 2025, arXiv 2510.05381: length alone changes performance.
-- VibeMemBench (arXiv 2609.23570) used one irrelevant distractor passage, not token-matched; its authors say the matched control was planned but not reported.
-- Ours is the matched version. Read VibeMemBench in full before citing it.
+- VibeMemBench (Fan et al., arXiv 2609.23570) **[verified]**: a fixed distractor passage of everyday sentences ("There is a cat sleeping on the sofa") in place of the memory, on three solvers. Results ranged from −3.4 to −0.7 points against memory-off, and every interval crossed zero.
+  - Its authors: "The distractor passage is not matched to the frozen record in token count"; a stricter length-controlled condition is described separately (their Table 12), and the paper does not say whether it was run.
+- Ours is matched in size and shape, and memory-shaped: skill files, frontmatter and an index.
 
 ### 2. Read-first: does the agent use what it has? *(adapted)*
 
@@ -132,7 +133,7 @@ Below, "turn 0" is what the model sees in its first request.
 - **Compared with:** HM1.
 
 **Lineage.**
-- SkillRouter (Zheng et al., arXiv 2603.22455): routing on name and description alone loses 37–44 points of Hit@1 against using skill bodies **[check table]**. So we rank on bodies.
+- SkillRouter (Zheng et al., arXiv 2603.22455) **[verified]**: "removing body reduces Hit@1 by 37.3pp for Qwen3-Emb-0.6B, 38.7pp for Qwen3-Emb-8B", and 44.0 for the 8B pipeline (Section 3, Figure 1). So we rank on bodies.
 - Liu et al., arXiv 2604.04323: skill gains shrink under realistic retrieval.
 - BM25 is the standard baseline in MemoryAgentBench and LongMemEval.
 - k = 3 follows SkillsBench (arXiv 2602.12670): 2–3 focused skills beat larger bundles.
@@ -194,7 +195,7 @@ Below, "turn 0" is what the model sees in its first request.
 - **Claude Code model tiers:** Harbor points Claude Code's background "haiku" and subagent tiers at the main model only when it sets the base URL itself. `claude_code_local.py` sets it there, so no call asks for a Claude model. (The second cluster's adapter sets it afterwards, so its background calls would still ask for a Claude model.) `API_TIMEOUT_MS` is 1800 s, Hermes's per-call limit.
 
 **Lineage.**
-- Terminal-Bench (Merrill et al., arXiv 2601.11868): the same model across harnesses; model choice usually matters more than scaffold **[check table]**.
+- Terminal-Bench (Merrill et al., arXiv 2601.11868) **[verified]**, Table 2: the same model across harnesses. GPT-5 scored 49.6 % with Codex CLI against 33.9 % with Mini-SWE-Agent; Claude Sonnet 4.5 scored 40.1–42.8 % across four harnesses. Its conclusion: "model selection is usually more important than agent scaffold".
 - HAL (arXiv 2510.11977): scaffold × model interactions.
 - Gloaguen et al., "Evaluating AGENTS.md", arXiv 2602.11988 **[verified]**: always-on context files did not raise success and cost over 20 % more.
 
@@ -249,6 +250,27 @@ Pass rate by how much memory the agent saw at start. No new run and no test:
 5. E-all.
 
 Precedents: SkillsBench (focused beats exhaustive); Evaluating AGENTS.md (length binning).
+
+## What is verified, and what only a real run can show
+
+- **Verified without the GPU:**
+  - Every design was checked against the pinned Hermes, Harbor and FrontierMemory source.
+  - 54+ tests pass; one set runs the real Harbor and FrontierMemory classes against a fake container.
+  - An independent review found 4 defects, all fixed with tests.
+  - Every cited number was confirmed in the paper itself.
+- **Only a real run can show:**
+  - Hermes loading the cue plugin in the container;
+  - Codex and Claude Code working through the relay to Ollama;
+  - the placebo built from the real run 1 memory;
+  - whether the server acts on each harness's effort setting.
+- **How to get those first:** `STAGE=checks` runs only the effort probe (`official/vm/effort_probe.py`), the two harness gates, and every arm's one-trial end-to-end check. That is about a day of GPU, against about 8 for all counted sets. It runs before committing to the full run.
+- **Effort probe, how:**
+  - It sends the settings each harness actually sends ("xhigh" from Hermes and "max" from Codex on the Responses API, and both Messages forms) and reports status and reasoning size.
+  - It also answers the main study's open item: whether effort reaches the model.
+  - Which Messages form Claude Code sends is not observable here, because the relay logs no bodies.
+- **Measurement caveat, impact checked:**
+  - The over-count of "skills indexed" in `exposure_measure.py` is in no reported number. README finding 6 and the paper use the file-probe count ("1 of 13 files shown").
+  - The exposure none-arm check is unaffected, since MEMORY.md is not shown in that arm.
 
 ## Corrections to earlier statements
 

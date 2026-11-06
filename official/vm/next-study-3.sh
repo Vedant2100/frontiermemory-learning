@@ -5,7 +5,9 @@
 # Each arm: a one-trial uncounted end-to-end check (E2E=1), then 45 counted trials; the Codex and Claude Code arms first need
 # their own full gate (next-gate-harness.sh); the recency arms are generation plus a probe, no task trials. After each set:
 # serving check and trial check, as next-study-2.sh. Any failure writes official/vm/STUDY_STOPPED and exits; rerunning skips
-# finished sets. ARMS="a b" limits the run to those arms, in the preregistered order. Always exits 0.
+# finished sets. ARMS="a b" limits the run to those arms, in the preregistered order. STAGE=checks runs only the effort
+# probe (effort-check.sh), the harness gates and each arm's end-to-end check (recency arms skipped: generation is the arm),
+# so every arm is exercised for real before ~8 days of counted sets. Always exits 0.
 REPO=$HOME/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-arms-$SLURM_JOB_ID.log; RES=$REPO/results/official
 ORDER="placebo readfirst cue scoped evidence raw generator c0 cm k0 km recency-a recency-b categorized"  # prereg order
@@ -72,10 +74,16 @@ recency_checked() {  # generation and probe only
   step "$arm: SET_CHECKED"
 }
 
+if ! grep -qs "EFFORT_PROBE_DONE\|EFFORT_PROBE_REJECTED" "$RES"/effort-probe-*.txt; then  # once, before any arm
+  gpus_free || stop "effort probe: GPUs not free"
+  step "effort probe (effort-check.sh): does the server act on each harness's effort setting?"
+  bash official/vm/effort-check.sh 2>&1 | tee -a "$LOGF"  # reported either way; a refused setting also shows in the gates
+fi
+
 for arm in $ORDER; do
   case " ${ARMS:-$ORDER} " in *" $arm "*) ;; *) continue ;; esac
   case "$arm" in
-    recency-*) recency_checked "$arm"; continue ;;
+    recency-*) [ "${STAGE:-all}" = checks ] && continue; recency_checked "$arm"; continue ;;
     c0|cm) g=CODEX; h=codex ;;
     k0|km) g=CLAUDE; h=claude ;;
     *) g="" ;;
@@ -87,9 +95,11 @@ for arm in $ORDER; do
   fi
   # run_checked returns 1 only for NO_VALID_MEMORY: reported, and that arm's trials are not run (prereg)
   run_checked "arm-$arm e2e" "fm-smoke-arm-$arm" 1 env E2E=1 bash official/vm/run-arm.sh "$arm" || continue
+  [ "${STAGE:-all}" = checks ] && continue  # checks only: no counted set
   run_checked "arm-$arm" "fm-tasks-arm-$arm" 45 bash official/vm/run-arm.sh "$arm" || continue
   ( python3 -I scripts/analyze_arms.py --dir results/official 2>&1 | tail -5 | cut -c1-170 ) | tee -a "$LOGF"
 done
 
+[ "${STAGE:-all}" = checks ] && { step "ARM_CHECKS_DONE: effort probe, harness gates and every arm's end-to-end check; no counted set run"; exit 0; }
 step "ARMS_DONE"
 exit 0

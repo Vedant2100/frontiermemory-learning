@@ -3,6 +3,7 @@
 # ended. Same resources and job name as run-all.sbatch, so --dependency=singleton queues it behind that job.
 #   sbatch --dependency=singleton official/vm/run-arms.sbatch            all arms, in the preregistered order
 #   sbatch --dependency=singleton --export=ALL,ARMS="placebo readfirst" official/vm/run-arms.sbatch
+#   sbatch --dependency=singleton --export=ALL,STAGE=checks official/vm/run-arms.sbatch   checks only, about a day
 #SBATCH --job-name=fm-serial
 #SBATCH --partition=vcggpu
 #SBATCH --nodelist=nodevcggpu02
