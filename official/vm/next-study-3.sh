@@ -10,7 +10,7 @@
 # so every arm is exercised for real before ~8 days of counted sets. Always exits 0.
 REPO=$HOME/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-arms-$SLURM_JOB_ID.log; RES=$REPO/results/official
-ORDER="placebo readfirst exposure-none cue scoped evidence raw generator recency-a recency-b categorized"  # prereg order, A5; c0 cm k0 km moved to the second machine (B1)
+ORDER="placebo readfirst exposure-none cue scoped evidence raw generator categorized"  # prereg order, A5; c0 cm k0 km (B1) and recency (B2) on the second machine
 rm -f official/vm/STUDY_STOPPED
 step() { echo; echo "=== $(date +%m-%d\ %H:%M:%S) $*"; }
 gpus_free() { for _ in $(seq 1 12); do u=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | sort -n | tail -1); [ "$u" -lt 1000 ] && return 0; pkill -u "$USER" -x ollama; sleep 5; done; return 1; }
@@ -25,7 +25,7 @@ except FileNotFoundError: sys.exit(1)
 sys.exit(0 if len(rows) == int(sys.argv[2]) and all(r.get("finished") and r.get("valid") for r in rows) else 1)
 PY
 }
-for s in control run1 run3 run4 exposure-all; do complete "fm-tasks-$s" 45 || stop "$s is not complete; the arms run after the preregistered sets"; done  # A5: exposure-none runs in ORDER
+for s in ${ARMS_PRE:-control run1 run3 run4 exposure-all}; do complete "fm-tasks-$s" 45 || stop "$s is not complete; the arms run after the preregistered sets"; done  # A5: exposure-none runs in ORDER; B2: the fast-track call sets ARMS_PRE
 
 trials_ok() {  # $1 summary name, $2 expected trials: all valid and finished, none given up on the model server
   python3 - "$RES/summary-$1.jsonl" "$2" <<'PY'
@@ -108,5 +108,6 @@ for arm in $ORDER; do
 done
 
 [ "${STAGE:-all}" = checks ] && { step "ARM_CHECKS_DONE: effort probe, harness gates and every arm's end-to-end check; no counted set run"; exit 0; }
+if [ -n "${ARMS:-}" ]; then step "ARMS_DONE for: $ARMS (a subset; the job is not released)"; exit 0; fi
 step "ARMS_DONE"; date > official/vm/DRIVER_DONE  # releases the held allocation
 exit 0

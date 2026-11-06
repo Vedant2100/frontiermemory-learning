@@ -114,3 +114,11 @@ They are not run on this cluster. Their designs, checks and tests are unchanged.
 differs.
 
 **Order here:** placebo, read-first, exposure-none (A5), cue, scoped, evidence, raw corpus, generator, recency a/b, categorized.
+
+## Amendment B2 (2026-11-06, before any arm trial)
+
+**Changes (user decisions):**
+- **Fast track:** placebo and read-first run first, right after the main study's run 3 and before its run 4 (main study amendment A6). Their designs, checks and comparators (vs HM1, and vs A0 for placebo) are unchanged.
+- **Recency a/b moves to the second machine,** and runs there first after its gate. It is generation-only and needs no baseline, so it is self-contained there.
+
+**Order here, then:** placebo, read-first; [main study: run 4, all-shown]; exposure-none, cue, scoped, evidence, raw corpus, generator, categorized.

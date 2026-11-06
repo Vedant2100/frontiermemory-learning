@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run 4 (prereg A4, D114), then the all-shown exposure arm (A5), then hands over to the arms driver. Starts only after next-study-resume.sh checked run 3 and stopped at the
+# Placebo and read-first (arms B2), then run 4 (prereg A4, A6), then the all-shown exposure arm (A5), then hands over to the arms driver. Starts only after next-study-resume.sh checked run 3 and stopped at the
 # RUN4_PENDING hold in run-exposure.sh. Same checks as the first driver. Run by the hold: echo official/vm/next-study-2.sh > official/vm/NEXT
 # control -> run1 -> run2 -> run3 through run-set-v1.sbatch, then the exploratory exposure arms (none, then all), each after a
 # one-trial uncounted end-to-end check. After each set: serving checks (check-serving.py) and trial checks. Any failure writes
@@ -61,6 +61,12 @@ step "study, part 2: full key audits of the finished sets (every line must read 
   rc=$?; vm_stop; exit $rc ) || stop "key audit of a finished set is not all zero, or could not be read"
 
 for s in control run1 run3; do complete "fm-tasks-$s" 45 || stop "$s is not complete; this driver only adds run 4"; done
+# B2 / A6 (user: fast-track the interesting arms): placebo and read-first run before run 4, through the arms driver.
+if ! complete fm-tasks-arm-placebo 45 || ! complete fm-tasks-arm-readfirst 45; then
+  step "fast-track arms (B2): placebo, read-first, before run 4"
+  ARMS="placebo readfirst" ARMS_PRE="control run1 run3" bash official/vm/next-study-3.sh
+  [ -f official/vm/STUDY_STOPPED ] && stop "fast-track arms stopped: $(cat official/vm/STUDY_STOPPED)"
+fi
 D4=$REPO/official/vm/.run-set-v1-run4.sbatch  # run-set-v1.sbatch with run4 allowed as a set name, nothing else changed (A4)
 python3 - "$REPO/official/vm/run-set-v1.sbatch" "$D4" <<'PY2' || stop "run-set-v1.sbatch changed: could not derive the run 4 script"
 import sys
