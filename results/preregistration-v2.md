@@ -81,3 +81,15 @@ The first restart gate (job 305865) failed: customer delivery with memory ended 
 2. **Retry supersede in the relay** (`official/fm_local/model_relay.py`): a POST byte-identical to one still in flight cancels the older call at Ollama.
 
 The serving check counts Ollama aborts caused by these cancels as expected, and still fails any other abort. A second gate (`official/vm/next-gate-2.sh`: a fresh generation, customer delivery and APEX with that memory, then awilix with no memory to its full limit) must pass before the control starts. Everything else in A2 is unchanged, including the order, the `model_unavailable` flag and the sensitivity analysis. The first gate is reported as an uncounted infrastructure check.
+
+
+## Amendment A4 (2026-11-06 01:30, after run 2's generation failed and before any run 3 task result)
+
+**What happened:** run 2's memory generation reached the official 6-hour limit (`AgentTimeoutError`) and exported no memory. As line 20 above says, this is reported and run 2's trials weren't run (D113). The likely cause is serving capacity: the generator delegated to parallel sub-agents, our single model slot serialised them, and the median wait for a model reply was 596 s.
+
+**Change (user decision, Nov 6):** one replacement memory run, **run 4**, is added after run 3 and before the exploratory exposure arms. Its procedure is identical: a fresh generation under the same 6-hour limit, then 3 attempts per task with the HM task agent, the same settings, checks and validity rules. If run 4's generation also fails, that is reported the same way, with no further replacement.
+
+**Analysis:**
+- **Primary:** unchanged in form. HM pools every memory run that produced valid memory: runs 1, 3 and 4, or fewer if a generation fails.
+- **Sensitivity:** the same test without run 4, i.e. the runs preregistered in the original design.
+- **Reported in full:** run 2's failed generation, with its duration, call count and wait times.
