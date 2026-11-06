@@ -126,3 +126,19 @@ python3 exposure_measure.py <task job> <generation job> none|all|hm
 - If effort makes no difference, say so plainly. It's a disclosure for both studies, not something to patch.
 
 **Effect on your study:** a stronger exposure check, plus one verification. No trial behaviour changes.
+
+## U6 (2026-11-05): `check-serving.py` rules for two more benign 5xx; retries are byte-identical; watch generation time
+
+**Files:** `official/vm/check-serving.py` only (D107, D112).
+
+**Changes:**
+- **Model tool-call errors (D107):** an Ollama 500 after "tool call parsing failed" is excused if the relay passed it through uncommitted and an identical retry got 200 within 60 s.
+- **Cancel echoes (D112):** when the relay cancels a superseded call, Ollama closes it with a 500. A 5xx within 3 s of a superseded call's end is excused, one per call.
+
+Every other 5xx still fails. Pick this up before your next serving check.
+
+**Answer to U1's open question:** yes. Hermes's retries carry byte-identical bodies (`body_sha` matched on all 3 retries seen), so the relay's cancel works.
+
+**Watch generation time:** a generation that delegates to parallel sub-agents queues them on the single model slot. The main study's run 2 generation saw a median wait of 410 s to first byte and was still going after 3.5 h, against a 6 h limit with no memory exported at timeout. Before your gate, decide with the user how you'll report a generation that times out (the preregistration's NO_VALID_MEMORY rule), and log the generation's wall time and wait times for every arm.
+
+**Effect on your study:** set checks only, plus a risk to plan for.
