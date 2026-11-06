@@ -11,27 +11,31 @@
 
 ## Results so far
 
-*Updated after each set. Last update: Nov 5, 07:40, run 1 at 11 of 45 trials.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
+*Updated after each set. Last update: Nov 5, 18:45, after run 1.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
 
 ### Counted sets
 
 | Set | Memory | Status | Passed | Valid | Gave up on the model | Serving faults |
 |---|---|---|---|---|---|---|
 | Control | none | done Nov 5 03:18 (14.4 h) | 6/45 | 45/45 | 0 | 0 (D105) |
-| Run 1 | generation 1: 13 files, 62 KB | running since Nov 5 03:43 | | | | |
-| Run 2 | generation 2 | queued | | | | |
+| Run 1 | generation 1: 13 files, 62 KB | done Nov 5 18:37 (15.3 h with generation) | 7/45 | 45/45 | 0 | 0 (D107: 1 model tool-call parse 500, recovered on retry) |
+| Run 2 | generation 2 | running since Nov 5 18:40 | | | | |
 | Run 3 | generation 3 | queued | | | | |
 | Exposure none, all (exploratory) | run 1's | queued | | | | |
 
-The memory effect (paired sign-flip over the 15 tasks, preregistration v2) can't be computed until run 1 is done. 15 tasks give low power: p < .05 needs at least 5 tasks moving the same way with none opposing.
+**Provisional memory effect, run 1 only** (the preregistered test pools runs 1–3): per-task pass rate +0.02 (95% CI −0.09 to +0.17), 2 tasks up, 2 down, one-sided p = 0.50. Without the 4 tasks whose reference solution fails: +0.06, 2 up, 1 down, p = 0.38. Not evidence either way yet. 15 tasks give low power: p < .05 needs at least 5 tasks moving the same way with none opposing.
 
-### Control, per task (3 attempts each)
+### Per task (3 attempts each)
 
-| Passed | Tasks |
-|---|---|
-| 2/3 | automationbench marketing content gap analysis; enterpriseops CSM |
-| 1/3 | automationbench sales partnership contract; cookie-store compositional changelog |
-| 0/3 | the other 11, including Eurogrid, which scores 0.83 on every attempt (its maximum reachable reward, per the maintainers) |
+| Task | Control | Run 1 |
+|---|---|---|
+| build-word2vec-pipeline | 0/3 | **2/3** |
+| apex-brightpath-market-share | 0/3 | **1/3** |
+| automationbench sales partnership contract | 1/3 | 0/3 |
+| cookie-store compositional changelog | 1/3 | 0/3 |
+| automationbench marketing content gap analysis | 2/3 | 2/3 |
+| enterpriseops CSM | 2/3 | 2/3 |
+| the other 9 (Eurogrid scores 0.83 every attempt, its maximum reachable reward per the maintainers) | 0/3 | 0/3 |
 
 ### Audit findings: where the official pipeline loses value
 
@@ -40,8 +44,10 @@ The memory effect (paired sign-flip over the 15 tasks, preregistration v2) can't
 | 1 | Harbor's egress proxy cuts any response whose first byte takes over 15 s. Cloud models answer sooner, so official runs never hit it; a local or slow model does | First control: 420 cut requests, 3 of 41 trials given up and scored as failures. That control was discarded (D93–D94). Fixed with a relay that starts the response at once (protocol v4) | M |
 | 2 | Hermes at effort max cancels any call after 300 s, but the cancel doesn't reach the model server, so retries queue behind abandoned calls. After 5 cancels it gives up (`model_unavailable`) | Gate 1: customer delivery and awilix both gave up. Short-task gates missed it twice; only a gate with the longest task caught it (D100–D101). Fixed with Hermes's own timeout settings, disclosed as a deviation (amendment A3) | M |
 | 3 | Hermes's post-answer memory review starts as the agent finishes and is cut when the container stops | Every trial loses that review. It doesn't affect scores, but the official pipeline drops part of the harness's own memory step (D99, D104) | M |
-| 4 | Harnesses show different shares of the same memory at the start | Codex about 21%, Claude Code about 48%, Hermes 100% ([survey](results/harness-exposure-survey.md)). The exposure arms test the effect | M (simulated) |
+| 4 | Harnesses show different shares of the same memory at the start | Of the entry file: Codex about 21%, Claude Code about 48%, Hermes 100% ([survey](results/harness-exposure-survey.md)). Of the whole memory, Hermes shows much less (finding 6). The exposure arms test the effect | M (simulated) |
 | 5 | No released task needs newer corpus evidence to win | Recency can't be tested on the released corpus ([check](results/recency-check.md), D97) | M |
+| 6 | Hermes shows only MEMORY.md and its skill index at start: 1 of 13 memory files in run 1. The rest must be opened by the agent | Measured from saved system prompts (D106); the survey's "Hermes 100%" refers to MEMORY.md only | M |
+| 7 | A malformed tool call from the model surfaces as an Ollama HTTP 500 | Once in about 4,100 calls; Hermes's identical retry recovered it (D107) | M |
 
 ## The new setup
 
@@ -72,7 +78,8 @@ Dates after Nov 4 are estimates.
 | Nov 3 | **Done:** smoke test; preregistration locked |
 | Nov 4 | **Done:** first control discarded (proxy cut, D93); gate 1 failed (Hermes give-ups, D100); gate 2 passed (D102) |
 | Nov 4–5 | **Done:** counted control (D105) |
-| Nov 5–7 | Run 1 (running), run 2, run 3, about 15–17 h each. Then the exposure arms, to about Nov 9 |
+| Nov 5 | **Done:** run 1 (D107) |
+| Nov 5–7 | Run 2 (running), run 3, about 15–16 h each. Then the exposure arms, to about Nov 8 |
 | Nov 5–11 | Audit of the real pipeline. Draft on incoming data |
 | **Nov 11** | **Go/no-go:** submit with the runs finished, stating the shortfall, or move to EASE (Jan 22) |
 | Nov 12–14 | Full draft review, 4-page fit, anonymized artifact |
