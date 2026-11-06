@@ -1,0 +1,97 @@
+# Preregistration: exploratory arms after the main study (draft, 2026-11-06)
+
+**Status: draft for the user's review. No arm may run until this file is approved and its commit is tagged `prereg-arms`;
+`official/vm/next-study-3.sh` refuses to start without that tag.** Designs, sources and worked examples:
+`results/arm-designs.md`. These arms are exploratory. None changes, replaces or is pooled with the preregistered study
+(`results/preregistration-v2.md`, amendments A1–A4), whose primary test stays as registered.
+
+## What stays exactly as in the main study
+
+Everything not listed under an arm's "changes" below:
+- **Pipeline and settings:**
+  - official `frontier-memory` commands (`generate-memory`, `run-tasks`, `score`, `bundle`) at commit `9af28c2f`, Harbor 0.24.0;
+  - the 15 released tasks, 3 attempts each;
+  - official per-task limits, timeout multiplier 1.0, one trial at a time;
+  - the local model `qwen3.8:27b-mtp-q4_K_M` (context 262,144) behind the same relay, with requested effort `max`;
+  - Hermes watchdog settings (D100) and the Docker-in-KVM guest;
+  - the APEX judge (Claude Opus 5.5, verifier-side only, judge key never in an agent's environment);
+  - the 6 h generation limit.
+- **Set mechanics:** each arm's set script is derived from `official/vm/run-set-v1.sbatch` by exact replacements (`official/vm/derive_arm.py`). So resume, the rerun of no-reward trials, scoring, summary, key audit and the per-set audit are the same code as in the counted sets.
+- **Checks after every set:** the same serving check (`check-serving.py`) and trial check, plus the arm check (`official/fm_local/arm_check.py`), which confirms from each trial's saved system prompt and the harness report that the arm was applied.
+
+## Fidelity to the official protocol
+
+Every arm uses the official commands and the documented `--harness module:Class` hook (`frontiermemory/docs/submitting-a-harness.md`). Each arm departs from `frontiermemory/docs/rules.md` in exactly the way listed here, and nowhere else.
+
+| Arm | Within the official rules? | Departure |
+|---|---|---|
+| Generator | Yes: a custom memory-generation harness is what the rules allow ("The memory generation model is your choice") | Only the local model, as in the main study |
+| C0/CM, K0/KM | Yes: the repo's fixed Codex and Claude Code task agents | Local model routing only (as Hermes in the main study). Codex gets a custom provider entry so its 300 s stream idle limit becomes 900 s, matching D100 |
+| Read-first, scoped, cue, categorized | No: they change the fixed task agent's memory loading | That loading change is the treatment |
+| Placebo | No: its memory does not come from a generation run | Control for content |
+| Raw corpus, evidence | No: the agent reads corpus files instead of generated memory | That is the treatment; it gives the task agent the gated corpus |
+| Recency a/b | No: the corpus digest differs from the release | A perturbed corpus copy is the treatment; no task trials |
+
+Unlike a leaderboard submission (three runs, each with fresh memory), each arm is one 45-trial set on one memory: HM run 1's generation, or the arm's own single generation. So an arm's effect is measured for one memory. That limit is stated with every result.
+
+## Arms, in run order (most promising first)
+
+The comparator is "vs HM1" where the arm keeps run 1's memory content, and "vs A0" otherwise. The test is the main study's one-sided exact paired sign-flip over the 15 task-level pass-rate differences, with a 95 % interval by test inversion (`scripts/analyze_arms.py`). Every result is labelled exploratory. With 15 tasks, p < .05 needs at least 5 tasks moving one way and none the other; a null is not evidence of no effect.
+
+| # | Arm | Changes | Comparator | Exploratory hypothesis (one-sided) |
+|---|---|---|---|---|
+| 1 | Placebo | Memory replaced by a size- and shape-matched placebo (`build_placebo.py`): same files and bytes, neutral names, public-domain text | vs HM1 and A0 | HM1 > placebo; placebo ≈ A0 |
+| 2 | Read-first | HM plus one fixed sentence asking the agent to check its saved memory before starting | vs HM1 | Read-first > HM1; memory opened in more trials |
+| 3 | Cue | Nothing shown at start. The fm-cue plugin appends a skill to a tool result when the call shares ≥ 2 non-generic terms with the skill's name and description, once per skill | vs HM1 | Cue > HM1 |
+| 4 | Scoped (BM25) | Skills index holds the top 3 skills by Okapi BM25 (k1 1.2, b 0.75) between the task instruction and each SKILL.md; the full memory stays on disk | vs HM1 | Scoped > HM1 |
+| 5 | Evidence | No generated memory; the task's related corpus runs (the coverage relation in `results/recency-check.json`) as files, with a one-line pointer; tasks with none get nothing | vs A0 (and HM1 for reference) | Evidence > A0 |
+| 6 | Raw corpus | As evidence, but all 750 corpus runs | vs A0 (and HM1) | Raw > A0 |
+| 7 | Generator | One fresh generation with three fixed, cited rules added to the official learn request (`generator_hermes.py`); HM delivery | vs A0 and HM1 | Generator > HM1 |
+| 8–9 | C0, CM | Codex task agent, without and with HM1's memory; needs its own full gate first | CM vs C0 | CM > C0 |
+| 10–11 | K0, KM | Claude Code task agent, likewise | KM vs K0 | KM > K0 |
+| 12–13 | Recency a, b | Generation only, on a corpus copy with 7 injected stale/current fact pairs (`build_recency_corpus.py`); b swaps the two host files' names | Probe counts, a vs b | Current-only exceeds stale-only. Descriptive; no task trials, no test |
+| 14 | Categorized | HM's memory skills indexed under three fixed categories (Hermes's own category headings) | vs HM1 | No direction claimed; likely null at about 10 skills |
+
+Also reported (no new runs):
+- **Dose, post hoc:** pass rate by how much memory was shown at start. E-none and cue show none; then scoped, HM1 and categorized, read-first, and E-all. Descriptive only.
+- **Memory opened:** per arm (`scripts/memory_access.py`), and the cue plugin's activations and insertions.
+- **Cross-harness differences** (C0 vs A0, K0 vs A0): descriptive only, with no test, because harness and loading rule are confounded.
+
+## Gates and checks before counting
+
+- **End-to-end check per arm:** one uncounted Word2Vec attempt (`E2E=1`) that must pass the arm check, the serving check and the trial check. For the cue arm it must show the plugin ran (`hook_calls ≥ 1`); the number of insertions is reported, not required.
+- **Codex and Claude Code:** before C0/CM or K0/KM, a full uncounted gate as in gate 2 (`next-gate-harness.sh`): memory customer delivery plus one APEX task, then no-memory awilix-implicit to its full limit. It must show:
+  - serving ok with keepalives;
+  - every trial valid on its first round;
+  - the judge completed;
+  - the harness's own API path at the relay (`/v1/responses` or `/v1/messages`).
+  - If Claude Code needs a translation proxy, stop and ask.
+- **Model unavailability for Codex and Claude Code:** detected by the serving check (client closes, upstream errors, max-wait drops), because the Hermes text marker does not exist for them.
+- **Placebo:** built once (`fm-mem-placebo`), and only used if every file matches its source's byte length and the skill counts match.
+- **Generator:** the arm check confirms the generation used the arm's request.
+- **Recency corpus:** used only with ≥ 6 facts and every file accounted for. The probe needs the generation to be valid.
+
+## Rules carried over unchanged
+
+- No-reward trials are rerun and not counted.
+- An incomplete APEX judge is regraded before the set is accepted.
+- No outcome-based exclusions, stopping or reordering.
+- A failed generation (NO_VALID_MEMORY) is reported and its trials are not run.
+- Any infrastructure stop keeps the finished sets and reports the shortfall.
+
+## Order, time and compute
+
+- **When it runs:** after the main study's job ends, in a new held job (`sbatch --dependency=singleton official/vm/run-arms.sbatch`), with the same 2 GPUs and node.
+- **Estimated time:** about 13–14 h per 45-trial set, giving about 8 days for all arms. That is 12 task sets, 2 gates, 14 end-to-end checks, and 3 generations of up to 6 h.
+- **Partial runs:** `ARMS="..."` runs a subset, still in this order.
+
+## Not decided here
+
+- Whether to run all arms or a subset, and whether any of them goes in the FORGE paper. Main-study results come first.
+- The open main-study item, whether Ollama applies the requested effort, applies equally to every arm.
+
+## Approval record
+
+- Arms preregistration: **draft, awaiting user approval**.
+- `prereg-arms` tag: **not created**.
+- First arm trial: **not run**.
