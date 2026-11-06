@@ -93,3 +93,12 @@ The serving check counts Ollama aborts caused by these cancels as expected, and 
 - **Primary:** unchanged in form. HM pools every memory run that produced valid memory: runs 1, 3 and 4, or fewer if a generation fails.
 - **Sensitivity:** the same test without run 4, i.e. the runs preregistered in the original design.
 - **Reported in full:** run 2's failed generation, with its duration, call count and wait times.
+
+
+## Amendment A5 (2026-11-06, before any exposure-arm trial)
+
+**Change (user decision, Nov 6):** the two exploratory exposure arms are reordered and nothing is dropped. **All shown** runs right after run 4, as the last set of this study's job. **None shown** moves into the exploratory arms' order (`results/preregistration-arms.md`), after the placebo and read-first arms and just before the cue-triggered arm, whose comparison it serves.
+
+**Why:** all shown tests a finding already in the paper: Hermes shows 1 of 13 memory files at start (D106). None shown matters most as the control for cue-triggered delivery. This order gets the results most relevant to the paper sooner.
+
+**Unchanged:** both arms' designs, checks, analysis and exploratory status (A2). Run 4 (A4) still comes first. The primary test is not affected.

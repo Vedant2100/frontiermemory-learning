@@ -1,10 +1,10 @@
 #!/bin/bash
-# Run 4 (prereg A4, D114), then the exposure arms. Starts only after next-study-resume.sh checked run 3 and stopped at the
+# Run 4 (prereg A4, D114), then the all-shown exposure arm (A5), then hands over to the arms driver. Starts only after next-study-resume.sh checked run 3 and stopped at the
 # RUN4_PENDING hold in run-exposure.sh. Same checks as the first driver. Run by the hold: echo official/vm/next-study-2.sh > official/vm/NEXT
 # control -> run1 -> run2 -> run3 through run-set-v1.sbatch, then the exploratory exposure arms (none, then all), each after a
 # one-trial uncounted end-to-end check. After each set: serving checks (check-serving.py) and trial checks. Any failure writes
 # official/vm/STUDY_STOPPED and returns to the hold; rerunning this driver skips finished sets and resumes the rest.
-# At the end it writes official/vm/DRIVER_DONE, so the job releases the GPUs. Always exits 0.
+# At the end it hands over to next-study-3.sh (the arms) when that is merged and tagged prereg-arms; otherwise it holds. Always exits 0.
 REPO=/home/csgrad/vbork001/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-$SLURM_JOB_ID.log; RES=$REPO/results/official  # same log as the first driver, appended
 rm -f official/vm/STUDY_STOPPED
@@ -76,11 +76,16 @@ run_checked run4 fm-tasks-run4 45 env SET=run4 SMOKE=0 bash "$D4"
 ( python3 -I scripts/analyze_official.py --dir results/official 2>&1 | grep -E '"flags"|no reward|judge failed|expected|attempts differ' | cut -c1-170 ) | tee -a "$LOGF"
 rm -f official/vm/RUN4_PENDING  # releases the hold in run-exposure.sh
 
-for arm in none all; do
+for arm in all; do  # A5: none-shown runs later, inside the arms order (next-study-3.sh), as cue's control
   run_checked "exposure-$arm e2e" "fm-smoke-exposure-$arm" 1 env E2E=1 bash official/vm/run-exposure.sh "$arm"
   tail -60 "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed" && stop "exposure-$arm: end-to-end check failed"
   run_checked "exposure-$arm" "fm-tasks-exposure-$arm" 45 bash official/vm/run-exposure.sh "$arm"
 done
 
-step "STUDY_DONE"; date > official/vm/DRIVER_DONE
+step "PREREGISTERED_SETS_DONE: control, run 1, run 3, run 4, exposure-all (A5)"
+if git -C "$REPO" rev-parse -q --verify refs/tags/prereg-arms >/dev/null && [ -f "$REPO/official/vm/next-study-3.sh" ]; then
+  echo official/vm/next-study-3.sh > official/vm/NEXT; step "next: the exploratory arms (next-study-3.sh), in this allocation"
+else
+  step "HOLD: arms not approved or not merged; the job keeps the GPUs until NEXT or DRIVER_DONE"
+fi
 exit 0
