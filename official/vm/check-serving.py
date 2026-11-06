@@ -11,6 +11,9 @@ Aborts up to the number of superseded calls are those cancels; any abort beyond 
 Model tool-call parse errors (D107): when the model emits a malformed tool call, Ollama logs "tool call parsing failed" and
 answers 500. That's model output, not serving. Such a 500 is excused only if the parse warning is in the 5 lines before it,
 and the relay passed it through uncommitted and a byte-identical retry got 200 within 60 s. Every other 5xx still fails.
+Cancel echoes (D112): when the relay cancels a superseded call, Ollama closes that request with a 500 (after an abort line if
+it was running, without one if it was still queued). A 5xx logged within 3 s of a superseded call's end, one per superseded
+call, is excused, and only while aborts don't exceed superseded calls either.
 
     python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive] [--summaries DIR]
 """
@@ -34,7 +37,17 @@ def recovered(i, r):  # an uncommitted 5xx answered, then a byte-identical retry
 r5xx = [(i, r) for i, r in enumerate(relay) if (r.get("upstream_status") or 0) >= 500]
 rec = sum(bool(recovered(i, r)) for i, r in r5xx)
 print(f"relay: {len(r5xx)} upstream 5xx passed through, {rec} retried identically and answered 200 (D107)")
-excused5xx = min(parse5xx, rec) if rec == len(r5xx) else 0
+ends = sorted(ts(r) + r.get("total_s", 0) for r in relay if r.get("superseded"))
+def gin(l):  # "[GIN] 2026/11/05 - 22:01:20 | 500 | ..." -> epoch seconds, local time
+    m = re.search(r"\[GIN\] (\d{4}/\d\d/\d\d - \d\d:\d\d:\d\d)", l)
+    return dt.datetime.strptime(m.group(1), "%Y/%m/%d - %H:%M:%S").timestamp() if m else None
+echo5xx, used = 0, set()
+for i in i5xx:
+    g = gin(server[i])
+    j = next((k for k, e in enumerate(ends) if k not in used and g is not None and abs(g - e) <= 3), None)
+    if j is not None: used.add(j); echo5xx += 1
+print(f"ollama: {echo5xx} HTTP 5xx within 3 s of a superseded call's end (relay cancel, D112)")
+excused5xx = (min(parse5xx, rec) if rec == len(r5xx) else 0) + (echo5xx if aborts <= superseded else 0)
 bad += ["client aborts"] * (aborts > superseded) + ["HTTP 5xx"] * (len(i5xx) > excused5xx)
 posts = [r for r in relay if r["method"] == "POST"]
 c = {k: sum(bool(r.get(k)) for r in relay) for k in ("committed", "upstream_error", "max_wait_drop", "client_closed")}
