@@ -1,0 +1,6 @@
+name: fm-cue
+version: "0.1.0"
+description: "FrontierMemory study, cue arm: append a saved memory skill to a tool result when the call matches the skill's name and description terms. Counts only in fm-cue-metrics.json."
+author: "FrontierMemory study"
+provides_hooks:
+  - transform_tool_result
