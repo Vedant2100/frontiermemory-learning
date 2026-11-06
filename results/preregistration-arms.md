@@ -102,3 +102,15 @@ Also reported (no new runs):
 - Runs in the main study's held allocation right after all shown (`next-study-2.sh` hands over), so the GPUs are never released between.
 - `prereg-arms` tag: **created with this commit**.
 - First arm trial: **not run**.
+
+## Amendment B1 (2026-11-06, before any arm trial)
+
+**Change (user decision):** the Codex (C0, CM) and Claude Code (K0, KM) arms, and their gates, move to a separate study on a
+second GPU machine, run from a fresh clone of `main` with its own gate, its own no-memory control and its own HM1 generation.
+They are not run on this cluster. Their designs, checks and tests are unchanged.
+
+**Why:** the second machine is idle, while this cluster's job ends on Nov 17. The harness pairs compare within the harness
+(CM vs C0, KM vs K0), so they don't need this cluster's numbers. The two machines' numbers are never compared: the hardware
+differs.
+
+**Order here:** placebo, read-first, exposure-none (A5), cue, scoped, evidence, raw corpus, generator, recency a/b, categorized.
