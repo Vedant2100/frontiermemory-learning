@@ -327,6 +327,7 @@ else
   run_tasks "$MEM"
 fi
 for round in 1 2 3; do  # official rule: trials with no reward are rerun and not counted
+  G "$ENV; sudo install -d -o fm -g fm -m 0700 -- jobs/$TASKJOB.no-reward"
   n=$(G "$ENV; python3 ~/official/fm_local/set_tools.py set-aside jobs/$TASKJOB")
   step "$SET: round $round: $n trial(s) with no reward set aside"
   [ "$n" = 0 ] && break
@@ -334,7 +335,7 @@ for round in 1 2 3; do  # official rule: trials with no reward are rerun and not
 done
 if [ "$SMOKE" = 1 ]; then
   step "$SET: smoke only: exercise the rerun path by setting the finished trial aside as if it had failed"
-  G "cd ~/official/frontiermemory; d=\$(ls -d jobs/$TASKJOB/*__* | head -1); mkdir -p jobs/$TASKJOB.smoke-aside; mv \$d jobs/$TASKJOB.smoke-aside/"
+  G "$ENV; sudo install -d -o fm -g fm -m 0700 -- jobs/$TASKJOB.smoke-aside; d=\$(ls -d jobs/$TASKJOB/*__* | head -1); mv \$d jobs/$TASKJOB.smoke-aside/"
   run_tasks "$MEM"
 fi
 
