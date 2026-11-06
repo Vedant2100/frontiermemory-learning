@@ -74,25 +74,45 @@ run_checked() {
   local status="$set_dir/set-check-$summary_name.json"
   local memory_access="$set_dir/memory-access-$summary_name.jsonl"
   local memory_access_check="$set_dir/memory-access-check-$summary_name.json"
+  local exposure_measure="$set_dir/exposure-measure-$summary_name.jsonl"
+  local exposure_measure_summary="$set_dir/exposure-measure-$summary_name.summary.json"
+  local exposure_measure_check="$set_dir/exposure-measure-check-$summary_name.json"
+  local measure_arm=""
+  case "$harness" in
+    exposure-none) measure_arm=none ;;
+    exposure-all) measure_arm=all ;;
+    delivery-cue) measure_arm=cue ;;
+    delivery-scoped) measure_arm=scoped ;;
+    delivery-categorized) measure_arm=categorized ;;
+    codex|claude-code) if [ "$kind" = control ]; then measure_arm=none; else measure_arm=hm; fi ;;
+  esac
   local validate=(python3 scripts/validate_set_cluster2.py "$summary" --kind "$kind" --attempts "$expected")
   [ "$task" = - ] || validate+=(--task "$task")
   [ -z "$memory_digest" ] || validate+=(--expected-memory "$memory_digest")
-  if [ -f "$status" ] && "${validate[@]}" >/dev/null 2>&1 &&
+  local exposure_measure_ok=1
+  if [ -n "$measure_arm" ]; then
+    python3 scripts/validate_exposure_measure_cluster2.py "$summary" "$exposure_measure" "$exposure_measure_summary" \
+      --harness "$harness" --arm "$measure_arm" --receipt "$exposure_measure_check" --verify-receipt >/dev/null 2>&1 || exposure_measure_ok=0
+  fi
+  if [ "$exposure_measure_ok" = 1 ] && [ -f "$status" ] && "${validate[@]}" >/dev/null 2>&1 &&
      python3 scripts/validate_memory_access_cluster2.py "$summary" "$memory_access" --harness "$harness" \
        --kind "$kind" --receipt "$memory_access_check" --verify-receipt >/dev/null 2>&1 &&
      grep -q '^AUDIT_OK$' "$audit"; then
-    if python3 - "$summary" "$audit" "$audit_config" "$serving" "$status" "$expected" "$harness" "$kind" "$memory_digest" "$task" "$arm" "$(git rev-parse HEAD)" "$memory_access" "$memory_access_check" "$TASK_COPY_SHA256" <<'PY'
+    if python3 - "$summary" "$audit" "$audit_config" "$serving" "$status" "$expected" "$harness" "$kind" "$memory_digest" "$task" "$arm" "$(git rev-parse HEAD)" "$memory_access" "$memory_access_check" "$TASK_COPY_SHA256" "$exposure_measure" "$exposure_measure_summary" "$exposure_measure_check" "$measure_arm" <<'PY'
 import hashlib, json, sys
 from pathlib import Path
 summary, audit, audit_config, serving, receipt = map(Path, sys.argv[1:6])
 expected, harness, kind, memory, task, arm, commit = sys.argv[6:13]
 memory_access, memory_access_check = map(Path, sys.argv[13:15])
 expected_task_copy = sys.argv[15]
+exposure_measure, exposure_measure_summary, exposure_measure_check = map(Path, sys.argv[16:19])
+measure_arm = sys.argv[19]
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 try:
     r = json.loads(receipt.read_text())
     a = json.loads(audit_config.read_text())
     ma = json.loads(memory_access_check.read_text())
+    u5 = json.loads(exposure_measure_check.read_text()) if measure_arm else {}
     rows = [json.loads(x) for x in summary.read_text().splitlines() if x.strip()]
     key_logs = list(summary.parent.glob("key-audit-*.log"))
 except (OSError, ValueError):
@@ -137,6 +157,14 @@ ok = (r.get("status") == "pass" and r.get("summary_sha256") == sha(summary)
       and ma.get("memory_sha256") == (memory or None)
       and r.get("memory_access_sha256") == sha(memory_access)
       and r.get("memory_access_check_sha256") == sha(memory_access_check)
+      and r.get("exposure_measure_arm") == (measure_arm or None)
+      and (not measure_arm or (u5.get("status") == "pass" and u5.get("harness") == harness
+           and u5.get("arm") == measure_arm and u5.get("trial_count") == int(expected)
+           and u5.get("summary_sha256") == sha(summary) and u5.get("measure_sha256") == sha(exposure_measure)
+           and u5.get("measure_summary_sha256") == sha(exposure_measure_summary)
+           and r.get("exposure_measure_sha256") == sha(exposure_measure)
+           and r.get("exposure_measure_summary_sha256") == sha(exposure_measure_summary)
+           and r.get("exposure_measure_check_sha256") == sha(exposure_measure_check)))
       and len(key_logs) == 1 and r.get("key_audit_sha256") == sha(key_logs[0])
       and "AUDIT_SAMPLE" in key_logs[0].read_text() and "AUDIT_DONE" in key_logs[0].read_text()
       and network_ok
@@ -168,13 +196,19 @@ PY
   [ "${PIPESTATUS[0]}" = 0 ] || stop "$label: summary check failed"
   "${validate[@]}" || stop "$label: summary validation failed"
   grep -q '^AUDIT_OK$' "$audit" || stop "$label: audit evidence missing or failed"
-  python3 - "$summary" "$audit" "$audit_config" "$serving" "$status" "$harness" "$kind" "$memory_digest" "$task" "$arm" "$(git rev-parse HEAD)" "$memory_access" "$memory_access_check" "$TASK_COPY_SHA256" <<'PY'
+  if [ -n "$measure_arm" ]; then
+    python3 scripts/validate_exposure_measure_cluster2.py "$summary" "$exposure_measure" "$exposure_measure_summary" \
+      --harness "$harness" --arm "$measure_arm" --receipt "$exposure_measure_check" | tee -a "$LOGF" || stop "$label: U5 exposure measurement failed validation"
+  fi
+  python3 - "$summary" "$audit" "$audit_config" "$serving" "$status" "$harness" "$kind" "$memory_digest" "$task" "$arm" "$(git rev-parse HEAD)" "$memory_access" "$memory_access_check" "$TASK_COPY_SHA256" "$exposure_measure" "$exposure_measure_summary" "$exposure_measure_check" "$measure_arm" <<'PY'
 import hashlib, json, os, sys, tempfile
 from pathlib import Path
 summary, audit, audit_config, serving, out = map(Path, sys.argv[1:6])
 harness, kind, memory, task, arm, commit = sys.argv[6:12]
 memory_access, memory_access_check = map(Path, sys.argv[12:14])
 expected_task_copy = sys.argv[14]
+exposure_measure, exposure_measure_summary, exposure_measure_check = map(Path, sys.argv[15:18])
+measure_arm = sys.argv[18]
 def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 ma = json.loads(memory_access_check.read_text())
 audit_record = json.loads(audit_config.read_text())
@@ -188,6 +222,10 @@ report = {"status":"pass", "summary_sha256":sha(summary), "audit_sha256":sha(aud
           "memory_access_sha256":sha(memory_access), "memory_access_check_sha256":sha(memory_access_check),
           "task_copy_manifest_sha256":sha(summary.parent / f"task-copy-manifest-{summary.name.removeprefix('summary-').removesuffix('.jsonl')}.json"),
           "network_probe_sha256":sha(summary.parent / "network-probe.json"),
+          "exposure_measure_arm":measure_arm or None,
+          "exposure_measure_sha256":sha(exposure_measure) if measure_arm else None,
+          "exposure_measure_summary_sha256":sha(exposure_measure_summary) if measure_arm else None,
+          "exposure_measure_check_sha256":sha(exposure_measure_check) if measure_arm else None,
           "task_copy_sha256":json.loads(audit_config.read_text()).get("task_copy_sha256"),
           "network_policy":json.loads(audit_config.read_text()).get("network_policy"),
           "cluster2_commit":commit, "harness":harness, "kind":kind, "memory_sha256":memory or None,

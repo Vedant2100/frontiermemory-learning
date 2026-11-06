@@ -16,6 +16,7 @@ SLURM_JOB_ID=${SLURM_JOB_ID:-c2-gate-$TASK_HARNESS-$(date +%m%d%H%M)}
 [[ "$SLURM_JOB_ID" =~ ^c2-[A-Za-z0-9_-]+$ ]] || { echo BAD_RUN_ID; exit 1; }
 source official/vm/lib-cluster2.sh
 bash official/vm/check-updates-cluster2.sh || exit 1
+python3 scripts/validate_effort_check_cluster2.py results/effort-check-cluster2.json || { echo U5_EFFORT_CHECK_REQUIRED_BEFORE_GATE; exit 1; }
 acquire_study_lock || exit 1
 [ -z "$(git status --porcelain)" ] || { echo WORKTREE_NOT_CLEAN; exit 1; }
 EXPECTED_MODEL=22130167c4c20e20c7b71454612966ca8e8171e9b3cc8ab6ce8aa6cbfec79643
@@ -138,6 +139,7 @@ relay_rows = [json.loads(x) for x in Path(olog, 'relay.log').read_text().splitli
 routes = __import__('collections').Counter(r.get('path') for r in relay_rows if r.get('method') == 'POST')
 record = {'status':'pass','gate_job':runid,'harness':harness,'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
  'cluster2_commit':commit,'handoff_blob':handoff,'model':'qwen3.8:27b-mtp-q4_K_M','model_manifest_sha256':model,
+ 'effort_check_sha256':sha(Path('results/effort-check-cluster2.json')),
  'corpus_manifest_sha256':corpus,'reference_receipt_sha256':sha(ref),'task_release':'letta-ai/frontier-memory@v1.0',
  'frontiermemory_commit':'9af28c2f8210779f442aa36a1d73553630441af5','task_manifest_sha256':reference['task_manifest_sha256'],
  'harbor_version':reference['harbor_version'],'docker_server_version':reference['docker_server_version'],

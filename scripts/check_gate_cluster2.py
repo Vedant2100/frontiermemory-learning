@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MODEL = "22130167c4c20e20c7b71454612966ca8e8171e9b3cc8ab6ce8aa6cbfec79643"
 CORPUS = "19346a3e46b022ed1def552f8e4f4c50030cefd3250a7a8e10676b46b370b763"
 TOOLS = "9af28c2f8210779f442aa36a1d73553630441af5"
-UPDATE = "8cea454bfe730e111d19dac04dd9649290b0c0b0"
+UPDATE = "1f8025c520ff5a51861854da05bd53a1645c6f91"
 HARNESSES = ("hermes", "codex", "claude-code")
 MEMORY_TASKS = ("customer-delivery-contextual-preferences", "apex-eurogrid-curtailment")
 CONTROL_TASK = "awilix-release-tier-implicit"
@@ -73,6 +73,11 @@ def check_one(harness: str, require_prereg: bool) -> str:
     require(receipt_path.is_relative_to(ROOT) and receipt_path.is_file(), f"{harness}: receipt missing or outside clone")
     require(digest(receipt_path) == wanted_sha, f"{harness}: receipt digest mismatch")
     receipt = json.loads(receipt_path.read_text())
+    effort_receipt = ROOT / "results/effort-check-cluster2.json"
+    require(effort_receipt.is_file() and digest(effort_receipt) == receipt.get("effort_check_sha256"),
+            f"{harness}: U5 effort-check receipt missing or changed")
+    subprocess.run([sys.executable, str(ROOT / "scripts/validate_effort_check_cluster2.py"), str(effort_receipt)],
+                   cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
     gate_id = receipt.get("gate_job")
     require(isinstance(gate_id, str) and re.fullmatch(r"c2-[A-Za-z0-9_-]+", gate_id), f"{harness}: gate id malformed")
     gate_commit = receipt.get("cluster2_commit")
@@ -307,7 +312,7 @@ def main() -> int:
         require(not git("status", "--porcelain"), "worktree is not clean")
         require(git("rev-parse", "origin/main:HANDOFF-updates.md") == UPDATE, "handoff update changed")
         digests = [check_one(harness, args.require_prereg)
-                   for harness in HARNESSES if args.all else (args.harness,)]
+                   for harness in (HARNESSES if args.all else (args.harness,))]
         if args.all:
             require(len(set(digests)) == 1,
                     "Hermes, Codex, and Claude Code gates used different task-copy digests")

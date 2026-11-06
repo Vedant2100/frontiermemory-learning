@@ -7,7 +7,7 @@ cd "$REPO"
 git fetch --quiet origin || { echo UPDATE_CHECK_FETCH_FAILED; exit 1; }
 git show origin/main:HANDOFF-updates.md | grep '^## U[0-9]' || { echo UPDATE_CHECK_MISSING; exit 1; }
 current=$(git rev-parse origin/main:HANDOFF-updates.md)
-[ "$current" = 8cea454bfe730e111d19dac04dd9649290b0c0b0 ] || { echo UPDATE_CHECK_NEW_CONTENT; exit 1; }
+[ "$current" = 1f8025c520ff5a51861854da05bd53a1645c6f91 ] || { echo UPDATE_CHECK_NEW_CONTENT; exit 1; }
 # The GitHub API published cluster2 as a tree snapshot on e7b84fd, so the earlier
 # local U1 commit is not an ancestor. Verify the imported U1 files by blob instead.
 check_blob() {
@@ -24,4 +24,9 @@ check_blob official/vm/check-serving.py 1ce151d4dae0309a341610bd3c80e8e549372ae1
 grep -q 'D15.*Applied U1' results/decisions-log-cluster2.md || { echo UPDATE_CHECK_U1_DECISION_MISSING; exit 1; }
 grep -q 'D20.*D103.*Codex.*Claude Code' results/decisions-log-cluster2.md || { echo UPDATE_CHECK_U3_NOT_APPLIED; exit 1; }
 grep -q 'D21.*D104.*agent-end close' results/decisions-log-cluster2.md || { echo UPDATE_CHECK_U4_NOT_APPLIED; exit 1; }
+grep -q 'D34.*U5.*exposure' results/decisions-log-cluster2.md || { echo UPDATE_CHECK_U5_NOT_APPLIED; exit 1; }
+grep -q 'D35.*U5 effort check' results/decisions-log-cluster2.md || { echo UPDATE_CHECK_U5_EFFORT_NOT_RECORDED; exit 1; }
+test -s scripts/exposure_measure_cluster2.py || { echo UPDATE_CHECK_U5_MEASURE_MISSING; exit 1; }
+test -s scripts/validate_exposure_measure_cluster2.py || { echo UPDATE_CHECK_U5_VALIDATOR_MISSING; exit 1; }
+python3 scripts/validate_effort_check_cluster2.py results/effort-check-cluster2.json >/dev/null || { echo UPDATE_CHECK_U5_EFFORT_RECEIPT_INVALID; exit 1; }
 echo UPDATE_CHECK_OK

@@ -5,6 +5,7 @@ T=
 PROBE_IMAGE=alpine:3.23.4@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11  # Harbor's kernel probe: an uncached slow pull reads as "no-network unsupported"
 # Harbor may request the tag form; keep it aliased to this pinned digest.
 PROBE_IMAGE_TAG=${PROBE_IMAGE%%@*}
+GUEST_DNS_SERVER=169.235.16.10  # UCR primary resolver; the QEMU DNS proxy intermittently times out on Docker auth lookups.
 mkdir -p "$ROOT"
 chmod 700 "$ROOT"
 SSH=(); SCP=(); QEMU_PID=; SEED_PID=; C2_VM_LOCKED=0
@@ -78,8 +79,49 @@ vm_boot() {
   trap 'vm_stop' EXIT
   local o=(-i "$ROOT/id" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5 -o LogLevel=ERROR -o ServerAliveInterval=60)
   SSH=(ssh "${o[@]}" -p "$SSH_PORT" fm@127.0.0.1); SCP=(scp "${o[@]}" -P "$SSH_PORT" -q -r)
-  for i in $(seq 1 60); do "${SSH[@]}" true 2>/dev/null && return 0; sleep 5; done
+  for i in $(seq 1 60); do
+    if "${SSH[@]}" true 2>/dev/null; then
+      configure_guest_dns || return 1
+      return 0
+    fi
+    sleep 5
+  done
   echo "guest SSH never came up"; tail -20 "$ROOT/console.log"; return 1
+}
+
+configure_guest_dns() {
+  "${SSH[@]}" "sudo bash -s -- '$GUEST_DNS_SERVER'" <<'REMOTE'
+set -euo pipefail
+dns=$1
+iface=$(ip -4 route show default | awk 'NR == 1 {print $5}')
+[[ "$iface" =~ ^[[:alnum:]_.-]+$ ]] || { echo GUEST_DNS_INTERFACE_NOT_FOUND >&2; exit 1; }
+network_file=$(networkctl status "$iface" --no-pager | sed -n 's/^[[:space:]]*Network File: //p')
+expected="/run/systemd/network/10-netplan-${iface}.network"
+[[ "$network_file" == "$expected" ]] || { echo "UNEXPECTED_GUEST_NETWORK_FILE=$network_file" >&2; exit 1; }
+dropin_dir="/etc/systemd/network/$(basename "$network_file").d"
+install -d -m 0755 "$dropin_dir"
+dropin="$dropin_dir/50-cluster2-dns.conf"
+tmp="$dropin.tmp.$$"
+printf '[Network]\nDNS=%s\n\n[DHCPv4]\nUseDNS=no\n\n[DHCPv6]\nUseDNS=no\n\n[IPv6AcceptRA]\nUseDNS=no\n' "$dns" > "$tmp"
+chmod 0644 "$tmp"
+if ! cmp -s "$dropin" "$tmp" 2>/dev/null; then
+  mv "$tmp" "$dropin"
+  networkctl reload
+else
+  rm -f "$tmp"
+fi
+resolvectl flush-caches
+actual=
+for attempt in $(seq 1 20); do
+  actual=$(resolvectl dns "$iface" | sed -E 's/^Link [0-9]+ \([^)]*\): //')
+  [[ "$actual" == "$dns" ]] && break
+  sleep 1
+done
+[[ "$actual" == "$dns" ]] || { echo "GUEST_DNS_MISMATCH actual=$actual expected=$dns" >&2; exit 1; }
+all_dns=$(resolvectl dns | awk -F': ' 'NF > 1 {n = split($NF, servers, " "); for (i = 1; i <= n; i++) if (servers[i] != "") print servers[i]}' | sort -u | tr '\n' ' ' | sed 's/ $//')
+[[ "$all_dns" == "$dns" ]] || { echo "GUEST_DNS_SET_MISMATCH actual=$all_dns expected=$dns" >&2; exit 1; }
+printf 'GUEST_DNS_CONFIGURED link=%s server=%s persistent_dropin=%s\n' "$iface" "$dns" "$dropin"
+REMOTE
 }
 
 vm_stop() {

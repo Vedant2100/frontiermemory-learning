@@ -18,6 +18,9 @@ set -Eeuo pipefail
 [[ "$SET" =~ ^[a-z0-9][a-z0-9-]{0,39}$ ]] || { echo "bad SET"; exit 2; }
 case "$SMOKE" in 0|1|gate|apex) ;; *) echo "bad SMOKE"; exit 2 ;; esac
 : "${TASK_HARNESS:=hermes}"
+NETWORK_PROBE_ONLY="${NETWORK_PROBE_ONLY:-0}"
+case "$NETWORK_PROBE_ONLY" in 0|1) ;; *) echo BAD_NETWORK_PROBE_ONLY; exit 2 ;; esac
+[ "$NETWORK_PROBE_ONLY" = 0 ] || [ "$SMOKE" = gate ] || { echo NETWORK_PROBE_ONLY_REQUIRES_UNCOUNTED_GATE_MODE; exit 2; }
 EXPERIMENT_ARM=""
 case "$TASK_HARNESS" in
   hermes) TASK_ADAPTER=fm_local.hermes_local:LocalHermes; TASK_PROVIDER=openai; TASK_AGENT_ARGS="" ;;
@@ -98,6 +101,9 @@ PY
 fi
 source official/vm/lib-cluster2.sh
 bash official/vm/check-updates-cluster2.sh || exit 1
+if [ "$SMOKE" = gate ]; then
+  python3 scripts/validate_effort_check_cluster2.py results/effort-check-cluster2.json || { echo U5_EFFORT_CHECK_REQUIRED_BEFORE_GATE; exit 1; }
+fi
 acquire_study_lock || exit 1
 python3 official/vm/gpu-check-cluster2.py || exit 1
 used_kb=$(du -sk "$ROOT" | cut -f1); available_kb=$(df -Pk "$ROOT" | awk 'NR==2 {print $4}')
@@ -249,6 +255,14 @@ run_network_probe() {
 }
 
 run_network_probe || exit 1
+if [ "$NETWORK_PROBE_ONLY" = 1 ]; then
+  G "rm -f $PROBE_SAFE"
+  step "NETWORK_PROBE_ONLY_OK no task-agent task, generation, or counted set launched"
+  cleanup_c2
+  trap - EXIT
+  trap - USR1
+  exit 0
+fi
 
 MEM=""
 case "$MEMORY_SOURCE" in
@@ -350,6 +364,34 @@ elif [ "$MEMORY_SOURCE" = none ]; then kind=control
 fi
 python3 scripts/validate_memory_access_cluster2.py "$summary" "$RESULTS/memory-access-$TASKJOB.jsonl" \
   --harness "$TASK_HARNESS" --kind "$kind" --receipt "$RESULTS/memory-access-check-$TASKJOB.json"
+measure_arm=""
+case "$TASK_HARNESS" in
+  exposure-none) measure_arm=none ;;
+  exposure-all) measure_arm=all ;;
+  delivery-cue) measure_arm=cue ;;
+  delivery-scoped) measure_arm=scoped ;;
+  delivery-categorized) measure_arm=categorized ;;
+  codex|claude-code)
+    if [ "$SMOKE" = 0 ]; then
+      if [ "$MEMORY_SOURCE" = none ]; then measure_arm=none; else measure_arm=hm; fi
+    fi
+    ;;
+esac
+if [ -n "$measure_arm" ]; then
+  measure_genjob=$GENJOB
+  if { [ "$TASK_HARNESS" = codex ] || [ "$TASK_HARNESS" = claude-code ]; } && [ "$MEMORY_SOURCE" = none ]; then
+    measure_genjob=${MEMORY_JOB_NAME:-fm-gen-run1}
+  fi
+  "${SCP[@]}" "$REPO/scripts/exposure_measure_cluster2.py" fm@127.0.0.1:exposure_measure_cluster2.py
+  expected_measure_count=$(wc -l < "$summary")
+  G "cd ~/official/frontiermemory; p=\$(find jobs/$measure_genjob -path '*/artifacts/memory/MEMORY.md' -print -quit); test -n \"\$p\"; python3 ~/exposure_measure_cluster2.py jobs/$TASKJOB \"\${p%/MEMORY.md}\" --harness $TASK_HARNESS --arm $measure_arm --expected-count $expected_measure_count --out ~/exposure-measure-$TASKJOB.jsonl" || { echo EXPOSURE_MEASURE_FAILED; exit 1; }
+  "${SCP[@]}" "fm@127.0.0.1:exposure-measure-$TASKJOB.jsonl" "$RESULTS/"
+  "${SCP[@]}" "fm@127.0.0.1:exposure-measure-$TASKJOB.summary.json" "$RESULTS/"
+  python3 scripts/validate_exposure_measure_cluster2.py "$summary" \
+    "$RESULTS/exposure-measure-$TASKJOB.jsonl" "$RESULTS/exposure-measure-$TASKJOB.summary.json" \
+    --harness "$TASK_HARNESS" --arm "$measure_arm" \
+    --receipt "$RESULTS/exposure-measure-check-$TASKJOB.json" || { echo EXPOSURE_MEASURE_VALIDATION_FAILED; exit 1; }
+fi
 validate=(python3 scripts/validate_set_cluster2.py "$summary" --kind "$kind")
 if [ "$SMOKE" = gate ]; then
   : "${GATE_TASKS:?exact task ids required for gate summary validation}"
