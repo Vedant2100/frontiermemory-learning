@@ -8,6 +8,9 @@ after it. The review starts as the final answer lands; the close comes when the 
 18 s (D104), so the rule keys on the start. Every other close still fails.
 Retries (D100): when the relay cancels a call that a byte-identical retry superseded, Ollama logs that as a client abort.
 Aborts up to the number of superseded calls are those cancels; any abort beyond them fails. Superseded calls are reported.
+Model tool-call parse errors (D107): when the model emits a malformed tool call, Ollama logs "tool call parsing failed" and
+answers 500. That's model output, not serving. Such a 500 is excused only if the parse warning is in the 5 lines before it,
+and the relay passed it through uncommitted and a byte-identical retry got 200 within 60 s. Every other 5xx still fails.
 
     python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive] [--summaries DIR]
 """
@@ -17,12 +20,22 @@ olog, s0, r0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 bad = []
 server = open(f"{olog}/server.log", errors="replace").read().splitlines()[s0:]
 aborts = sum("client closing the connection" in l for l in server)
-s5xx = sum(bool(re.search(r"\|\s*5\d\d\s*\|", l)) for l in server)
-print(f"ollama: {len(server)} new lines, {aborts} client aborts, {s5xx} HTTP 5xx")
+i5xx = [i for i, l in enumerate(server) if re.search(r"\|\s*5\d\d\s*\|", l)]
+parse5xx = sum(any("tool call parsing failed" in l for l in server[max(0, i - 5):i]) for i in i5xx)
+print(f"ollama: {len(server)} new lines, {aborts} client aborts, {len(i5xx)} HTTP 5xx ({parse5xx} after a tool-call parse error)")
 relay = [json.loads(l) for l in open(f"{olog}/relay.log").read().splitlines()[r0:]]
 superseded = sum(bool(r.get("superseded")) for r in relay)
 print(f"relay: {superseded} calls superseded by an identical retry and cancelled (D100)")
-bad += ["client aborts"] * (aborts > superseded) + ["HTTP 5xx"] * bool(s5xx)
+year0 = dt.date.today().year
+def ts(r): return dt.datetime.strptime(f"{year0}-{r['t']}", "%Y-%m-%d %H:%M:%S").timestamp()
+def recovered(i, r):  # an uncommitted 5xx answered, then a byte-identical retry got 200 within 60 s
+    return not r.get("committed") and r.get("body_sha") and any(
+        x.get("body_sha") == r["body_sha"] and x.get("upstream_status") == 200 and 0 <= ts(x) - ts(r) <= 60 for x in relay[i + 1:])
+r5xx = [(i, r) for i, r in enumerate(relay) if (r.get("upstream_status") or 0) >= 500]
+rec = sum(bool(recovered(i, r)) for i, r in r5xx)
+print(f"relay: {len(r5xx)} upstream 5xx passed through, {rec} retried identically and answered 200 (D107)")
+excused5xx = min(parse5xx, rec) if rec == len(r5xx) else 0
+bad += ["client aborts"] * (aborts > superseded) + ["HTTP 5xx"] * (len(i5xx) > excused5xx)
 posts = [r for r in relay if r["method"] == "POST"]
 c = {k: sum(bool(r.get(k)) for r in relay) for k in ("committed", "upstream_error", "max_wait_drop", "client_closed")}
 ka = sum(r.get("keepalives", 0) for r in relay)

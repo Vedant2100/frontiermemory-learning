@@ -76,7 +76,7 @@ import collections,json,sys
 print('judge status', dict(collections.Counter(json.loads(l).get('judge_status') for l in open(sys.argv[1]))))\" ~/summary-$TASKJOB.jsonl"
 [ "$SET" = control ] && [ "$SMOKE" != 1 ] || G "$ENV; frontier-memory bundle --memory-job jobs/$GENJOB --task-job jobs/$TASKJOB --out $TASKJOB-bundle.tar.gz 2>&1 | tail -14 | cut -c1-170"
 mkdir -p "$REPO/results/official"; "${SCP[@]}" "fm@127.0.0.1:summary-$TASKJOB.jsonl" "$REPO/results/official/"
-G "cut -d' ' -f2- ~/key-audit-$SET.log | sort | uniq -c | sort -rn | head -14 | cut -c1-100; echo \"saved files holding the key: \$(sudo grep -rlF \"\$(cat ~/.judge-key)\" ~/official/frontiermemory/jobs/$TASKJOB 2>/dev/null | wc -l)\"; sudo docker system df | grep -E 'Build Cache' | cut -c1-70; df -h / | tail -1"
+G "cut -d' ' -f2- ~/key-audit-$SET.log | sort | uniq -c | sort -rn | head -14 | cut -c1-150; echo \"saved files holding the key: \$(sudo grep -rlF \"\$(cat ~/.judge-key)\" ~/official/frontiermemory/jobs/$TASKJOB 2>/dev/null | wc -l)\"; sudo docker system df | grep -E 'Build Cache' | cut -c1-70; df -h / | tail -1"
 "${SCP[@]}" "$REPO/official/vm/audit-set.py" fm@127.0.0.1:audit-set.py; G "cd ~/official/frontiermemory; sudo python3 ~/audit-set.py jobs/$TASKJOB" > "$REPO/results/official/audit-$TASKJOB.txt" 2>&1; tail -3 "$REPO/results/official/audit-$TASKJOB.txt"
 vm_stop; trap - EXIT; kill $OLLAMA_PID 2>/dev/null; pkill -u "$USER" -x ollama; rm -rf "${OLOG:?}/tmp"
 step "$SET: SET_DONE"
