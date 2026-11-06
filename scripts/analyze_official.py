@@ -19,7 +19,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 from analyze_matrix import clopper_pearson, signflip_p  # noqa: E402
 
-CONTROL, RUNS = "fm-tasks-control", ("fm-tasks-run1", "fm-tasks-run2", "fm-tasks-run3")
+CONTROL, RUNS = "fm-tasks-control", ("fm-tasks-run1", "fm-tasks-run2", "fm-tasks-run3", "fm-tasks-run4")  # run 4 replaces run 2 (A4)
+REPLACEMENT = "fm-tasks-run4"
 EXPECTED_ATTEMPTS, N_TASKS = 3, 15
 NO_REFERENCE_PASS = {"cattrs-compositional-changelog", "cookie-store-compositional-changelog",
                      "enterpriseops-csm-26d1b04a", "enterpriseops-teams-2725d17f"}
@@ -107,7 +108,7 @@ def analyse(sets: dict[str, list[dict]]) -> dict:
     if CONTROL not in sets or not runs:
         return {"flags": flags + ["need the control and at least one run"]}
     if len(runs) < len(RUNS):
-        flags.append(f"only {len(runs)} of {len(RUNS)} runs: state the shortfall (prereg)")
+        flags.append(f"{len(runs)} of {len(RUNS)} runs have trials: state the shortfall (prereg; run 2 had no valid memory, D113)")
     control = tally(sets[CONTROL])
     memory: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for r in runs:
@@ -123,10 +124,17 @@ def analyse(sets: dict[str, list[dict]]) -> dict:
             mem_c[task][0] += k
             mem_c[task][1] += n
     tasks_c = sorted(t for t in ctrl_c if mem_c[t][1] and ctrl_c[t][1])
+    mem_o: dict[str, list[int]] = defaultdict(lambda: [0, 0])  # A4 sensitivity: the originally planned runs only
+    for r in (r for r in runs if r != REPLACEMENT):
+        for task, (k, n) in tally(sets[r]).items():
+            mem_o[task][0] += k
+            mem_o[task][1] += n
+    tasks_o = sorted(t for t in control if mem_o[t][1] and control[t][1])
     pooled = {arm: (sum(v[0] for v in d.values()), sum(v[1] for v in d.values())) for arm, d in (("A0", control), ("HM", memory))}
     return {"runs_used": runs, "flags": flags, "primary": compare(control, memory, tasks),
             "sensitivity_without_no_reference_tasks": compare(control, memory, [t for t in tasks if t not in NO_REFERENCE_PASS]),
             "sensitivity_without_model_unavailable": compare(ctrl_c, mem_c, tasks_c), "model_unavailable_per_set": gave_up,
+            "sensitivity_without_replacement_run": compare(control, mem_o, tasks_o) if tasks_o else None,
             "pooled": {arm: {"pass": k, "n": n, "ci95": list(clopper_pearson(k, n)) if n else None} for arm, (k, n) in pooled.items()},
             "per_task": {t: {"A0": control[t], "HM": memory[t]} for t in tasks},
             "per_run_pass": {r: sum(v[0] for v in tally(sets[r]).values()) for r in runs}}
@@ -142,12 +150,14 @@ def self_test() -> None:
     r = analyse({CONTROL: a0, RUNS[0]: run})
     assert abs(r["primary"]["p_one_sided"] - 1 / 32) < 1e-12, r["primary"]["p_one_sided"]  # 5 tasks up, none down
     assert r["pooled"]["HM"]["pass"] == 5 and r["pooled"]["A0"]["pass"] == 0 and r["primary"]["tasks_up"] == 5
-    assert any("only 1 of 3" in f for f in r["flags"])
+    assert any("1 of 4 runs" in f for f in r["flags"])
     r = analyse({CONTROL: rows(CONTROL, [3] + [0] * (n - 1)), RUNS[0]: rows(RUNS[0], [0] * n, "abc")})
     assert abs(r["primary"]["p_one_sided"] - 1.0) < 1e-12 and r["primary"]["tasks_down"] == 1  # only a loss: no evidence for memory
     r = analyse({CONTROL: a0, RUNS[0]: rows(RUNS[0], [1] * n, "abc"), RUNS[1]: rows(RUNS[1], [0] * n, "abc"), RUNS[2]: rows(RUNS[2], [0] * n, "abc")})
     assert abs(r["primary"]["mean_diff"] - 1 / 9) < 1e-12  # pooled over runs: 1 pass of 9 per task
     assert not [f for f in r["flags"] if "attempts" in f or "digest" in f]
+    r = analyse({CONTROL: a0, RUNS[0]: rows(RUNS[0], [0] * n, "abc"), RUNS[3]: rows(RUNS[3], [1] * n, "def")})  # A4: run 4 pooled, and left out
+    assert abs(r["primary"]["mean_diff"] - 1 / 6) < 1e-12 and r["sensitivity_without_replacement_run"]["mean_diff"] == 0
     bad = a0[:-1] + [{**a0[-1], "valid": False}]
     assert any("no reward" in f for f in check_set(CONTROL, bad)) and any("attempts differ" in f for f in check_set(CONTROL, bad))
     assert any("digest" in f for f in check_set(RUNS[0], rows(RUNS[0], [0] * n, None)))
@@ -175,8 +185,8 @@ def main() -> None:
     (args.dir / "analysis.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps({k: out.get(k) for k in ("runs_used", "flags", "pooled", "per_run_pass")}, indent=1))
     print("model_unavailable_per_set", out.get("model_unavailable_per_set"))
-    for k in ("primary", "sensitivity_without_no_reference_tasks", "sensitivity_without_model_unavailable"):
-        if k in out:
+    for k in ("primary", "sensitivity_without_no_reference_tasks", "sensitivity_without_model_unavailable", "sensitivity_without_replacement_run"):
+        if out.get(k):
             print(k, {x: out[k][x] for x in ("tasks", "mean_diff", "ci95", "p_one_sided", "tasks_up", "tasks_down")})
 
 

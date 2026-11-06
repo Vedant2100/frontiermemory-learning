@@ -11,6 +11,10 @@ ARM=${1:?usage: run-exposure.sh none|all}
 case "$ARM" in none|all) ;; *) echo "exposure arm must be none or all"; exit 2 ;; esac
 REPO=${REPO:-/home/csgrad/vbork001/frontiermemory-experiment-20261024}
 cd "$REPO"
+if [ -f official/vm/RUN4_PENDING ]; then  # A4: run 4 goes before the exposure arms; next-study-2.sh removes this marker
+  echo "=== $(date +%m-%d\ %H:%M:%S) RUN4_PENDING: run 4 runs before the exposure arms (prereg A4); no exposure trial started"
+  exit 0
+fi
 DERIVED=$(mktemp "$REPO/official/vm/.run-exposure-$ARM-XXXX.sbatch")
 trap 'rm -f "$DERIVED"' EXIT
 E2E=${E2E:-0} ARM=$ARM python3 - "$REPO/official/vm/run-set-v1.sbatch" "$DERIVED" <<'PY'
