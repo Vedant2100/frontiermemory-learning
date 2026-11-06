@@ -4,7 +4,7 @@ FrontierMemory ranks memory systems for coding and knowledge-work agents by the 
 For memory to raise that score, the corpus must hold the knowledge, generation must capture it, the harness must deliver it, the agent must use it and the grader must credit it.
 We audit each link by running the benchmark's public pipeline, changing only the model, to a local open-weights model, under a preregistered comparison with no memory on all 15 tasks.
 \todo{Primary result: memory vs no memory, with effect size and interval.}
-Independent of the model, we find that no corpus run resembles the prompt of 8 of 15 tasks, that 4 tasks can't be passed by their own reference solution, that a failed LLM judge scores the same as a failed agent, that a task broke when a dependency released, and that the same memory is 21--100\% visible depending on the harness.
+Independent of the model, we find that no corpus run resembles the prompt of 8 of 15 tasks, that 4 tasks can't be passed by their own reference solution, that a failed LLM judge scores the same as a failed agent, that a task broke when a dependency released, that the same memory's entry file is 21--100\% visible depending on the harness, and that the network proxy and the agent's own timeouts turn a slow model's calls into failed attempts.
 The leaderboard reports neither a no-memory row nor per-task results, so these effects can't be separated from memory quality.
 We recommend what to report so that a memory score can be read.
 \end{abstract}

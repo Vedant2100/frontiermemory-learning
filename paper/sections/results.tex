@@ -23,11 +23,13 @@ Link & Finding & Basis \\
 \midrule
 Corpus & Runs with prompts resembling a target task are very uneven: none for 8 of 15 tasks, 35 for DAPT with none passing; v1.1 doesn't change this. Same-repository runs with different prompts aren't counted. & O \\
 Generation & Memory is exported only when generation ends, so a timeout leaves none. & S, O \\
-Generation & Generation used \todo{33} minutes of 6 hours and printed about 0.2\% of the corpus to itself: 290\,KB of 126\,MB. & L \\
-Harness & Index caps are fixed, not scaled to the context window: 2{,}500 tokens in Codex and 200 lines or 25\,KB in Claude Code. The same memory is 21--100\% visible at start, depending on the harness. & S \\
-Agent & \todo{Share of memory trials opening a memory file, per task.} & L \\
-Grader & The reference solution scores 0 on 4 of 15 tasks, so no reference shows that a strict pass is reachable; yet a no-memory agent passed one of them (cattrs, 77/77 checks). Reference scores don't bound what agents can do. & S, O \\
+Generation & Generations used 24 to \todo{run 2, 3} minutes of 6 hours; one printed about 0.2\% of the corpus to itself (290\,KB of 126\,MB). & L \\
+Harness & Index caps are fixed, not scaled to the context window: 2{,}500 tokens in Codex and 200 lines or 25\,KB in Claude Code, so 21--100\% of the same entry file is visible at start. Hermes shows the whole entry file and a skill index, but that was 1 of 13 files of our run-1 memory; the rest must be opened. & S, O \\
+Harness & At the highest effort, Hermes cancels a model call after 300\,s, but the cancel doesn't stop the server, so retries queue behind abandoned calls; after 5 it gives up and the trial scores 0, valid. Hermes's post-answer memory review is cut when the trial's container stops. & S, O \\
+Agent & In run 1 the agent opened a memory file in 15 of 45 trials, never on 7 of 15 tasks. Of its 7 passes, 2 followed an open (both Word2Vec); 5 passed without opening memory beyond what was shown. & L \\
+Grader & The reference solution scores 0 on 4 of 15 tasks, so no reference shows that a strict pass is reachable; yet our no-memory agent passed 3 of them (cattrs in an earlier run, cookie store and EnterpriseOps CSM in the counted control). Reference scores don't bound what agents can do. & S, O \\
 Grader & A failed LLM judge yields reward 0 and a valid trial, indistinguishable from an agent failing. The judge's identity isn't reported, and task files and the CLI name different judges. & S, O \\
+Serving & Harbor's egress proxy, which enforces no-network tasks, drops a model response not started within 15\,s. Any slower model hits it; the agent gives up and the trial counts as a valid failure (3 of 41 trials in a discarded first control). A malformed tool call from the model surfaces as an HTTP 500 (1 in about 4{,}100 calls, recovered by retry). & O \\
 Build & Harbor rebuilds images per trial, and 12 of 15 tasks have install commands in their builds. One task broke without any change on the benchmark's side when a dependency released on Nov 1; another built to a different image from identical files. & S, O \\
 \bottomrule
 \end{tabular}

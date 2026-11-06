@@ -19,7 +19,7 @@ We ask what a FrontierMemory score can and cannot tell us:
 \textbf{Contributions.}
 \begin{enumerate}
   \item A preregistered no-memory comparison on all 15 tasks through the official commands and containers: \todo{result}.
-  \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution can't pass or that score a judge failure as an agent failure, a task that broke when a dependency released, and fixed memory caps that differ across harnesses.
+  \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution can't pass or that score a judge failure as an agent failure, a task that broke when a dependency released, fixed memory caps that differ across harnesses, and serving limits that turn slow model calls into failed attempts.
   \item A separate account of what holds only for our local model, including how much of the corpus generation actually read.
 \end{enumerate}
 We make no claim that leaderboard scores are wrong: we don't run the leaderboard's models.
