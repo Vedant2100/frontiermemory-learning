@@ -15,18 +15,43 @@ Cancel echoes (D112): when the relay cancels a superseded call, Ollama closes th
 it was running, without one if it was still queued). A 5xx logged within 3 s of a superseded call's end, one per superseded
 call, is excused, and only while aborts don't exceed superseded calls either.
 
+Documented incidents (D123): `--incidents FILE` (JSON list of {"id", "start", "end", "why"}, ISO times with offset) drops
+every timestamped Ollama line and every relay record that falls inside an incident window, and reports how many. Off unless
+given; only the D122 recovery driver passes it, after that incident's trials are set aside and rerun (arms amendment B3).
+
     python3 check-serving.py <ollama log dir> <server.log start line> <relay.log start line> [--need-keepalive] [--summaries DIR]
+                             [--incidents FILE]
 """
 import datetime as dt, glob, json, os, re, sys
 
 olog, s0, r0 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 bad = []
 server = open(f"{olog}/server.log", errors="replace").read().splitlines()[s0:]
+windows = []
+if "--incidents" in sys.argv:
+    for w in json.load(open(sys.argv[sys.argv.index("--incidents") + 1])):
+        windows.append((w["id"], dt.datetime.fromisoformat(w["start"]).timestamp(), dt.datetime.fromisoformat(w["end"]).timestamp()))
+def in_window(t):
+    return t is not None and any(a <= t <= b for _, a, b in windows)
+def line_time(l):  # Ollama "time=2026-11-06T15:04:09.873-08:00" or "[GIN] 2026/11/06 - 15:04:09" (local)
+    m = re.search(r"time=(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)(?:\.\d+)?([+-]\d\d:\d\d)", l)
+    if m: return dt.datetime.fromisoformat(m.group(1) + m.group(2)).timestamp()
+    m = re.search(r"\[GIN\] (\d{4}/\d\d/\d\d - \d\d:\d\d:\d\d)", l)
+    return dt.datetime.strptime(m.group(1), "%Y/%m/%d - %H:%M:%S").timestamp() if m else None
+if windows:
+    kept = [l for l in server if not in_window(line_time(l))]
+    print(f"incidents {[w[0] for w in windows]}: {len(server) - len(kept)} Ollama lines inside the window(s) left out")
+    server = kept
 aborts = sum("client closing the connection" in l for l in server)
 i5xx = [i for i, l in enumerate(server) if re.search(r"\|\s*5\d\d\s*\|", l)]
 parse5xx = sum(any("tool call parsing failed" in l for l in server[max(0, i - 5):i]) for i in i5xx)
 print(f"ollama: {len(server)} new lines, {aborts} client aborts, {len(i5xx)} HTTP 5xx ({parse5xx} after a tool-call parse error)")
 relay = [json.loads(l) for l in open(f"{olog}/relay.log").read().splitlines()[r0:]]
+if windows:
+    def r_start(r): return dt.datetime.strptime(f"{dt.date.today().year}-{r['t']}", "%Y-%m-%d %H:%M:%S").timestamp()
+    n0 = len(relay)
+    relay = [r for r in relay if not (in_window(r_start(r)) or in_window(r_start(r) + r.get("total_s", 0)))]
+    print(f"incidents: {n0 - len(relay)} relay records starting or ending inside the window(s) left out")
 superseded = sum(bool(r.get("superseded")) for r in relay)
 print(f"relay: {superseded} calls superseded by an identical retry and cancelled (D100)")
 year0 = dt.date.today().year

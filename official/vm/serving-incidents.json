@@ -1,0 +1,4 @@
+[
+ {"id": "D122", "start": "2026-11-06T14:49:00-08:00", "end": "2026-11-06T15:58:30-08:00",
+  "why": "Ollama runner hang in the placebo arm; server restarted by hand at 15:56, first call served 15:57"}
+]

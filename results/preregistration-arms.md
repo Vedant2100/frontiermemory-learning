@@ -122,3 +122,17 @@ differs.
 - **Recency a/b moves to the second machine,** and runs there first after its gate. It is generation-only and needs no baseline, so it is self-contained there.
 
 **Order here, then:** placebo, read-first; [main study: run 4, all-shown]; exposure-none, cue, scoped, evidence, raw corpus, generator, categorized.
+
+## Amendment B3 (2026-11-06 16:30, during the placebo set, before its result)
+
+**What happened:** D122. From 14:49 to about 15:57 Ollama served nothing (a runner hang); the server was restarted by hand.
+The trial running then (placebo, APEX seat surplus) stalled for about 70 minutes.
+
+**Rule, fixed now, before the placebo set's result:**
+- Every placebo trial whose agent ran at any time in the window 2026-11-06 14:49:00 to 15:58:30 (Pacific) is an
+  infrastructure casualty. It is set aside (kept, in `fm-tasks-arm-placebo.incident-d122/`) and rerun, **whatever its
+  result**, through the same resume path as the official no-reward rerun.
+- Serving faults inside that window, and only those, are excused (`check-serving.py --incidents
+  official/vm/serving-incidents.json`). The rerun itself must pass the normal checks with nothing excused.
+- The set's own end-of-set check stays strict, so it stops as designed; `official/vm/next-recover-d122.sh`, queued in the
+  hold, then applies this rule and continues the study. Any other stop reason: it does nothing and the job holds.
