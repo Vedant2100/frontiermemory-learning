@@ -1,0 +1,8 @@
+Check (a), D128: pinned Hermes d923a5eb, run as the adapter runs it, against a stand-in server (official/tests/capture/).
+Per case: each /v1/responses request, its system-text size, and whether each marker is in the system text. Synthetic memory only.
+readfirst system_chars=   942 read_first=False skill_body=False memory_index=False
+readfirst system_chars= 17510 read_first=True skill_body=False memory_index=True
+all       system_chars=   942 read_first=False skill_body=False memory_index=False
+all       system_chars= 17736 read_first=False skill_body=True memory_index=True
+control   system_chars=   942 read_first=False skill_body=False memory_index=False
+control   system_chars= 17308 read_first=False skill_body=False memory_index=True

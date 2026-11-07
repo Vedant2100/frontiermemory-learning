@@ -1,0 +1,24 @@
+agent:
+  disabled_toolsets:
+  - web
+  - search
+  - browser
+  - browser-use
+  reasoning_effort: max
+  system_prompt: 'Saved memory from earlier work is available: the MEMORY.md block
+    and the skills listed in <available_skills>. Before you start the task, check
+    them and open any saved skill that may be relevant.'
+checkpoints:
+  enabled: false
+delegation:
+  max_iterations: 50
+memory:
+  memory_enabled: true
+  user_profile_enabled: false
+model: qwen3.8:27b-mtp-q4_K_M
+provider: auto
+terminal:
+  backend: local
+  timeout: 180
+toolsets:
+- hermes-cli
