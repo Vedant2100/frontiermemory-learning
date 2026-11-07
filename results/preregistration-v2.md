@@ -107,3 +107,7 @@ The serving check counts Ollama aborts caused by these cancels as expected, and 
 ## Amendment A6 (2026-11-06, before any run 4 or arm trial)
 
 **Change (user decision):** two exploratory arms, placebo and read-first (`results/preregistration-arms.md`, amendment B2), run right after run 3 and before run 4. Run 4 (A4) and the all-shown arm (A5) follow, then the remaining arms. Run 4's procedure, checks and analysis are unchanged. The primary test still pools every memory run with valid memory (runs 1, 3 and 4). Order only; decided without any run 3, run 4 or arm result.
+
+## Amendment A7 (2026-11-07, before any run 4 or read-first counted trial)
+
+**Change (order only, operational):** read-first's uncounted end-to-end check stopped the fast track at 06:32 on Nov 7 (D125). Run 4 now runs next, ahead of read-first. Read-first and the all-shown arm (A5) run after run 4, once their end-to-end checks are fixed: both inject text through Hermes's `agent.system_prompt` key, which Hermes adds at API-call time only and never saves to the session file the checks read. Run 4's procedure, checks and analysis are unchanged. The primary analysis is unchanged. No outcome had been seen for run 4 or read-first when this was written.
