@@ -1,9 +1,10 @@
 """Check that every finished trial of an exploratory arm actually carried the arm (results/preregistration-arms.md).
 
-Reads only saved trial files: Hermes's session file (agent/hermes-session.jsonl, whose first line holds the system prompt
-the model received), the harness's agent/arm-report.json, the cue plugin's agent/fm-cue-metrics.json and result.json.
+Reads only saved trial files: the system prompt the model received, rebuilt by api_prompt.py from Hermes's session file
+(agent/hermes-session.jsonl, the cached part) and agent/hermes-config.yaml (agent.system_prompt, added at API-call time only and
+never saved, D125), the harness's agent/arm-report.json, the cue plugin's agent/fm-cue-metrics.json and result.json.
 Skill names are matched only inside <available_skills>, because HM's MEMORY.md block also lists every skill's folder.
-Prints counts and pass/fail only. Standard library only (guest system Python).
+Prints counts and pass/fail only. Guest system Python (standard library and PyYAML, through api_prompt.py).
 
     python3 arm_check.py <task job dir> <arm>        (run from ~/official/frontiermemory, as the derived set script does)
 """
@@ -11,11 +12,13 @@ Prints counts and pass/fail only. Standard library only (guest system Python).
 from __future__ import annotations
 
 import glob
+import hashlib
 import json
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import api_prompt  # noqa: E402
 import arm_logic  # noqa: E402
 from pathlib import Path  # noqa: E402
 
@@ -33,14 +36,6 @@ def memory_dir(job: str) -> Path:
     if len(found) != 1:
         raise SystemExit(f"expected one memory in {job}, found {len(found)}")
     return Path(found[0])
-
-
-def session_prompt(trial: Path) -> str | None:
-    p = trial / "agent" / "hermes-session.jsonl"
-    if not p.is_file():
-        return None
-    with open(p, errors="replace") as f:
-        return json.loads(f.readline()).get("system_prompt")
 
 
 def load(p: Path) -> dict | None:
@@ -66,7 +61,10 @@ def check_trial(arm: str, trial: Path, mem: Path | None, emap: dict) -> list[str
         if has_memory != (arm in ("cm", "km")):
             bad.append("memory presence differs from the arm")
         return bad
-    sp = session_prompt(trial)
+    try:
+        sp = api_prompt.api_prompt(trial)
+    except ValueError as e:
+        return [str(e)]
     if sp is None:
         return ["no Hermes session file"]
     index = arm_logic.available_skills(sp)
@@ -83,6 +81,8 @@ def check_trial(arm: str, trial: Path, mem: Path | None, emap: dict) -> list[str
     if arm == "readfirst":
         if arm_logic.READ_FIRST not in sp:
             bad.append("read-first sentence not in the system prompt")
+        if api_prompt.ephemeral(trial) != arm_logic.READ_FIRST or report.get("system_prompt_sha256") != hashlib.sha256(arm_logic.READ_FIRST.encode()).hexdigest():
+            bad.append("config agent.system_prompt is not exactly the read-first sentence the report records")
         if MEMORY_HEAD not in sp:
             bad.append("memory block not shown")
     if arm == "scoped":

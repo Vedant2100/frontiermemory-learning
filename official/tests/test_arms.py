@@ -16,6 +16,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 REPO = Path(__file__).resolve().parents[2]
 for sub in ("official/fm_local", "official/vm", "scripts"):
     sys.path.insert(0, str(REPO / sub))
@@ -312,7 +314,8 @@ class DeriveTests(unittest.TestCase):
 
 class ArmCheckTests(unittest.TestCase):
     def run_check(self, arm: str, prompt: str, report: dict | None, extra: dict | None = None,
-                  task: str = "build-word2vec-pipeline", memory_meta=None) -> int:
+                  task: str = "build-word2vec-pipeline", memory_meta=None, ephemeral: str = "",
+                  config: dict | None = None) -> int:
         with tempfile.TemporaryDirectory() as tmp:
             cwd = Path(tmp)
             mem = memory(cwd / "jobs/fm-gen-run1/gen__1/artifacts/memory")
@@ -322,6 +325,8 @@ class ArmCheckTests(unittest.TestCase):
             (trial / "result.json").write_text(json.dumps({"task_name": f"letta-ai/{task}",
                                                            "agent_result": {"metadata": {"frontier_memory": memory_meta}}}))
             (trial / "agent/hermes-session.jsonl").write_text(json.dumps({"system_prompt": prompt}) + "\n")
+            cfg = config if config is not None else {"agent": {"system_prompt": ephemeral} if ephemeral else {}}
+            (trial / "agent/hermes-config.yaml").write_text(yaml.safe_dump(cfg))
             if report is not None:
                 (trial / "agent/arm-report.json").write_text(json.dumps(report))
             for k, v in (extra or {}).items():
@@ -330,10 +335,17 @@ class ArmCheckTests(unittest.TestCase):
                                   cwd=cwd, capture_output=True).returncode
 
     def test_readfirst(self):
-        sp = f"# Learned Hermes skills\n{arm_logic.READ_FIRST}"
-        self.assertEqual(self.run_check("readfirst", sp, {"arm": "readfirst"}), 0)
-        self.assertEqual(self.run_check("readfirst", "# Learned Hermes skills", {"arm": "readfirst"}), 1)
-        self.assertEqual(self.run_check("readfirst", sp, None), 1)
+        # D125: the sentence is Hermes's ephemeral prompt, in the config, never in the saved session prompt
+        rf, saved = arm_logic.READ_FIRST, "# Learned Hermes skills"
+        rep = {"arm": "readfirst", "system_prompt_sha256": hashlib.sha256(rf.encode()).hexdigest()}
+        self.assertEqual(self.run_check("readfirst", saved, rep, ephemeral=rf), 0)
+        self.assertEqual(self.run_check("readfirst", saved, rep), 1)  # the failure seen on Nov 7: not in the config either
+        self.assertEqual(self.run_check("readfirst", saved, {"arm": "readfirst"}, ephemeral=rf), 1)  # report lacks the digest
+        self.assertEqual(self.run_check("readfirst", saved, rep, ephemeral=rf + " Extra."), 1)  # not exactly the sentence
+        self.assertEqual(self.run_check("readfirst", "no memory block", rep, ephemeral=rf), 1)
+        self.assertEqual(self.run_check("readfirst", saved, None, ephemeral=rf), 1)
+        self.assertEqual(self.run_check("readfirst", saved, rep,  # a personality would replace agent.system_prompt
+                                        config={"agent": {"system_prompt": rf}, "display": {"personality": "pirate"}}), 1)
 
     def test_scoped_counts_only_the_index(self):
         idx = "<available_skills>\n  general:\n    - deploy-steps: d\n    - eval-metrics: e\n    - user-style: u\n</available_skills>"

@@ -6,7 +6,7 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / "fm_local" / "exposure_measure.py"
 
 
-def make(tmp, prompt):
+def make(tmp, prompt, ephemeral=""):
     mem = tmp / "gen" / "t1" / "artifacts" / "memory"
     (mem / "skills" / "release-tier-checklist").mkdir(parents=True)
     (mem / "MEMORY.md").write_text("# Index\nAlways read the release notes before tagging a tier.\n")
@@ -15,6 +15,7 @@ def make(tmp, prompt):
     (trial / "agent").mkdir(parents=True)
     (trial / "result.json").write_text("{}")
     (trial / "agent" / "hermes-session.jsonl").write_text(json.dumps({"system_prompt": prompt}) + "\n")
+    (trial / "agent" / "hermes-config.yaml").write_text(json.dumps({"agent": {"system_prompt": ephemeral}}))  # JSON is YAML
     return tmp / "job", tmp / "gen"
 
 
@@ -41,3 +42,20 @@ def test_output_has_counts_not_text(tmp_path):
     job, gen = make(tmp_path, "Always read the release notes before tagging a tier.")
     out = run(job, gen, "hm").stdout
     assert "release notes" not in out and "files shown 1 of 2" in out
+
+
+def test_all_counts_the_api_time_prompt(tmp_path):
+    # D125: the all arm's text is Hermes's ephemeral prompt (config agent.system_prompt), added per call, never saved
+    text = "Always read the release notes before tagging a tier.\nRun the full test suite before publishing anything."
+    job, gen = make(tmp_path, "You are a helpful agent.", ephemeral=text)
+    assert run(job, gen, "all").returncode == 0
+    assert run(job, gen, "none").returncode == 1
+    job, gen = make(tmp_path / "b", "You are a helpful agent.")
+    assert run(job, gen, "all").returncode == 1
+
+
+def test_missing_config_fails(tmp_path):
+    job, gen = make(tmp_path, "Always read the release notes before tagging a tier.")
+    (job / "task__abc" / "agent" / "hermes-config.yaml").unlink()
+    r = run(job, gen, "hm")
+    assert r.returncode == 1 and "no hermes-config.yaml" in r.stdout

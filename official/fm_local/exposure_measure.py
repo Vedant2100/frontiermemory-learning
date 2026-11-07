@@ -1,6 +1,8 @@
 """Measure, from saved trials, how much of a memory the task agent's system prompt actually carried. Counts only, never text.
 
-For each trial, Hermes's session file (agent/hermes-session.jsonl) holds the system prompt. A memory file counts as shown
+For each trial, the system prompt the model received is rebuilt by api_prompt.py: Hermes's session file
+(agent/hermes-session.jsonl) holds the cached part, and the all arm's text sits in agent/hermes-config.yaml's
+agent.system_prompt, which Hermes adds at API-call time only and never saves (D125). A memory file counts as shown
 when a probe from it (its longest line, up to 80 characters, at least 20) appears in that prompt; a skill counts as indexed
 when its folder name appears there.
 
@@ -11,9 +13,11 @@ hm needs MEMORY.md shown. Without one, it only reports.
 """
 
 import glob
-import json
 import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import api_prompt  # noqa: E402
 
 
 def probes(memory_dir):
@@ -32,14 +36,6 @@ def skill_names(memory_dir):
     return sorted({os.path.basename(os.path.dirname(p)) for p in glob.glob(os.path.join(memory_dir, "**", "SKILL.md"), recursive=True)})
 
 
-def system_prompt(trial_dir):
-    p = os.path.join(trial_dir, "agent", "hermes-session.jsonl")
-    if not os.path.exists(p):
-        return None
-    with open(p, errors="replace") as f:
-        return json.loads(f.readline()).get("system_prompt")
-
-
 def main():
     task_job, gen_job = sys.argv[1], sys.argv[2]
     arm = sys.argv[3] if len(sys.argv) > 3 else None
@@ -50,7 +46,12 @@ def main():
     ok = True
     trials = sorted(d for d in glob.glob(os.path.join(task_job, "*__*")) if os.path.isfile(os.path.join(d, "result.json")))  # finished
     for t in trials:
-        sp = system_prompt(t)
+        try:
+            sp = api_prompt.api_prompt(t)
+        except ValueError as e:
+            print(f"{os.path.basename(t)}: {e}")
+            ok = False
+            continue
         if sp is None:
             print(f"{os.path.basename(t)}: no session file")
             ok = False
