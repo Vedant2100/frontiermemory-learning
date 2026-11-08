@@ -1,0 +1,299 @@
+{
+ "runs_used": [
+  "fm-tasks-run1",
+  "fm-tasks-run3",
+  "fm-tasks-run4"
+ ],
+ "flags": [
+  "3 of 4 runs have trials: state the shortfall (prereg; run 2 had no valid memory, D113)"
+ ],
+ "primary": {
+  "tasks": 15,
+  "mean_diff": 0.00740740740740741,
+  "ci95": [
+   -0.12433333333333318,
+   0.13855555555555576
+  ],
+  "p_one_sided": 0.5,
+  "per_task": {
+   "apex-brightpath-market-share": 0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.1111111111111111,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.2222222222222222,
+   "automationbench-sales-chatgpt-proposal-customization": 0.0,
+   "automationbench-sales-partnership-contract": -0.3333333333333333,
+   "awilix-release-tier-explicit": 0.0,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 0.5555555555555556,
+   "cattrs-compositional-changelog": 0.2222222222222222,
+   "cookie-store-compositional-changelog": -0.3333333333333333,
+   "customer-delivery-contextual-preferences": 0.0,
+   "dapt-intrusion-detection-workflow-learning": 0.0,
+   "enterpriseops-csm-26d1b04a": -0.2222222222222222,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 4,
+  "tasks_down": 4
+ },
+ "sensitivity_without_no_reference_tasks": {
+  "tasks": 11,
+  "mean_diff": 0.04040404040404041,
+  "ci95": [
+   -0.10988888888888892,
+   0.1992222222222222
+  ],
+  "p_one_sided": 0.34375,
+  "per_task": {
+   "apex-brightpath-market-share": 0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.1111111111111111,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.2222222222222222,
+   "automationbench-sales-chatgpt-proposal-customization": 0.0,
+   "automationbench-sales-partnership-contract": -0.3333333333333333,
+   "awilix-release-tier-explicit": 0.0,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 0.5555555555555556,
+   "customer-delivery-contextual-preferences": 0.0,
+   "dapt-intrusion-detection-workflow-learning": 0.0
+  },
+  "tasks_up": 3,
+  "tasks_down": 2
+ },
+ "sensitivity_without_model_unavailable": {
+  "tasks": 15,
+  "mean_diff": 0.00740740740740741,
+  "ci95": [
+   -0.12433333333333318,
+   0.13855555555555576
+  ],
+  "p_one_sided": 0.5,
+  "per_task": {
+   "apex-brightpath-market-share": 0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.1111111111111111,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.2222222222222222,
+   "automationbench-sales-chatgpt-proposal-customization": 0.0,
+   "automationbench-sales-partnership-contract": -0.3333333333333333,
+   "awilix-release-tier-explicit": 0.0,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 0.5555555555555556,
+   "cattrs-compositional-changelog": 0.2222222222222222,
+   "cookie-store-compositional-changelog": -0.3333333333333333,
+   "customer-delivery-contextual-preferences": 0.0,
+   "dapt-intrusion-detection-workflow-learning": 0.0,
+   "enterpriseops-csm-26d1b04a": -0.2222222222222222,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 4,
+  "tasks_down": 4
+ },
+ "model_unavailable_per_set": {
+  "fm-tasks-control": 0,
+  "fm-tasks-run1": 0,
+  "fm-tasks-run3": 0,
+  "fm-tasks-run4": 0
+ },
+ "sensitivity_without_replacement_run": {
+  "tasks": 15,
+  "mean_diff": -0.011111111111111108,
+  "ci95": [
+   -0.13783333333333325,
+   0.1246666666666667
+  ],
+  "p_one_sided": 0.625,
+  "per_task": {
+   "apex-brightpath-market-share": 0.16666666666666666,
+   "apex-brightpath-seat-surplus": 0.0,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.16666666666666663,
+   "automationbench-sales-chatgpt-proposal-customization": 0.0,
+   "automationbench-sales-partnership-contract": -0.3333333333333333,
+   "awilix-release-tier-explicit": 0.0,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 0.6666666666666666,
+   "cattrs-compositional-changelog": 0.16666666666666666,
+   "cookie-store-compositional-changelog": -0.3333333333333333,
+   "customer-delivery-contextual-preferences": 0.0,
+   "dapt-intrusion-detection-workflow-learning": 0.0,
+   "enterpriseops-csm-26d1b04a": -0.3333333333333333,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 3,
+  "tasks_down": 4
+ },
+ "pooled": {
+  "A0": {
+   "pass": 6,
+   "n": 45,
+   "ci95": [
+    0.05054237591332621,
+    0.26792495409344763
+   ]
+  },
+  "HM": {
+   "pass": 19,
+   "n": 135,
+   "ci95": [
+    0.08691184831463716,
+    0.21102913866619932
+   ]
+  }
+ },
+ "per_task": {
+  "apex-brightpath-market-share": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    3,
+    9
+   ]
+  },
+  "apex-brightpath-seat-surplus": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    1,
+    9
+   ]
+  },
+  "apex-eurogrid-curtailment": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "automationbench-marketing-content-gap-analysis": {
+   "A0": [
+    2,
+    3
+   ],
+   "HM": [
+    4,
+    9
+   ]
+  },
+  "automationbench-sales-chatgpt-proposal-customization": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "automationbench-sales-partnership-contract": {
+   "A0": [
+    1,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "awilix-release-tier-explicit": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "awilix-release-tier-implicit": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "build-word2vec-pipeline": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    5,
+    9
+   ]
+  },
+  "cattrs-compositional-changelog": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    2,
+    9
+   ]
+  },
+  "cookie-store-compositional-changelog": {
+   "A0": [
+    1,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "customer-delivery-contextual-preferences": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "dapt-intrusion-detection-workflow-learning": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  },
+  "enterpriseops-csm-26d1b04a": {
+   "A0": [
+    2,
+    3
+   ],
+   "HM": [
+    4,
+    9
+   ]
+  },
+  "enterpriseops-teams-2725d17f": {
+   "A0": [
+    0,
+    3
+   ],
+   "HM": [
+    0,
+    9
+   ]
+  }
+ },
+ "per_run_pass": {
+  "fm-tasks-run1": 7,
+  "fm-tasks-run3": 4,
+  "fm-tasks-run4": 8
+ }
+}

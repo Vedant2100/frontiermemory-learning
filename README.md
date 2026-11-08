@@ -11,7 +11,7 @@
 
 ## Results so far
 
-*Updated after each set. Last update: Nov 7, 06:30, after the placebo arm.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
+*Updated after each set. Last update: Nov 7, 22:45, after run 4: the preregistered test is complete.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
 
 ### Counted sets
 
@@ -21,28 +21,28 @@
 | Run 1 | generation 1: 13 files, 62 KB | done Nov 5 18:37 (15.3 h with generation) | 7/45 | 45/45 | 0 | 0 (D107: 1 model tool-call parse 500, recovered on retry) |
 | Run 2 | generation 2: **timed out at 6 h, no memory** (D113) | reported, trials not run (prereg) | – | – | – | – |
 | Run 3 | generation 3: 6 files, 40 KB | done Nov 6 14:27 (13.7 h) | 4/45 | 45/45 | 0 | 0 |
-| Run 4 (replaces run 2, A4) | generation 4 | after placebo and read-first (A6), about Nov 8 | | | | |
+| Run 4 (replaces run 2, A4) | generation 4: 7 files, 38 KB (21 min) | done Nov 7 22:31 (15.9 h with generation) | 8/45 | 45/45 | 0 | 0 |
 | Placebo (exploratory arm, fast-tracked) | run 1's files, same file count and byte sizes, text replaced by public-domain prose | done Nov 7 06:27 (15.8 h) | 4/45 | 45/45 | 0 | 0 outside the D122 Ollama hang; its one overlapping trial set aside and rerun (B3, D124) |
-| Read-first (exploratory arm, fast-tracked) | run 1's, plus a nudge to read it first | started Nov 7 06:28 | | | | |
-| Exposure all, then none (exploratory) | run 1's | all after run 4; none in the arms order (A5) | | | | |
+| Read-first (exploratory arm) | run 1's, plus a nudge to read it first | e2e passed Nov 7 22:39 (checks fixed, D125–D129); 45 trials running, about Nov 8 evening | | | | |
+| Exposure all, then none (exploratory) | run 1's | all after read-first (A7), about Nov 9; none in the arms order (A5) | | | | |
 
-**Placebo (exploratory; the arms preregistration's test):** 4/45, vs run 1 (same file layout, real content) −0.07 per task (95% CI −0.19 to +0.06), 1 task up, 3 down, p = 0.94; vs no memory −0.04, p = 0.89. The Word2Vec gain does not appear with placebo text (0/3, vs 2/3 in both real-memory runs): consistent with the content, not the presence of files, mattering there, but one task with 3 attempts each.
+**Placebo (exploratory; the arms preregistration's test):** 4/45, vs run 1 (same file layout, real content) −0.07 per task (95% CI −0.19 to +0.06), 1 task up, 3 down, p = 0.94; vs no memory −0.04, p = 0.89. The Word2Vec gain does not appear with placebo text (0/3, vs 5 of 9 across the three real-memory runs): consistent with the content, not the presence of files, mattering there, but one task with 3 attempts each.
 
-**Provisional memory effect, runs 1 and 3** (the preregistered test pools runs 1, 3 and 4): per-task pass rate −0.01 (95% CI −0.14 to +0.12), 3 tasks up, 4 down, one-sided p = 0.63. Without the 4 tasks whose reference solution fails: +0.03, p = 0.44. Not evidence either way. The one consistent change is Word2Vec: 0/3 without memory, 2/3 in both memory runs.
+**Primary result (preregistered, runs 1, 3 and 4 pooled vs no memory):** per-task pass rate +0.01 (95% CI −0.12 to +0.14), 4 tasks up, 4 down, one-sided p = 0.50. Pooled: 19 of 135 with memory vs 6 of 45 without. Sensitivity: without the 4 tasks whose reference solution fails, +0.04, p = 0.34; without run 4 (the replacement run), −0.01, p = 0.63. Not evidence of a gain, and with 15 tasks not evidence of no effect either. Shortfall stated: 3 of 4 memory runs have trials (run 2's generation timed out). The one consistent change is Word2Vec: 0/3 without memory, 2, 2 and 1 of 3 in the three memory runs.
 
 ### Per task (3 attempts each)
 
-| Task | Control | Run 1 | Run 3 | Placebo |
-|---|---|---|---|---|
-| build-word2vec-pipeline | 0/3 | **2/3** | **2/3** | 0/3 |
-| apex-brightpath-market-share | 0/3 | 1/3 | 0/3 | 1/3 |
-| cattrs compositional changelog (reference solution scores 0) | 0/3 | 0/3 | 1/3 | 0/3 |
-| automationbench marketing content gap analysis | 2/3 | 2/3 | 1/3 | 1/3 |
-| enterpriseops CSM | 2/3 | 2/3 | 0/3 | 1/3 |
-| automationbench sales partnership contract | 1/3 | 0/3 | 0/3 | 0/3 |
-| cookie-store compositional changelog | 1/3 | 0/3 | 0/3 | 0/3 |
-| apex-brightpath-seat-surplus | 0/3 | 0/3 | 0/3 | 1/3 |
-| the other 7 (Eurogrid scores 0.83 every attempt, its maximum reachable reward per the maintainers) | 0/3 | 0/3 | 0/3 | 0/3 |
+| Task | Control | Run 1 | Run 3 | Run 4 | Placebo |
+|---|---|---|---|---|---|
+| build-word2vec-pipeline | 0/3 | **2/3** | **2/3** | **1/3** | 0/3 |
+| apex-brightpath-market-share | 0/3 | 1/3 | 0/3 | 2/3 | 1/3 |
+| cattrs compositional changelog (reference solution scores 0) | 0/3 | 0/3 | 1/3 | 1/3 | 0/3 |
+| automationbench marketing content gap analysis | 2/3 | 2/3 | 1/3 | 1/3 | 1/3 |
+| enterpriseops CSM | 2/3 | 2/3 | 0/3 | 2/3 | 1/3 |
+| automationbench sales partnership contract | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 |
+| cookie-store compositional changelog | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 |
+| apex-brightpath-seat-surplus | 0/3 | 0/3 | 0/3 | 1/3 | 1/3 |
+| the other 7 (Eurogrid scores 0.83 every attempt, its maximum reachable reward per the maintainers) | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 |
 
 ### Audit findings: where the official pipeline loses value
 
