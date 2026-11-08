@@ -30,6 +30,8 @@
 
 **Primary result (preregistered, runs 1, 3 and 4 pooled vs no memory):** per-task pass rate +0.01 (95% CI −0.12 to +0.14), 4 tasks up, 4 down, one-sided p = 0.50. Pooled: 19 of 135 with memory vs 6 of 45 without. Sensitivity: without the 4 tasks whose reference solution fails, +0.04, p = 0.34; without run 4 (the replacement run), −0.01, p = 0.63. Not evidence of a gain, and with 15 tasks not evidence of no effect either. Shortfall stated: 3 of 4 memory runs have trials (run 2's generation timed out). The one consistent change is Word2Vec: 0/3 without memory, 2, 2 and 1 of 3 in the three memory runs.
 
+**Hidden tests passed (preregistered secondary, `scripts/partial_credit.py`, D131):** the share of each verifier's hidden tests (or rubric checks) an attempt passes, by the verifier's own partial-credit field where it has one, else its printed test counts. Means over 45 trials: no memory 58%, run 1 65%, run 3 59%, run 4 67%, placebo 60%. Runs 1, 3, 4 vs no memory: +0.06 per task (95% CI −0.07 to +0.20, one-sided p = 0.25, 7 tasks up, 7 down), the same picture as strict passes. Word2Vec: 0% of hidden tests without memory and with placebo (all 6 attempts failed before any test ran), 72–94% with real memory. AutoBench partnership drops from 51% to 17–25% in every memory arm, placebo included. Consistency check: a trial's partial credit is 1 exactly when its strict reward is 1, on all 225 trials.
+
 ### Per task (3 attempts each)
 
 | Task | Control | Run 1 | Run 3 | Run 4 | Placebo |

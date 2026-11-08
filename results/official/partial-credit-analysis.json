@@ -1,0 +1,131 @@
+{
+ "trials_per_set": {
+  "fm-tasks-arm-placebo": 45,
+  "fm-tasks-control": 45,
+  "fm-tasks-run1": 45,
+  "fm-tasks-run3": 45,
+  "fm-tasks-run4": 45
+ },
+ "mean_partial": {
+  "control": 0.5792,
+  "memory_runs_1_3_4": 0.6365,
+  "placebo": 0.5996
+ },
+ "memory_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.057283854780000296,
+  "ci95": [
+   -0.06555654761904761,
+   0.19940013227513242
+  ],
+  "p_one_sided": 0.2467041015625,
+  "per_task": {
+   "apex-brightpath-market-share": 0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.1111111111111111,
+   "apex-eurogrid-curtailment": -1.1102230246251565e-16,
+   "automationbench-marketing-content-gap-analysis": -0.13930513930513944,
+   "automationbench-sales-chatgpt-proposal-customization": 0.033333333333333215,
+   "automationbench-sales-partnership-contract": -0.2837301587301587,
+   "awilix-release-tier-explicit": -0.009259259259259356,
+   "awilix-release-tier-implicit": -0.1111111111111111,
+   "build-word2vec-pipeline": 0.8518518518518519,
+   "cattrs-compositional-changelog": 0.015873015873015706,
+   "cookie-store-compositional-changelog": -0.02693236714975844,
+   "customer-delivery-contextual-preferences": 0.004728132387706974,
+   "dapt-intrusion-detection-workflow-learning": 0.13492063492063483,
+   "enterpriseops-csm-26d1b04a": -0.05555555555555547,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 7,
+  "tasks_down": 7
+ },
+ "placebo_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.02033669254992106,
+  "ci95": [
+   -0.05581845238095218,
+   0.10083333333333355
+  ],
+  "p_one_sided": 0.31884765625,
+  "per_task": {
+   "apex-brightpath-market-share": 0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.3333333333333333,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.045454545454545414,
+   "automationbench-sales-chatgpt-proposal-customization": 0.033333333333333326,
+   "automationbench-sales-partnership-contract": -0.25595238095238093,
+   "awilix-release-tier-explicit": -0.00694444444444442,
+   "awilix-release-tier-implicit": -0.01388888888888895,
+   "build-word2vec-pipeline": 0.0,
+   "cattrs-compositional-changelog": 0.0,
+   "cookie-store-compositional-changelog": -0.03876811594202889,
+   "customer-delivery-contextual-preferences": 0.0017730496453902678,
+   "dapt-intrusion-detection-workflow-learning": 0.04761904761904756,
+   "enterpriseops-csm-26d1b04a": -0.08333333333333326,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 5,
+  "tasks_down": 6
+ },
+ "placebo_vs_run1": {
+  "tasks": 15,
+  "mean_diff": -0.05276516986970269,
+  "ci95": [
+   -0.1957500000000003,
+   0.06155555555555514
+  ],
+  "p_one_sided": 0.703125,
+  "per_task": {
+   "apex-brightpath-market-share": 0.0,
+   "apex-brightpath-seat-surplus": 0.3333333333333333,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.045454545454545414,
+   "automationbench-sales-chatgpt-proposal-customization": 0.06666666666666676,
+   "automationbench-sales-partnership-contract": 0.0,
+   "awilix-release-tier-explicit": -0.00694444444444442,
+   "awilix-release-tier-implicit": -0.006944444444444531,
+   "build-word2vec-pipeline": -0.9444444444444445,
+   "cattrs-compositional-changelog": -0.01298701298701288,
+   "cookie-store-compositional-changelog": 0.05326086956521747,
+   "customer-delivery-contextual-preferences": -0.0017730496453900457,
+   "dapt-intrusion-detection-workflow-learning": -0.14285714285714285,
+   "enterpriseops-csm-26d1b04a": -0.08333333333333326,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 3,
+  "tasks_down": 8
+ },
+ "fm-tasks-run1_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.07310186241962376,
+  "ci95": [
+   -0.051002976190476224,
+   0.22423115079365097
+  ],
+  "p_one_sided": 0.20703125,
+  "tasks_up": 5,
+  "tasks_down": 4
+ },
+ "fm-tasks-run3_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.008169230895872884,
+  "ci95": [
+   -0.09784424603174591,
+   0.1332996031746032
+  ],
+  "p_one_sided": 0.4580078125,
+  "tasks_up": 6,
+  "tasks_down": 5
+ },
+ "fm-tasks-run4_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.09058047102450432,
+  "ci95": [
+   -0.07605555555555532,
+   0.26856060606060606
+  ],
+  "p_one_sided": 0.1630859375,
+  "tasks_up": 7,
+  "tasks_down": 5
+ }
+}
