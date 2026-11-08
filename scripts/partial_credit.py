@@ -178,6 +178,11 @@ def analyze(d: str) -> None:
     if "fm-tasks-arm-placebo" in rows:
         out["placebo_vs_control"] = ao.compare(ctrl, per_task(["fm-tasks-arm-placebo"]), tasks)
         out["placebo_vs_run1"] = ao.compare(per_task(["fm-tasks-run1"]), per_task(["fm-tasks-arm-placebo"]), tasks)
+    for arm in ("fm-tasks-arm-readfirst",):  # further exploratory arms are added here as they finish
+        if arm in rows:
+            out[f"{arm}_vs_control"] = ao.compare(ctrl, per_task([arm]), tasks)
+            out[f"{arm}_vs_run1"] = ao.compare(per_task(["fm-tasks-run1"]), per_task([arm]), tasks)
+            out["mean_partial"][arm] = round(sum(v[0] for v in per_task([arm]).values()) / sum(v[1] for v in per_task([arm]).values()), 4)
     for j in ("fm-tasks-run1", "fm-tasks-run3", "fm-tasks-run4"):
         out[f"{j}_vs_control"] = {k: v for k, v in ao.compare(ctrl, per_task([j]), tasks).items() if k != "per_task"}
     print(json.dumps(out, indent=1))

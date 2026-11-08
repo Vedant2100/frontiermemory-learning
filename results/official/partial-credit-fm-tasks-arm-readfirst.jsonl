@@ -1,0 +1,45 @@
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-market-share__HVqC9UW", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-market-share__RKA3wHY", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-market-share__S3esE7G", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-seat-surplus__9qboL5t", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-seat-surplus__QVfNmrb", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-brightpath-seat-surplus__Sg6FRMq", "strict": 0.0, "partial": 0.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-eurogrid-curtailment__HsPaAdd", "strict": 0.8333333333333334, "partial": 0.8333333333333334, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-eurogrid-curtailment__ahRpqp6", "strict": 0.8333333333333334, "partial": 0.8333333333333334, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "apex-eurogrid-curtailment__vnrscq7", "strict": 0.8333333333333334, "partial": 0.8333333333333334, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-marketing-conten__G4hWrqm", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-marketing-conten__dTHVG53", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-marketing-conten__raAuHHG", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-chatgpt-pr__5sumuuD", "strict": 0.0, "partial": 0.7, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-chatgpt-pr__7PmQgr3", "strict": 0.0, "partial": 0.8, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-chatgpt-pr__AuwZnZv", "strict": 0.0, "partial": 0.6, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-partnershi__4jwvucg", "strict": 0.0, "partial": 0.25, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-partnershi__jkbPPib", "strict": 0.0, "partial": 0.25, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "automationbench-sales-partnershi__xhCnCoA", "strict": 0.0, "partial": 0.125, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-explicit__9nrgBN9", "strict": 0.0, "partial": 0.4791666666666667, "parts": {"tests": 0.9583333333333334, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-explicit__P6zn8RP", "strict": 0.0, "partial": 0.0, "parts": {"tests": 0.0, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-explicit__SHhC9Bm", "strict": 0.0, "partial": 0.4583333333333333, "parts": {"tests": 0.9166666666666666, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-implicit__FCcRQb6", "strict": 0.0, "partial": 0.4791666666666667, "parts": {"tests": 0.9583333333333334, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-implicit__XftrSGy", "strict": 0.0, "partial": 0.4791666666666667, "parts": {"tests": 0.9583333333333334, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "awilix-release-tier-implicit__qxSBtW7", "strict": 0.0, "partial": 0.4791666666666667, "parts": {"tests": 0.9583333333333334, "preference": 0.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "build-word2vec-pipeline__CNWMh63", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "build-word2vec-pipeline__DxiofwD", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "build-word2vec-pipeline__MyUvViz", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cattrs-compositional-changelog__8RRFNjo", "strict": 0.0, "partial": 0.948051948051948, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cattrs-compositional-changelog__FzhBGoy", "strict": 0.0, "partial": 0.987012987012987, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cattrs-compositional-changelog__tBHGHmu", "strict": 0.0, "partial": 0.987012987012987, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cookie-store-compositional-chang__4tWQuo3", "strict": 0.0, "partial": 0.991304347826087, "parts": {"tests": 0.9826086956521739, "gates": 1.0}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cookie-store-compositional-chang__h5ZQsAn", "strict": 0.0, "partial": 0.7021739130434783, "parts": {"tests": 0.9043478260869565, "gates": 0.5}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "cookie-store-compositional-chang__qqwASgX", "strict": 0.0, "partial": 0.8315217391304348, "parts": {"tests": 0.9130434782608695, "gates": 0.75}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "customer-delivery-contextual-pre__GXPxPsA", "strict": 0.0, "partial": 0.9893617021276596, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "customer-delivery-contextual-pre__Vv8CKgj", "strict": 0.0, "partial": 0.9893617021276596, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "customer-delivery-contextual-pre__bUSc59h", "strict": 0.0, "partial": 0.9893617021276596, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "dapt-intrusion-detection-workflo__LQ9g3es", "strict": 0.0, "partial": 0.7857142857142857, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "dapt-intrusion-detection-workflo__ihjGXpp", "strict": 0.0, "partial": 0.8571428571428571, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "dapt-intrusion-detection-workflo__pPizqx2", "strict": 0.0, "partial": 0.7857142857142857, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-csm-26d1b04a__aJXBHJJ", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-csm-26d1b04a__e5xMA59", "strict": 1.0, "partial": 1.0, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-csm-26d1b04a__joBDTwD", "strict": 0.0, "partial": 0.75, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-teams-2725d17f__Tnv3qnd", "strict": 0.0, "partial": 0.75, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-teams-2725d17f__hufTKQk", "strict": 0.0, "partial": 0.75, "parts": {}, "error": null}
+{"job": "fm-tasks-arm-readfirst", "trial": "enterpriseops-teams-2725d17f__tPt5US3", "strict": 0.0, "partial": 0.75, "parts": {}, "error": null}

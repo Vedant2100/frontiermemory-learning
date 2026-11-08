@@ -1,6 +1,7 @@
 {
  "trials_per_set": {
   "fm-tasks-arm-placebo": 45,
+  "fm-tasks-arm-readfirst": 45,
   "fm-tasks-control": 45,
   "fm-tasks-run1": 45,
   "fm-tasks-run3": 45,
@@ -9,7 +10,8 @@
  "mean_partial": {
   "control": 0.5792,
   "memory_runs_1_3_4": 0.6365,
-  "placebo": 0.5996
+  "placebo": 0.5996,
+  "fm-tasks-arm-readfirst": 0.6543
  },
  "memory_vs_control": {
   "tasks": 15,
@@ -94,6 +96,62 @@
   },
   "tasks_up": 3,
   "tasks_down": 8
+ },
+ "fm-tasks-arm-readfirst_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.07506224528888729,
+  "ci95": [
+   -0.061011904761904656,
+   0.23577380952380955
+  ],
+  "p_one_sided": 0.2109375,
+  "per_task": {
+   "apex-brightpath-market-share": 0.0,
+   "apex-brightpath-seat-surplus": 0.0,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": 0.1515151515151515,
+   "automationbench-sales-chatgpt-proposal-customization": 0.0,
+   "automationbench-sales-partnership-contract": -0.29761904761904756,
+   "awilix-release-tier-explicit": -0.16666666666666669,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 1.0,
+   "cattrs-compositional-changelog": -2.220446049250313e-16,
+   "cookie-store-compositional-changelog": 0.02862318840579725,
+   "customer-delivery-contextual-preferences": 0.005319148936170359,
+   "dapt-intrusion-detection-workflow-learning": 0.4047619047619046,
+   "enterpriseops-csm-26d1b04a": 0.0,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 5,
+  "tasks_down": 3
+ },
+ "fm-tasks-arm-readfirst_vs_run1": {
+  "tasks": 15,
+  "mean_diff": 0.001960382869263527,
+  "ci95": [
+   -0.06844047619047622,
+   0.06785714285714284
+  ],
+  "p_one_sided": 0.4755859375,
+  "per_task": {
+   "apex-brightpath-market-share": -0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.0,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": 0.1515151515151515,
+   "automationbench-sales-chatgpt-proposal-customization": 0.03333333333333344,
+   "automationbench-sales-partnership-contract": -0.04166666666666666,
+   "awilix-release-tier-explicit": -0.16666666666666669,
+   "awilix-release-tier-implicit": 0.00694444444444442,
+   "build-word2vec-pipeline": 0.05555555555555547,
+   "cattrs-compositional-changelog": -0.012987012987013102,
+   "cookie-store-compositional-changelog": 0.12065217391304361,
+   "customer-delivery-contextual-preferences": 0.0017730496453900457,
+   "dapt-intrusion-detection-workflow-learning": 0.2142857142857142,
+   "enterpriseops-csm-26d1b04a": 0.0,
+   "enterpriseops-teams-2725d17f": 0.0
+  },
+  "tasks_up": 7,
+  "tasks_down": 4
  },
  "fm-tasks-run1_vs_control": {
   "tasks": 15,

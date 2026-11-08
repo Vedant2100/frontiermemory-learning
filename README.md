@@ -11,7 +11,7 @@
 
 ## Results so far
 
-*Updated after each set. Last update: Nov 7, 22:45, after run 4: the preregistered test is complete.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
+*Updated after each set. Last update: Nov 8, 12:20, after the read-first arm.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
 
 ### Counted sets
 
@@ -23,28 +23,30 @@
 | Run 3 | generation 3: 6 files, 40 KB | done Nov 6 14:27 (13.7 h) | 4/45 | 45/45 | 0 | 0 |
 | Run 4 (replaces run 2, A4) | generation 4: 7 files, 38 KB (21 min) | done Nov 7 22:31 (15.9 h with generation) | 8/45 | 45/45 | 0 | 0 |
 | Placebo (exploratory arm, fast-tracked) | run 1's files, same file count and byte sizes, text replaced by public-domain prose | done Nov 7 06:27 (15.8 h) | 4/45 | 45/45 | 0 | 0 outside the D122 Ollama hang; its one overlapping trial set aside and rerun (B3, D124) |
-| Read-first (exploratory arm) | run 1's, plus a nudge to read it first | e2e passed Nov 7 22:39 (checks fixed, D125–D129); 45 trials running, about Nov 8 evening | | | | |
-| Exposure all, then none (exploratory) | run 1's | all after read-first (A7), about Nov 9; none in the arms order (A5) | | | | |
+| Read-first (exploratory arm) | run 1's, plus a nudge to read it first | done Nov 8 12:16 (13.5 h; checks fixed first, D125–D129) | 8/45 | 45/45 | 0 | 0 (16 of 16 closes at an agent's end); one trial with no reward (environment command timed out before the agent started) set aside and rerun |
+| Exposure all, then none (exploratory) | run 1's | all-shown running since Nov 8 12:17, about Nov 9; none in the arms order (A5) | | | | |
 
 **Placebo (exploratory; the arms preregistration's test):** 4/45, vs run 1 (same file layout, real content) −0.07 per task (95% CI −0.19 to +0.06), 1 task up, 3 down, p = 0.94; vs no memory −0.04, p = 0.89. The Word2Vec gain does not appear with placebo text (0/3, vs 5 of 9 across the three real-memory runs): consistent with the content, not the presence of files, mattering there, but one task with 3 attempts each.
 
 **Primary result (preregistered, runs 1, 3 and 4 pooled vs no memory):** per-task pass rate +0.01 (95% CI −0.12 to +0.14), 4 tasks up, 4 down, one-sided p = 0.50. Pooled: 19 of 135 with memory vs 6 of 45 without. Sensitivity: without the 4 tasks whose reference solution fails, +0.04, p = 0.34; without run 4 (the replacement run), −0.01, p = 0.63. Not evidence of a gain, and with 15 tasks not evidence of no effect either. Shortfall stated: 3 of 4 memory runs have trials (run 2's generation timed out). The one consistent change is Word2Vec: 0/3 without memory, 2, 2 and 1 of 3 in the three memory runs.
 
+**Read-first (exploratory):** the nudge nearly doubled how often the agent opened its memory, 15 of 45 trials (run 1) to 27 of 45, and opened it sooner (median 2 tool calls before the first open, against 5), mostly on tasks that never opened it before (awilix 0/3 to 2/3, cookie store 0/3 to 2/3, DAPT 1/3 to 3/3). The score did not move: 8/45 vs 7/45 strict passes (per task +0.02 vs run 1, p = 0.50), hidden tests 65.4% vs 65.2%. Word2Vec already opened the memory 3 of 3 times in run 1, with no nudge. So in this setup delivery is not the bottleneck; what the memory says is (`scripts/memory_access.py`, D132).
+
 **Hidden tests passed (preregistered secondary, `scripts/partial_credit.py`, D131):** the share of each verifier's hidden tests (or rubric checks) an attempt passes, by the verifier's own partial-credit field where it has one, else its printed test counts. Means over 45 trials: no memory 58%, run 1 65%, run 3 59%, run 4 67%, placebo 60%. Runs 1, 3, 4 vs no memory: +0.06 per task (95% CI −0.07 to +0.20, one-sided p = 0.25, 7 tasks up, 7 down), the same picture as strict passes. Word2Vec: 0% of hidden tests without memory and with placebo (all 6 attempts failed before any test ran), 72–94% with real memory. AutoBench partnership drops from 51% to 17–25% in every memory arm, placebo included. Consistency check: a trial's partial credit is 1 exactly when its strict reward is 1, on all 225 trials.
 
 ### Per task (3 attempts each)
 
-| Task | Control | Run 1 | Run 3 | Run 4 | Placebo |
-|---|---|---|---|---|---|
-| build-word2vec-pipeline | 0/3 | **2/3** | **2/3** | **1/3** | 0/3 |
-| apex-brightpath-market-share | 0/3 | 1/3 | 0/3 | 2/3 | 1/3 |
-| cattrs compositional changelog (reference solution scores 0) | 0/3 | 0/3 | 1/3 | 1/3 | 0/3 |
-| automationbench marketing content gap analysis | 2/3 | 2/3 | 1/3 | 1/3 | 1/3 |
-| enterpriseops CSM | 2/3 | 2/3 | 0/3 | 2/3 | 1/3 |
-| automationbench sales partnership contract | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 |
-| cookie-store compositional changelog | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 |
-| apex-brightpath-seat-surplus | 0/3 | 0/3 | 0/3 | 1/3 | 1/3 |
-| the other 7 (Eurogrid scores 0.83 every attempt, its maximum reachable reward per the maintainers) | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 |
+| Task | Control | Run 1 | Run 3 | Run 4 | Placebo | Read-first |
+|---|---|---|---|---|---|---|
+| build-word2vec-pipeline | 0/3 | **2/3** | **2/3** | **1/3** | 0/3 | **3/3** |
+| apex-brightpath-market-share | 0/3 | 1/3 | 0/3 | 2/3 | 1/3 | 0/3 |
+| cattrs compositional changelog (reference solution scores 0) | 0/3 | 0/3 | 1/3 | 1/3 | 0/3 | 0/3 |
+| automationbench marketing content gap analysis | 2/3 | 2/3 | 1/3 | 1/3 | 1/3 | 3/3 |
+| enterpriseops CSM | 2/3 | 2/3 | 0/3 | 2/3 | 1/3 | 2/3 |
+| automationbench sales partnership contract | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 |
+| cookie-store compositional changelog | 1/3 | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 |
+| apex-brightpath-seat-surplus | 0/3 | 0/3 | 0/3 | 1/3 | 1/3 | 0/3 |
+| the other 7 (Eurogrid scores 0.83 every attempt, its maximum reachable reward per the maintainers) | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 |
 
 ### Audit findings: where the official pipeline loses value
 
