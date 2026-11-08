@@ -38,7 +38,7 @@ Build & Harbor rebuilds images per trial, and 12 of 15 tasks have install comman
 \subsection{RQ3: What can a reader conclude from the leaderboard?}
 The leaderboard reports score and task cost.
 It doesn't report a no-memory row, per-task results, latency, tokens, memory size or the judge, although the rules refer to no-memory rows.
-All 15 published scores are multiples of 1/45, which fits one attempt per task in each of 3 runs, while submissions require 3 attempts; on that grid, ranks 1 and 2 differ by one trial.
+All 15 published scores are multiples of 1/45, which fits one attempt per task in each of 3 runs, while submissions require 3 attempts. Ranks 1--3 are 33, 32 and 31 of 45; a rerun would reverse each adjacent pair with probability 0.41 and keep the top three's order with probability 0.22 (random: 0.17). Our three generations of one system passed 7, 4 and 8 of 45, with the binomial spread.
 This is our inference.
 Without per-task results, a reader can't test such a gap.
 With a sign-flip over tasks, $p<.05$ needs at least 5 tasks moving the same way with none opposing.

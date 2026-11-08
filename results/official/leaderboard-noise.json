@@ -1,0 +1,67 @@
+{
+ "adjacent_pairs": [
+  {
+   "pair": "rank 1 vs rank 2",
+   "attempts": "33 vs 32 of 45",
+   "gap_attempts": 1,
+   "gap_points": 2.2,
+   "se_points": 9.4,
+   "p_rerun_reverses": 0.41
+  },
+  {
+   "pair": "rank 2 vs rank 3",
+   "attempts": "32 vs 31 of 45",
+   "gap_attempts": 1,
+   "gap_points": 2.2,
+   "se_points": 9.7,
+   "p_rerun_reverses": 0.41
+  },
+  {
+   "pair": "rank 3 vs rank 4",
+   "attempts": "31 vs 29 of 45",
+   "gap_attempts": 2,
+   "gap_points": 4.4,
+   "se_points": 9.9,
+   "p_rerun_reverses": 0.33
+  },
+  {
+   "pair": "rank 4 vs rank 5",
+   "attempts": "29 vs 23 of 45",
+   "gap_attempts": 6,
+   "gap_points": 13.3,
+   "se_points": 10.3,
+   "p_rerun_reverses": 0.1
+  },
+  {
+   "pair": "rank 5 vs rank 6",
+   "attempts": "23 vs 23 of 45",
+   "gap_attempts": 0,
+   "gap_points": 0.0,
+   "se_points": 10.5,
+   "p_rerun_reverses": 0.5
+  },
+  {
+   "pair": "rank 6 vs rank 7",
+   "attempts": "23 vs 17 of 45",
+   "gap_attempts": 6,
+   "gap_points": 13.3,
+   "se_points": 10.4,
+   "p_rerun_reverses": 0.1
+  }
+ ],
+ "same_system_runs": {
+  "passes_of_45": {
+   "run1": 7,
+   "run3": 4,
+   "run4": 8
+  },
+  "range": 4,
+  "sd_attempts": 2.08,
+  "binomial_sd_attempts": 2.33,
+  "ratio": 0.89
+ },
+ "p_rerun_reproduces_top3_order": {
+  "binomial": 0.215,
+  "scaled_to_our_runs": 0.223
+ }
+}
