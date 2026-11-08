@@ -11,7 +11,7 @@
 REPO=$HOME/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-arms-$SLURM_JOB_ID.log; RES=$REPO/results/official
 L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: a check reads only the log lines written since the step it follows began
-ORDER="placebo readfirst exposure-none cue scoped evidence raw generator categorized"  # prereg order, A5; c0 cm k0 km (B1) and recency (B2) on the second machine
+ORDER="placebo readfirst exposure-none cue evidence raw generator"  # prereg order, A5; c0 cm k0 km (B1) and recency (B2) on the second machine; scoped and categorized dropped (B4, D135: one skill per memory)
 rm -f official/vm/STUDY_STOPPED
 step() { echo; echo "=== $(date +%m-%d\ %H:%M:%S) $*"; }
 gpus_free() { for _ in $(seq 1 12); do u=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | sort -n | tail -1); [ "$u" -lt 1000 ] && return 0; pkill -u "$USER" -x ollama; sleep 5; done; return 1; }

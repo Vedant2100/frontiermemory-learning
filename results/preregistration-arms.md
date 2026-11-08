@@ -136,3 +136,16 @@ The trial running then (placebo, APEX seat surplus) stalled for about 70 minutes
   official/vm/serving-incidents.json`). The rerun itself must pass the normal checks with nothing excused.
 - The set's own end-of-set check stays strict, so it stops as designed; `official/vm/next-recover-d122.sh`, queued in the
   hold, then applies this rule and continues the study. Any other stop reason: it does nothing and the job holds.
+
+## Amendment B4 (2026-11-08, before any scoped or categorized trial)
+
+**Change (user decision, "Skip em"):** the **scoped** and **categorized** arms are not run. They are reported as not run, with this reason.
+
+**Why, found before either arm ran (D134):** every Hermes generation we have (runs 1, 3, 4 and the second gate) exports exactly one skill,
+one SKILL.md plus 5 to 12 supporting files. Scoped keeps the top 3 skills for each task, which is that one skill, the same as ordinary
+memory; categorized files the skills under category folders, which is that one skill in one folder. On the real run 1 memory both builders
+produce one skill. Neither arm can differ from the HM run 1 arm, so running them would cost about 14 hours each and test nothing.
+This is a design fact about the memory format, known without any result of either arm.
+
+**Order now:** placebo, read-first, none-shown, cue, evidence, raw, generator (the rest of A5/B2 is unchanged). The free job time is left unused.
+The preregistered test, the secondary outcomes and every other arm's rules are unchanged.
