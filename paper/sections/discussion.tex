@@ -7,7 +7,7 @@ A solve rate credits memory only if every link holds: the corpus has the knowled
 Our audit finds a weak point at every link that doesn't depend on the model.
 For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks can't be passed by their own reference solution, yet the hidden preferences of two of them can be met without memory; the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
 A score difference between two memory systems therefore mixes memory quality with corpus coverage, harness loading and grader limits, and the leaderboard publishes too little to separate them.
-\todo{One sentence on RQ1 once results exist, stated as this pipeline with this model.}
+With this model on this pipeline, generated memory gave no measurable gain over no memory; with 15 tasks, that is not evidence that it has no effect.
 
 \textbf{Recommendations for the benchmark.}
 \begin{itemize}

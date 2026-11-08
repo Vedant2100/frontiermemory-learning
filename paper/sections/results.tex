@@ -7,7 +7,7 @@
 Table~\ref{tab:main} gives strict passes per task.
 Memory changes the per-task pass rate by \resMeanDiff{} on average (exact 95\% interval \resCI), with \resUp{} tasks up and \resDown{} down; the preregistered one-sided test gives $p=\resP$.
 Without the 4 tasks whose reference solution scores 0, $p=\resSensNoRefP$; without trials where the agent gave up on the model server, $p=\resSensUnavailP$.
-\todo{Interpretation, run-to-run variation, and whether memory was opened.}}{\todo{Results table: run scripts/analyze\_official.py, then scripts/results\_table.py.}}
+Three of the four preregistered memory runs have trials; run 2's generation hit the time limit (Table~\ref{tab:chain}). Without run 4, which replaced it, $p=0.63$. Runs vary: 7, 4 and 8 of 45 passed, and EntOps CSM passed 2, 0 and 2 of 3. Only Word2Vec improved in every run (0/3 to 5/9). In an exploratory placebo arm, run 1's memory with each file's text replaced by unrelated prose of the same length, Word2Vec passed 0 of 3 and the arm was 0.04 below no memory ($p=0.89$), consistent with the content, not the files' presence, driving that one gain.}{\todo{Results table: run scripts/analyze\_official.py, then scripts/results\_table.py.}}
 
 \subsection{RQ2: Where can memory's value be lost?}
 Table~\ref{tab:chain} summarises each link. Unless marked, a finding comes from the public code, documentation or task files, or from running them, and doesn't depend on our model.
