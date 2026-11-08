@@ -51,6 +51,14 @@ run_checked() {  # $1 label, $2 summary name, $3 expected trials, rest: command
   local label=$1 name=$2 n=$3; shift 3
   if complete "$name" "$n"; then step "$label: already complete"; return 0; fi
   gpus_free || stop "$label: GPUs not free"
+  case "$name" in fm-smoke-*)  # D134: an uncounted test run whose job exists but never reached a summary failed earlier. Resuming a
+    # finished trial sends no traffic and fails the serving check (D124, D129, D133), so set it aside, kept, and run a fresh one.
+    if [ ! -f "$RES/summary-$name.jsonl" ]; then
+      ( source official/vm/lib.sh; vm_boot 4 8G || exit 1
+        G "cd ~/official/frontiermemory/jobs && if [ -d $name ]; then sudo mv $name $name.aside-\$(date +%s); fi; [ ! -e $name ]"
+        rc=$?; vm_stop; exit $rc ) || stop "$label: could not set aside the earlier test run (D134)"
+    fi ;;
+  esac
   local s0 r0; s0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0); r0=$(wc -l < "$OLOG/relay.log" 2>/dev/null || echo 0)
   L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: checks read only what this step wrote
   step "$label: start"
