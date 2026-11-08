@@ -78,6 +78,14 @@ if ! complete fm-tasks-arm-readfirst 45; then
   [ -f official/vm/STUDY_STOPPED ] && stop "read-first stopped: $(cat official/vm/STUDY_STOPPED)"
 fi
 
+# D133: all-shown's first e2e (12:17) failed its token check on Hermes's side request, not the arm (structural check passed, 13 of 13 files
+# in the prompt); set that trial aside, kept, so the e2e step runs a fresh one instead of resuming a finished trial with no traffic.
+if ! complete fm-smoke-exposure-all 1; then
+  ( source official/vm/lib.sh; vm_boot 4 8G || exit 1
+    G 'cd ~/official/frontiermemory/jobs && if [ -d fm-smoke-exposure-all ]; then [ ! -e fm-smoke-exposure-all.d133 ] && sudo mv fm-smoke-exposure-all fm-smoke-exposure-all.d133; fi; [ ! -e fm-smoke-exposure-all ]'
+    rc=$?; vm_stop; exit $rc ) || stop "could not set aside the first all-shown e2e (D133)"
+  step "exposure-all: first e2e set aside as fm-smoke-exposure-all.d133"
+fi
 for arm in all; do  # A5: none-shown runs later, inside the arms order (next-study-3.sh), as cue's control
   run_checked "exposure-$arm e2e" "fm-smoke-exposure-$arm" 1 env E2E=1 bash official/vm/run-exposure.sh "$arm"
   tail -n +$((L0+1)) "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed" && stop "exposure-$arm: end-to-end check failed"

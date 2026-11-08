@@ -38,7 +38,7 @@ if e2e:
                   '\nL0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0)\nrun_tasks "$MEM"\nexposure_check "$L0"\nfor round in 1 2 3;'))
     pairs.append(('MODEL=qwen3.8:27b-mtp-q4_K_M; JUDGE=', '''exposure_check() {  # E2E only: did the first prompt carry the arm's memory text? Counts only.
   local first est
-  first=$(tail -n +"$(( $1 + 1 ))" "$OLOG/server.log" | grep -oE 'task.n_tokens = [0-9]+' | head -1 | grep -oE '[0-9]+$' || true)
+  first=$(tail -n +"$(( $1 + 1 ))" "$OLOG/server.log" | grep -oE 'task.n_tokens = [0-9]+' | grep -oE '[0-9]+$' | awk '$1 >= 2000 {print; exit}' || true)  # skip Hermes's short side request (about 350 tokens, D133)
   est=$(G "cd ~/official/frontiermemory; sudo find jobs/$TASKJOB -name exposure-report.json | head -1 | xargs -r sudo python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))[\\"injected_tokens_estimate\\"])'")
   echo "EXPOSURE_CHECK arm=${SET#exposure-} first_prompt_tokens=${first:-none} injected_tokens_estimate=${est:-none}"
   if [ "$SET" = exposure-all ] && { [ -z "$first" ] || [ -z "$est" ] || [ "$first" -lt "$est" ]; }; then echo "EXPOSURE_CHECK_FAILED"; exit 1; fi
