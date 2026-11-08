@@ -10,6 +10,7 @@
 # so every arm is exercised for real before ~8 days of counted sets. Always exits 0.
 REPO=$HOME/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-arms-$SLURM_JOB_ID.log; RES=$REPO/results/official
+L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: a check reads only the log lines written since the step it follows began
 ORDER="placebo readfirst exposure-none cue scoped evidence raw generator categorized"  # prereg order, A5; c0 cm k0 km (B1) and recency (B2) on the second machine
 rm -f official/vm/STUDY_STOPPED
 step() { echo; echo "=== $(date +%m-%d\ %H:%M:%S) $*"; }
@@ -51,10 +52,11 @@ run_checked() {  # $1 label, $2 summary name, $3 expected trials, rest: command
   if complete "$name" "$n"; then step "$label: already complete"; return 0; fi
   gpus_free || stop "$label: GPUs not free"
   local s0 r0; s0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0); r0=$(wc -l < "$OLOG/relay.log" 2>/dev/null || echo 0)
+  L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: checks read only what this step wrote
   step "$label: start"
   "$@" 2>&1 | tee -a "$LOGF"
-  if tail -60 "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$label: NO_VALID_MEMORY (prereg: reported, trials not run)"; return 1; fi
-  tail -80 "$LOGF" | grep -q "ARM_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|PLACEBO_BUILD_FAILED\|run-set-v1.sbatch changed" && stop "$label: arm check failed"
+  if tail -n +$((L0+1)) "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$label: NO_VALID_MEMORY (prereg: reported, trials not run)"; return 1; fi
+  tail -n +$((L0+1)) "$LOGF" | grep -q "ARM_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|PLACEBO_BUILD_FAILED\|run-set-v1.sbatch changed" && stop "$label: arm check failed"
   python3 official/vm/check-serving.py "$OLOG" "$s0" "$r0" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$label: serving check failed"
   trials_ok "$name" "$n" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$label: trial check failed"
   step "$label: SET_CHECKED"
@@ -65,10 +67,11 @@ recency_checked() {  # generation and probe only
   if [ -f "$RES/recency-probe-arm-$arm.txt" ] && grep -q RECENCY_PROBE "$RES/recency-probe-arm-$arm.txt"; then step "$arm: already complete"; return 0; fi
   gpus_free || stop "$arm: GPUs not free"
   local s0 r0; s0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0); r0=$(wc -l < "$OLOG/relay.log" 2>/dev/null || echo 0)
+  L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129
   step "$arm: start"
   bash official/vm/run-arm.sh "$arm" 2>&1 | tee -a "$LOGF"
-  tail -60 "$LOGF" | grep -q "RECENCY_CORPUS_FAILED\|run-set-v1.sbatch changed" && stop "$arm: corpus build failed"
-  if tail -60 "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$arm: NO_VALID_MEMORY (prereg: reported, no probe)"; return 0; fi
+  tail -n +$((L0+1)) "$LOGF" | grep -q "RECENCY_CORPUS_FAILED\|run-set-v1.sbatch changed" && stop "$arm: corpus build failed"
+  if tail -n +$((L0+1)) "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$arm: NO_VALID_MEMORY (prereg: reported, no probe)"; return 0; fi
   python3 official/vm/check-serving.py "$OLOG" "$s0" "$r0" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$arm: serving check failed"
   grep -q RECENCY_PROBE "$RES/recency-probe-arm-$arm.txt" 2>/dev/null || stop "$arm: no probe result"
   step "$arm: SET_CHECKED"
@@ -84,7 +87,7 @@ for arm in $ORDER; do
   case " ${ARMS:-$ORDER} " in *" $arm "*) ;; *) continue ;; esac
   if [ "$arm" = exposure-none ]; then  # A5: the preregistered none-shown arm (A2), here as cue's control
     run_checked "exposure-none e2e" fm-smoke-exposure-none 1 env E2E=1 bash official/vm/run-exposure.sh none || continue
-    tail -60 "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed\|RUN4_PENDING" && stop "exposure-none: end-to-end check failed"
+    tail -n +$((L0+1)) "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed\|RUN4_PENDING" && stop "exposure-none: end-to-end check failed"
     [ "${STAGE:-all}" = checks ] && continue
     run_checked exposure-none fm-tasks-exposure-none 45 bash official/vm/run-exposure.sh none
     continue

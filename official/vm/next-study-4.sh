@@ -5,6 +5,7 @@
 # echo official/vm/next-study-4.sh > official/vm/NEXT. Any failure writes official/vm/STUDY_STOPPED and holds. Always exits 0.
 REPO=/home/csgrad/vbork001/frontiermemory-experiment-20261024; cd "$REPO" || exit 0
 OLOG=/scratch/$USER/fm-vm/ollama-$SLURM_JOB_ID; LOGF=$REPO/official/logs/study-$SLURM_JOB_ID.log; RES=$REPO/results/official  # same log as the first driver, appended
+L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: a check reads only the log lines written since the step it follows began
 rm -f official/vm/STUDY_STOPPED
 step() { echo; echo "=== $(date +%m-%d\ %H:%M:%S) $*"; }
 gpus_free() { for _ in $(seq 1 12); do u=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | sort -n | tail -1); [ "$u" -lt 1000 ] && return 0; pkill -u "$USER" -x ollama; sleep 5; done; return 1; }
@@ -44,9 +45,10 @@ run_checked() {  # $1 label, $2 summary name, $3 expected trials, rest: command
   if complete "$name" "$n"; then step "$label: already complete"; return 0; fi
   gpus_free || stop "$label: GPUs not free"
   local s0 r0; s0=$(wc -l < "$OLOG/server.log" 2>/dev/null || echo 0); r0=$(wc -l < "$OLOG/relay.log" 2>/dev/null || echo 0)
+  L0=$(wc -l < "$LOGF" 2>/dev/null || echo 0)  # D129: checks read only what this step wrote
   step "$label: start"
   "$@" 2>&1 | tee -a "$LOGF"
-  if tail -40 "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$label: NO_VALID_MEMORY (prereg: reported, trials not run)"; return 1; fi
+  if tail -n +$((L0+1)) "$LOGF" | grep -q "NO_VALID_MEMORY"; then step "$label: NO_VALID_MEMORY (prereg: reported, trials not run)"; return 1; fi
   python3 official/vm/check-serving.py "$OLOG" "$s0" "$r0" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$label: serving check failed"
   trials_ok "$name" "$n" | tee -a "$LOGF"; [ "${PIPESTATUS[0]}" = 0 ] || stop "$label: trial check failed"
   step "$label: SET_CHECKED"
@@ -78,7 +80,7 @@ fi
 
 for arm in all; do  # A5: none-shown runs later, inside the arms order (next-study-3.sh), as cue's control
   run_checked "exposure-$arm e2e" "fm-smoke-exposure-$arm" 1 env E2E=1 bash official/vm/run-exposure.sh "$arm"
-  tail -60 "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed" && stop "exposure-$arm: end-to-end check failed"
+  tail -n +$((L0+1)) "$LOGF" | grep -q "EXPOSURE_CHECK_FAILED\|NO_RUN1_MEMORY_FAILED\|run-set-v1.sbatch changed" && stop "exposure-$arm: end-to-end check failed"
   run_checked "exposure-$arm" "fm-tasks-exposure-$arm" 45 bash official/vm/run-exposure.sh "$arm"
 done
 
