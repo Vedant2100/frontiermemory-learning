@@ -4,8 +4,8 @@
 
 \textbf{What a FrontierMemory score measures.}
 A solve rate credits memory only if every link holds: the corpus has the knowledge, generation captures it, the harness shows it or the agent finds it, and the grader can reward it.
-Our audit finds a weak point at every link that doesn't depend on the model.
-For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks can't be passed by their own reference solution, yet the hidden preferences of two of them can be met without memory; the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
+Our audit finds a weak point at each model-independent link in Table~\ref{tab:chain}.
+For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks cannot be passed by their own reference solution, yet our agent passed three of them without memory; the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
 A score difference between two memory systems therefore mixes memory quality with corpus coverage, harness loading and grader limits, and the leaderboard publishes too little to separate them.
 With this model on this pipeline, generated memory gave no measurable gain over no memory; with 15 tasks, that is not evidence that it has no effect.
 
@@ -14,7 +14,7 @@ With this model on this pipeline, generated memory gave no measurable gain over 
   \item Publish the no-memory rows the rules already mention, with per-task results and all attempts, so readers can test score gaps.
   \item Report per-task corpus coverage, and the judge model for judged tasks.
   \item Treat a failed LLM judge as an infrastructure failure, not a zero.
-  \item Pin build dependencies, or ship prebuilt images, so a task can't change under a published score.
+  \item Pin build dependencies, or ship prebuilt images, so a task cannot change under a published score.
   \item Make the submission check compare the corpus digest and the task and attempt counts.
   \item Report how much of each memory the harness shows at start, and how often agents open the rest.
   \item Treat a model call cut by the network proxy or abandoned by the agent's own timeout as an infrastructure failure, and document the proxy's 15-second first-byte limit.
@@ -22,11 +22,11 @@ With this model on this pipeline, generated memory gave no measurable gain over 
 
 \textbf{Threats to validity.}
 \begin{itemize}
-  \item \emph{Model.} One local 27B model generates memory and runs tasks. Our findings about gains from memory, generation quality and agent behaviour apply to it only; findings about corpus, graders, reporting and caps don't depend on it.
-  \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader aren't public. Results may differ for Letta Dream and Letta Code.
-  \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognised model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, so ``highest effort'' is nominal for this model; a second GPU type agreed.
-  \item \emph{Deviations.} The Docker host is a virtual machine; one task's verifier build is repaired with one line; an Anthropic judge stands in for the documented OpenAI judge on 3 tasks; trials run one at a time; a relay and longer Hermes call timeouts serve the local model. All are listed in \S\ref{sec:method}.
+  \item \emph{Model.} One local 27B model generates memory and runs tasks. Our findings about gains from memory, generation quality and agent behavior apply to it only; findings about corpus, graders, reporting and caps do not depend on it.
+  \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader are not public. Results may differ for Letta Dream and Letta Code.
+  \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognized model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, so ``highest effort'' is nominal for this model; a second GPU type agreed.
+  \item \emph{Deviations.} All are listed in \S\ref{sec:method}.
   \item \emph{Order.} The control ran before the memory runs rather than interleaved; the environment and model are frozen, but the remote judge is not.
-  \item \emph{Corpus coverage.} Prompt similarity misses runs on the same repository with different prompts, so a task with no matching run isn't proven unlearnable.
-  \item \emph{Power.} With 15 tasks, $p<.05$ needs 5 tasks moving the same way with none opposing; a null is not evidence of no effect.
+  \item \emph{Corpus coverage.} Prompt similarity misses runs on the same repository with different prompts, so a task with no matching run is not proven unlearnable.
+  \item \emph{Power.} With 15 tasks, a null is not evidence of no effect (\S\ref{sec:method}).
 \end{itemize}

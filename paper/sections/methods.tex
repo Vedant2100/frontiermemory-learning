@@ -4,33 +4,33 @@
 
 \subsection{Setup}
 We run FrontierMemory's public release~\cite{frontiermemory} through its own commands (\texttt{generate-memory}, \texttt{run-tasks}, \texttt{score}, \texttt{bundle}) and task containers, on Docker.
-The leaderboard's default generator and loader are not public, so we use Hermes, a published leaderboard row whose generator and task agent are both in the public repository at a pinned commit.
-All 15 tasks are run on corpus v1.1, as used on the leaderboard, although the public code still pins v1.0.
-A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task; we do 3 runs (135 trials), plus a no-memory control of the same agent with 3 attempts per task (45 trials).
-Two exploratory arms reuse run 1's memory and change only what the agent sees of it at start: \emph{none shown}, with every memory file still on disk for the agent to open, and \emph{all shown}, with every file placed in context (45 trials each).
+The leaderboard's default generator and loader (Letta Dream and Letta Code) are not public, so we use Hermes, a published leaderboard row whose generator and task agent are both in the public repository at a pinned commit.
+Tasks keep their benchmark names (APEX, AutomationBench, EnterpriseOps, DAPT and others). All 15 tasks are run on corpus v1.1, as used on the leaderboard, although the public code still pins v1.0.
+A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task; the preregistered design has 3 runs; run 2's generation timed out and a dated amendment, made before any run 3 result, added run 4 in its place (135 trials over runs 1, 3 and 4), plus a no-memory control of the same agent with 3 attempts per task (45 trials).
+Two exploratory arms reuse run 1's memory (45 trials each): a \emph{placebo}, with each file's text replaced by unrelated prose of the same length, and \emph{read-first}, which adds one sentence telling the agent to read its memory.
 Official timeouts apply.
 
 \subsection{What differs from official runs}
-\paragraph{Model} Generation and tasks both use Qwen3.8-27B (4-bit) served by Ollama, at its full 262{,}144-token context. A thin adapter, loaded through the official custom-harness hook, changes only the model URL. Effort is requested at the highest level; Hermes sends a model it doesn't recognize \emph{xhigh}.
+\paragraph{Model} Generation and tasks both use Qwen3.8-27B (4-bit) served by Ollama, at its full 262{,}144-token context. A thin adapter, loaded through the official custom-harness hook, changes only the model URL. Effort is requested at the highest level; for a model it does not recognize, Hermes sends effort \emph{xhigh}.
 \paragraph{Docker host} The cluster has no Docker, so the official Docker Engine runs in a virtual machine, with the model on the host GPUs. The official network probe and reference solutions behave as the maintainers report (\S\ref{sec:method-validity}).
 \paragraph{One task repair} Cookie-store's verifier cannot be built as published since a dependency released on Nov 1 (\S\ref{sec:results}). We add the version its own test script requires, one line in the verifier's build.
 \paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol. Only an Anthropic key was available, so Claude Opus 5.5 judges instead. It reproduced the reference scores exactly; agreement on wrong answers is untested. Trials where the judge fails are regraded, not counted as agent failures.
-\paragraph{Execution} With one model server, trials run one at a time rather than Harbor's default of 4, so that queueing doesn't count against agent time limits.
-\paragraph{Relay} Harbor's egress proxy, which enforces the tasks' no-network policy, drops any model response that hasn't started within 15 seconds. Cloud APIs start sooner; a local model reading a long prompt may not. A first control run under these conditions lost 3 of 41 trials to the agent giving up, and we discarded it (preregistered amendment). A relay in front of the model server now passes responses that start within 10 seconds through unchanged and keeps slower ones alive with keepalive bytes the client ignores; the model's output is untouched, and the agent's own timeouts still apply.
-\paragraph{Call timeouts} At the highest effort Hermes cancels a model call after 300 seconds; a local model's long calls exceed that, and the cancel doesn't reach the server. We set Hermes's own documented timeout variables to 900 and 1800 seconds, and the relay cancels a call at the server when an identical retry replaces it.
+\paragraph{Execution} With one model server, trials run one at a time rather than the default of 4 in Harbor, the benchmark's trial runner, so that queueing does not count against agent time limits.
+\paragraph{Relay} Harbor's egress proxy, which enforces the tasks' no-network policy, drops any model response that has not started within 15 seconds. Cloud APIs start sooner; a local model reading a long prompt may not. A first control run under these conditions lost 3 of 41 trials to the agent giving up, and we discarded it (preregistered amendment). A relay in front of the model server now passes responses that start within 10 seconds through unchanged and keeps slower ones alive with keepalive bytes the client ignores; the model's output is untouched, and the agent's own timeouts still apply.
+\paragraph{Call timeouts} At the highest effort Hermes cancels a model call after 300 seconds; a local model's long calls exceed that, and the cancel does not reach the server. We set Hermes's own documented timeouts to 900 seconds for a call's first event and 1800 seconds per call, and the relay cancels a call at the server when an identical retry replaces it.
 \paragraph{Frozen builds} Task builds include floating installs, so we keep one Docker build cache, validated by all 15 reference solutions, across every arm. Word2Vec's image exceeds its own 600-second build limit on this host, so it is pre-built once, unmodified.
 
 \subsection{Validity}
 \label{sec:method-validity}
 Before any counted trial, every task's reference solution was run and matched the maintainers' reported scores: 10 tasks at 1, one at about 0.83 and 4 at 0.
 The official network probe shows only the model host reachable during generation.
-Two uncounted gates then ran at full settings, including the longest task to its limit; the first failed on the call timeouts above, the second passed with no serving fault. After every set, serving logs are checked for dropped, cut or failed calls, and the study stops on any that isn't explained.
+Two uncounted gates then ran at full settings, including the longest task to its limit; the first failed on the call timeouts above, the second passed with no serving fault. After every set, serving logs are checked for dropped, cut or failed calls, and the study stops on any that is not explained.
 
 \subsection{Analysis}
 Design and analysis were preregistered before any counted trial.
 The primary outcome is strict pass.
 We test memory against no memory by exact one-sided paired sign-flip over tasks, pooling a task's memory attempts across runs, and report effect sizes with exact intervals.
-With this test, $p<.05$ needs at least 5 tasks moving the same way with none opposing, so a null is not evidence of no effect.
+With this test, $p<.05$ needs at least 5 tasks to change, so a null over 15 tasks is not evidence of no effect.
 
 \subsection{Audit}
 For each link we report what we can establish and how: from source and documentation, by measurement, or by inference.
@@ -40,6 +40,6 @@ For each link we report what we can establish and how: from source and documenta
   \item[Harness] The rule each harness uses to load memory, and the share of a memory it would show.
   \item[Agent] Whether and when trials open memory files, from tool calls in traces, against what was shown at start.
   \item[Recency] Whether any task needs newer corpus evidence over older, from timestamps and the versions tasks pin.
-  \item[Grader] Reference-solution behaviour, judge identity, handling of judge failure, and build reproducibility.
+  \item[Grader] Reference-solution behavior, judge identity, handling of judge failure, and build reproducibility.
 \end{IEEEdescription}
 Findings about construction apply to any model; those about gains from memory, and generation quality, apply to this model only.
