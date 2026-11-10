@@ -15,6 +15,7 @@ INCLUDE=(official/fm_local official/vm/lib.sh official/vm/build-and-test-vm.sbat
          official/tests scripts/partial_credit.py scripts/leaderboard_noise.py scripts/memory_access.py scripts/analyze_arms.py
          results/preregistration-arms.md results/decisions-log-detailed.md)
 for p in "${INCLUDE[@]}"; do [ -e "$p" ] && { mkdir -p "$A/$(dirname "$p")"; cp -r "$p" "$A/$p"; }; done
+mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatordate:iso8601)  %(refname:short)  %(objectname:short)' 'refs/tags/prereg*' > "$A/results/prereg-timestamps.txt"
 find "$A" -name '__pycache__' -prune -exec rm -r {} + ; find "$A" -name '*.log' -delete
 # Scrub identifiers. Order matters: longest first.
 find "$A" -type f \( -name '*.py' -o -name '*.sh' -o -name '*.sbatch' -o -name '*.md' -o -name '*.json' -o -name '*.jsonl' -o -name '*.yaml' -o -name '*.txt' \) -print0 | xargs -0 sed -i -E \
@@ -30,7 +31,7 @@ Code and records for the paper's official-setup study. The gated FrontierMemory 
 trial folders aren't included: the corpus license doesn't allow redistribution. Paths and host names are replaced by placeholders.
 
 - `results/protocol-v4-official.md`: the setup, item by item, with every difference from official runs.
-- `results/preregistration-v2.md`: the preregistration and its dated amendment, locked before any counted trial.
+- `results/preregistration-v2.md`: the written plan and its dated amendments. It was tagged in version control before any counted trial; `results/prereg-timestamps.txt` lists every tag with its commit time. It was not filed with a public registry.
 - `results/official/summary-*.jsonl`: one line per trial (task, reward, validity, memory digest, tokens, times).
 - `scripts/analyze_official.py`: the preregistered analysis (`--test` runs its self-test).
 - `official/`: how the official pipeline was run: a Docker VM, the local-model adapter, the run jobs.
