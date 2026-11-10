@@ -1,17 +1,17 @@
 # FrontierMemory study: plan of action
 
-*Updated Nov 5, 2026. Target: FORGE 2027 Data & Benchmarking, due Nov 15 ([call](https://conf.researchr.org/track/forge-2027/forge-2027-data-and-benchmarking-track)). Earlier study: [pilot archive](results/pilot-v1-README.md).*
+*Updated Nov 9, 2026. Target: FORGE 2027 Data & Benchmarking, due Nov 15 ([call](https://conf.researchr.org/track/forge-2027/forge-2027-data-and-benchmarking-track)). Earlier study: [pilot archive](results/pilot-v1-README.md).*
 
 ## Summary
 
 - **The problem:** our first study used a custom memory generator, Codex, Apptainer and our own runner. Any result about memory gains could be blamed on that setup, so it can't say anything about the benchmark's real pipeline.
 - **The decision:** restart the whole experiment on the official setup. Only the model differs. The first study becomes a pilot and is never pooled with the new data.
 - **The paper:** an audit of FrontierMemory that traces where memory's value can be lost: corpus → generation → harness → agent → grader. It shows what a score can and can't tell you.
-- **Biggest risk:** time. The full run may take 7.5–12 days on one GPU server, which puts Nov 15 at risk. The decision point is Nov 11.
+- **Status (Nov 9):** the preregistered main test is done (no pooled gain, +0.01 per task, p = 0.50) and the paper draft is complete (4 pages plus references; the sources are in `paper/`). The cluster is finishing the exploratory arms (none-shown running, all-shown rerun, evidence, generator; about Nov 12; cue, raw, Claude Code and recency are not run, amendment B5). The second machine is released for a quick ALFWorld memory test (below). Go/no-go on submitting is Nov 11, submission Nov 15.
 
 ## Results so far
 
-*Updated after each set. Last update: Nov 8, 12:20, after the read-first arm.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
+*Updated after each set. Last update: Nov 9, 17:00: all-shown ran but is not reported (D136), none-shown running.* A trial passes only with reward 1. Per-trial data: `results/official/summary-*.jsonl`. Decisions: `results/decisions-log-detailed.md`.
 
 ### Counted sets
 
@@ -28,7 +28,7 @@
 | None shown (exploratory) | run 1's, no memory shown at start, files on disk | running since Nov 9 11:12 | | | | clean so far |
 | Next (arms amendment B5, Nov 9) | | all-shown's 10 stalled trials rerun, then evidence, then generator; about Nov 12. Cue, raw, Claude Code (K0, KM) and recency a/b not run | | | | |
 
-**Second machine (separate study, its own preregistration; numbers never compared with the above):** Codex without memory 6/45, with the same run 1 memory 7/45 (45/45 valid in each). One exploratory test on DAPT put the memory into the task instruction (rewritten once by the same local model): 0/3 strict in all three conditions, hidden tests passed 52% without memory, 74% with it, 76% blended. Claude Code's gate is being rerun after two unexplained client closes.
+**Second machine (separate study, its own preregistration; numbers never compared with the above):** Codex without memory 6/45, with the same run 1 memory 7/45 (45/45 valid in each). One exploratory test on DAPT put the memory into the task instruction (rewritten once by the same local model): 0/3 strict in all three conditions, hidden tests passed 52% without memory, 74% with it, 76% blended. Claude Code's gate failed twice because model calls were still in flight when trials hit the 90-minute agent limit (start plus duration of each close lands 12 to 40 s after the timeout); K0, KM and recency a/b are not run anywhere (amendment B5). The machine now runs an exploratory ALFWorld memory test.
 
 **Placebo (exploratory; the arms preregistration's test):** 4/45, vs run 1 (same file layout, real content) −0.07 per task (95% CI −0.19 to +0.06), 1 task up, 3 down, p = 0.94; vs no memory −0.04, p = 0.89. The Word2Vec gain does not appear with placebo text (0/3, vs 5 of 9 across the three real-memory runs): consistent with the content, not the presence of files, mattering there, but one task with 3 attempts each.
 
@@ -94,14 +94,21 @@ Dates after Nov 4 are estimates.
 | Nov 4 | **Done:** first control discarded (proxy cut, D93); gate 1 failed (Hermes give-ups, D100); gate 2 passed (D102) |
 | Nov 4–5 | **Done:** counted control (D105) |
 | Nov 5 | **Done:** run 1 (D107) |
-| Nov 5–7 | Run 2 (running), run 3, about 15–16 h each. Then the exposure arms, to about Nov 8 |
-| Nov 5–11 | Audit of the real pipeline. Draft on incoming data |
+| Nov 5–8 | **Done:** run 2 (timed out), run 3, run 4, placebo, read-first |
+| Nov 8–9 | All-shown: ran, 10 of 45 trials hit model-server stalls (D136) |
+| Nov 9–12 | None-shown (running), all-shown rerun of the 10 trials, evidence, generator (B5) |
+| Nov 5–9 | **Done:** audit of the real pipeline; paper draft complete and reviewed; anonymized artifact built (`scripts/build_artifact.sh`) |
 | **Nov 11** | **Go/no-go:** submit with the runs finished, stating the shortfall, or move to EASE (Jan 22) |
-| Nov 12–14 | Full draft review, 4-page fit, anonymized artifact |
+| Nov 12–14 | Final read-through of the paper, re-run `scripts/build_artifact.sh`, update numbers if the rerun changes any |
 | Nov 15 | Submit to FORGE |
 | After FORGE | Better generator, then EASE |
 
 **If Qwen can't drive Hermes in the smoke test,** we stop and decide. The fallback is the Codex route, which is public code but not a published leaderboard row.
+
+## What's next
+
+- **ALFWorld memory test (second machine, exploratory, separate from this study):** no memory, static tips, raw past trajectories, a summarizing writer and a prompted Letta-style writer, with memory built on one split, frozen and tested on 134 unseen tasks. Bar fixed before running: at least +15 points over no memory and +10 over the static tips, in at least 4 of 6 task types. Static tips guard against memory merely teaching command syntax in templated tasks.
+- **After FORGE:** (1) a hand-written note per task, built only from facts in the corpus, to measure each task's headroom and the generator's extraction efficiency; (2) leave-one-file-out and per-claim attribution on Word2Vec; (3) the leaderboard-reliability analysis as a short methods note; (4) tasks built so that memory is needed, goes stale or is wrong.
 
 ## Answers to our questions
 
