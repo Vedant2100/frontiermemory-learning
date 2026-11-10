@@ -6,13 +6,13 @@
 We run FrontierMemory's public release~\cite{frontiermemory} through its own commands (\texttt{generate-memory}, \texttt{run-tasks}, \texttt{score}, \texttt{bundle}) and task containers, on Docker.
 The leaderboard's default generator and loader (Letta Dream and Letta Code) are not public, so we use Hermes, a published leaderboard row whose generator and task agent are both in the public repository at a pinned commit.
 Tasks keep their benchmark names (APEX, AutomationBench, EnterpriseOps, DAPT and others). All 15 tasks are run on corpus v1.1, as used on the leaderboard, although the public code still pins v1.0.
-A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task; the preregistered design has 3 runs; run 2's generation timed out and a dated amendment, made before any run 3 result, added run 4 in its place (135 trials over runs 1, 3 and 4), plus a no-memory control of the same agent with 3 attempts per task (45 trials).
+A run is one fresh memory generation under the official 6-hour limit followed by 3 attempts per task. The preregistered design has 3 runs; run 2's generation timed out, so an amendment made before any run 3 result added run 4 in its place (135 trials over runs 1, 3 and 4). A no-memory control of the same agent has 3 attempts per task (45 trials).
 Two exploratory arms reuse run 1's memory (45 trials each): a \emph{placebo}, with each file's text replaced by unrelated prose of the same length, and \emph{read-first}, which adds one sentence telling the agent to read its memory.
 Official timeouts apply.
 
 \subsection{What differs from official runs}
 \paragraph{Model} Generation and tasks both use Qwen3.8-27B (4-bit) served by Ollama, at its full 262{,}144-token context. A thin adapter, loaded through the official custom-harness hook, changes only the model URL. Effort is requested at the highest level; for a model it does not recognize, Hermes sends effort \emph{xhigh}.
-\paragraph{Docker host} The cluster has no Docker, so the official Docker Engine runs in a virtual machine, with the model on the host GPUs. The official network probe and reference solutions behave as the maintainers report (\S\ref{sec:method-validity}).
+\paragraph{Docker host} The official Docker Engine runs in a virtual machine, with the model on the host GPUs. The official network probe and reference solutions behave as the maintainers report (\S\ref{sec:method-validity}).
 \paragraph{One task repair} Cookie-store's verifier cannot be built as published since a dependency released on Nov 1 (\S\ref{sec:results}). We add the version its own test script requires, one line in the verifier's build.
 \paragraph{Judge} Three APEX tasks are graded by an LLM judge, documented as GPT-5.6 Sol; we use Claude Opus 5.5. It reproduced the reference scores exactly; agreement on wrong answers is untested. Trials where the judge fails are regraded, not counted as agent failures.
 \paragraph{Execution} With one model server, trials run one at a time rather than the default of 4 in Harbor, the benchmark's trial runner, so that queueing does not count against agent time limits.
@@ -24,7 +24,7 @@ Official timeouts apply.
 \label{sec:method-validity}
 Before any counted trial, every task's reference solution was run and matched the maintainers' reported scores: 10 tasks at 1, one at about 0.83 and 4 at 0.
 The official network probe shows only the model host reachable during generation.
-Two uncounted gates then ran at full settings, including the longest task to its limit; the first failed on the call timeouts above, the second passed with no serving fault. After every set, serving logs are checked for dropped, cut or failed calls, and the study stops on any that is not explained.
+Two uncounted rehearsals at full settings, including the longest task to its limit, followed: the first exposed the call-timeout problem above, the second ran without serving faults. After every set, serving logs are checked for dropped, cut or failed calls, and the study stops on any that is not explained.
 
 \subsection{Analysis}
 Design and analysis were preregistered before any counted trial.
