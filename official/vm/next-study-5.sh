@@ -41,6 +41,7 @@ for r in map(json.loads, open(sys.argv[1])):
     if a is not None and any(a <= hi and (b is None or b >= lo) for lo, hi in w): print(r["trial"])
 PY
 ) || hold "could not read the all-shown summary"
+  TR=$(echo $TR)  # one line: the list is spliced into a remote command
   [ "$(echo $TR | wc -w)" = 10 ] || hold "expected the 10 trials fixed in B5, found $(echo $TR | wc -w): $TR"
   step "B5: setting aside the 10 trials: $TR"
   ( source official/vm/lib.sh; vm_boot 4 8G || exit 1
