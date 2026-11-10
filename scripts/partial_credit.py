@@ -178,7 +178,7 @@ def analyze(d: str) -> None:
     if "fm-tasks-arm-placebo" in rows:
         out["placebo_vs_control"] = ao.compare(ctrl, per_task(["fm-tasks-arm-placebo"]), tasks)
         out["placebo_vs_run1"] = ao.compare(per_task(["fm-tasks-run1"]), per_task(["fm-tasks-arm-placebo"]), tasks)
-    for arm in ("fm-tasks-arm-readfirst",):  # further exploratory arms are added here as they finish
+    for arm in ("fm-tasks-arm-readfirst", "fm-tasks-exposure-all", "fm-tasks-exposure-none"):  # further exploratory arms are added here as they finish
         if arm in rows:
             out[f"{arm}_vs_control"] = ao.compare(ctrl, per_task([arm]), tasks)
             out[f"{arm}_vs_run1"] = ao.compare(per_task(["fm-tasks-run1"]), per_task([arm]), tasks)

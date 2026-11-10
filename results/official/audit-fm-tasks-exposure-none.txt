@@ -1,0 +1,7 @@
+job config: n_concurrent 1 | timeout_multiplier None agent_timeout_multiplier None | attempts 3
+agent: fm_local.exposure_hermes:ExposureHermes | model openai/qwen3.8:27b-mtp-q4_K_M | kwargs {'exposure': 'none', 'reasoning_effort': 'max'} | memory_dir /home/fm/official/frontiermemory/jobs/fm-gen-run1/memory-task-v1.1__DHmpJBb/artifacts/memory
+environment: None | extra_allowed_hosts None
+verifier env keys: ['ANTHROPIC_API_KEY', 'GRADING_MODEL'] | GRADING_MODEL anthropic/claude-opus-5-5 | ANTHROPIC_API_KEY is template True
+{'effort=max': 45, 'exception=None': 45, 'judge=completed': 9, 'memory_enabled=false': 45, 'model=qwen3.8:27b-mtp-q4_K_M': 45, 'trials': 45}
+attempts per task: {'apex-brightpath-market-share': 3, 'apex-brightpath-seat-surplus': 3, 'apex-eurogrid-curtailment': 3, 'automationbench-marketing-content-gap-analysis': 3, 'automationbench-sales-chatgpt-proposal-customization': 3, 'automationbench-sales-partnership-contract': 3, 'awilix-release-tier-explicit': 3, 'awilix-release-tier-implicit': 3, 'build-word2vec-pipeline': 3, 'cattrs-compositional-changelog': 3, 'cookie-store-compositional-changelog': 3, 'customer-delivery-contextual-preferences': 3, 'dapt-intrusion-detection-workflow-learning': 3, 'enterpriseops-csm-26d1b04a': 3, 'enterpriseops-teams-2725d17f': 3}
+ISSUES: none

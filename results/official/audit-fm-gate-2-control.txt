@@ -1,0 +1,7 @@
+job config: n_concurrent 1 | timeout_multiplier None agent_timeout_multiplier None | attempts None
+agent: fm_local.hermes_local:LocalHermes | model openai/qwen3.8:27b-mtp-q4_K_M | kwargs {'reasoning_effort': 'max'} | memory_dir None
+environment: None | extra_allowed_hosts None
+verifier env keys: ['ANTHROPIC_API_KEY', 'GRADING_MODEL'] | GRADING_MODEL anthropic/claude-opus-5-5 | ANTHROPIC_API_KEY is template True
+{'effort=max': 1, 'exception=None': 1, 'memory_enabled=false': 1, 'model=qwen3.8:27b-mtp-q4_K_M': 1, 'trials': 1}
+attempts per task: {'awilix-release-tier-implicit': 1}
+ISSUES: none

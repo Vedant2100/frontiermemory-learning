@@ -1,0 +1,7 @@
+EFFORT_PROBE api=responses setting=low used_by='reference' status=[200] reasoning_mean=168 seconds_mean=11.1
+EFFORT_PROBE api=responses setting=xhigh used_by='Hermes' status=[200] reasoning_mean=202 seconds_mean=6.6
+EFFORT_PROBE api=responses setting=max used_by='Codex' status=[200] reasoning_mean=226 seconds_mean=9.0
+EFFORT_PROBE api=messages setting=none used_by='reference' status=[200] reasoning_mean=226 seconds_mean=9.2
+EFFORT_PROBE api=messages setting=thinking-16k used_by='Claude Code (if it sends a thinking budget)' status=[200] reasoning_mean=223 seconds_mean=9.1
+EFFORT_PROBE api=messages setting=effort-max used_by='Claude Code (if it sends output_config.effort)' status=[200] reasoning_mean=212 seconds_mean=8.7
+EFFORT_PROBE_DONE
