@@ -149,3 +149,28 @@ This is a design fact about the memory format, known without any result of eithe
 
 **Order now:** placebo, read-first, none-shown, cue, evidence, raw, generator (the rest of A5/B2 is unchanged). The free job time is left unused.
 The preregistered test, the secondary outcomes and every other arm's rules are unchanged.
+
+## Amendment B5 (2026-11-09 16:40, during the none-shown set, before any trial of cue, evidence, raw, generator, K0, KM or recency)
+
+**1. All-shown stalls (D136), the B3 rule applied again.** From 23:44 on Nov 8, Ollama's request layer repeatedly held
+calls for 15 to 30 minutes with the model idle. Nine windows, built from the relay's own stall records
+(`official/vm/serving-incidents-d136.json`), cover every abort, 5xx, max-wait drop and superseded call of the set; outside
+them the set's serving check passes (0 aborts, 17 of 17 closes at an agent's end). Every all-shown trial whose agent ran in
+a window, 10 trials, is an infrastructure casualty: set aside (kept, in `fm-tasks-exposure-all.incident-d136/`) and rerun,
+**whatever its result**, through the same resume path as the official no-reward rerun. The rerun must pass the normal checks
+with nothing excused. The set-aside list is fixed now: automationbench sales partnership, awilix explicit, awilix
+implicit, Word2Vec, cattrs, cookie store, customer delivery, DAPT, EnterpriseOps CSM, EnterpriseOps teams (all 10 ended
+AgentTimeoutError; 0 of them passed).
+
+**2. Arms not run (user decision, Nov 9, on the time left and each arm's value; no result of any of them exists).**
+- **cue** is not run: read-first already raised memory opens from 15 to 27 of 45 with no score change, so a cue that
+  delivers the same skill earlier tests a lever already shown to be weak here.
+- **raw** is not run: 750 corpus files (235 MB) are far beyond what the 27B agent can search in its time limits; evidence
+  (the related past runs given directly) tests the same question in a usable form.
+- **K0, KM (Claude Code) and recency a/b** are not run on either machine. On the second machine the Claude Code gate failed
+  twice: each time a model call was still in flight when a trial hit its 90-minute agent limit (start + duration of each
+  close lands 12 to 40 s after the agent's timeout). That is the model's speed against Claude Code's limits, so a gate here
+  would fail the same way. The second machine is released for a separate exploratory project.
+
+**Order now:** [none-shown, running]; then the all-shown rerun (item 1); then **evidence**, **generator**. Then the job is
+released. Nothing else changes: designs, checks, comparators, and the primary test (done) are unaffected.

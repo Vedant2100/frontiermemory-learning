@@ -1,0 +1,56 @@
+[
+ {
+  "id": "D136-1",
+  "start": "2026-11-08T23:44:33-08:00",
+  "end": "2026-11-09T01:46:32-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-2",
+  "start": "2026-11-09T01:49:26-08:00",
+  "end": "2026-11-09T03:20:09-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-3",
+  "start": "2026-11-09T03:22:30-08:00",
+  "end": "2026-11-09T03:43:02-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-4",
+  "start": "2026-11-09T03:43:52-08:00",
+  "end": "2026-11-09T05:14:25-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-5",
+  "start": "2026-11-09T05:15:25-08:00",
+  "end": "2026-11-09T06:45:56-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-6",
+  "start": "2026-11-09T06:46:58-08:00",
+  "end": "2026-11-09T08:17:31-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-7",
+  "start": "2026-11-09T08:19:36-08:00",
+  "end": "2026-11-09T09:50:25-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-8",
+  "start": "2026-11-09T09:51:24-08:00",
+  "end": "2026-11-09T10:22:27-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ },
+ {
+  "id": "D136-9",
+  "start": "2026-11-09T10:23:03-08:00",
+  "end": "2026-11-09T10:38:16-08:00",
+  "why": "Ollama request layer held calls with the model idle (all-shown, D136)"
+ }
+]
