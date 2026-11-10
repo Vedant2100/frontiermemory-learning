@@ -5,12 +5,12 @@
 VibeMemBench~\cite{vibemembench} finds that 11 of 12 pairings of solver and existing memory system fail to beat a memory-off baseline on repository tasks.
 MERIT~\cite{merit} measures memory's marginal value per dollar on tool-using tasks and finds that changing a memory's implementation can shift task success substantially.
 Scope Before You Persist~\cite{scopebefore} shows that lessons can harm tasks outside their scope.
-These studies build their own benchmarks; we audit an existing one, by running its own pipeline.
+We audit an existing benchmark by running its own pipeline.
 
 \textbf{Delivery and harness effects.}
-Saha~\cite{deliverynotstorage} argues that delivery is what matters; in a single seeded run of a coding agent on one task, it made no memory calls in 114 turns, whereas our agent opened memory files in 15 of 45 run-1 trials.
+Saha~\cite{deliverynotstorage} argues that delivery matters. In a single seeded run of a coding agent on one task, it made no memory calls in 114 turns; our agent opened memory files in 15 of 45 run-1 trials.
 A harness comparison~\cite{harnessormodel} treats truncation policy as part of the harness and recommends logging when it fires.
-We add a reading of how each harness loads the same memory.
+We compare how each harness loads the same memory.
 
 \textbf{Leaderboard reliability.}
 Miller~\cite{errorbars} argues for standard errors and paired comparisons in evaluations; Hardy et al.~\cite{agentreliability} find that agent leaderboards can rank deployed systems reliably but not the models inside them. We apply this to a memory leaderboard whose published scores sit on a grid of 45 attempts.

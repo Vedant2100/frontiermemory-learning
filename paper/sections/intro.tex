@@ -2,25 +2,25 @@
 \section{Introduction}
 \label{sec:intro}
 Coding agents increasingly carry \emph{memory} between sessions: notes distilled from earlier runs that are meant to save the next run from repeating mistakes.
-FrontierMemory~\cite{frontiermemory} makes this measurable and says it measures the quality of memory.
+FrontierMemory~\cite{frontiermemory} claims to measure the quality of memory.
 It provides a corpus of prior agent trajectories, a fixed memory-generation task, and 15 held-out tasks graded by hidden verifiers, and it ranks models and harnesses by the agent's solve rate.
 
-But memory must survive a chain before it can raise a score: the corpus must hold the knowledge, generation must capture it, the harness must deliver it, the agent must use it, and the grader must be able to credit it.
-A solve rate alone cannot say which link is responsible.
+Memory can raise a score only if it survives a chain: the corpus must hold the knowledge, generation must capture it, the harness must deliver it, the agent must use it, and the grader must be able to credit it.
+A solve rate does not show which link failed.
 We audit that chain by running the benchmark's public pipeline with a local open-weights model as both task and memory model, and the serving changes listed in \S\ref{sec:method}.
 
-We ask what a FrontierMemory score can and cannot tell us:
+We ask three questions:
 \begin{itemize}
   \item \textbf{RQ1.} With the official pipeline, does generated memory beat no memory?
   \item \textbf{RQ2.} Where along the chain can memory's value be lost?
-  \item \textbf{RQ3.} What does the published leaderboard let a reader conclude?
+  \item \textbf{RQ3.} What can a reader conclude from the leaderboard?
 \end{itemize}
 
 \textbf{Contributions.}
 \begin{enumerate}
   \item A no-memory comparison on all 15 tasks, specified before any counted trial, through the official commands and containers: memory changed the per-task pass rate by $+0.01$ (95\% interval $-0.12$ to $+0.14$, $p=0.50$), with an exploratory placebo arm.
   \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution cannot pass or that score a judge failure as an agent failure, a task that broke when a dependency released, fixed memory caps that differ across harnesses, and serving limits that turn slow model calls into failed attempts.
-  \item A separate account of what holds only for our local model, and of how much of the corpus generation actually read.
+  \item What holds only for our local model, and how much of the corpus generation read.
 \end{enumerate}
-We make no claim that leaderboard scores are wrong: we do not run the leaderboard's models.
+We did not run the leaderboard's models, so we cannot say whether its scores are right.
 An anonymized artifact with the code, the written plans and their dated amendments, per-trial summaries and the decision log accompanies the submission.
