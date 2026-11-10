@@ -13,7 +13,7 @@ With this model on this pipeline, generated memory gave no measurable gain over 
 \begin{itemize}
   \item Publish the no-memory rows the rules already mention, with per-task results and all attempts, so readers can test score gaps.
   \item Report per-task corpus coverage, and the judge model for judged tasks.
-  \item Treat a failed LLM judge as an infrastructure failure, not a zero.
+  \item Score a trial whose LLM judge failed as missing, and report it as an infrastructure failure.
   \item Pin build dependencies, or ship prebuilt images, so a task cannot change under a published score.
   \item Make the submission check compare the corpus digest and the task and attempt counts.
   \item Report how much of each memory the harness shows at start, and how often agents open the rest.
@@ -26,7 +26,7 @@ With this model on this pipeline, generated memory gave no measurable gain over 
   \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader are not public. Results may differ for Letta Dream and Letta Code.
   \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognized model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, so ``highest effort'' is nominal for this model; a second GPU type agreed.
   \item \emph{Deviations.} All are listed in \S\ref{sec:method}.
-  \item \emph{Order.} The control ran before the memory runs rather than interleaved; the environment and model are frozen, but the remote judge is not.
+  \item \emph{Order.} The control ran before the memory runs rather than interleaved; the environment and model are frozen, and the remote judge can change between runs.
   \item \emph{Corpus coverage.} Prompt similarity misses runs on the same repository with different prompts, so a task with no matching run is not proven unlearnable.
   \item \emph{Power.} With 15 tasks, a null is not evidence of no effect (\S\ref{sec:method}).
 \end{itemize}
