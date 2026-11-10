@@ -26,6 +26,7 @@
 | Read-first (exploratory arm) | run 1's, plus a nudge to read it first | done Nov 8 12:16 (13.5 h; checks fixed first, D125–D129) | 8/45 | 45/45 | 0 | 0 (16 of 16 closes at an agent's end); one trial with no reward (environment command timed out before the agent started) set aside and rerun |
 | All shown (exploratory) | run 1's, every file in the prompt | ran Nov 8 12:33 to Nov 9 10:54 (22 h) | not reported: 5/45 raw | 45/45 | 55 aborts, 5 max-wait drops | **FAIL (D136)**: model-server stalls of 15 to 30 min hit 10 trials; exactly those 10 hit the agent time limit. To rerun (about 4 h) before any result is reported |
 | None shown (exploratory) | run 1's, no memory shown at start, files on disk | running since Nov 9 11:12 | | | | clean so far |
+| Next (arms amendment B5, Nov 9) | | all-shown's 10 stalled trials rerun, then evidence, then generator; about Nov 12. Cue, raw, Claude Code (K0, KM) and recency a/b not run | | | | |
 
 **Second machine (separate study, its own preregistration; numbers never compared with the above):** Codex without memory 6/45, with the same run 1 memory 7/45 (45/45 valid in each). One exploratory test on DAPT put the memory into the task instruction (rewritten once by the same local model): 0/3 strict in all three conditions, hidden tests passed 52% without memory, 74% with it, 76% blended. Claude Code's gate is being rerun after two unexplained client closes.
 
