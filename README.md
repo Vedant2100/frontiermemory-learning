@@ -7,8 +7,8 @@ The paper (FORGE 2027, due Nov 15) is drafted in [`paper/`](paper/).
 ## What the benchmark does
 
 A model reads about 750 past attempts by other agents and writes **memory**: an index file plus a "skill" with 13 reference files
-(62 KB in our first run). Then an agent solves 15 held-out tasks (build a Word2Vec text pipeline, fix an intrusion-detection
-workflow, edit a changelog to a customer's preferences, and so on) with that memory available. Hidden tests grade the result.
+(62 KB in our first run). Then an agent solves 15 held-out tasks (build a Word2Vec text pipeline, learn an intrusion-detection
+workflow, write changelogs that meet hidden preference checks, and so on) with that memory available. Hidden tests grade the result.
 The public leaderboard ranks systems by how many of 45 attempts pass (15 tasks × 3).
 
 ## The result in one table
