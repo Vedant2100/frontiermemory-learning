@@ -28,9 +28,9 @@ pkill -u "$USER" -f qemu-kvm 2>/dev/null && sleep 20
 
 if ! grep -qs "B5: all-shown rerun checked" "$LOGF"; then
   step "B5 (D136): all-shown serving re-check with only the nine stall windows left out"
-  head -n $((SE-1)) "$OLOG/server.log" > "$OLOG/tmp/d136-server.log"; head -n $((RE-1)) "$OLOG/relay.log" > "$OLOG/tmp/d136-relay.log"
-  mkdir -p "$OLOG/tmp/d136"; mv "$OLOG/tmp/d136-server.log" "$OLOG/tmp/d136/server.log"; mv "$OLOG/tmp/d136-relay.log" "$OLOG/tmp/d136/relay.log"
-  python3 official/vm/check-serving.py "$OLOG/tmp/d136" "$S0" "$R0" --incidents "$INC" | tee -a "$LOGF"
+  CHK="$OLOG/d136chk"; mkdir -p "$CHK" || hold "could not make $CHK"
+  head -n $((SE-1)) "$OLOG/server.log" > "$CHK/server.log"; head -n $((RE-1)) "$OLOG/relay.log" > "$CHK/relay.log"
+  python3 official/vm/check-serving.py "$CHK" "$S0" "$R0" --incidents "$INC" | tee -a "$LOGF"
   [ "${PIPESTATUS[0]}" = 0 ] || hold "all-shown serving faults outside the D136 windows"
   TR=$(python3 - "$RES/summary-$JOB.jsonl" "$INC" <<'PY'
 import datetime as dt, json, sys
