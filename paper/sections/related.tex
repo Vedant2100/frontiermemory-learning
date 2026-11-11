@@ -1,10 +1,10 @@
-% Draft 2026-11-03. VibeMemBench, MERIT and Delivery-Not-Storage claims checked against the full papers; others against abstracts.
+% Claims checked against the full text for VibeMemBench, MERIT, Delivery-Not-Storage and Harness-or-Model (Nov 11 audit); against abstracts for the rest.
 \section{Related Work}
 \label{sec:related}
 \textbf{Evaluating agent memory.}
 VibeMemBench~\cite{vibemembench} finds that 11 of 12 pairings of solver and existing memory system fail to beat a memory-off baseline on repository tasks.
 MERIT~\cite{merit} measures memory's marginal value per dollar on tool-using tasks and finds that changing a memory's implementation can shift task success substantially.
-Scope Before You Persist~\cite{scopebefore} shows that lessons can harm tasks outside their scope.
+Scope Before You Persist~\cite{scopebefore} shows, on a code-repair stream, that lessons can harm tasks outside their scope.
 We audit an existing benchmark by running its own pipeline.
 
 \textbf{Delivery and harness effects.}
@@ -12,8 +12,8 @@ Saha~\cite{deliverynotstorage} argues that delivery matters. In a single seeded 
 A harness comparison~\cite{harnessormodel} treats truncation policy as part of the harness and recommends logging when it fires; we compare how each harness loads the same memory.
 
 \textbf{Leaderboard reliability.}
-Miller~\cite{errorbars} argues for standard errors and paired comparisons in evaluations; Hardy et al.~\cite{agentreliability} find that agent leaderboards can rank deployed systems reliably but not the models inside them; we apply this to a memory leaderboard whose published scores sit on a grid of 45 attempts.
+Miller~\cite{errorbars} argues for standard errors and paired comparisons in evaluations; Hardy et al.~\cite{agentreliability} find that an evaluation that reliably ranks deployed systems may not reliably rank the models inside them; we apply this to a memory leaderboard whose published scores sit on a grid of 45 attempts.
 
 \textbf{Experience memory for agents.}
-Coding and general agents accumulate procedures, skills and lessons across tasks~\cite{survey-selfevolving,sepm,chronos}, and some systems gate those lessons with evidence or verifier signals~\cite{grounding-memory,memguard,sedm,aecg}.
-Shared memory across agents and teams is studied as organizational learning~\cite{enterprise-memory}; the FrontierMemory corpus is an instance of it.
+Coding and general agents accumulate procedures, skills and lessons across tasks~\cite{survey-selfevolving,sepm} or mine them from repository history~\cite{chronos}, and some systems gate those lessons with evidence, replay or verifier signals~\cite{grounding-memory,memguard,sedm,aecg}.
+Shared organizational memory for coding agents has been deployed in industry~\cite{enterprise-memory}; the FrontierMemory corpus is a benchmark version of the same idea.
