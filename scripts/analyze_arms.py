@@ -98,6 +98,19 @@ def analyse(sets: dict[str, list[dict]], res: Path | None = None) -> dict:
     for arm in VS_A0:
         comp(named[arm], CONTROL, f"{arm} vs no memory (A0)")
         comp(named[arm], HM1, f"{arm} vs HM run 1 (reference)")
+    bjob = ARM.format("blend")  # B6: memory worked into the task description; tasks whose rewrite failed are left out
+    if have(bjob):
+        out["pass_rates"]["blend"] = rate(sets[bjob])
+        out["flags"] += checks("blend", sets[bjob], memory=False)
+        report = res / "blend-report.json" if res is not None else None
+        failed = set(json.loads(report.read_text()).get("failed", [])) if report and report.is_file() else set()
+        out["blend_tasks_without_valid_rewrite"] = sorted(failed)
+        for ref, label in ((CONTROL, "no memory (A0)"), (HM1, "HM run 1 (reference)")):
+            if have(ref):
+                tasks = sorted(t for t in set(tables[bjob]) & set(tables[ref]) if t.split("/")[-1] not in failed)
+                if tasks:
+                    name = f"blend vs {label}"
+                    out["comparisons"][name] = labelled(compare(tables[ref], tables[bjob], tasks), name)
     for harness, (zero, mem) in WITHIN.items():
         comp(named[mem], named[zero], f"{harness}: memory vs no memory (within harness)")
         if have(named[zero]) and have(CONTROL):

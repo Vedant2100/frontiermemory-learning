@@ -174,3 +174,46 @@ AgentTimeoutError; 0 of them passed).
 
 **Order now:** [none-shown, running]; then the all-shown rerun (item 1); then **evidence**, **generator**. Then the job is
 released. Nothing else changes: designs, checks, comparators, and the primary test (done) are unaffected.
+
+## Amendment B6 (2026-11-11, during the generator arm, before any blend trial)
+
+**Change (user decision, "go"):** one new exploratory arm, **blend**, runs after the generator arm. The Claude Code and recency
+arms stay not run (B5; D141).
+
+**What it tests.** Every delivery arm so far gave the agent run 1's memory as a separate thing to read: read-first, none shown,
+all shown, scoped and the index all left the scores where they were (D132, D139). Blend puts the same memory inside the task
+description itself, as ordinary task text, and gives the agent no separate memory. The question is whether placement of this kind
+makes a large difference where separate delivery did not. A second-machine test on one task (DAPT, Codex, 3 attempts, hidden
+tests passed 52% without memory, 74% with it, 76% blended) was too small to say.
+
+**The rewrite.** The same local model (qwen3.8:27b-mtp-q4_K_M, temperature 0.2) rewrites each of the 15 task descriptions once.
+It sees only the original description and run 1's memory (`official/fm_local/blend_logic.py`, prompt hash recorded), never tests,
+solutions or other tasks. One sample per task, seed 1; if the contract fails, one automatic redraw with seed 2, and no other
+redraw. Contract: every backticked item, path, file name, snake_case or CamelCase name, flag and number of the original appears
+verbatim in the rewrite; the rewrite does not talk about notes, memory, earlier runs, lessons or skills unless the original does;
+it is not shorter than the original; it does not start with a preface. Nobody reads the rewrites before the trials (user
+decision: a quick test). The rewrites stay in the guest, because they embed text from the gated memory; the repository gets
+counts, sizes and hashes (`results/official/blend-report.json`).
+
+**Failures.** A task whose rewrite fails the contract twice runs its original description and is left out of the blend
+comparison (listed in the report). If fewer than 10 of 15 tasks have a valid rewrite, the trials are not run and this is
+reported. The first (end-to-end) step is the rewrite of all 15 tasks plus one Word2Vec attempt; the counted set then reuses that
+exact sample, with no second draw.
+
+**The arm.** Hermes (`LocalHermes`) with no memory, 45 trials (15 tasks x 3), the rewritten description as the task text. Every
+other setting is the control's. `blend_check.py` verifies on every trial that the model's first message is the expected text.
+The set's serving, arm and trial checks run as for every arm.
+
+**Comparisons (exploratory, labelled so).** Blend vs no memory (A0) and vs HM run 1 (same memory, usual delivery), over tasks
+with a valid rewrite: strict pass rate (primary) with the preregistered study's paired sign-flip, and hidden tests passed.
+**Written before any trial: a clear effect means hidden tests passed up by at least 0.15 per task over HM run 1 with one-sided
+p < 0.05, or strict pass rate up on at least 3 tasks and down on none against HM run 1.** Anything less is reported as no clear
+effect. Not part of the FORGE submission.
+
+**Time.** About 1 hour for the rewrite and 15 to 17 hours for the set. The driver (`official/vm/next-study-6.sh`) refuses to
+start after Nov 16 06:00.
+
+**Unchanged:** every other arm, the primary test (done), the plan's checks. Mechanism: `official/vm/derive_blend.py` and
+`run-blend.sh` (new files; `derive_arm.py` and the running drivers are not edited), `blend_hermes.py`, `blend_rewrite.py`,
+`blend_check.py`, tests in `official/tests/test_blend*.py`. A guard (`official/vm/handover-b6.sh`) stops `next-study-5.sh` right
+after the generator arm's last check, before it releases the job, and queues `next-study-6.sh`.
