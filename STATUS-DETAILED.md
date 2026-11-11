@@ -26,7 +26,9 @@
 | Read-first (exploratory arm) | run 1's, plus a nudge to read it first | done Nov 8 12:16 (13.5 h; checks fixed first, D125–D129) | 8/45 | 45/45 | 0 | 0 (16 of 16 closes at an agent's end); one trial with no reward (environment command timed out before the agent started) set aside and rerun |
 | All shown (exploratory) | run 1's, every file in the prompt | done Nov 10 12:53 after the D136/B5 rerun of 10 stalled trials | 7/45 | 45/45 | clean after rerun | ok (D139) |
 | None shown (exploratory) | run 1's, no memory shown at start, files on disk | done Nov 10 02:50 (15.6 h) | 9/45 | 45/45 | 0 | ok (D138) |
-| Next (arms amendment B5, Nov 9) | | all-shown's 10 stalled trials rerun, then evidence, then generator; about Nov 12. Cue, raw, Claude Code (K0, KM) and recency a/b not run | | | | |
+| Generator (exploratory) | a fresh memory from a writer prompt with extra rules | generation ran Nov 11 04:24 to 10:26 and hit the 6-hour limit: **no memory, trials not run** (D144) | – | – | – | – |
+| Blend (exploratory, B6) | no separate memory; run 1's memory worked into each task description (12 of 15 changed, 2 unchanged, 1 excluded) | running since Nov 11 10:49, about 17 h | | | | e2e ok (D144) |
+| Not run (B5) | | cue, raw, Claude Code (K0, KM), recency a/b | | | | |
 
 **Second machine (separate study, its own preregistration; numbers never compared with the above):** Codex without memory 6/45, with the same run 1 memory 7/45 (45/45 valid in each). One exploratory test on DAPT put the memory into the task instruction (rewritten once by the same local model): 0/3 strict in all three conditions, hidden tests passed 52% without memory, 74% with it, 76% blended. Claude Code's gate failed twice because model calls were still in flight when trials hit the 90-minute agent limit (start plus duration of each close lands 12 to 40 s after the timeout); K0, KM and recency a/b are not run anywhere (amendment B5). The machine now runs an exploratory ALFWorld memory test.
 

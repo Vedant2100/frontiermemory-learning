@@ -52,7 +52,8 @@ standard deviation over 3 runs, but the rows show no standard deviations, and no
 
 ## Still running
 
-- One more comparison, a better memory writer ("generator"), finishes about Nov 12.
+- A better memory writer ("generator") hit the same 6-hour generation limit and produced no memory, so it has no trials.
+  One more comparison is running: the memory worked into each task's own description ("blend"), ending about Nov 12.
 - A second machine is running a quick, separate ALFWorld test of memory methods in an environment where memory has room to help.
   Bar set in advance: at least +15 points over no memory and +10 over hand-written static tips, in at least 4 of 6 task types.
 

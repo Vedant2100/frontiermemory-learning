@@ -1,0 +1,147 @@
+{
+ "tasks": 15,
+ "valid": 14,
+ "failed": [
+  "automationbench-sales-partnership-contract"
+ ],
+ "memory_files": 13,
+ "notes_sha256": "85c53c7ce0c6ebe51f82f2d4390a0e69fb86ababf31e29205a0028fb60978957",
+ "prompt_sha256": "9f30bbfbb55a971cf4af55fbfa0959e2320e0fb25aab8ab1d94fdfc1af5391c9",
+ "per_task": {
+  "apex-brightpath-market-share": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "01219296f93d083ce444be4cfcc799753a7257fbbfc471cd71e6bb54741e5f81",
+   "blend_sha": "1a42ba520319a3d93337af3e30236d2ac4a6d1047a4be25568dae9f5b5d92ee1",
+   "orig_chars": 533,
+   "blend_chars": 1522,
+   "added_sentences": 11
+  },
+  "apex-brightpath-seat-surplus": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "8fa6ca3877f957867bf7f86411f060b65f0496c7f7d4c880e8133eb297a98503",
+   "blend_sha": "f7365ea4e4e8a5ff2dbd0a24c911cfda537da8c4b890445d8ee1f3462252cb1d",
+   "orig_chars": 524,
+   "blend_chars": 1799,
+   "added_sentences": 13
+  },
+  "apex-eurogrid-curtailment": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "80fd876cc90323ba1c72205b5e76a9446103014700c18d309825ec356f2a71af",
+   "blend_sha": "56a57cd3e4002188180f72833a4b4e6411a5b4a0c919b1bce790904366658c58",
+   "orig_chars": 306,
+   "blend_chars": 1525,
+   "added_sentences": 13
+  },
+  "automationbench-marketing-content-gap-analysis": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "10204c4b550dbad783bcc25288e504ec3c492eb9fffb5432094030456c05af3b",
+   "blend_sha": "af194d4de1c73a07a6726299bc22c27086c8d5b35f854c6234141755dc59eaf7",
+   "orig_chars": 963,
+   "blend_chars": 1588,
+   "added_sentences": 6
+  },
+  "automationbench-sales-chatgpt-proposal-customization": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "2ee703c0f85086c18c015ca66d89382dc48335fe3de0f7d14c05cfe479442eae",
+   "blend_sha": "c299cd88013a751bdbc177398fc806204f1c98d2869f3b917f20f5a5620b2c37",
+   "orig_chars": 1014,
+   "blend_chars": 2411,
+   "added_sentences": 11
+  },
+  "automationbench-sales-partnership-contract": {
+   "ok": false,
+   "rolls": 2,
+   "orig_sha": "323ac9b9fec54f9fd9a4e463aa4ebcf6ebb63261b108119032e97f474057db4e",
+   "blend_sha": null,
+   "orig_chars": 839,
+   "blend_chars": null,
+   "added_sentences": null
+  },
+  "awilix-release-tier-explicit": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "a664c92c64a163a1b71ae07144678be962fcf956e1e6593e2b571768d89eea07",
+   "blend_sha": "a664c92c64a163a1b71ae07144678be962fcf956e1e6593e2b571768d89eea07",
+   "orig_chars": 2275,
+   "blend_chars": 2275,
+   "added_sentences": 0
+  },
+  "awilix-release-tier-implicit": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "ba90df199ecdd07f71ca0459feca102b3e29d1bb87783fabcdf99c4f13ec7d82",
+   "blend_sha": "45c613e1b3b86dfdeccb7195e0b0f82340a21be831b90d9bbf32baccce50ce60",
+   "orig_chars": 2248,
+   "blend_chars": 3314,
+   "added_sentences": 8
+  },
+  "build-word2vec-pipeline": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "5888b512c61d18728d6c14197172c98d4877a8308a5ddfc92d5b066be7ea4f17",
+   "blend_sha": "f5a2ff375817318e66cd7d8df3d4150af81eebd56c0df744e746e8b90e07aefc",
+   "orig_chars": 462,
+   "blend_chars": 2666,
+   "added_sentences": 34
+  },
+  "cattrs-compositional-changelog": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "24117ce3dd937c1cc35eeccfe07d32dd838e43216eee502d8852a9f9d54f05b4",
+   "blend_sha": "fac4591451d97e3595d18cfe4a13415498f37dfa315a0124600174459a99d208",
+   "orig_chars": 1385,
+   "blend_chars": 2066,
+   "added_sentences": 5
+  },
+  "cookie-store-compositional-changelog": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "9d58684576a7022a6d4d3c2de20b3d1eb72dd759ebe306ab394b699f9f69848f",
+   "blend_sha": "9d58684576a7022a6d4d3c2de20b3d1eb72dd759ebe306ab394b699f9f69848f",
+   "orig_chars": 3150,
+   "blend_chars": 3150,
+   "added_sentences": 0
+  },
+  "customer-delivery-contextual-preferences": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "a1782d0f1c7a238582b9137a10b6259effa39fd3b50c4b58d645df16a2c19714",
+   "blend_sha": "d09a514effaea6d605ae16a8d3b40256ef2a7a9801bd521922eb86933e198233",
+   "orig_chars": 2427,
+   "blend_chars": 3994,
+   "added_sentences": 15
+  },
+  "dapt-intrusion-detection-workflow-learning": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "2304934457d5c556eb33e846f2675c45578ee7c6d2be2ed7bd8f04e3732d60b1",
+   "blend_sha": "d14764e08174e925fde09d775a5aad84085429d52e29d7079e6dd8de09262a80",
+   "orig_chars": 2479,
+   "blend_chars": 3998,
+   "added_sentences": 24
+  },
+  "enterpriseops-csm-26d1b04a": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "0ab36a1016ac9d8d4d451dc1187a12b8cc52375f31bd9800fb6d3b6ad4c71eea",
+   "blend_sha": "1b79e494dfb382b3f998c95b6fea1696befff5c3bd0f54984355c32307150e7f",
+   "orig_chars": 11295,
+   "blend_chars": 11840,
+   "added_sentences": 5
+  },
+  "enterpriseops-teams-2725d17f": {
+   "ok": true,
+   "rolls": 1,
+   "orig_sha": "7b9fc994d9874fae088c74480228dca73eee0647dddbfe764423235148d5e1cb",
+   "blend_sha": "675e3ff3deabcb049cb4a7f3733b1652df763f94fb9a44e67fdbb48d8d2c7ea8",
+   "orig_chars": 14000,
+   "blend_chars": 14913,
+   "added_sentences": 9
+  }
+ }
+}
