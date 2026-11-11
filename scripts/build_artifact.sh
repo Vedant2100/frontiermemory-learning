@@ -15,7 +15,7 @@ INCLUDE=(official/fm_local official/vm/lib.sh official/vm/build-and-test-vm.sbat
          official/tests scripts/partial_credit.py scripts/leaderboard_noise.py scripts/memory_access.py scripts/analyze_arms.py
          results/preregistration-arms.md results/decisions-log-detailed.md)
 for p in "${INCLUDE[@]}"; do [ -e "$p" ] && { mkdir -p "$A/$(dirname "$p")"; cp -r "$p" "$A/$p"; }; done
-mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatordate:iso8601)  %(refname:short)  %(objectname:short)' 'refs/tags/prereg*' > "$A/results/prereg-timestamps.txt"
+mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatordate:iso8601)  %(refname:short)' 'refs/tags/prereg*' > "$A/results/prereg-timestamps.txt"
 find "$A" -name '__pycache__' -prune -exec rm -r {} + ; find "$A" -name '*.log' -delete
 # Scrub identifiers. Order matters: longest first.
 find "$A" -type f \( -name '*.py' -o -name '*.sh' -o -name '*.sbatch' -o -name '*.md' -o -name '*.json' -o -name '*.jsonl' -o -name '*.yaml' -o -name '*.txt' \) -print0 | xargs -0 sed -i -E \
