@@ -3,10 +3,12 @@
 \label{sec:discussion}
 
 \textbf{Links behind a score.}
-Our audit finds a weak point at each model-independent link in Table~\ref{tab:chain}.
-For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks cannot be passed by their own reference solution, yet without memory our agent met all hidden checks on three of them in at least one attempt; the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
+Our audit finds a risk at each model-independent link in Table~\ref{tab:chain}.
+For 8 of 15 tasks no corpus run resembles the task's prompt; the reference solution scores 0 on 4 tasks, as the maintainers document, yet without memory our agent passed two of them in the counted control (cookie store in 1 of 3 attempts, EnterpriseOps CSM in 2 of 3); the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
 A score difference between two memory systems mixes memory quality with corpus coverage, harness loading and grader limits, and the leaderboard publishes too little to separate them.
-With this model on this pipeline, generated memory gave no measurable gain over no memory.
+With this model on this pipeline, generated memory gave no measurable gain over no memory, and the interval excludes mean gains above 0.14 per task.
+
+\textbf{What is already documented.} The maintainers list the four zero reference scores~\cite{frontiermemory-code}, report a mean and standard deviation across 3 runs~\cite{frontiermemory}, updated the corpus to v1.1 to reduce reward hacking~\cite{frontiermemory-changelog}, and plan an online setting~\cite{frontiermemory}. The rules fix the task model to Opus 5.5 or GPT-6 Sol~\cite{frontiermemory-code}, so our local-model results lie outside what the leaderboard supports.
 
 \textbf{Recommendations for the benchmark.}
 \begin{itemize}
@@ -14,15 +16,15 @@ With this model on this pipeline, generated memory gave no measurable gain over 
   \item Report per-task corpus coverage, and the judge model for judged tasks.
   \item Score a trial whose LLM judge failed as missing, and report it as an infrastructure failure.
   \item Pin build dependencies, or ship prebuilt images, so a task cannot change under a published score.
-  \item Make the submission check compare the corpus digest and the task and attempt counts.
+  \item Make the submission check do what the rules say: compare the corpus digest and the task and attempt counts.
   \item Report how much of each memory the harness shows at start, and how often agents open the rest.
-  \item Treat a model call cut by the network proxy or abandoned by the agent's own timeout as an infrastructure failure, and document the proxy's 15-second first-byte limit.
+  \item Treat a model call cut by the network proxy or abandoned by the agent's own timeout as an infrastructure failure, and document the proxy's 15-second first-byte limit (the proxy belongs to Harbor, upstream of the benchmark).
 \end{itemize}
 
 \textbf{Threats to validity.}
 \begin{itemize}
   \item \emph{Model.} One local 27B model generates memory and runs tasks. Our findings about gains from memory, generation quality and agent behavior apply to it only; findings about corpus, graders, reporting and caps do not depend on it.
-  \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader are not public. Results may differ for Letta Dream and Letta Code.
+  \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader are not public. Results may differ for Letta Dream and Letta Code. On a second machine, Codex with the same run-1 memory passed 7 of 45 attempts against 6 without (a separate exploratory study).
   \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognized model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, so ``highest effort'' has little effect on this model; a second GPU type agreed. The proxy and timeout findings need a model slow enough to hit them.
   \item \emph{Deviations.} All are listed in \S\ref{sec:method}.
   \item \emph{Order.} The control ran before the memory runs rather than interleaved; the environment and model are frozen, and the remote judge can change between runs.

@@ -37,9 +37,10 @@ of 45 trials instead of 15, and passed 8 instead of 7. Getting the agent to look
 Two more arms point the same way. With every memory file placed in the prompt, the agent passed 7 of 45; with no memory shown at the start (files only on disk), 9 of 45; run 1 had 7. Even on Word2Vec the result barely moved: the agent passed 83–100% of the hidden tests whether or not the memory was shown first.
 A third arm gave the agent no generated memory at all, only the past runs related to each task, as files. It passed 9 of 45 (no memory 6), and on Word2Vec it passed all three attempts with 100% of the hidden tests, the best result on that task. For this task, the raw related history was at least as useful as the generated notes.
 
-**3. The leaderboard can't separate the top three.** Ranks 1 to 3 scored 33, 32 and 31 of 45. Rerunning would keep their order about
-1 time in 5 (pure guessing: 1 in 6). Our three memory generations of one system passed 7, 4 and 8, which is no more spread than
-chance alone. And no no-memory score is published to compare against.
+**3. The leaderboard can't separate the top five.** On Nov 11 the top five scores in the model table were 33, 33, 32, 32 and 31 of 45.
+Under a simple binomial model, rerunning everything would put the same entry first only about 1 time in 4. Our three memory
+generations of one system passed 7, 4 and 8, which is no more spread than chance alone. The footnote says scores are a mean and
+standard deviation over 3 runs, but the rows show no standard deviations, and no no-memory score is published to compare against.
 
 **4. The benchmark loses memory's value at many steps.** Examples:
 - For 8 of 15 tasks, no past run in the corpus even resembles the task.

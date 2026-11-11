@@ -24,8 +24,11 @@ import statistics
 from pathlib import Path
 
 N = 45  # task-attempts behind each published score: 15 tasks x 3 runs
-PUBLISHED = [("rank 1", 73.3), ("rank 2", 71.1), ("rank 3", 68.9), ("rank 4", 64.4), ("rank 5", 51.1), ("rank 6", 51.1),
-             ("rank 7", 37.8)]
+# The model table as displayed on frontiermemory.com on 2026-11-11 (Models v1.1; the earlier 2026-11-08 snapshot, kept in
+# leaderboard-noise-nov8.json, was ranks 73.3, 71.1, 68.9, 64.4, 51.1, 51.1, 37.8 and has since gained entries).
+PUBLISHED = [("Opus 5.5", 73.3), ("Fable 5.2", 73.3), ("DeepSeek V4.1 Flash", 71.1), ("Kimi K3", 71.1), ("GLM-5.3", 68.9),
+             ("Gemini 4 Argon", 64.4), ("Inkling 2 Small", 60.0), ("Kimi K3.1 Pro", 55.6), ("Muse Wonder", 51.1),
+             ("GPT-6.1 Sol", 51.1), ("GPT-6.1 Terra", 46.7), ("Grok 4.7", 37.8)]
 SAME_SYSTEM_RUNS = ("run1", "run3", "run4")
 
 
@@ -78,6 +81,27 @@ def main() -> None:
             kept += draws[0] > draws[1] > draws[2]
         res[label] = round(kept / a.sims, 3)
     out["p_rerun_reproduces_top3_order"] = res
+    # With ties at the top, "the same order" is undefined; ask instead who leads a rerun. All entries are redrawn at their
+    # published rates (same two noise levels), ties are broken at random.
+    lead = {}
+    for label, scale in (("binomial", 1.0), ("scaled_to_our_runs", sd / sd_binom)):
+        first = either = top5 = 0
+        for _ in range(a.sims):
+            draws = []
+            for kk in k:
+                p = kk / N
+                x = round(N * p + rng.gauss(0, 1) * scale * math.sqrt(N * p * (1 - p)))
+                draws.append(min(N, max(0, x)))
+            best = max(draws)
+            winner = rng.choice([i for i, d in enumerate(draws) if d == best])
+            first += winner == 0
+            either += winner in (0, 1)
+            top5 += set(sorted(range(len(draws)), key=lambda i: (-draws[i], rng.random()))[:5]) == set(range(5))
+        lead[label] = {"first_ranked_entry_leads": round(first / a.sims, 3), "one_of_the_two_tied_entries_leads": round(either / a.sims, 3),
+                       "same_top_five_set": round(top5 / a.sims, 3)}
+    out["rerun_leader"] = lead
+    out["top5_scores_of_45"] = k[:5]
+    out["entries"] = len(k)
     print(json.dumps(out, indent=1))
 
 
