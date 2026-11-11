@@ -1,5 +1,6 @@
 {
  "trials_per_set": {
+  "fm-tasks-arm-evidence": 45,
   "fm-tasks-arm-placebo": 45,
   "fm-tasks-arm-readfirst": 45,
   "fm-tasks-control": 45,
@@ -15,7 +16,8 @@
   "placebo": 0.5996,
   "fm-tasks-arm-readfirst": 0.6543,
   "fm-tasks-exposure-all": 0.6885,
-  "fm-tasks-exposure-none": 0.6091
+  "fm-tasks-exposure-none": 0.6091,
+  "fm-tasks-arm-evidence": 0.6728
  },
  "memory_vs_control": {
   "tasks": 15,
@@ -268,6 +270,62 @@
   },
   "tasks_up": 4,
   "tasks_down": 7
+ },
+ "fm-tasks-arm-evidence_vs_control": {
+  "tasks": 15,
+  "mean_diff": 0.09358779304431479,
+  "ci95": [
+   -0.015151515151515138,
+   0.2372738095238094
+  ],
+  "p_one_sided": 0.0947265625,
+  "per_task": {
+   "apex-brightpath-market-share": 0.0,
+   "apex-brightpath-seat-surplus": 0.0,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.015151515151515138,
+   "automationbench-sales-chatgpt-proposal-customization": 0.10000000000000009,
+   "automationbench-sales-partnership-contract": -0.13095238095238093,
+   "awilix-release-tier-explicit": -0.00694444444444442,
+   "awilix-release-tier-implicit": 0.0,
+   "build-word2vec-pipeline": 1.0,
+   "cattrs-compositional-changelog": 0.004329004329004182,
+   "cookie-store-compositional-changelog": -0.047463768115941996,
+   "customer-delivery-contextual-preferences": 0.0,
+   "dapt-intrusion-detection-workflow-learning": 0.3333333333333333,
+   "enterpriseops-csm-26d1b04a": 0.08333333333333337,
+   "enterpriseops-teams-2725d17f": 0.08333333333333337
+  },
+  "tasks_up": 6,
+  "tasks_down": 4
+ },
+ "fm-tasks-arm-evidence_vs_run1": {
+  "tasks": 15,
+  "mean_diff": 0.020485930624691038,
+  "ci95": [
+   -0.040761904761904555,
+   0.0731428571428574
+  ],
+  "p_one_sided": 0.2728271484375,
+  "per_task": {
+   "apex-brightpath-market-share": -0.3333333333333333,
+   "apex-brightpath-seat-surplus": 0.0,
+   "apex-eurogrid-curtailment": 0.0,
+   "automationbench-marketing-content-gap-analysis": -0.015151515151515138,
+   "automationbench-sales-chatgpt-proposal-customization": 0.13333333333333353,
+   "automationbench-sales-partnership-contract": 0.125,
+   "awilix-release-tier-explicit": -0.00694444444444442,
+   "awilix-release-tier-implicit": 0.00694444444444442,
+   "build-word2vec-pipeline": 0.05555555555555547,
+   "cattrs-compositional-changelog": -0.008658008658008698,
+   "cookie-store-compositional-changelog": 0.04456521739130437,
+   "customer-delivery-contextual-preferences": -0.0035460992907803135,
+   "dapt-intrusion-detection-workflow-learning": 0.1428571428571429,
+   "enterpriseops-csm-26d1b04a": 0.08333333333333337,
+   "enterpriseops-teams-2725d17f": 0.08333333333333337
+  },
+  "tasks_up": 8,
+  "tasks_down": 5
  },
  "fm-tasks-run1_vs_control": {
   "tasks": 15,

@@ -35,6 +35,7 @@ tests passed in every memory condition, **including the placebo**, so showing me
 **2. Showing the memory more doesn't help.** We told the agent to read its memory first. It then opened its memory files in 27
 of 45 trials instead of 15, and passed 8 instead of 7. Getting the agent to look is not the bottleneck; what the notes say is.
 Two more arms point the same way. With every memory file placed in the prompt, the agent passed 7 of 45; with no memory shown at the start (files only on disk), 9 of 45; run 1 had 7. Even on Word2Vec the result barely moved: the agent passed 83–100% of the hidden tests whether or not the memory was shown first.
+A third arm gave the agent no generated memory at all, only the past runs related to each task, as files. It passed 9 of 45 (no memory 6), and on Word2Vec it passed all three attempts with 100% of the hidden tests, the best result on that task. For this task, the raw related history was at least as useful as the generated notes.
 
 **3. The leaderboard can't separate the top three.** Ranks 1 to 3 scored 33, 32 and 31 of 45. Rerunning would keep their order about
 1 time in 5 (pure guessing: 1 in 6). Our three memory generations of one system passed 7, 4 and 8, which is no more spread than
@@ -50,8 +51,7 @@ chance alone. And no no-memory score is published to compare against.
 
 ## Still running
 
-- Two more comparisons finish about Nov 11–12: the related past runs handed over directly ("evidence", running now), then a
-  better memory writer ("generator").
+- One more comparison, a better memory writer ("generator"), finishes about Nov 12.
 - A second machine is running a quick, separate ALFWorld test of memory methods in an environment where memory has room to help.
   Bar set in advance: at least +15 points over no memory and +10 over hand-written static tips, in at least 4 of 6 task types.
 
