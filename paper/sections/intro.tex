@@ -6,7 +6,6 @@ FrontierMemory~\cite{frontiermemory} claims to measure the quality of memory.
 It provides a corpus of prior agent trajectories, a fixed memory-generation task, and 15 held-out tasks graded by hidden verifiers, and it ranks models and harnesses by the agent's solve rate.
 
 Memory can raise a score only if it survives a chain: the corpus must hold the knowledge, generation must capture it, the harness must deliver it, the agent must use it, and the grader must be able to credit it.
-A solve rate does not show which link failed.
 We audit that chain by running the benchmark's public pipeline with a local open-weights model as both task and memory model, and the serving changes listed in \S\ref{sec:method}.
 
 We ask three questions:
@@ -18,9 +17,9 @@ We ask three questions:
 
 \textbf{Contributions.}
 \begin{enumerate}
-  \item A no-memory comparison on all 15 tasks, specified before any counted trial, through the official commands and containers: memory changed the per-task pass rate by $+0.01$ (95\% interval $-0.12$ to $+0.14$, $p=0.50$), with an exploratory placebo arm.
-  \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution cannot pass or that score a judge failure as an agent failure, a task that broke when a dependency released, fixed memory caps that differ across harnesses, and serving limits that turn slow model calls into failed attempts.
+  \item A no-memory comparison on all 15 tasks, specified before any counted trial, through the official commands and containers, with the deviations listed in \S\ref{sec:method}: memory changed the per-task pass rate by $+0.01$ (95\% interval $-0.12$ to $+0.14$, $p=0.50$), with an exploratory placebo arm.
+  \item A link-by-link audit. Findings about the benchmark's construction hold for any model: uneven corpus coverage per task, graders that a reference solution cannot pass or that score a judge failure as an agent failure, a task that broke when a dependency released, and fixed memory caps that differ across harnesses. A slow model also meets serving limits that turn its calls into failed attempts.
   \item What holds only for our local model, and how much of the corpus generation read.
 \end{enumerate}
-We did not run the leaderboard's models, so we cannot say whether its scores are right.
+We did not run the leaderboard's models and make no claim about whether its scores are right.
 An anonymized artifact with the code, the written plans and their dated amendments, per-trial summaries and the decision log accompanies the submission.

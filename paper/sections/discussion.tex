@@ -2,11 +2,10 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\textbf{Interpreting a score.}
-A solve rate credits memory only when every link of that chain holds.
+\textbf{Links behind a score.}
 Our audit finds a weak point at each model-independent link in Table~\ref{tab:chain}.
 For 8 of 15 tasks no corpus run resembles the task's prompt; 4 tasks cannot be passed by their own reference solution, yet without memory our agent met all hidden checks on three of them in at least one attempt; the same entry file is 21--100\% visible depending on the harness; and a slow model's calls are cut by the network proxy or abandoned by the agent and scored as failed attempts.
-A score difference between two memory systems therefore mixes memory quality with corpus coverage, harness loading and grader limits. The leaderboard publishes too little to separate them.
+A score difference between two memory systems mixes memory quality with corpus coverage, harness loading and grader limits, and the leaderboard publishes too little to separate them.
 With this model on this pipeline, generated memory gave no measurable gain over no memory.
 
 \textbf{Recommendations for the benchmark.}
@@ -24,7 +23,7 @@ With this model on this pipeline, generated memory gave no measurable gain over 
 \begin{itemize}
   \item \emph{Model.} One local 27B model generates memory and runs tasks. Our findings about gains from memory, generation quality and agent behavior apply to it only; findings about corpus, graders, reporting and caps do not depend on it.
   \item \emph{Harness.} We run Hermes, a published row, because the default generator and loader are not public. Results may differ for Letta Dream and Letta Code.
-  \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognized model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, which makes ``highest effort'' nominal for this model; a second GPU type agreed.
+  \item \emph{Serving.} One model slot serves each trial, so side calls wait behind long ones; the relay and longer call timeouts, the same in every arm, remove the failures this caused. Hermes sends \emph{xhigh} effort for an unrecognized model, and the server barely acts on any setting: on a fixed probe, reasoning length was similar for low, \emph{xhigh}, max and no effort at all, so ``highest effort'' has little effect on this model; a second GPU type agreed. The proxy and timeout findings need a model slow enough to hit them.
   \item \emph{Deviations.} All are listed in \S\ref{sec:method}.
   \item \emph{Order.} The control ran before the memory runs rather than interleaved; the environment and model are frozen, and the remote judge can change between runs.
   \item \emph{Corpus coverage.} Prompt similarity misses runs on the same repository with different prompts, so a task with no matching run is not proven unlearnable.
