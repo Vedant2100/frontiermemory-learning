@@ -1,5 +1,7 @@
 # Does memory help coding agents? An audit of the FrontierMemory benchmark
 
+**Final results (all experiments closed Nov 12): see [FINAL-RESULTS.md](FINAL-RESULTS.md).**
+
 We ran the benchmark's own pipeline with a local open model and asked a simple question: if an agent gets notes distilled from
 past runs, does it solve more tasks? **Not by a measurable amount**, and the reasons are as interesting as the answer.
 The paper (FORGE 2027, due Nov 15) is drafted in [`paper/`](paper/).
