@@ -53,7 +53,7 @@ standard deviation over 3 runs, but the rows show no standard deviations, and no
 ## Still running
 
 - A better memory writer ("generator") hit the same 6-hour generation limit and produced no memory, so it has no trials.
-  The last comparison, memory worked into each task's own description ("blend", exploratory), finished Nov 12: 3/45 strict passes, against 7/45 for run 1 and 6/45 with no memory (14 tasks, one excluded because its rewrite failed the check; 45/45 valid, serving ok). It does not meet the written bar on strict passes (up on 0 tasks, down on 2 against run 1). Its hidden-test fractions are not extracted yet. Not in the paper.
+  The last comparison, memory worked into each task's own description ("blend", exploratory), finished Nov 12: 3/45 strict passes, against 7/45 for run 1 and 6/45 with no memory (14 tasks, one excluded because its rewrite failed the check; 45/45 valid, serving ok). It does not meet the written bar on strict passes (up on 0 tasks, down on 2 against run 1). Hidden tests passed: 63% on average (no memory 58%, run 1 about 65%); against run 1 −0.02 per task (p = 0.86), so it misses the hidden-test half of the bar too. Not in the paper.
 - A second machine is running a quick, separate ALFWorld test of memory methods in an environment where memory has room to help.
   Bar set in advance: at least +15 points over no memory and +10 over hand-written static tips, in at least 4 of 6 task types.
 
