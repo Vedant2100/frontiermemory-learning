@@ -32,4 +32,4 @@ Cue, raw corpus, scoped and categorized memory (degenerate or unusable input, am
 - The model server can stall (15–30 minutes with the model idle); 10 of 45 all-shown trials timed out and were rerun under a rule written beforehand.
 
 ## Deliverables
-Paper (4 pages plus references, anonymous), artifact (129 files) and plan archive are in `~/fm-submission/`; rebuild the artifact with `scripts/build_artifact.sh <dir>` before the Nov 15 submission. The plan archive does not prove the plan predates the results.
+Paper (4 pages plus references, anonymous), artifact (129 files) and plan archive are in `~/fm-submission/`; rebuild the artifact with `scripts/build_artifact.sh <dir>` before submission (deadline Nov 16, 3:59 AM Pacific). The plan archive does not prove the plan predates the results.

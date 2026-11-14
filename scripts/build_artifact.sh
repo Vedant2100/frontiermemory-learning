@@ -13,7 +13,10 @@ INCLUDE=(official/fm_local official/vm/lib.sh official/vm/build-and-test-vm.sbat
          results/corpus-coverage.json results/official
          official/vm/check-serving.py official/vm/audit-set.py official/vm/run-exposure.sh official/vm/next-study-3.sh official/vm/next-study-4.sh
          official/tests scripts/partial_credit.py scripts/leaderboard_noise.py scripts/memory_access.py scripts/analyze_arms.py
-         results/preregistration-arms.md results/decisions-log-detailed.md)
+         results/preregistration-arms.md results/decisions-log-detailed.md
+         FINAL-RESULTS.md results/paper-supplement-rq2-factors.md official/vm/next-study-5.sh official/vm/next-study-6.sh official/vm/handover-b5.sh
+         official/vm/handover-b6.sh official/vm/derive_arm.py official/vm/derive_blend.py official/vm/run-blend.sh official/vm/extract-blend.sbatch
+         official/vm/serving-incidents-d136.json)
 for p in "${INCLUDE[@]}"; do [ -e "$p" ] && { mkdir -p "$A/$(dirname "$p")"; cp -r "$p" "$A/$p"; }; done
 mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatordate:iso8601)  %(refname:short)' 'refs/tags/prereg*' > "$A/results/prereg-timestamps.txt"
 find "$A" -name '__pycache__' -prune -exec rm -r {} + ; find "$A" -name '*.log' -delete
