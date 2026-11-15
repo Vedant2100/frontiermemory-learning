@@ -1,0 +1,1639 @@
+{
+ "generated_by": "scratchpad compute.py + gen.py; inputs results/official/*",
+ "n_never_pass": 6,
+ "never_pass": [
+  "apex-eurogrid-curtailment",
+  "automationbench-sales-chatgpt-proposal-customization",
+  "awilix-release-tier-explicit",
+  "awilix-release-tier-implicit",
+  "customer-delivery-contextual-preferences",
+  "dapt-intrusion-detection-workflow-learning"
+ ],
+ "tasks": {
+  "apex-brightpath-market-share": {
+   "task": "apex-brightpath-market-share",
+   "verifier": {
+    "type": "LLM judge",
+    "n_checks": 3,
+    "strict_pass": "reward 1.0 = every rubric criterion judged met (score is a fraction of criteria, with a capped penalty for undesired edits); summary field passed == (reward==1.0) in all 450 trials",
+    "all_or_nothing": "strict yes (passed=reward==1); the reward itself is a fraction (Eurogrid tops out at 0.8333)",
+    "src": [
+     "data/tasks/frontier-memory/apex-brightpath-market-share/tests/grading_config.json (verifiers list, scoring_config)",
+     "data/tasks/frontier-memory/apex-brightpath-market-share/tests/grade.py (write_rewards)"
+    ]
+   },
+   "oracle": {
+    "result": "1.0 (maintainers 1; ours via harbor trials regrade of saved reference trials)",
+    "measured": true,
+    "src": [
+     "frontiermemory/docs/maintainers.md:76-83",
+     "results/protocol-v4-official.md:52",
+     "results/pipeline-audit.md (Grader)",
+     "D75"
+    ],
+    "a1": "A1 NO (reference = 1 under the Opus judge)"
+   },
+   "a1": "A1 NO (reference = 1 under the Opus judge)",
+   "a2": {
+    "applies": true,
+    "verdict": "A2 YES (task-level)",
+    "judge": "Run with anthropic/claude-opus-5-5 (results/protocol-v4-official.md:52, D74). Documented judge is openai/gpt-5.6-sol (results/protocol-v4-official.md:22; results/pipeline-audit.md Grader table: \"CLI pins GPT-5.6 Sol\"). The task file grading_config.json names vertex_ai/gemini-2.5-flash (results/pipeline-audit.md). Three different judges are named in the sources.",
+    "separation_check": "Only agreement on correct reference answers (reference trials regraded 1, 1, 0.8333 = maintainers; results/protocol-v4-official.md:52 and D75). Agreement on wrong outputs: not measured (same lines). Judge status completed in 30/30 trials (summary field judge_status), so no failed-judge zeros here."
+   },
+   "b1": {
+    "verdict": "B1 YES at 50 and 70 pct (none); 3 run(s) at 30 pct",
+    "v11": {
+     "0.3": {
+      "PASS": 2,
+      "FAIL": 1
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"apex-brightpath-market-share\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 1,
+     "run3": 0,
+     "run4": 2,
+     "arm-placebo": 1,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 1
+    },
+    "total_of_30": 5,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.0,
+    "max": 0.0,
+    "n_ge_0.9": 0,
+    "n_eq_0": 25,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 25,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 195.0,
+    "minutes_all": {
+     "median": 11.9,
+     "max": 32.9
+    },
+    "minutes_failed": {
+     "median": 11.7,
+     "max": 32.9
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 1050798,
+    "median_out_tokens": 20037,
+    "max_in_tokens": 3124457,
+    "limit_src": "data/tasks/frontier-memory/apex-brightpath-market-share/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "completed": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: procedure for reading the chart/segment files, the rounding convention and the report format could come from memory; the three numeric answers are task-specific facts that memory has only if a related run (3 at 30% overlap, no 50%) supplied them.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "apex-brightpath-seat-surplus": {
+   "task": "apex-brightpath-seat-surplus",
+   "verifier": {
+    "type": "LLM judge",
+    "n_checks": 2,
+    "strict_pass": "reward 1.0 = every rubric criterion judged met (score is a fraction of criteria, with a capped penalty for undesired edits); summary field passed == (reward==1.0) in all 450 trials",
+    "all_or_nothing": "strict yes (passed=reward==1); the reward itself is a fraction (Eurogrid tops out at 0.8333)",
+    "src": [
+     "data/tasks/frontier-memory/apex-brightpath-seat-surplus/tests/grading_config.json (verifiers list, scoring_config)",
+     "data/tasks/frontier-memory/apex-brightpath-seat-surplus/tests/grade.py (write_rewards)"
+    ]
+   },
+   "oracle": {
+    "result": "1.0 (as above)",
+    "measured": true,
+    "src": [
+     "frontiermemory/docs/maintainers.md:76-83",
+     "results/protocol-v4-official.md:52",
+     "D75"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": true,
+    "verdict": "A2 YES (task-level)",
+    "judge": "Run with anthropic/claude-opus-5-5 (results/protocol-v4-official.md:52, D74). Documented judge is openai/gpt-5.6-sol (results/protocol-v4-official.md:22; results/pipeline-audit.md Grader table: \"CLI pins GPT-5.6 Sol\"). The task file grading_config.json names vertex_ai/gemini-2.5-flash (results/pipeline-audit.md). Three different judges are named in the sources.",
+    "separation_check": "Only agreement on correct reference answers (reference trials regraded 1, 1, 0.8333 = maintainers; results/protocol-v4-official.md:52 and D75). Agreement on wrong outputs: not measured (same lines). Judge status completed in 30/30 trials (summary field judge_status), so no failed-judge zeros here. Observation: 14 of 27 failed trials ran under 3 minutes while the 3 passes took 11.4-17.9 minutes (summary agent_started/agent_finished)."
+   },
+   "b1": {
+    "verdict": "B1 YES at 50 and 70 pct (none); 1 run(s) at 30 pct",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 1
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"apex-brightpath-seat-surplus\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 1,
+     "arm-placebo": 1,
+     "arm-readfirst": 0,
+     "exposure-all": 1,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 3,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.0,
+    "max": 0.0,
+    "n_ge_0.9": 0,
+    "n_eq_0": 27,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 27,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 195.0,
+    "minutes_all": {
+     "median": 6.8,
+     "max": 32.6
+    },
+    "minutes_failed": {
+     "median": 1.5,
+     "max": 32.6
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 672965,
+    "median_out_tokens": 10663,
+    "max_in_tokens": 3060528,
+    "limit_src": "data/tasks/frontier-memory/apex-brightpath-seat-surplus/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "completed": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: procedure (which file/table, how Seat Purchased Surplus and share gaps are defined, rounding) and the reply format could come from memory; the two numbers are task facts, with 1 related run at 30% overlap and none at 50%.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "apex-eurogrid-curtailment": {
+   "task": "apex-eurogrid-curtailment",
+   "verifier": {
+    "type": "LLM judge",
+    "n_checks": 6,
+    "strict_pass": "reward 1.0 = every rubric criterion judged met (score is a fraction of criteria, with a capped penalty for undesired edits); summary field passed == (reward==1.0) in all 450 trials",
+    "all_or_nothing": "strict yes (passed=reward==1); the reward itself is a fraction (Eurogrid tops out at 0.8333)",
+    "src": [
+     "data/tasks/frontier-memory/apex-eurogrid-curtailment/tests/grading_config.json (verifiers list, scoring_config)",
+     "data/tasks/frontier-memory/apex-eurogrid-curtailment/tests/grade.py (write_rewards)"
+    ],
+    "notes": "expected output is a new slide deck (grading_config metadata expected_output=make_new_slide_deck; tests/golden has Curtailment_Analysis.pptx)"
+   },
+   "oracle": {
+    "result": "about 0.8333 (maintainers 0.83; ours regraded 0.8333)",
+    "measured": true,
+    "src": [
+     "frontiermemory/docs/maintainers.md:76-83 (\"APEX Eurogrid scored 0.83 from its LLM judge\")",
+     "results/protocol-v4-official.md:52",
+     "D75"
+    ],
+    "a1": "A1 YES (reference 0.8333 < 1; strict pass not defined; all 30 trials score exactly 0.8333 = 5 of 6 criteria, O, summary reward)"
+   },
+   "a1": "A1 YES (reference 0.8333 < 1; strict pass not defined; all 30 trials score exactly 0.8333 = 5 of 6 criteria, O, summary reward)",
+   "a2": {
+    "applies": true,
+    "verdict": "A2 YES (task-level)",
+    "judge": "Run with anthropic/claude-opus-5-5 (results/protocol-v4-official.md:52, D74). Documented judge is openai/gpt-5.6-sol (results/protocol-v4-official.md:22; results/pipeline-audit.md Grader table: \"CLI pins GPT-5.6 Sol\"). The task file grading_config.json names vertex_ai/gemini-2.5-flash (results/pipeline-audit.md). Three different judges are named in the sources.",
+    "separation_check": "Only agreement on correct reference answers (reference trials regraded 1, 1, 0.8333 = maintainers; results/protocol-v4-official.md:52 and D75). Agreement on wrong outputs: not measured (same lines). Judge status completed in 30/30 trials (summary field judge_status), so no failed-judge zeros here. One of 6 criteria is missed by the reference and by all 30 trials; which one was not read (not measured)."
+   },
+   "b1": {
+    "verdict": "B1 YES (no related run at 30/50/70%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"apex-eurogrid-curtailment\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.8333,
+    "median": 0.8333,
+    "max": 0.8333,
+    "n_ge_0.9": 0,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 30,
+    "n_failed": 30,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 195.0,
+    "minutes_all": {
+     "median": 13.7,
+     "max": 76.5
+    },
+    "minutes_failed": {
+     "median": 13.7,
+     "max": 76.5
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 1851248,
+    "median_out_tokens": 26745,
+    "max_in_tokens": 20328742,
+    "limit_src": "data/tasks/frontier-memory/apex-eurogrid-curtailment/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "completed": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: nothing in a strict sense; strict 1 is not reachable even by the reference. Memory could at most supply slide-building procedure for the 5 criteria already met.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "grader",
+    "grade": "O",
+    "evidence": "Reference scores 0.8333 and all 30 trials score exactly 0.8333 (summary reward; partial-credit strict/partial); strict 1 unreachable under this verifier (A1). Judge named three ways (A2)."
+   }
+  },
+  "automationbench-marketing-content-gap-analysis": {
+   "task": "automationbench-marketing-content-gap-analysis",
+   "verifier": {
+    "type": "hidden tests (deterministic end-state assertions over the MCP sidecar dump)",
+    "n_checks": 18,
+    "strict_pass": "all scored assertions pass (grade.py: reward is the strict metric task_completed_correctly; partial_credit kept beside it)",
+    "all_or_nothing": "yes strict; partial_credit = fraction (assertions in rubric: 18; partial denominators not verified, possibly fewer scored)",
+    "notes": "Gmail send/not-send assertions to named recipients and bodies.",
+    "src": [
+     "data/tasks/frontier-memory/automationbench-marketing-content-gap-analysis/tests/rubric.json (assertions, 18 entries, none excluded)",
+     "data/tasks/frontier-memory/automationbench-marketing-content-gap-analysis/tests/grade.py:1-8,120-126"
+    ]
+   },
+   "oracle": {
+    "result": "1 (AutomationBench 3/3 matched)",
+    "measured": true,
+    "src": [
+     "D70 (decisions log line 76)",
+     "D81 line 87 (all 15 match)",
+     "results/protocol-v4-official.md:72"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.5": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.7": {
+      "PASS": 3,
+      "FAIL": 12
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"automationbench-marketing-content-gap-analysis\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 2,
+     "run1": 2,
+     "run3": 1,
+     "run4": 1,
+     "arm-placebo": 1,
+     "arm-readfirst": 3,
+     "exposure-all": 1,
+     "exposure-none": 2,
+     "arm-evidence": 2,
+     "arm-blend": 0
+    },
+    "total_of_30": 15,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.5714,
+    "max": 0.9091,
+    "n_ge_0.9": 2,
+    "n_eq_0": 1,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 12,
+    "n_failed": 15,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 30.0,
+    "minutes_all": {
+     "median": 6.1,
+     "max": 12.8
+    },
+    "minutes_failed": {
+     "median": 6.7,
+     "max": 12.8
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 471043,
+    "median_out_tokens": 17328,
+    "max_in_tokens": 941890,
+    "limit_src": "data/tasks/frontier-memory/automationbench-marketing-content-gap-analysis/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: which recipients to notify and not notify, and the \"list only acted-on items\" wording rule, are procedure/policy that memory could carry; the instruction also fixes a ~50 tool-turn budget (instruction.md) memory cannot lift.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "automationbench-sales-chatgpt-proposal-customization": {
+   "task": "automationbench-sales-chatgpt-proposal-customization",
+   "verifier": {
+    "type": "hidden tests (deterministic end-state assertions over the MCP sidecar dump)",
+    "n_checks": 10,
+    "strict_pass": "all scored assertions pass (grade.py: reward is the strict metric task_completed_correctly; partial_credit kept beside it)",
+    "all_or_nothing": "yes strict; partial_credit = fraction (assertions in rubric: 10; partial denominators not verified, possibly fewer scored)",
+    "notes": "strategy-record assertions (saved, account, finance, completion).",
+    "src": [
+     "data/tasks/frontier-memory/automationbench-sales-chatgpt-proposal-customization/tests/rubric.json (assertions, 10 entries, none excluded)",
+     "data/tasks/frontier-memory/automationbench-sales-chatgpt-proposal-customization/tests/grade.py:1-8,120-126"
+    ]
+   },
+   "oracle": {
+    "result": "1 (AutomationBench 3/3 matched)",
+    "measured": true,
+    "src": [
+     "D70 (decisions log line 76)",
+     "D81 line 87 (all 15 match)",
+     "results/protocol-v4-official.md:72"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.5": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 15
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"automationbench-sales-chatgpt-proposal-customization\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.5,
+    "median": 0.7,
+    "max": 0.9,
+    "n_ge_0.9": 1,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 29,
+    "n_failed": 30,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 30.0,
+    "minutes_all": {
+     "median": 7.4,
+     "max": 15.5
+    },
+    "minutes_failed": {
+     "median": 7.4,
+     "max": 15.5
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 1,
+    "median_in_tokens": 1578889,
+    "median_out_tokens": 17248,
+    "max_in_tokens": 3273649,
+    "limit_src": "data/tasks/frontier-memory/automationbench-sales-chatgpt-proposal-customization/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the Proposal SOP requirements and stakeholder-finance/account framing are procedure that memory could carry; the instruction points at an SOP sheet the agent can read itself, so the gap is likely execution detail, not a missing fact.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "capability or missing policy (undetermined)",
+    "grade": "I",
+    "evidence": "Grader feasible (AutomationBench oracle 3/3), no exceptions, all 30 valid, partial 0.5-0.9 (median 0.7, 1 trial at 0.9); the corpus count at 30/50% (45 runs) is identical across the three AutomationBench tasks, which fits matching the shared prompt preamble rather than the task (B1 unreliable). Trajectories needed."
+   }
+  },
+  "automationbench-sales-partnership-contract": {
+   "task": "automationbench-sales-partnership-contract",
+   "verifier": {
+    "type": "hidden tests (deterministic end-state assertions over the MCP sidecar dump)",
+    "n_checks": 8,
+    "strict_pass": "all scored assertions pass (grade.py: reward is the strict metric task_completed_correctly; partial_credit kept beside it)",
+    "all_or_nothing": "yes strict; partial_credit = fraction (assertions in rubric: 8; partial denominators not verified, possibly fewer scored)",
+    "notes": "DocuSign envelope assertions (exists, created, recipient, count, subject).",
+    "src": [
+     "data/tasks/frontier-memory/automationbench-sales-partnership-contract/tests/rubric.json (assertions, 8 entries, none excluded)",
+     "data/tasks/frontier-memory/automationbench-sales-partnership-contract/tests/grade.py:1-8,120-126"
+    ]
+   },
+   "oracle": {
+    "result": "1 (AutomationBench 3/3 matched)",
+    "measured": true,
+    "src": [
+     "D70 (decisions log line 76)",
+     "D81 line 87 (all 15 match)",
+     "results/protocol-v4-official.md:72"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.5": {
+      "PASS": 3,
+      "FAIL": 42
+     },
+     "0.7": {
+      "PASS": 3,
+      "FAIL": 42
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"automationbench-sales-partnership-contract\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 1,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 1,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.25,
+    "max": 0.5714,
+    "n_ge_0.9": 0,
+    "n_eq_0": 4,
+    "n_0_to_0.5": 23,
+    "n_0.5_to_0.9": 2,
+    "n_failed": 29,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 30.0,
+    "minutes_all": {
+     "median": 7.1,
+     "max": 15.4
+    },
+    "minutes_failed": {
+     "median": 7.1,
+     "max": 15.4
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 1,
+    "median_in_tokens": 1213334,
+    "median_out_tokens": 16468,
+    "max_in_tokens": 2599388,
+    "limit_src": "data/tasks/frontier-memory/automationbench-sales-partnership-contract/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the standard contract workflow (which DocuSign envelope fields, recipients, Salesforce updates) is exactly a procedure memory could supply; the instruction is a 2-line request with no steps.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "awilix-release-tier-explicit": {
+   "task": "awilix-release-tier-explicit",
+   "verifier": {
+    "type": "hidden tests plus a deterministic preference gate (regex/subprocess on the submitted model.patch); no LLM judge",
+    "n_checks": 185,
+    "strict_pass": "161 regression + 23 functional (1 skipped) + 1 preference gate: root package.json must go 12.0.5 -> 12.1.0 (one preference gate; counts 184 cases + gate)",
+    "all_or_nothing": "yes strict (all functional, regression and preference checks)",
+    "src": [
+     "data/tasks/frontier-memory/awilix-release-tier-explicit/tests/user_preference_verifier.py:27-47",
+     "data/tasks/frontier-memory/awilix-release-tier-explicit/tests/preference-verifier.md",
+     "results/awilix-release-tier-explicit-oracle-check-summary.md (Results)"
+    ]
+   },
+   "oracle": {
+    "result": "1 (184/184, preference pass)",
+    "measured": true,
+    "src": [
+     "results/awilix-release-tier-explicit-oracle-check-summary.md (job 303256)",
+     "D81"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 YES (no related run at 30/50/70%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"awilix-release-tier-explicit\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.4792,
+    "max": 0.4792,
+    "n_ge_0.9": 0,
+    "n_eq_0": 1,
+    "n_0_to_0.5": 29,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 30,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": [
+     "preference",
+     "tests"
+    ]
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 33.9,
+     "max": 46.0
+    },
+    "minutes_failed": {
+     "median": 33.9,
+     "max": 46.0
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 1,
+    "median_in_tokens": 7199922,
+    "median_out_tokens": 89431,
+    "max_in_tokens": 11367011,
+    "limit_src": "data/tasks/frontier-memory/awilix-release-tier-explicit/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the preference (an \"internal release tier 7\" change bumps the root version to 12.1.0) is a fact/convention that memory could supply; instruction.md states only \"Internal release tier: 7\" and never the target version.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "missing preference fact, no source",
+    "grade": "O (that preference gate fails) / I (why)",
+    "evidence": "partial-credit parts: preference = 0.0 in 30/30 trials (O); functional tests at full score (0.958 = 23/24 with the skip counted as not passed, same ceiling as the passing oracle) in 22/30. The oracle passes. Needed fact (version 12.1.0) is absent from the instruction; corpus holds no related run (B1)."
+   }
+  },
+  "awilix-release-tier-implicit": {
+   "task": "awilix-release-tier-implicit",
+   "verifier": {
+    "type": "hidden tests plus a deterministic preference gate (regex/subprocess on the submitted model.patch); no LLM judge",
+    "n_checks": 185,
+    "strict_pass": "same as explicit: 161 + 23 (+1 skipped) + 1 preference gate (version bump 12.1.0)",
+    "all_or_nothing": "yes strict (all functional, regression and preference checks)",
+    "src": [
+     "data/tasks/frontier-memory/awilix-release-tier-implicit/tests/user_preference_verifier.py",
+     "data/tasks/frontier-memory/awilix-release-tier-implicit/tests/preference-verifier.md",
+     "results/awilix-release-tier-implicit-oracle-check-summary.md"
+    ]
+   },
+   "oracle": {
+    "result": "1 (184/184, preference pass)",
+    "measured": true,
+    "src": [
+     "results/awilix-release-tier-implicit-oracle-check-summary.md (job 303255)",
+     "D81"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 YES (no related run at 30/50/70%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"awilix-release-tier-implicit\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.4792,
+    "max": 0.4792,
+    "n_ge_0.9": 0,
+    "n_eq_0": 3,
+    "n_0_to_0.5": 27,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 30,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": [
+     "preference",
+     "tests"
+    ]
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 32.2,
+     "max": 55.3
+    },
+    "minutes_failed": {
+     "median": 32.2,
+     "max": 55.3
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 2,
+    "median_in_tokens": 5777388,
+    "median_out_tokens": 87627,
+    "max_in_tokens": 12110205,
+    "limit_src": "data/tasks/frontier-memory/awilix-release-tier-implicit/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: same version-bump preference, but the implicit instruction does not even mention a release tier (grep finds no \"release tier\" in instruction.md), so only memory can supply it.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "missing preference fact, no source",
+    "grade": "O / I",
+    "evidence": "preference = 0.0 in 30/30 (O); full functional score in 22/30; instruction does not mention a release tier at all; oracle passes; B1 YES."
+   }
+  },
+  "build-word2vec-pipeline": {
+   "task": "build-word2vec-pipeline",
+   "verifier": {
+    "type": "hidden tests",
+    "n_checks": 6,
+    "strict_pass": "all 6 pytest cases pass (test.sh writes reward 1 only on pytest exit 0)",
+    "all_or_nothing": "yes",
+    "src": [
+     "data/tasks/frontier-memory/build-word2vec-pipeline/tests/test.sh:18-31",
+     "data/tasks/frontier-memory/build-word2vec-pipeline/tests/test_outputs.py (6 test_ functions)",
+     "results/word2vec-openhands/oracle-check-summary.md (6 cases) cited by results/history.md:320"
+    ]
+   },
+   "oracle": {
+    "result": "1 (6/6)",
+    "measured": true,
+    "src": [
+     "results/history.md:320",
+     "D81"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 5,
+      "FAIL": 60
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 9
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 9
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"build-word2vec-pipeline\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 2,
+     "run3": 2,
+     "run4": 1,
+     "arm-placebo": 0,
+     "arm-readfirst": 3,
+     "exposure-all": 2,
+     "exposure-none": 1,
+     "arm-evidence": 3,
+     "arm-blend": 0
+    },
+    "total_of_30": 14,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.0,
+    "median": 0.8333,
+    "max": 0.8333,
+    "n_ge_0.9": 0,
+    "n_eq_0": 6,
+    "n_0_to_0.5": 1,
+    "n_0.5_to_0.9": 9,
+    "n_failed": 16,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 20.0,
+    "minutes_all": {
+     "median": 4.7,
+     "max": 7.7
+    },
+    "minutes_failed": {
+     "median": 5.3,
+     "max": 7.7
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 321458,
+    "median_out_tokens": 13635,
+    "max_in_tokens": 751494,
+    "limit_src": "data/tasks/frontier-memory/build-word2vec-pipeline/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the prompt names no path or interface (\"callable interface and artifact layout used by prior implementations\"); memory could supply the output path (/workspace/solution.py), function name/signature and the preprocessing conventions. Pipeline-audit: most gate failures wrote no /workspace/solution.py (results/pipeline-audit.md Only-for-our-setup).",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "cattrs-compositional-changelog": {
+   "task": "cattrs-compositional-changelog",
+   "verifier": {
+    "type": "hidden tests plus one binary preference check on model.patch",
+    "n_checks": 77,
+    "strict_pass": "70 F2P + 7 P2P (76 behaviour + 1 preference) all pass; preference = documented public API + runnable example + changelog entry",
+    "all_or_nothing": "yes strict",
+    "src": [
+     "data/tasks/frontier-memory/cattrs-compositional-changelog/tests/preference-verifier.md",
+     "results/cattrs-oracle-check-summary.md (table, 69/70 + 7/7, \"Cases / 77\")"
+    ]
+   },
+   "oracle": {
+    "result": "0 (76/77: reference misses the preference check)",
+    "measured": true,
+    "src": [
+     "results/cattrs-oracle-check-summary.md (job 303194)",
+     "frontiermemory/docs/maintainers.md:76-83",
+     "results/pipeline-audit.md (Grader)"
+    ],
+    "a1": "A1 YES formal (reference 0 < 1). Not infeasible in practice: 4 of 30 trials pass, one control trial passed 77/77 (results/pipeline-audit.md)"
+   },
+   "a1": "A1 YES formal (reference 0 < 1). Not infeasible in practice: 4 of 30 trials pass, one control trial passed 77/77 (results/pipeline-audit.md)",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 YES (no related run at 30/50/70%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"cattrs-compositional-changelog\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 1,
+     "run4": 1,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 2,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 4,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.9221,
+    "median": 0.987,
+    "max": 0.987,
+    "n_ge_0.9": 26,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 26,
+    "near_miss": "near-miss (all failures >= 0.9)",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 35.1,
+     "max": 53.0
+    },
+    "minutes_failed": {
+     "median": 34.1,
+     "max": 53.0
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 3,
+    "median_in_tokens": 9368141,
+    "median_out_tokens": 83573,
+    "max_in_tokens": 15325261,
+    "limit_src": "data/tasks/frontier-memory/cattrs-compositional-changelog/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: exactly the preference (public API gets docs, a runnable example, and a changelog entry), which the instruction does not state and the reference omits; functional behaviour (partial_structure) is the instruction, not memory.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "cookie-store-compositional-changelog": {
+   "task": "cookie-store-compositional-changelog",
+   "verifier": {
+    "type": "hidden tests plus 4 preference gates on model.patch",
+    "n_checks": 1404,
+    "strict_pass": "115 functional + 1285 regression cases (4 skipped excluded) + 4 preference gates all pass",
+    "all_or_nothing": "yes strict",
+    "src": [
+     "results/cookie-store-oracle-check-summary.md (job 303213 table)",
+     "data/tasks/frontier-memory/cookie-store-compositional-changelog/tests/preference-verifier.md"
+    ]
+   },
+   "oracle": {
+    "result": "0 (functional 115/115; 2 of 4 preference gates fail)",
+    "measured": true,
+    "src": [
+     "results/cookie-store-oracle-check-summary.md",
+     "D70/D81 (match maintainers: 0)",
+     "frontiermemory/docs/maintainers.md:76-83"
+    ],
+    "a1": "A1 YES formal (reference 0 < 1). Not infeasible in practice: 2 of 30 trials pass. Note the Singularity check also logged one regression error (tmp dir ownership, environment) and ended FAILED; the later Docker-guest oracle matched the maintainers list."
+   },
+   "a1": "A1 YES formal (reference 0 < 1). Not infeasible in practice: 2 of 30 trials pass. Note the Singularity check also logged one regression error (tmp dir ownership, environment) and ended FAILED; the later Docker-guest oracle matched the maintainers list.",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 YES at 50 and 70 pct (none); 1 run(s) at 30 pct",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 1
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"cookie-store-compositional-changelog\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 1,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 1,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 2,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.5772,
+    "median": 0.812,
+    "max": 0.9913,
+    "n_ge_0.9": 4,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 24,
+    "n_failed": 28,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": [
+     "gates",
+     "tests"
+    ]
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 33.4,
+     "max": 46.6
+    },
+    "minutes_failed": {
+     "median": 33.4,
+     "max": 46.6
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 1,
+    "median_in_tokens": 7989540,
+    "median_out_tokens": 90191,
+    "max_in_tokens": 12860818,
+    "limit_src": "data/tasks/frontier-memory/cookie-store-compositional-changelog/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the preference gates (docs introduce CookieStore, copyable example, mocks not a live server in added tests, no debug artifacts) are conventions memory could carry; the functional spec is long and in the instruction.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "customer-delivery-contextual-preferences": {
+   "task": "customer-delivery-contextual-preferences",
+   "verifier": {
+    "type": "hidden tests plus 3 preference checks on the submitted code/patch",
+    "n_checks": 191,
+    "strict_pass": "26 F2P + 162 P2P (incl. build gate) + 3 preference checks all pass",
+    "all_or_nothing": "yes strict",
+    "src": [
+     "results/customer-delivery-oracle-check-summary.md (table)",
+     "data/tasks/frontier-memory/customer-delivery-contextual-preferences/tests/preference-verifier.md"
+    ]
+   },
+   "oracle": {
+    "result": "1 (188/188, preference 3/3)",
+    "measured": true,
+    "src": [
+     "results/customer-delivery-oracle-check-summary.md (job 303268)",
+     "D81"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 YES (no related run at 30/50/70%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 0
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 0
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"customer-delivery-contextual-preferences\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.9681,
+    "median": 0.9894,
+    "max": 0.9947,
+    "n_ge_0.9": 30,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 0,
+    "n_failed": 30,
+    "near_miss": "near-miss (all failures >= 0.9)",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 34.0,
+     "max": 54.7
+    },
+    "minutes_failed": {
+     "median": 34.0,
+     "max": 54.7
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 3,
+    "median_in_tokens": 8658562,
+    "median_out_tokens": 88190,
+    "max_in_tokens": 13567724,
+    "limit_src": "data/tasks/frontier-memory/customer-delivery-contextual-preferences/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the three preferences (a runnable async-failure example, AwilixInitializationError keeps registration id and cause, monotonic timing via performance.now/hrtime) are conventions memory could supply; none is in the instruction.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "missing preference conventions, no source (near miss)",
+    "grade": "O (near miss) / I (why)",
+    "evidence": "partial 0.968-0.995 in 30/30 (all >= 0.9, O) so functional work is nearly complete; strict fails on preference checks (inferred: oracle passes 188/188 + 3/3, instruction states none of them; per-check parts not in the partial file, not measured). B1 YES."
+   }
+  },
+  "dapt-intrusion-detection-workflow-learning": {
+   "task": "dapt-intrusion-detection-workflow-learning",
+   "verifier": {
+    "type": "hidden tests",
+    "n_checks": 37,
+    "strict_pass": "all pytest cases on the filled CSV pass (37 collected in the oracle check; test.sh writes reward 1 only on pytest success)",
+    "all_or_nothing": "yes strict",
+    "notes": "partial-credit values are multiples of 1/14, which does not match the 37 collected cases (scripts/partial_credit.py reads ctrf tests); denominator discrepancy not resolved",
+    "src": [
+     "results/frontiermemory-dapt/oracle-check-summary.md:14",
+     "data/tasks/frontier-memory/dapt-intrusion-detection-workflow-learning/tests/test.sh:12-24"
+    ]
+   },
+   "oracle": {
+    "result": "1 (37/37)",
+    "measured": true,
+    "src": [
+     "results/frontiermemory-dapt/oracle-check-summary.md:14",
+     "D70/D81"
+    ],
+    "a1": "A1 NO"
+   },
+   "a1": "A1 NO",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 0,
+      "FAIL": 35
+     },
+     "0.5": {
+      "PASS": 0,
+      "FAIL": 35
+     },
+     "0.7": {
+      "PASS": 0,
+      "FAIL": 35
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"dapt-intrusion-detection-workflow-learning\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 0,
+     "exposure-none": 0,
+     "arm-evidence": 0,
+     "arm-blend": 0
+    },
+    "total_of_30": 0,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.2143,
+    "median": 0.6429,
+    "max": 0.8571,
+    "n_ge_0.9": 0,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 8,
+    "n_0.5_to_0.9": 22,
+    "n_failed": 30,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 90.0,
+    "minutes_all": {
+     "median": 10.6,
+     "max": 43.6
+    },
+    "minutes_failed": {
+     "median": 10.6,
+     "max": 43.6
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 709272,
+    "median_out_tokens": 29487,
+    "max_in_tokens": 5946648,
+    "limit_src": "data/tasks/frontier-memory/dapt-intrusion-detection-workflow-learning/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: procedure for computing the statistics from the pcap (library, bucket convention, entropy definition) could come from memory; exact numeric agreement with the test tolerances is execution. The corpus holds 35 related runs, none passing.",
+   "headroom_grade": "I",
+   "never_passes": true,
+   "never_passes_why": {
+    "category": "capability (numeric computation), grader and source ruled out",
+    "grade": "I",
+    "evidence": "Oracle passes 37/37; partial 0.21-0.86, none >= 0.9; no exceptions, median 10.6 min of 90, max 43.6; the corpus holds 35 related runs and none passes at any overlap (v1.1 0/35 at 30/50/70%), so even the source has no success to learn from. Cause not determined at task level; trajectories needed."
+   }
+  },
+  "enterpriseops-csm-26d1b04a": {
+   "task": "enterpriseops-csm-26d1b04a",
+   "verifier": {
+    "type": "hidden tests (4 database_state SQL checks)",
+    "n_checks": 4,
+    "strict_pass": "all 4 checks pass (grade.py: reward 1.0 iff passed == len(results))",
+    "all_or_nothing": "yes strict",
+    "src": [
+     "data/tasks/frontier-memory/enterpriseops-csm-26d1b04a/tests/checks.json (checks, 4 database_state)",
+     "data/tasks/frontier-memory/enterpriseops-csm-26d1b04a/tests/grade.py:240"
+    ]
+   },
+   "oracle": {
+    "result": "0 (reference replays nothing: solution/calls.jsonl is empty)",
+    "measured": true,
+    "src": [
+     "frontiermemory/docs/maintainers.md:76-83 (lines 82-83)",
+     "D70/D75/D81"
+    ],
+    "a1": "A1 YES formal (reference 0 < 1) but uninformative: the reference is empty, so it says nothing about feasibility. Feasible by observation: 19 of 30 trials pass"
+   },
+   "a1": "A1 YES formal (reference 0 < 1) but uninformative: the reference is empty, so it says nothing about feasibility. Feasible by observation: 19 of 30 trials pass",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 16,
+      "FAIL": 64
+     },
+     "0.5": {
+      "PASS": 9,
+      "FAIL": 25
+     },
+     "0.7": {
+      "PASS": 8,
+      "FAIL": 17
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"enterpriseops-csm-26d1b04a\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 2,
+     "run1": 2,
+     "run3": 0,
+     "run4": 2,
+     "arm-placebo": 1,
+     "arm-readfirst": 2,
+     "exposure-all": 2,
+     "exposure-none": 3,
+     "arm-evidence": 3,
+     "arm-blend": 2
+    },
+    "total_of_30": 19,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.75,
+    "median": 0.75,
+    "max": 0.75,
+    "n_ge_0.9": 0,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 11,
+    "n_failed": 11,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 30.0,
+    "minutes_all": {
+     "median": 4.4,
+     "max": 10.2
+    },
+    "minutes_failed": {
+     "median": 4.8,
+     "max": 10.2
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 450296,
+    "median_out_tokens": 11663,
+    "max_in_tokens": 1375027,
+    "limit_src": "data/tasks/frontier-memory/enterpriseops-csm-26d1b04a/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: the policy is in the instruction (11 KB); memory could supply which tables/fields and the order of operations for this lifecycle; failed trials all land on exactly 3 of 4 checks, so one specific check is missed.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  },
+  "enterpriseops-teams-2725d17f": {
+   "task": "enterpriseops-teams-2725d17f",
+   "verifier": {
+    "type": "hidden tests (4 database_state SQL checks)",
+    "n_checks": 4,
+    "strict_pass": "all 4 checks pass (grade.py: reward 1.0 iff passed == len(results))",
+    "all_or_nothing": "yes strict",
+    "src": [
+     "data/tasks/frontier-memory/enterpriseops-teams-2725d17f/tests/checks.json (checks, 4 database_state)",
+     "data/tasks/frontier-memory/enterpriseops-teams-2725d17f/tests/grade.py:240"
+    ]
+   },
+   "oracle": {
+    "result": "0 (reference replays nothing: solution/calls.jsonl is empty)",
+    "measured": true,
+    "src": [
+     "frontiermemory/docs/maintainers.md:76-83 (lines 82-83)",
+     "D70/D75/D81"
+    ],
+    "a1": "A1 YES formal (reference 0 < 1) but uninformative: the reference is empty, so it says nothing about feasibility. Feasible by observation: 2 of 30 trials pass"
+   },
+   "a1": "A1 YES formal (reference 0 < 1) but uninformative: the reference is empty, so it says nothing about feasibility. Feasible by observation: 2 of 30 trials pass",
+   "a2": {
+    "applies": false,
+    "verdict": "A2 not applicable (no LLM judge)",
+    "judge": "none: deterministic grader",
+    "separation_check": "n/a"
+   },
+   "b1": {
+    "verdict": "B1 NO (related runs exist at 50%)",
+    "v11": {
+     "0.3": {
+      "PASS": 7,
+      "FAIL": 37
+     },
+     "0.5": {
+      "PASS": 6,
+      "FAIL": 28
+     },
+     "0.7": {
+      "PASS": 6,
+      "FAIL": 28
+     }
+    },
+    "keys": "results/corpus-coverage.json -> \"v1.1\" -> \"tasks\" -> \"enterpriseops-teams-2725d17f\" -> \"0.3\"/\"0.5\"/\"0.7\" -> PASS/FAIL (run counts; the key is the overlap threshold)"
+   },
+   "passes": {
+    "per_arm": {
+     "control": 0,
+     "run1": 0,
+     "run3": 0,
+     "run4": 0,
+     "arm-placebo": 0,
+     "arm-readfirst": 0,
+     "exposure-all": 1,
+     "exposure-none": 0,
+     "arm-evidence": 1,
+     "arm-blend": 0
+    },
+    "total_of_30": 2,
+    "src": "scripts: scratchpad compute.py over results/official/summary-fm-tasks-<arm>.jsonl (fields task, passed, reward); passed==reward==1 in every trial (mismatch 0)"
+   },
+   "partial_failed": {
+    "min": 0.75,
+    "median": 0.75,
+    "max": 0.75,
+    "n_ge_0.9": 0,
+    "n_eq_0": 0,
+    "n_0_to_0.5": 0,
+    "n_0.5_to_0.9": 28,
+    "n_failed": 28,
+    "near_miss": "mostly far",
+    "src": "results/official/partial-credit-fm-tasks-<arm>.jsonl (fields strict, partial, parts); strict equals summary reward in all 450 trials",
+    "parts_keys": []
+   },
+   "time": {
+    "agent_timeout_min": 30.0,
+    "minutes_all": {
+     "median": 1.6,
+     "max": 4.9
+    },
+    "minutes_failed": {
+     "median": 1.5,
+     "max": 3.2
+    },
+    "failed_at_or_over_limit": 0,
+    "failed_ge_90pct": 0,
+    "failed_ge_50pct": 0,
+    "median_in_tokens": 177219,
+    "median_out_tokens": 3234,
+    "max_in_tokens": 799387,
+    "limit_src": "data/tasks/frontier-memory/enterpriseops-teams-2725d17f/task.toml [agent] timeout_sec",
+    "exceptions": {},
+    "model_unavailable": 0,
+    "invalid": 0,
+    "judge_status": {
+     "None": 30
+    },
+    "a6_candidate": false
+   },
+   "headroom": "I: Microsoft Graph/table conventions and the rule that triggers the missed check; failed trials all land on exactly 3 of 4 checks. Median run is 1.6 minutes, so the agent may stop early.",
+   "headroom_grade": "I",
+   "never_passes": false,
+   "never_passes_why": null
+  }
+ }
+}
