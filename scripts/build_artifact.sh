@@ -22,7 +22,7 @@ mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatorda
 find "$A" -name '__pycache__' -prune -exec rm -r {} + ; find "$A" -name '*.log' -delete
 # Strip quoted chat messages: the decision log and plans record who decided, never the words said to the assistant.
 find "$A" -type f -name '*.md' -print0 | xargs -0 python3 -I scripts/scrub_chat.py
-if grep -rnE '\((the )?user[:,]|[Uu]ser (decision|said|chose|approved|asked|allowed)|the user\b|I asked|\*\*[^*]*decision[^*]*\*\* \("' "$A" --include='*.md'; then echo "ARTIFACT_LEAK: chat wording remains; nothing written"; rm -r "$STAGE"; exit 1; fi
+if grep -rnE '\((the )?user[:,]|[Uu]ser (decision|said|chose|approved|asked|allowed)|the user([^-[:alnum:]_]|$)|I asked|\*\*[^*]*decision[^*]*\*\* \("' "$A" --include='*.md'; then echo "ARTIFACT_LEAK: chat wording remains; nothing written"; rm -r "$STAGE"; exit 1; fi
 # Scrub identifiers. Order matters: longest first.
 find "$A" -type f \( -name '*.py' -o -name '*.sh' -o -name '*.sbatch' -o -name '*.md' -o -name '*.json' -o -name '*.jsonl' -o -name '*.yaml' -o -name '*.txt' \) -print0 | xargs -0 sed -i -E \
   -e 's#/home/csgrad/vbork001/shared-mem-gov-pilot/models#/path/to/ollama-models#g' \

@@ -23,7 +23,7 @@ RULES = [
     (r"\buser allowed\b", "the project owner allowed"), (r"\buser asked\b", "the project owner asked"),
     (r"\bUser decision\b", "Project-owner decision"),
     (r"\bUser (approved|asked|chose|said|agreed|allowed)\b", r"Project owner \1"),
-    (r"\bthe user(?:’|')s\b", "the project owner’s"), (r"\bthe user\b", "the project owner"),
+    (r"\bthe user(?:’|')s\b", "the project owner’s"), (r"\bthe user\b(?![-\w])", "the project owner"),
     (r"\bthe user-run\b", "the project-owner-run"),
 ]
 for f in sys.argv[1:]:
