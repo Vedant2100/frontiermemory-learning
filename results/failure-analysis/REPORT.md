@@ -88,6 +88,16 @@ The partnership contract task shows the same thing from another angle. In read-f
 
 We cannot say what the run-1 memory says. It is one skill, `agent-evals/eval-task-families`, with reference files named for task families (analysis-mcp, workflow-automation, swe-repo, pcap). The file names suggest content, but the text is on the unreachable disk.
 
+### Opened against not opened
+
+The two arms with an access log (run 1 and read-first, 90 trials together) let us compare trials where the agent opened memory with trials where it did not. Without trajectories this is the closest we can get to asking whether reading memory helped, and the naive comparison is misleading.
+
+Opened trials score higher against the control. Their partial credit is 0.124 above the control's average for the same task, against 0.030 for trials that did not open memory. Read that way, opening looks like it helps.
+
+The agent chooses when to open memory, though, and it opens more on some tasks than others, so the two groups are not the same mix of tasks. Comparing within the same task and arm removes that: across the 16 task-and-arm cells that have both opened and unopened trials, opened trials score 0.085 lower on average. A permutation test (5,000 shuffles of the opened label within each cell) gives p = 0.90 that opening is better. Strict passes are 6 of 42 when opened and 9 of 48 when not.
+
+So these data give no evidence that reading memory helped, and they cannot show that it hurt: the cells are small, and the agent may open memory when it is already struggling. The signs also mix by task. Within a task, opened trials did better on DAPT (0.79 against 0.43 and 0.57 in run 1) and cookie store (0.99 and 0.83 against 0.70 in read-first), and worse on marketing in run 1 (0.55 against 1.0 twice), market share in run 1 (0.0 twice against 1.0 once) and CSM in read-first (0.75 against 1.0 twice). `opens_analysis.py` reproduces the numbers.
+
 ### Word2Vec
 
 Word2Vec asks the agent to write a function that goes in a particular place with a particular name. In the control and the placebo, 6 of 6 trials score exactly 0.0, and the pipeline audit notes that most gate failures wrote no `/workspace/solution.py` (the official prompt names no path). Every arm that gave the agent real memory or real past runs scores between 0.17 and 1.0. Run 1 scored 0.83, 1.0 and 1.0. The evidence arm passed 3 of 3: the past runs it was given include a passing one that shows `/workspace/solution.py` and the `task_func` signature.
