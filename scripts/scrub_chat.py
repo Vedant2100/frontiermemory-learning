@@ -6,6 +6,9 @@ import sys
 
 S = re.S
 RULES = [
+    (r"\s?\(D\d{2,3}(?:(?:,|\s+to)\s*D\d{2,3})*\)", ""),     # (D94), (D132, D139): ids that point into the working diary
+    (r"[;,]\s*D\d{2,3}\)", ")"), (r"(What happened:\*\*) D\d{2,3}\.", r"\1"),
+    (r"[,;]?\s*\bD\d{2,3}\b(?=[)\s.,;:|])", ""),                                    # any id left after the forms above (r"Rule from D\d{2,3}:", "Rule:"),
     (r'\((?:the )?user: "[^"]*"(?: …)?(?: "[^"]*")*\)', "(project-owner decision)"),   # (user: "a" … "b")
     (r'\((?:the )?user: "[^"]*"', "(project-owner decision"),                          # (user: "Add run 4", prereg ...)
     (r'user decision \("[^"]*"[^)]*?\)', "project-owner decision"),

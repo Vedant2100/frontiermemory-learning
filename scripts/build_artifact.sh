@@ -7,17 +7,17 @@ OUT=${1:?output directory}; REPO=$(cd "$(dirname "$0")/.." && pwd)
 STAGE=$(mktemp -d); A=$STAGE/artifact; mkdir -p "$A"
 cd "$REPO"
 INCLUDE=(official/fm_local official/vm/lib.sh official/vm/build-and-test-vm.sbatch official/vm/provision.sbatch official/vm/oracle-all.sbatch
-         official/vm/freeze-disk.sbatch official/vm/run-set.sbatch official/vm/run-all.sbatch official/vm/regen-summary.sh official/set-openai-key.sh
+         official/vm/freeze-disk.sbatch official/vm/run-set.sbatch official/vm/run-all.sbatch official/vm/regen-summary.sh
          scripts/analyze_official.py scripts/analyze_matrix.py scripts/results_table.py scripts/corpus_coverage.py scripts/harness_exposure.py
          results/protocol-v4-official.md results/preregistration-v2.md results/pipeline-audit.md results/harness-exposure-survey.md
          results/corpus-coverage.json results/official
-         official/vm/check-serving.py official/vm/audit-set.py official/vm/run-exposure.sh official/vm/next-study-3.sh official/vm/next-study-4.sh
+         official/vm/check-serving.py official/vm/audit-set.py official/vm/run-exposure.sh
          official/tests scripts/partial_credit.py scripts/leaderboard_noise.py scripts/memory_access.py scripts/analyze_arms.py
-         results/preregistration-arms.md results/decisions-log-detailed.md
-         FINAL-RESULTS.md results/paper-supplement-rq2-factors.md official/vm/next-study-5.sh official/vm/next-study-6.sh official/vm/handover-b5.sh
-         official/vm/handover-b6.sh official/vm/derive_arm.py official/vm/derive_blend.py official/vm/run-blend.sh official/vm/extract-blend.sbatch
-         official/vm/serving-incidents-d136.json)
+         results/preregistration-arms.md results/paper-supplement-rq2-factors.md)
+# official/tests/test_arms.py and test_blend.py drive the dropped orchestration scripts and are not shipped either.
+# Not shipped on purpose: the working decision log, the chat-driven driver and hand-over scripts, the key-setup script and the status notes.
 for p in "${INCLUDE[@]}"; do [ -e "$p" ] && { mkdir -p "$A/$(dirname "$p")"; cp -r "$p" "$A/$p"; }; done
+rm -f "$A/official/tests/test_arms.py" "$A/official/tests/test_blend.py"
 mkdir -p "$A/results"; git for-each-ref --sort=creatordate --format='%(creatordate:iso8601)  %(refname:short)' 'refs/tags/prereg*' > "$A/results/prereg-timestamps.txt"
 find "$A" -name '__pycache__' -prune -exec rm -r {} + ; find "$A" -name '*.log' -delete
 # Strip quoted chat messages: the decision log and plans record who decided, never the words said to the assistant.
@@ -40,7 +40,10 @@ trial folders aren't included: the corpus license doesn't allow redistribution. 
 - `results/preregistration-v2.md`: the written plan and its dated amendments. It was tagged in version control before any counted trial; `results/prereg-timestamps.txt` lists every tag with its commit time. It was not filed with a public registry.
 - `results/official/summary-*.jsonl`: one line per trial (task, reward, validity, memory digest, tokens, times).
 - `scripts/analyze_official.py`: the preregistered analysis (`--test` runs its self-test).
-- `official/`: how the official pipeline was run: a Docker VM, the local-model adapter, the run jobs.
+- `official/`: how the official pipeline was run: a Docker VM, the local-model adapter, the run jobs, the serving checks and their tests.
+- `results/paper-supplement-rq2-factors.md`: the full text of the paper's RQ2 table rows.
+
+The working diary of the study is not included; the dated plan, its amendments and the tag timestamps are. The plans mention the job-sequencing scripts for the exploratory arms (`next-study-*.sh`, `run-blend.sh`, `derive_*.py`); they only queue jobs and are not included.
 R
 LEAK='bender|vbork001|csgrad|nodevcggpu|Vedant|compfly|crisnas|cris\.local|amitroy|ygarg|mukunz|sk-ant-|sk-svcacct|sk-proj-'
 if grep -rniE "$LEAK" "$A"; then echo "ARTIFACT_LEAK: identifiers remain; nothing written"; rm -r "$STAGE"; exit 1; fi
