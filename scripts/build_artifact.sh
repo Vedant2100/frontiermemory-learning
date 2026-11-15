@@ -13,7 +13,7 @@ INCLUDE=(official/fm_local official/vm/lib.sh official/vm/build-and-test-vm.sbat
          results/corpus-coverage.json results/official
          official/vm/check-serving.py official/vm/audit-set.py official/vm/run-exposure.sh
          official/tests scripts/partial_credit.py scripts/leaderboard_noise.py scripts/memory_access.py scripts/analyze_arms.py
-         results/preregistration-arms.md results/paper-supplement-rq2-factors.md)
+         results/preregistration-arms.md results/paper-supplement-rq2-factors.md results/amendments-and-deviations.md)
 # official/tests/test_arms.py and test_blend.py drive the dropped orchestration scripts and are not shipped either.
 # Not shipped on purpose: the working decision log, the chat-driven driver and hand-over scripts, the key-setup script and the status notes.
 for p in "${INCLUDE[@]}"; do [ -e "$p" ] && { mkdir -p "$A/$(dirname "$p")"; cp -r "$p" "$A/$p"; }; done
@@ -41,6 +41,7 @@ trial folders aren't included: the corpus license doesn't allow redistribution. 
 - `results/official/summary-*.jsonl`: one line per trial (task, reward, validity, memory digest, tokens, times).
 - `scripts/analyze_official.py`: the preregistered analysis (`--test` runs its self-test).
 - `official/`: how the official pipeline was run: a Docker VM, the local-model adapter, the run jobs, the serving checks and their tests.
+- `results/amendments-and-deviations.md`: every plan amendment, deviation from the official setup, and incident that touched counted data, with whether results had been seen.
 - `results/paper-supplement-rq2-factors.md`: the full text of the paper's RQ2 table rows.
 
 The working diary of the study is not included; the dated plan, its amendments and the tag timestamps are. The plans mention the job-sequencing scripts for the exploratory arms (`next-study-*.sh`, `run-blend.sh`, `derive_*.py`); they only queue jobs and are not included.
