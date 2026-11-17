@@ -1,0 +1,20 @@
+nodevcggpu02
+Mon Nov 16 18:45:32 PST 2026
+qemu-img: none
+qemu-nbd: none
+qemu-system-x86_64: none
+guestfish: none
+virt-ls: none
+virt-copy-out: none
+libguestfs-test-tool: none
+guestmount: none
+root
+rpms
+rpms-new
+--- image info (read-only, force-share)
+/var/spool/slurmd/job314095/slurm_script: line 15: qemu-img: command not found
+--- nbd/fuse/userns
+ls: cannot access '/dev/nbd0': No such file or directory
+/dev/fuse
+1028002
+--- running qemu now?

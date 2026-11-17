@@ -1,0 +1,29 @@
+nodevcggpu02
+Sun Nov 15 13:27:13 PST 2026
+total 197766124
+drwx------ 8 USER GROUP         4096 Nov  9 16:21 .
+drwxrwx--- 3 USER GROUP           19 Nov  3 09:31 ..
+-rw-rw---- 1 USER GROUP    621284352 Nov  3 09:31 base.img
+-rw-rw---- 1 USER GROUP        81493 Nov 12 04:35 console.log
+drwxrwx--- 2 USER GROUP           41 Nov  9 16:21 d136chk
+-rw-r----- 1 USER GROUP 131069181952 Nov 12 04:35 disk.qcow2
+-r--r----- 1 USER GROUP  83939688448 Nov  3 12:53 frozen-20261103.qcow2
+-rw------- 1 USER GROUP          411 Nov  3 09:31 id
+-rw-r----- 1 USER GROUP          103 Nov  3 09:31 id.pub
+drwxrwx--- 3 USER GROUP           35 Nov  3 10:22 ollama-305786
+drwxrwx--- 2 USER GROUP           24 Nov  3 12:11 ollama-305799
+drwxrwx--- 2 USER GROUP           24 Nov  3 13:13 ollama-305832
+drwxrwx--- 3 USER GROUP           73 Nov 12 02:19 ollama-305865
+drwxrwx--- 2 USER GROUP           40 Nov  3 09:31 seed
+593M	/scratch/USER/fm-vm/base.img
+80K	/scratch/USER/fm-vm/console.log
+996M	/scratch/USER/fm-vm/d136chk
+123G	/scratch/USER/fm-vm/disk.qcow2
+66G	/scratch/USER/fm-vm/frozen-20261103.qcow2
+4.0K	/scratch/USER/fm-vm/id
+4.0K	/scratch/USER/fm-vm/id.pub
+38M	/scratch/USER/fm-vm/ollama-305786
+632K	/scratch/USER/fm-vm/ollama-305799
+156K	/scratch/USER/fm-vm/ollama-305832
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/centos-root  1.9T  219G  1.7T  12% /

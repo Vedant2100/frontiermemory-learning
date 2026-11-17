@@ -2,9 +2,9 @@
 
 We ran 15 FrontierMemory tasks under ten conditions, 45 trials each. Memory helped on one task. This report goes through the 385 trials that did not pass and asks why each one failed: did memory exist, did it reach the agent, did the agent use it, or was something else going on that no memory could have changed?
 
-**Short version.** More than a third of the failures (138 of 385) are ones where the grader caps the score or the corpus had nothing to learn from. Another 155 cannot be explained from the logs we kept. Only 3 trials show the agent using memory correctly and still failing. We found no failure that we can say a better-delivered memory would have fixed.
+**Short version.** We sorted the failures twice. The first pass used only per-trial summaries and left 155 trials undeterminable. The second pass read the raw trajectories, which we recovered from the VM disk on Nov 16, and left none undeterminable. After the second pass, 152 of the 385 failures are cases where the grader caps the score or the corpus had nothing for the task, and 135 look like the task being beyond the agent or turning on a convention the prompt does not state. Memory is involved in 90: 37 where it lacked the point or was too vague to find, 19 where a relevant point was shown but never opened, and 34 where the agent opened or applied it and still failed (12 of them applied it correctly and failed downstream, 12 followed it and were made worse). A further 8 were by design: the memory had the content and the arm showed none of it. The memory reached the agent in every arm that was meant to show it (the read-first nudge sentence is the one item we could not confirm); delivery was not what failed.
 
-The raw trial directories (agent trajectories, saved prompts, verifier logs) sit on a compute node's local disk, and that node has been down since Nov 14. Everything below comes from what we have on the login host: per-trial summaries, partial-credit scores, audit files, memory-access logs for two arms, serving incidents, the task sources and the corpus. Where a conclusion needs a trajectory we say so and count the trial as undeterminable. Section 6 lists what that costs us.
+**What this pass is and is not.** Sections 1 to 8 describe the first pass and are kept as written, with notes where the trajectories changed an answer. Section 9 gives the second pass and supersedes the first pass's counts. The trajectories show what the agent did, but they hold no saved reasoning text, so whether the agent "used" a memory is often inferred from what it did next. The evidence grade on each trial says which. The raw data stay in a private directory; they come from a gated corpus and are not in this repository.
 
 ## 1. How we sorted the failures
 
@@ -161,8 +161,8 @@ What it does not support: a claim that memory could not help. The corpus has rel
 
 ## 6. What we do not know
 
-- **155 trials are undeterminable.** Settling them needs the trajectories, the saved first prompt for each trial and the memory text for runs 1, 3 and 4. All sit on a VM disk on a compute node that has been down since Nov 14. A read-only probe job is queued for when it returns.
-- **The 59 "beyond the model" labels are a residual.** They mean no other explanation fit, not that anyone watched the model fail. Only a trajectory turns them into observations.
+- **The 155 undeterminable trials are now classified (section 9).** The first-pass text below is kept for the record. 57 of the 385 second-pass labels are still inferences, not observations; section 9 says which.
+- **The "beyond the model" labels are mostly observed now.** Of the 128 A3 labels after the second pass, 103 are observed in the trajectory, 14 rest on a paired comparison and 11 are inferred.
 - **"No source" is approximate.** The corpus coverage count matches on prompt similarity. For the three AutomationBench tasks it returns the same counts, which looks like matching on a shared preamble, so we did not use it for them and filed those trials as undeterminable.
 - **The early stops need a look.** On seat-surplus, 14 of 27 failed trials ended in under 3 minutes while its passes took 11 to 18. Teams has a median of 1.6 minutes. Those may be the agent giving up early, a tool problem or a prompt problem. We have not seen one.
 - **The APEX judge is not validated.** Three judges are named in the sources (Gemini 2.5 Flash in the task file, GPT-5.6 Sol in the CLI, Claude Opus 5.5 in our runs). Agreement was shown on correct reference answers only. On market-share and seat-surplus every failed trial scores exactly 0.0, which looks binary, so we cannot tell a wrong answer from a judge error.
@@ -173,20 +173,54 @@ The analysis surfaced several mismatches. We list them here and have fixed the o
 
 - We first wrote that seven tasks never pass. It is six. Corrected in `TAXONOMY.md` (amendment 1).
 - We first wrote that the evidence arm gave nothing to 8 of 15 tasks. That is the corpus coverage count. The arm staged files for 11 of 15 tasks, though many are other tasks' runs (amendment 3).
-- `results/pipeline-audit.md` (line 11) says a counted control trial, `HJvLDqW`, passed cattrs 77 of 77. The control summary file has no cattrs passes and that trial id appears in no summary file on this host. We have not changed that sentence; it needs a check against the original run.
-- The assignment order puts "nothing shown" (B7) before "no source" (B1), while the stated principle asks whether the information existed first. The none-shown analyst followed the rule. Under the principle, about 17 of its 30 "not shown" trials would be "no source" instead.
+- `results/pipeline-audit.md` (line 11) says a counted control trial, `HJvLDqW`, passed cattrs 77 of 77. The trial exists and scored 77 of 77, but it sits in the pilot control job (`fm-tasks-control-pilot2`), not in the counted control run. The counted control run has no cattrs pass, which matches its summary file. The sentence in the audit file is mislabelled; we have not edited it.
+- The assignment order puts "nothing shown" (B7) before "no source" (B1), while the stated principle asks whether the information existed first. The none-shown analyst followed the rule. Under the principle, about 17 of its 30 "not shown" trials would be "no source" instead. The second pass checked this: 11 of the 30 became no source (the memory holds nothing about what was missed), 8 stayed not shown, 8 became beyond the model and 3 became generation-lost.
 - DAPT's partial scores are multiples of 1/14, but the oracle check ran 37 cases. We did not reconcile the two.
 - Awilix partial credit never reaches 1 even for the passing reference, because a skipped test counts as not passed. Read 0.479 as "functional work done, preference missed."
 
-## 8. Next steps once the disk is back
+## 8. What is still open
 
-A trajectory-level pass would settle most of the 155. In order of value:
+The trajectory pass is done (section 9). These questions are still open:
 
-1. For each failed trial in the 8 arms with memory, read the saved first request and confirm what the model saw (exposure bucket checks).
-2. Read the three run memories, then check whether any skill covers a failed task's missing piece (generation and specificity buckets).
-3. For trials that opened memory and failed (15 in read-first, 13 in run 1), read the turn where the error was made and compare it with the turn of the first open (read-but-not-applied versus opened-too-late).
-4. For seat-surplus and Teams early stops, read the last ten turns.
-5. For the APEX tasks, read the judge's rationale on a sample of 0.0 scores.
+1. Whether the nudge sentence in the read-first arm reached the model. It is in each trial's config, not in the saved prompt, and Hermes appends it at request time. The jump in opens from 15 of 45 to 27 of 45 suggests it did. The saved files cannot show it.
+2. Whether the 19 trials where a relevant point sat unopened would have passed had the agent opened it. The trajectories show the point was there and unread; they do not show the outcome of reading it.
+3. B1 against B3 on the trials where the corpus has related runs. We did not read the gated corpus, so those labels rest on the coverage counts in `TASK-LEVEL.md`.
+4. The APEX judge, as in section 6.
+
+## 9. Second pass: reading the trajectories
+
+**Method.** One agent per arm read every failed trial's trajectory, saved prompts, session log and verifier output, and answered the same four questions plus a fifth ("if memory is not the cause, what is?"). The instructions are in `TRACES-BRIEF.md`. The data were copied out of the VM disk on Nov 16. The disk was booted with writes discarded, and its size and modification time were identical before and after. We checked the totals against each agent's report, and spot-checked three claims against the raw files: the four none-shown trials that opened the staged memory folder, the three run 3 Teams trials that all omitted `source` in `create_call`, and the pilot-versus-counted location of the cattrs control trial.
+
+![Failures by cause after the trace pass](figures/fig5-failure-causes-after-traces.png)
+
+**What changed.** 194 of the 385 labels changed. All 155 undeterminable trials were assigned: 67 to beyond the model, 28 to generation-lost, 17 to shown-but-never-opened, 11 to no source, 10 to applied-correctly-still-failed, 8 to read-but-not-applied, 6 to misapplied, and the rest to a handful of other buckets. Evidence is observed on 295 trials, paired on 33 and inferred on 57. None is left undeterminable.
+
+| After the second pass | Trials |
+|---|---|
+| Beyond the model, or a convention the prompt does not state (A3, A7) | 135 |
+| No source, or the arm gave nothing (B1, B2) | 120 |
+| Memory lacked the point or was too vague (B3, B4) | 37 |
+| Opened or applied, and it did not help (C2, C4, C5, C6) | 34 |
+| Grader caps the score (A1) | 32 |
+| Relevant memory shown, never opened (C1) | 19 |
+| Memory had it, arm showed none (B7) | 8 |
+
+**What the trajectories showed, arm by arm.**
+
+- **Control (39 failures).** No exception, timeout or serving fault in any trial. The 27 trials that were an unexplained remainder have named mechanisms: conventions the prompt does not state while the functional tests pass (the awilix version bump, the cattrs documentation example), conflicting sources resolved the wrong way, plain functional bugs, and DAPT counting conventions. On market-share the agent used raw ARR. Two seat-surplus attempts quit after a minute of local search and never used the file tools their sibling used.
+- **Run 1, run 3, run 4.** The skill index was in the system prompt in every trial. The playbook was opened in 23 of 45 run 4 trials (18 of its 37 failures), 11 of the 41 failed run 3 trials, and, by the access log, memory was opened in 15 of 45 run 1 trials. In run 3, six failed trials had the relevant point in a playbook they never opened. When a playbook was opened it was used (Word2Vec, DAPT attempt 3 in run 4). In run 3 the stored Teams lesson is wrong, not missing: it blames the call state, while all three attempts omitted `source`. In run 4, seven trials that the first pass called memory-missing (cookie store, awilix) failed hidden functional tests independently of the missing preference.
+- **Placebo.** The memory block and index reached the agent in every trial and the unrelated text did not change what failed. In two Word2Vec trials the agent opened the unrelated text and used it as its training data. Those trials still failed first because the prompt names no `/workspace/solution.py`, the file the verifier loads. The same missing path fails control Word2Vec trials too.
+- **Read-first.** The nudge sentence is not in the saved prompt; it is in the config of all 45 trials, and Hermes adds it at request time. Memory was opened in 27 of 45 trials, 13 of them on the first turn. All three partnership trials followed run 1's stored instruction to correct the amount to $450,000, where the verifier expects $750,000.
+- **All shown.** All 13 memory files were in the system prompt in 45 of 45 trials, about 16,000 tokens more per request than control. The agent's reasoning quotes the memory in 30 of the 38 failures. The largest prompt reached 189,000 tokens against a 262,144-token window, with no overflow errors and two compacted trials. No trial is attributed to context pressure. The failures sit where the memory was silent (the APEX tasks never read mail), two-sided (partnership) or under-specified (DAPT, Word2Vec, Teams).
+- **None shown.** The "nothing shown" arm was not fully memory-free. The staged folder is `/tmp/hermes/memories`; four of 45 trials opened it (one market-share failure, two failed Word2Vec attempts and the Word2Vec pass). The Word2Vec prompt says "prior implementations", which led the agent there. The two failures followed the memory's path and signature and then raised an error on all-stop-word input, where the memory only says to guard the edge case.
+- **Evidence.** In Teams the two failing trials never opened the staged records; a passing record held the missing `source` field, and the passing sibling found it. In partnership and DAPT the agent copied wrong answers from records that had themselves failed. The pointer to the records is in the config, not the saved prompt, so exposure was judged from what the agent did.
+- **Blend.** The rewritten text reached every agent and, where it carried a specific point, was often misused. On the ChatGPT proposal task an added "SOP governs" line led two agents to discard a note that superseded it. On Word2Vec an either-or guard sentence led all three agents to raise an error where the hidden test needs a model returned. On Teams the caller-identity note reached all three agents and none set `source`. Most of the added APEX text was harness boilerplate. The rewriter's input file is not in the copy, so we could only match the added sentences against run 1's memory.
+
+**What this says.** Memory was delivered and the agent saw it. Where it failed to help, the usual reason was that the memory lacked the failed point, was ambiguous or was wrong, or the point sat in a file the agent did not open. The first-pass answer to "was memory delivered" was mostly inference; it is now observed for the arms that show memory. The opened-against-not-opened result in section 3 is unchanged.
+
+**Limits.** The agents did not read the gated corpus, so B1 against B3 rests on the coverage counts. No reasoning text is saved, so "applied" and "misapplied" are inferred from behaviour; of the 12 misapplied trials, 4 are observed, 5 paired and 3 inferred. The Teams call failure is inferred, because the verifier gives no reason text. One of the agents ran another agent's script by accident in a shared scratch folder; we checked that file's counts and they match its agent's report.
+
+Files for this section: `TRACES-BRIEF.md`, `traces/traces-<arm>.md` and `.jsonl` (one pair per arm), `traces/traces-all.json` and `traces_figure.py`.
 
 ## Files
 
@@ -195,3 +229,4 @@ A trajectory-level pass would settle most of the 155. In order of value:
 - `arm-<name>.md` and `arm-<name>.jsonl`: one analysis and one per-trial table for each arm (runs 3 and 4 have one each).
 - `all-failures.json`: the 385 rows merged.
 - `figures.py` and `figures/`: the plots in this report.
+- `TRACES-BRIEF.md`, `traces/` and `traces_figure.py`: the second pass (section 9).
