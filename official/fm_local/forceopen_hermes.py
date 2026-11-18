@@ -53,7 +53,8 @@ def task_of(trial_logs_dir: Path) -> str:
 
 def select_files(plan: str, task: str, memory_dir: Path) -> list[Path]:
     rules = PLANS[plan]
-    key = next((k for k in rules if task.startswith(k)), None)
+    hits = [k for k in rules if task.startswith(k) or (len(task) >= 24 and k.startswith(task))]
+    key = hits[0] if len(hits) == 1 else None
     if key is None:
         raise ValueError(f"task {task!r} is not in plan {plan!r}")
     every = sorted((p for p in memory_dir.rglob("*") if p.is_file()), key=lambda p: p.relative_to(memory_dir).as_posix())

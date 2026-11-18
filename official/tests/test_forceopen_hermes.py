@@ -95,3 +95,10 @@ def test_agent_wiring(memory, tmp_path):
         fo.ForceOpenHermes(logs_dir=tmp_path / "build-word2vec-pipeline__a/agent", model_name="openai/qwen3.8:27b-mtp-q4_K_M", memory_dir=str(memory), plan="run1")
     with pytest.raises(Exception):
         fo.ForceOpenHermes(logs_dir=logs, model_name="openai/qwen3.8:27b-mtp-q4_K_M", plan="run1")
+
+
+def test_truncated_trial_directory_names_still_match(memory):
+    assert len(fo.select_files("run4", "automationbench-marketing-conten", memory)) == 7
+    assert [p.name for p in fo.select_files("run1", "dapt-intrusion-detection-workflo", memory)] == ["SKILL.md", "family-pcap.md"]
+    with pytest.raises(ValueError):
+        fo.select_files("run4", "enterpriseops-teams-2725d17f", memory)
