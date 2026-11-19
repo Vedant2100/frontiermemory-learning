@@ -183,7 +183,7 @@ The analysis surfaced several mismatches. We list them here and have fixed the o
 The trajectory pass is done (section 9). These questions are still open:
 
 1. Whether the nudge sentence in the read-first arm reached the model. It is in each trial's config, not in the saved prompt, and Hermes appends it at request time. The jump in opens from 15 of 45 to 27 of 45 suggests it did. The saved files cannot show it.
-2. Whether the 19 trials where a relevant point sat unopened would have passed had the agent opened it. The trajectories show the point was there and unread; they do not show the outcome of reading it.
+2. Whether the 19 trials where a relevant point sat unopened would have passed had the agent opened it. Section 10 reports a follow-up run for 17 of them. It found no reliable gain, with only 3 attempts per task and memory.
 3. B1 against B3 on the trials where the corpus has related runs. We did not read the gated corpus, so those labels rest on the coverage counts in `TASK-LEVEL.md`.
 4. The APEX judge, as in section 6.
 
@@ -221,6 +221,31 @@ The trajectory pass is done (section 9). These questions are still open:
 **Limits.** The agents did not read the gated corpus, so B1 against B3 rests on the coverage counts. No reasoning text is saved, so "applied" and "misapplied" are inferred from behaviour; of the 12 misapplied trials, 4 are observed, 5 paired and 3 inferred. The Teams call failure is inferred, because the verifier gives no reason text. One of the agents ran another agent's script by accident in a shared scratch folder; we checked that file's counts and they match its agent's report.
 
 Files for this section: `TRACES-BRIEF.md`, `traces/traces-<arm>.md` and `.jsonl` (one pair per arm), `traces/traces-all.json` and `traces_figure.py`.
+
+## 10. Follow-up: forcing the unread note into the prompt
+
+Section 9 left one question open: in the trials where a relevant note was shown by index and never opened, would reading it have changed the result? We reran those tasks with the relevant note files placed in the system prompt, so the agent could not skip them. This is an exploratory run, reported separately from the counted results.
+
+**Setup.** Same model, harness, effort and grader as the main study; 3 attempts per task. For run 1 the injected files were the skill file plus the matching reference (seat surplus: the paths and analysis-tool references; DAPT: the pcap reference; Teams: the office-tool reference). Run 4's memory is small, so all of its files were injected for seat surplus, DAPT and the marketing task. Each trial's `forceopen-report.json` records the files injected (3 to 7 files, about 4,000 tokens or more) and the memory hash. The study disk was only read; the VM ran on a copy-on-write overlay.
+
+**Results.** Passes out of 3 attempts, next to the same task in the original arms:
+
+| Task | Memory | Forced open | Original arm | Control | All shown |
+| --- | --- | --- | --- | --- | --- |
+| Seat surplus | Run 1 | 1/3 | 0/3 | 0/3 | 1/3 |
+| DAPT | Run 1 | 0/3 | 0/3 | 0/3 | 0/3 |
+| Teams (2725d17f) | Run 1 | 0/3 | 0/3 | 0/3 | 1/3 |
+| Seat surplus | Run 4 | 1/3 | 1/3 | 0/3 | 1/3 |
+| DAPT | Run 4 | 0/3 | 0/3 | 0/3 | 0/3 |
+| Marketing content gap | Run 4 | 2/3 | 1/3 | 2/3 | 1/3 |
+
+Run 1 forced open passed 1 of 9 trials against 0 of 9 in its original arm; run 4 passed 4 of 9 against 2 of 9. Every difference is one trial in one task, which is inside the spread between identical arms (the marketing task alone ranges from 0 of 3 to 3 of 3 across arms with unrelated memory). Putting the note in front of the agent did not rescue DAPT in either memory (0 of 6 here, and it has never passed in any of the 12 arms), and it did not rescue Teams. The one clear improvement over control, run 1 on seat surplus, is a single pass and matches what the all-shown arm and run 4 already produced.
+
+**Reading.** Not opening the note was not what kept these trials from passing. Where the note was forced in, the same tasks failed at about the same rate, which fits the earlier finding that the notes either lacked the failed point or the task failed for reasons memory does not reach (DAPT's grader cap, conventions the prompt does not state). The evidence for notes that help is the same weak signal as before: a handful of single-trial gains.
+
+**Limits.** Three attempts per task and memory cannot detect a gain smaller than a full task's worth of passes. The all-shown arm had already injected every run 1 file, so for run 1 this run adds only the narrower injection, and for run 4 it is the first forced exposure. The two evidence-arm Teams trials (unread records, not notes) were not rerun. Run 4's first launch stopped after one trial because the harness could not match a trial folder name that Harbor shortens to 32 characters; the fix is in `915059d`, and the job was resumed so the first seat-surplus trial was kept.
+
+Files for this section: `official/fm_local/forceopen_hermes.py`, `official/vm/run-forceopen.sh`, and the summaries and audits `results/official/summary-fm-tasks-forceopen-run1.jsonl`, `...run4.jsonl` with matching `audit-` files.
 
 ## Files
 

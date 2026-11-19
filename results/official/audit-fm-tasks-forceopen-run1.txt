@@ -1,0 +1,7 @@
+job config: n_concurrent 1 | timeout_multiplier None agent_timeout_multiplier None | attempts 3
+agent: fm_local.forceopen_hermes:ForceOpenHermes | model openai/qwen3.8:27b-mtp-q4_K_M | kwargs {'plan': 'run1', 'reasoning_effort': 'max'} | memory_dir /home/fm/official/frontiermemory/jobs/fm-gen-run1/memory-task-v1.1__DHmpJBb/artifacts/memory
+environment: None | extra_allowed_hosts None
+verifier env keys: ['ANTHROPIC_API_KEY', 'GRADING_MODEL'] | GRADING_MODEL anthropic/claude-opus-5-5 | ANTHROPIC_API_KEY is template True
+{'effort=max': 9, 'exception=None': 9, 'judge=completed': 3, 'memory_enabled=true': 9, 'model=qwen3.8:27b-mtp-q4_K_M': 9, 'trials': 9}
+attempts per task: {'apex-brightpath-seat-surplus': 3, 'dapt-intrusion-detection-workflow-learning': 3, 'enterpriseops-teams-2725d17f': 3}
+ISSUES: none
