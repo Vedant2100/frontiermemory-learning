@@ -9,7 +9,8 @@ This is the third version of the analysis. It replaces the v2 report (commit 9c4
 - **Writer, notes:** the model read the corpus in a separate session and wrote notes: a skill file plus reference files. Three sessions produced three generations (runs 1, 3 and 4). The notes are listed to the agent as a *skill index* in the system prompt.
 - **Check:** one verifier test or rubric criterion.
 - **Requirement:** a group of checks that fail together for one reason. There are 73, 72 of them scored.
-- **Trial-requirement:** one requirement in one trial. The 385 failed trials contain 742 failed trial-requirements.
+- **Trial-requirement:** one requirement in one trial. The 385 failed trials contain 742 failed trial-requirements. They come from only 57 distinct requirements, and 8 requirements that fail in nearly every trial give 233 of them, so a count of trial-requirements mostly measures how often a few requirements failed. This report states each stage per arm, or per distinct requirement where the stage belongs to the notes rather than the arm; pooled trial-requirement counts appear only as secondary context.
+- **Arm:** one of ten conditions, each a different treatment: control; placebo notes; raw records (the evidence arm); blend; the three generations of notes (run 1, run 3, run 4), listed in the skill index; and run 1's notes under three other exposures (read-first, a prompt nudge; all shown, pasted into the prompt; none shown, on disk but not listed). Each arm ran 45 trials.
 - **Auditors, blind labeller, tracers:** LLM agents (Claude) given written briefs. Section 3 says how their work was checked.
 - **Task families:**
   - APEX: business analysis over a company's files and mail, graded by an LLM judge (market share, seat surplus, Eurogrid).
@@ -31,27 +32,37 @@ We ran one local model (Qwen 27B in Hermes) on 15 FrontierMemory tasks, 3 attemp
 6. Did it execute badly with the information in hand?
 7. Did the verifier fail it unfairly?
 
-The earlier analysis answered this with one label per failed trial, assigned in a fixed order, and the order decided much of the answer (section 1). This version traces each of the 742 failed trial-requirements through every stage it passed. Arm contrasts test the stages the design can test. Whether the task itself gave the information comes from outcome-blind labels (section 3).
+The earlier analysis answered this with one label per failed trial, assigned in a fixed order, and the order decided much of the answer (section 1). This version traces each failed requirement through every stage it passed. Arm contrasts test the stages the design can test. Whether the task itself gave the information comes from outcome-blind labels (section 3).
 
-| Stage | Failed trial-requirements | How we know |
+Each stage is counted in the unit that fits it. The experience and the writer stages belong to a requirement and a set of notes, so they are counted per distinct requirement and per generation of notes. Exposure, use and execution belong to a trial in an arm, so they are given per arm, over all 45 trials of the arm. No passing trial fails any requirement, so counts among failed trials equal counts over all trials.
+
+| Stage | Result | How we know |
 |---|---|---|
-| 1. Experience missing | 33 of 742 have nothing in the corpus; only 1 of them is a requirement the task does not give | Corpus searched for each requirement, with a search log that can be rerun |
-| 2. Writer lost it (notes arms, information not in the task) | 145 of 164: 110 never reached the writer, 35 reached it and were dropped or cut down | Traced in each writer's session: what it ran, what it saw, what it wrote |
-| 3. Not shown | 9, all in the arm built to show nothing | Delivery confirmed in every other trial, except that the read-first sentence is in the config only. Arm contrast: covered requirements met 0.50 on disk unmentioned vs 0.83 indexed |
-| 4. Listed, not opened | 9 | Arm contrast: 0.83 indexed vs 1.00 with a read-first nudge or pasted in. This includes the harness's index design: generic descriptions, and a prompt that says to load a skill only for knowledge the agent lacks |
-| 5. Opened, still failed | 0 where the note fully covered the requirement (60 of 60 met, all on Word2Vec and DAPT); 30 where the note only partly covered it or was flagged misleading | Observational: the agent chooses what to open |
-| 6. Information was in the task, agent missed it | 455 (in 285 trials; the only failure in 224). For 268 the information had to be found by searching mail or files, or by choosing between conflicting sources | Descriptive |
+| 1. Experience missing | 5 of the 57 requirements that ever failed have nothing in the corpus. Only 1 of the 5 is a requirement the task does not give | Corpus searched for each requirement, with a search log that can be rerun |
+| 2. Writer lost it | Of the 19 failed requirements the task does not give, the notes lack 12 in run 1 (7 never reached the writer, 5 reached it and were dropped or cut down), 17 in run 3 (14 and 3) and 12 in run 4 (7 and 5). They hold 6, 1 and 6 | Traced in each writer's session: what it ran, what it saw, what it wrote |
+| 3. Not shown | Only in none shown, the arm built for it: 9 trial-requirements in 3 trials | Delivery confirmed in every other trial, except that the read-first sentence is in the config only. Arm contrast: covered requirements met 0.50 on disk unmentioned vs 0.83 indexed |
+| 4. Listed, not opened | Run 1 arm 3 trial-requirements, run 4 arm 6; no other arm | Arm contrast: 0.83 indexed vs 1.00 with a read-first nudge or pasted in. This includes the harness's index design: generic descriptions, and a prompt that says to load a skill only for knowledge the agent lacks |
+| 5. Opened, still failed | Fully covering note: 0 failures in 60 opens or pastes (25 trials, 8 requirements, Word2Vec and DAPT only). Partly covering or misleading note: failed 30 times in 89 opens or pastes; per arm all shown 12 of 36, read-first 8 of 25, run 1 6 of 14, the rest 4 of 14 | Observational: the agent chooses what to open, except in all shown |
+| 6. Information was in the task, agent missed it | 38 of the 57 failed requirements are ones the task gives. Per arm, the miss rate on them is 0.23 (raw records) to 0.34 (blend), control 0.27; every arm's interval overlaps control's | Descriptive. Outcome-blind labels decide what "in the task" means |
 | 7. Verifier defect decided the outcome | 0 | The one rubric defect (Eurogrid) decided no agent trial |
 
-The other 123 failed trial-requirements are in arms without generated notes (control, placebo, raw records, blend), where the information was not in the task. Section 4.2 splits the table by arm. Every arm failed 36 to 42 of its 45 trials, and every arm missed in-task information about equally often (37 to 54 trial-requirements). The arms differ in the remainder: run 3's notes lost the most at the writer, only none shown had notes withheld, and opened partial or misleading notes failed mostly in all shown and read-first.
+**The arm comparison.** On requirements the task does not give, setting Word2Vec aside because control and placebo do not measure it, the share missed per arm is:
+
+| Control | Placebo | Raw records | Blend | Run 1 | Run 3 | Run 4 | None shown | Read-first | All shown |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.63 | 0.71 | 0.52 | 0.52 | 0.60 | 0.60 | 0.56 | 0.63 | 0.42 | 0.44 |
+
+Each is out of 48 requirement-trials. The differences are almost all DAPT, which control misses 16 times and read-first, all shown, raw records and blend 5 to 8 times. The never-met awilix and customer-delivery conventions are missed in every arm. Read with section 4.5: the arms that put run 1's notes in front of the agent miss less of what the task does not give, and that rests on one task.
+
+Section 4.2 gives the full split by arm, and the pooled trial-requirement counts for reference.
 
 The story the stages tell:
 
-- **The experience was mostly there.** The corpus holds the information fully for 463 of the 742 failed trial-requirements and partly for 246. For 251 the evidence is a same-task passing run or verifier feedback. That includes conventions behind requirements no trial ever met. Earlier maintainers had said "this one's internal release tier is 6" and later "bump the minor version", which is consistent with the rule the awilix test enforces. They had asked for "one runnable failure or cancellation example", which customer delivery's hidden preference wants. The tracers who judged this knew the requirement they were looking for (section 7).
-- **The largest upstream loss was at the writer.** The writers extracted mostly first messages, so maintainer follow-ups never reached them. Their parsers mishandled two of the corpus's three log formats: one format put an environment turn first, so even the request turn holding the release tier was never printed. They also sampled a few examples per group and cut excerpts at 150 to 500 characters. Across the three generations, 51 to 78% of the failed trial-requirements had information that never reached the writer, and only 2 to 9% had it in the notes.
-- **What reached the notes helped.** On requirements the notes cover, memory arms meet the requirement 39 points more often than control (p = 0.002, permuting within task). That rests on three tasks, and resampling tasks gives −0.22 to +1.00. With run 1's notes fixed, the rate climbs with exposure from 0.33 to 1.00 (trend p < 0.001). The graded part of that climb comes from DAPT alone. No agent that opened a note fully covering a requirement failed it. Partial or misleading notes that were opened did not protect the agent: 30 such failures.
+- **The experience was mostly there.** Of the 57 requirements that ever failed, the corpus holds the information fully for 32 and partly for 20. For 23 the evidence is a same-task passing run or verifier feedback. That includes conventions behind requirements no trial ever met. Earlier maintainers had said "this one's internal release tier is 6" and later "bump the minor version", which is consistent with the rule the awilix test enforces. They had asked for "one runnable failure or cancellation example", which customer delivery's hidden preference wants. The tracers who judged this knew the requirement they were looking for (section 7).
+- **The largest upstream loss was at the writer.** The writers extracted mostly first messages, so maintainer follow-ups never reached them. Their parsers mishandled two of the corpus's three log formats: one format put an environment turn first, so even the request turn holding the release tier was never printed. They also sampled a few examples per group and cut excerpts at 150 to 500 characters. Of the 19 failed requirements the task does not give, 7 never reached run 1's writer, 14 run 3's and 7 run 4's; run 1's and run 4's notes hold 6 each, run 3's 1.
+- **What reached the notes helped.** On requirements the notes cover, memory arms meet the requirement 39 points more often than control (p = 0.002, permuting within task). That average runs over arms with different exposure: +0.67 in read-first and all shown, +0.47 in run 1, +0.33 in run 4, +0.08 in run 3 and +0.07 in none shown. The three indexed arms alone give +0.31 (p = 0.006). It rests on three tasks, and resampling tasks gives −0.22 to +1.00. With run 1's notes fixed, the rate climbs with exposure from 0.33 to 1.00 (trend p < 0.001). The graded part of that climb comes from DAPT alone. No agent that opened a note fully covering a requirement failed it (60 opens or pastes, 8 requirements on two tasks). Partial or misleading notes that were opened failed in about a third of exposures in every arm that had many: all shown 12 of 36, read-first 8 of 25, run 1 6 of 14.
 - **Strict passes hid this.** A task passes only if every requirement does, and notes that covered one requirement of three changed nothing on the scoreboard. Word2Vec, the one task where the notes covered nearly everything, is the one clear strict-pass gain.
-- **The largest single group is in the agent's own hands.** 224 failed trials missed only requirements their own task made available, and most of those needed a search: a mail thread not opened, an older message trusted over a newer one. That also bounds what memory could do here. Of the 227 failed trials in notes arms, only 57 missed nothing the task itself gave, so even perfect notes could have flipped at most 57. Those are the never-met conventions on awilix, customer delivery and DAPT, plus Word2Vec and one cookie-store trial.
+- **The largest single group is in the agent's own hands.** In every arm, 20 to 27 of the 45 trials failed only on requirements their own task made available, and most of those needed a search: a mail thread not opened, an older message trusted over a newer one. Memory did not change the in-task miss rate in any arm beyond trial noise. That also bounds what notes of the current kind, which record facts, could do. If every arm had been given all the information its task lacks, and nothing else changed, the most it could pass is 13 to 19 of 45: control 17, run 1 16, run 4 16, read-first 18, all shown 18. Control has the same headroom as the notes arms, so the bound is about the tasks, not about the notes. Notes that point the agent to the right file could in principle also fix in-task misses (section 4.7); the bound does not cover them.
 
 What this does not show: that adding the lost conventions to the notes would have flipped those trials. The writer stages say where the information stopped. The causal evidence that putting information in front of the agent helps comes from the three tasks where the notes did cover a requirement. The direct test is a follow-up arm (section 6).
 
@@ -192,9 +203,84 @@ Two arm totals are mostly not memory:
 
 ### 4.2 Where the failures broke
 
+The ten arms are different treatments, so this section gives each stage per arm first. The experience and writer stages belong to a requirement and a set of notes, so they come next, per distinct requirement and per generation. The pooled trial-requirement counts come last, for reference. All counts use the blind prompt labels (`causal/out/stages.json` and `causal/out/aggregation.json`). No passing trial fails any requirement, so a count among an arm's failed trials is also its count over all 45 trials.
+
+**By arm.**
+
+![Where each arm's failed requirements broke](figures/v2/fig8-stages-by-arm.png)
+
+| Arm | Failed trials (of 45) | In-task requirements missed | Requirements the task does not give, missed (Word2Vec aside) | Where those stopped (trial-requirements, Word2Vec included) | Partial or misleading note opened or pasted: failed / exposures |
+|---|---|---|---|---|---|
+| Control | 39 | 43 of 159 (0.27) | 30 of 48 (0.63) | 33, no notes | – |
+| Placebo | 41 | 49 of 159 (0.31) | 34 of 48 (0.71) | 37, no notes | – |
+| Raw records | 36 | 37 of 159 (0.23) | 25 of 48 (0.52) | 25, records only | – |
+| Blend | 42 | 54 of 159 (0.34) | 25 of 48 (0.52) | 28, blend notes (not traced) | – |
+| Run 1 notes | 38 | 46 of 159 (0.29) | 29 of 48 (0.60) | never reached writer 17, writer kept part or none 10, not opened 3 | 6 / 14 |
+| Run 3 notes | 41 | 50 of 157 (0.32) | 29 of 48 (0.60) | never reached writer 28, kept part 3 | 1 / 3 |
+| Run 4 notes | 37 | 46 of 157 (0.29) | 27 of 48 (0.56) | never reached writer 17, kept part 6, not opened 6 | 1 / 8 |
+| Read-first (run 1) | 37 | 43 of 157 (0.27) | 20 of 48 (0.42) | never reached writer 16, kept part or none 4 | 8 / 25 |
+| All shown (run 1) | 38 | 41 of 159 (0.26) | 21 of 48 (0.44) | no earlier run 1, never reached writer 17, kept part 4 | 12 / 36 |
+| None shown (run 1) | 36 | 46 of 157 (0.29) | 30 of 48 (0.63) | never reached writer 15, kept part 8, not shown 9 | 2 / 3 |
+
+The in-task column counts requirement-trials the task gives; the denominators differ by two where a check did not run. Control and placebo do not measure Word2Vec, so the third column sets it aside for every arm.
+
+What the split shows:
+
+- **In-task misses do not differ from control in any arm.** Resampling each arm's three trials within each task, every arm's 95% interval overlaps control's (34 to 52 misses). Raw records (31 to 44) and blend (47 to 60) do not overlap each other; the AutomationBench tasks make that gap (15 misses against 29). Every arm has 20 to 27 trials whose every miss was in the task. That column cannot show a memory effect: better notes would move trials into it, not out.
+- **On what the task does not give, the arms do differ, and the difference is DAPT.** Control misses DAPT's such requirements 16 times; read-first 5, all shown 6, blend 7, raw records 8. Awilix's and customer delivery's conventions are missed in every arm (awilix 6 of 6, customer delivery 5 to 7). This is the exposure ladder of section 4.5 seen from the failure side.
+- **Arms without notes.** Control and placebo missed 70 requirement-trials the task does not give. Against run 1's notes, 19 of the 70 would have been covered; against run 4's, 25; against run 3's, 6. Counting any generation, 25 are covered and 45 are in no set of notes.
+- **The writer stage differs by generation, not by exposure.** Run 3's arm has the most failures whose information never reached the writer (28 trial-requirements); the four run 1 arms sit at 15 to 17. Per distinct requirement, below.
+- **Exposure.** Not opened appears only in the run 1 (3) and run 4 (6) arms, and not shown only in none shown (9).
+- **Partial or misleading notes that were read.** All shown, read-first and run 1 fail about a third of these exposures each (0.33, 0.32, 0.43). The arms that put notes in front of the agent have more such failures because they have more exposures, not because the agent fails more often per exposure. These are the partnership and DAPT cases below.
+
+Each arm has 45 trials, so a difference of a few failures between arms is within noise. The comparisons that carry causal weight are the content test and the exposure ladder in section 4.5.
+
+**By generation, per distinct requirement.** The writer stages are a property of a requirement and one set of notes. Counted over the 19 failed requirements the task does not give, and over all 72 scored requirements:
+
+![Where the information stopped, by writer](figures/v2/fig6-where-information-stopped.png)
+
+| Writer | Not in the task (19): no earlier run | Never reached writer | Writer saw it; notes lack it or hold part | In the notes | All 72 scored: never reached writer | In the notes |
+|---|---|---|---|---|---|---|
+| Run 1 | 1 | 7 | 5 | 6 | 43 | 6 |
+| Run 3 | 1 | 14 | 3 | 1 | 50 | 4 |
+| Run 4 | 1 | 7 | 5 | 6 | 36 | 7 |
+
+Runs 1 and 4 kept about a third of what the task does not give; run 3 kept one requirement. Of all 72 scored requirements, two in three never reached run 3's writer and half never reached run 4's. Run 1's notes also mislead on two partnership requirements (the $750,000 in the subject and in the description), both of which the task gives, so they are not in this count.
+
+In trial-requirements of each generation's own arms, the writer lost 91 in the four run 1 arms (12 in the notes, 1 with no earlier run), 31 in run 3 (0 in the notes) and 23 in run 4 (6 in the notes). The pooled "145 of 164" below is their sum, with run 1's content counted in four arms.
+
+**Notes that were opened but only partly covered the requirement, or misled.** In 30 failed trial-requirements the agent opened, or had pasted in, a note the blind labeller rated as partly covering the requirement or as misleading:
+
+- 11 are partnership, where run 1's "approval of record" rule is flagged misleading;
+- 8 are DAPT, mostly the port-scan verdict. Run 1's and run 4's notes carry the earlier feedback "do not infer port scanning from … an aggregate count of many destination ports alone". Every read-first and all-shown trial had that sentence in front of it and still answered that the traffic held a port scan;
+- the rest are Word2Vec 4, seat surplus 4, Teams 2 and marketing 1.
+
+Within each task, partly covered requirements were met more often when the note was read:
+
+| Task | Opened | Pasted in | Not opened |
+|---|---|---|---|
+| DAPT | 19 of 24 | 12 of 15 | 12 of 33 |
+| Partnership | 4 of 12 | 3 of 6 | 0 of 6 |
+| Seat surplus | 1 of 3 | 1 of 3 | 0 of 11 |
+| Word2Vec | 11 of 14 | 2 of 3 | none; 2 of 4 that opened another file |
+| Teams | – | 4 of 6 | 9 of 24 |
+| Marketing | – | 2 of 3 | 14 of 19 |
+
+Pooled over tasks this read 35 of 53 opened against 40 of 100 not opened, which understated the gap: in the tasks where any trial opened the note, not opened is 12 of 50. Reading a partial note helps and does not guarantee anything. This is observational, since the agent chooses what to open. These 30 sit in the pooled table under "in the task" or "notes hold part", because the stages describe where the information stopped. They are also the clearest cases of an agent not acting on what it read.
+
+**How much more information could have changed.** If every trial had been given all the information its task lacks, and nothing else changed, an arm could pass at most its passes plus its failed trials that missed nothing the task gave:
+
+| Control | Placebo | Raw records | Blend | Run 1 | Run 3 | Run 4 | Read-first | All shown | None shown |
+|---|---|---|---|---|---|---|---|---|---|
+| 6 + 11 = 17 | 4 + 9 = 13 | 9 + 10 = 19 | 3 + 13 = 16 | 7 + 9 = 16 | 4 + 9 = 13 | 8 + 8 = 16 | 8 + 10 = 18 | 7 + 11 = 18 | 9 + 10 = 19 |
+
+Control has the same headroom as the notes arms, so the ceiling describes the tasks, not the notes. In the six notes arms together, the 57 trials that could flip are awilix explicit 11 and implicit 12, customer delivery 14, DAPT 12, Word2Vec 7 and cookie store 1; each still needed the convention or verdict no notes held. The ceiling assumes notes cannot fix in-task misses. Notes that point to the right file might (section 4.7).
+
+**Pooled across arms, for reference.**
+
 ![Following each failed requirement from earlier runs to the answer](figures/v2/fig7-stage-funnel.png)
 
-The 742 failed trial-requirements, followed from earlier runs to the answer, with "in the task" from the blind prompt labels (`causal/out/stages.json`, mode `blind`):
+These counts add up trial-requirements over all ten arms, so they mix treatments, count run 1's content in four arms, and weight each requirement by how often it failed. They are kept because earlier versions quoted them and because the label-sensitivity check below uses them.
 
 | Where the information stopped | Trial-requirements | Failed trials with at least one | Failed trials with only this |
 |---|---|---|---|
@@ -219,29 +305,9 @@ The 742 failed trial-requirements, followed from earlier runs to the answer, wit
 - **Writer stages first:** 1 trial goes to "no earlier run", 79 to "never reached the writer", 13 to "kept part", 249 to "in the task, missed" and 43 to the arms without generated notes.
 - **"In the task" first:** that class takes 285, "never reached the writer" 49 and "kept part" 8, with the same 43 for the arms without notes.
 
-Either way the two large groups are the same: information the task gave and the agent missed, and information the writer never saw.
+**Sensitivity to the "in the task" labels.** Pooled counts, as above; the last column sums the six notes arms.
 
-**Notes that were opened but only partly covered the requirement, or misled.** The row "opened or pasted in, still failed" counts only notes that fully cover a requirement. In 30 more failed trial-requirements, the agent opened, or had pasted in, a note the blind labeller rated as partly covering the requirement or as misleading:
-
-- 11 are partnership, where run 1's "approval of record" rule is flagged misleading;
-- 8 are DAPT, mostly the port-scan verdict. Run 1's and run 4's notes carry the earlier feedback "do not infer port scanning from … an aggregate count of many destination ports alone". Every read-first and all-shown trial had that sentence in front of it and still answered that the traffic held a port scan;
-- the rest are Word2Vec 4, seat surplus 4, Teams 2 and marketing 1.
-
-Across all trials, requirements the notes cover partly were met 35 of 53 times when the relevant file was opened, 24 of 36 when pasted in, and 40 of 100 when nothing was opened. Reading a partial note helps on average and does not guarantee anything. These 30 sit in the table under "in the task" or "notes hold part", because the stages describe where the information stopped. They are also the clearest cases of an agent not acting on what it read.
-
-**How much better notes could have changed.** Of the 227 failed trials in notes arms, 170 also missed a requirement the task itself gave. Even perfect notes could have flipped at most the other 57:
-
-- awilix explicit 11 and implicit 12;
-- customer delivery 14;
-- DAPT 12;
-- Word2Vec 7;
-- cookie store 1.
-
-Each of those still needed the convention or verdict that no notes held.
-
-**Sensitivity to the "in the task" labels.**
-
-| Labels deciding "in the task" | In the task, missed | Never reached the writer | Writer saw, kept part, dropped or misled | Notes arms: trials better notes could flip |
+| Labels deciding "in the task" | In the task, missed | Never reached the writer | Writer saw, kept part, dropped or misled | Notes-arm failed trials with no in-task miss |
 |---|---|---|---|---|
 | Blind (primary) | 455 | 110 | 35 | 57 of 227 |
 | Blind, strict: low-confidence labels, Teams `source` and partnership's single envelope count as not in the task | 357 | 138 | 60 | 84 of 227 |
@@ -250,64 +316,26 @@ Each of those still needed the convention or verdict that no notes held.
 
 The strict row drops the four blind labels rated low confidence (CSM's entitlement, partnership's description field, the ChatGPT proposal's override, cookie store's docs mention; 62 failures between them). It also drops two the reviewer judged too generous. Teams' `source` is labelled stated in the prompt, but the prompt never names the field the checker reads. Partnership's single envelope rests on "the contract" being singular. The explicit-only row is the extreme reading. It treats a method in a mail thread, or the newer of two conflicting emails, as information the task does not give. Under it, the writer stage dominates. The blind and auditor labels agree that most of this information was reachable in the task. The cost was search: 268 of the 455 needed a search or a choice between sources.
 
-**Counting distinct requirements.** One generation's miss repeats across every trial and arm that carries it, and run 1's content is in four arms. Counted as distinct requirements in notes arms, the never-reached-the-writer stage covers 7 requirements for run 1, 12 for run 3 and 7 for run 4. The in-task stage covers 32, 23 and 24. Three conventions (the awilix bump in both variants and customer delivery's runnable example) account for 54 of the 110 never-reached trial-requirements.
-
-![Where the information stopped, by writer](figures/v2/fig6-where-information-stopped.png)
-
-The same 742 failures can be read against each generation's notes, whatever arm the trial was in. This asks how far the information got toward each set of notes:
-
-| Writer | No earlier run holds it | Never reached writer | Notes carry a misleading rule | Writer saw, notes lack it | Writer saw, notes hold part | In the notes |
-|---|---|---|---|---|---|---|
-| Run 1 | 33 | 444 | 45 | 39 | 134 | 47 |
-| Run 3 | 33 | 581 | 0 | 0 | 111 | 17 |
-| Run 4 | 33 | 379 | 0 | 112 | 150 | 68 |
-
-The misleading-rule column uses the blind labeller's flag: run 1's partnership rule.
-
-**Arm by arm.** The tables above pool the ten arms. Split by arm (blind labels, `per_arm` in `stages.json`):
-
-![Where each arm's failed requirements broke](figures/v2/fig8-stages-by-arm.png)
-
-| Arm | Failed trials (of 45) | Failed trial-reqs | In the task, missed | Not in the task: where it stopped | Failed trials, every miss in the task | Failed trials, no miss in the task | Opened or pasted a partial or misleading note, still failed |
-|---|---|---|---|---|---|---|---|
-| Control | 39 | 76 | 43 | 33, no notes | 22 | 11 | – |
-| Placebo | 41 | 86 | 49 | 37, no notes | 23 | 9 | – |
-| Raw records | 36 | 62 | 37 | 25, records only | 21 | 10 | – |
-| Blend | 42 | 82 | 54 | 28, blend notes (not traced) | 24 | 13 | – |
-| Run 1 notes | 38 | 76 | 46 | never reached writer 17, writer kept part or none 10, not opened 3 | 22 | 9 | 6 |
-| Run 3 notes | 41 | 81 | 50 | never reached writer 28, kept part 3 | 27 | 9 | 1 |
-| Run 4 notes | 37 | 75 | 46 | never reached writer 17, kept part 6, not opened 6 | 20 | 8 | 1 |
-| Read-first (run 1) | 37 | 63 | 43 | never reached writer 16, kept part or none 4 | 23 | 10 | 8 |
-| All shown (run 1) | 38 | 63 | 41 | no earlier run 1, never reached writer 17, kept part 4 | 21 | 11 | 12 |
-| None shown (run 1) | 36 | 78 | 46 | never reached writer 15, kept part 8, not shown 9 | 21 | 10 | 2 |
-
-What the split shows:
-
-- **The in-task misses are about the same in every arm**: 37 to 54 trial-requirements, and 20 to 27 failed trials whose every miss was in the task. Memory did not reduce them. This is expected, since no arm changes the task, and it means the pooled 455 is not one arm's doing.
-- **Arms without notes:** 70 control and placebo failures needed information the task did not give. Had those trials carried run 1's notes, 19 of the 70 would have been in the notes, 35 never reached run 1's writer, and 16 were kept only in part or dropped. For raw records the same split is 3 in run 1's notes, 17 never reached the writer, 5 kept part or dropped. Even in the control arm, most of what was missing was not in any set of notes.
-- **The writer stage differs by generation, not by arm.** Run 3's notes have the most failures that never reached the writer (28). The four run 1 arms sit at 15 to 17.
-- **Exposure:** not opened appears only in run 1 (3) and run 4 (6) notes arms, and not shown only in none shown (9).
-- **Acting on what was read:** failures after opening or being handed a partial or misleading note concentrate in all shown (12) and read-first (8), the two arms that put the notes in front of the agent. That is where the partnership and DAPT cases of section 4.2 sit.
-- **Better notes could flip** 8 to 11 failed trials per notes arm (57 in all), the "no miss in the task" column.
-
-Each arm has 45 trials, so a difference of a few failures between arms is within noise. The arm comparisons that carry causal weight are the content test and the exposure ladder in section 4.5; this table describes where each arm's failures sat.
+**Counting distinct requirements.** Counted as distinct requirements in notes arms, the never-reached-the-writer stage covers 7 requirements for run 1, 12 for run 3 and 7 for run 4, and the in-task stage covers 32, 23 and 24. (The 12 for run 3 counts requirements that failed in run 3's own arm; 14 of the 19 never reached its writer.) Three conventions (the awilix bump in both variants and customer delivery's runnable example) account for 54 of the 110 pooled never-reached trial-requirements.
 
 Sections 4.3 to 4.8 take the stages in order.
 
 ### 4.3 Stage 1: was the experience there?
 
-Mostly. The tracers rated the corpus as holding the information fully for 463 of the 742 failed trial-requirements, partly for 246, and not at all for 33. By the kind of evidence:
+Mostly. Of the 57 requirements that ever failed, the tracers rated the corpus as holding the information fully for 32, partly for 20, and not at all for 5. Weighted by failures, as earlier versions counted it, that is 463, 246 and 33 of the 742 failed trial-requirements; the weighting halves the share absent (4% against 9%), because the absent requirements fail less often. By the kind of evidence:
 
-| Corpus evidence | Fully | Partly |
-|---|---|---|
-| A same-task passing run or verifier feedback | 251 | 49 |
-| Only a same-task failing run's visible mistake | 25 | 115 |
-| Only other tasks (for the coding tasks, maintainers' instructions in other repositories) | 187 | 82 |
-| Nothing | 33 (absent) | |
+| Corpus evidence | Fully: requirements | Partly: requirements | Fully: failed trial-requirements | Partly: failed trial-requirements |
+|---|---|---|---|---|
+| A same-task passing run or verifier feedback | 20 | 3 | 251 | 49 |
+| Only a same-task failing run's visible mistake | 3 | 14 | 25 | 115 |
+| Only other tasks (for the coding tasks, maintainers' instructions in other repositories) | 9 | 3 | 187 | 82 |
+| Nothing | 5 (absent) | | 33 | |
 
-- **The 33 with nothing** are functional requirements the task gives: 26 on cookie store's cookie semantics and 7 on cattrs; the corpus has no cattrs or cookie-store runs. Under the blind labels, one of them is not in the task.
+The 187 failed trial-requirements held "fully, other tasks only" are 9 requirements, mostly the never-met conventions at 30 failures each.
+
+- **The 5 with nothing** (33 failures) are functional requirements: on cookie store's cookie semantics and on cattrs; the corpus has no cattrs or cookie-store runs. Under the blind labels, one of them is not in the task.
 - **Experience missing almost never mattered.** Only one failed requirement, under the blind labels, both lacked a source in the task and had nothing in the corpus.
-- **"Fully" is the tracers' judgement, made knowing the requirement.** Counting every cross-task "fully" as partly would cut fully held from 463 to 276. That changes no stage count, because the stages do not separate fully from partly. Cookie store's header semantics are rated absent, although one httpx run shows comma-combined `Set-Cookie` headers. Under the cross-task standard used for the documentation conventions that would be "partly".
+- **"Fully" is the tracers' judgement, made knowing the requirement.** Counting every cross-task "fully" as partly would cut fully held from 32 requirements to 23 (463 to 276 failed trial-requirements). That changes no stage count, because the stages do not separate fully from partly. Cookie store's header semantics are rated absent, although one httpx run shows comma-combined `Set-Cookie` headers. Under the cross-task standard used for the documentation conventions that would be "partly".
 
 **The conventions that decided the never-met requirements are in the corpus:**
 
@@ -328,12 +356,15 @@ The every-record-a-bare-verdict finding matters too. Apart from DAPT's feedback 
 
 ### 4.4 Stage 2: did the writer keep it?
 
-Mostly not. In notes arms, for the 164 failed trial-requirements whose information was not in the task (blind labels):
+Mostly not, and how much depends on the generation. Of the 19 failed requirements the task does not give (blind labels):
 
-- in 110 the information never reached the writer;
-- in 35 it reached the writer and was cut down or dropped;
-- in 18 it was in the notes;
-- in 1 no earlier run held it.
+| Writer | Never reached the writer | Reached it, cut down or dropped | In the notes | No earlier run holds it |
+|---|---|---|---|---|
+| Run 1 | 7 | 5 | 6 | 1 |
+| Run 3 | 14 | 3 | 1 | 1 |
+| Run 4 | 7 | 5 | 6 | 1 |
+
+In trial-requirements of each generation's own arms, that is 91 lost and 12 in the notes for run 1 (over four arms), 31 and 0 for run 3, 23 and 6 for run 4. Earlier versions summed these into one figure, "145 of 164", which counts run 1's content four times.
 
 What went wrong is visible in the writers' sessions:
 
@@ -370,6 +401,19 @@ When the notes held the information, it mattered whether the agent saw it. Three
 | Placebo against control, all requirements | 70 | | −0.05 | | | |
 
 Contested requirements are those some trial met and some trial failed.
+
+**The rows average over arms that are different treatments.** A unit is one requirement in one memory arm, and the six notes arms differ in content and exposure. Run 1's content supplies 20 of the 31 covered units. Split by arm, the covered row is:
+
+| Arm | Units | Arm minus control |
+|---|---|---|
+| Read-first | 5 | +0.67 |
+| All shown | 5 | +0.67 |
+| Run 1 | 5 | +0.47 |
+| Run 4 | 7 | +0.33 |
+| Run 3 | 4 | +0.08 |
+| None shown | 5 | +0.07 |
+
+The three indexed arms alone (runs 1, 3 and 4, same exposure, different content) give +0.31 (p = 0.006, trial permutation). Pooling each generation's arms into one unit per requirement gives 16 units and +0.31. The covered effect stands at that smaller size; the larger +0.39 includes the arms with more exposure, which is the ladder below. The partly covered row's +0.01 is not "no effect" on each task: it is partnership −0.38, marketing −0.21, DAPT +0.15, seat surplus +0.11 and Teams +0.03, which cancel (`aggregation.json`).
 
 **The covered row is narrow.** It comes from Word2Vec, DAPT and CSM:
 
@@ -409,6 +453,8 @@ Placebo, none shown, run 1, read-first and all shown carry the same content (the
 | All shown | 1.00 | 6/6 | 12/12 | 0.67 | 0.65 |
 | Trend p (one-sided) | < 0.001 | | | 0.02 | 0.54 |
 
+Control's and placebo's covered rates count DAPT only, since they do not measure Word2Vec (5 of 15 and 6 of 15). Weighting the two tasks equally gives control 0.21, placebo 0.25, none shown 0.63, run 1 0.88, read-first and all shown 1.00. The four run 1 arms have the same denominators, so comparisons among them are unaffected.
+
 **DAPT shows the effect within one task.** No DAPT trial in none shown opened the staged notes, and that arm sits at or below control. Where the notes were in front of the agent, DAPT met every covered metric: IPv4-only scoping, UDP over IPv6, flow tuples and bidirectional pairs. Blend, whose content differs and is excluded here, also met them in 12 of 12. The evidence arm's raw records, which carry the same verifier feedback, gave similar metric gains (one trial is seen reading the feedback rules and applying them).
 
 **What the ladder supports.** It is the evidence the earlier analysis lacked. That analysis compared trials that opened memory with trials that did not, within arms where the agent chooses when to open, and found nothing. The ladder rests on two tasks:
@@ -436,9 +482,9 @@ The agent decides whether to open, so this table is observational: trials that o
 
 ### 4.6 Stage 5: did the agent misuse what it read?
 
-No agent that opened a note fully covering a requirement, or had it pasted in, failed that requirement: 60 of 60, all on Word2Vec and DAPT. That is two tasks, so it says little about misuse in general.
+No agent that opened a note fully covering a requirement, or had it pasted in, failed that requirement: 60 of 60. Those 60 are 25 trials and 8 requirements, all on Word2Vec and DAPT, and 49 of them are in the four arms carrying run 1's content. That says little about misuse in general.
 
-Notes that covered a requirement only partly, or misled, were a different matter. In 30 failed trial-requirements the agent opened such a note or had it pasted in and still failed (section 4.2). Some of those are the note's fault, such as partnership's misleading rule. Others are the agent's: DAPT's notes told it not to infer a port scan from many destination ports alone, and it did so anyway. Averaged over uncovered requirements there is no detectable harm (section 4.5). The trajectories show these cases on single tasks:
+Notes that covered a requirement only partly, or misled, were a different matter. In 30 of 89 exposures the agent opened such a note or had it pasted in and still failed, at about the same rate in each arm with many exposures (section 4.2). Some of those are the note's fault, such as partnership's misleading rule. Others are the agent's: DAPT's notes told it not to infer a port scan from many destination ports alone, and it did so anyway. Averaged over uncovered requirements there is no detectable harm (section 4.5). The trajectories show these cases on single tasks:
 
 - **Partnership.** The checker wants the newest email: Emily as signer, $750,000. Run 1's notes say the "approval of record governs", which points to a CRM note with $450,000 and Mark. All three read-first trials followed it, and the blind labeller flagged the passage as misleading without seeing any outcome. The rule came from a failing earlier run (section 4.4). It is not the only cause, though. The wrong signer also appears without real memory: control met the signer requirement 1 of 3 times, placebo 0 of 3, and blend, which ran the original text on this task, 0 of 3. The note reinforced a mistake the model makes anyway. In the evidence arm, trial QVYnEg9 first sent the correct envelope and then reversed it after reading failed records.
 - **Marketing.** Run 1's "follow the written policy exactly" rule led the one run 1 marketing trial that opened it (6zkyYb4) to the older email, against the newer Slack method the checker wants.
@@ -449,7 +495,7 @@ Notes that covered a requirement only partly, or misled, were a different matter
 
 ### 4.7 Stage 6: the information was in the task
 
-The largest group. With the blind labels, 224 failed trials missed only requirements their own task made available, and 285 missed at least one. Of the 455 failed trial-requirements here, the blind labeller rated the information this way:
+The largest group, and the same size in every arm. With the blind labels, 38 of the 57 failed requirements are ones the task gives. Each arm misses 0.23 to 0.34 of its in-task requirement-trials, and has 20 to 27 trials whose only misses were in the task (224 over all arms; 285 trials missed at least one). Of the 455 failed trial-requirements here, pooled over arms, the blind labeller rated the information this way:
 
 - 72 stated in the prompt (28 of them Teams' `source` field, which is at best derivable: the prompt names the caller but not the field);
 - 40 in a source the prompt points to;
@@ -532,7 +578,7 @@ Two kinds of information are missing throughout:
 
 ### 4.11 Failure classes by where the information was
 
-This is the coarser, earlier view of section 4.2, kept because it needs no corpus reading. Each failed requirement in each failed trial is classed by where its information was:
+This is the coarser, earlier view of section 4.2, kept because it needs no corpus reading. It uses the auditors' prompt labels, not the blind ones the rest of this report uses: 49 failed trial-requirements that the blind labels place in the task count here as not in the task. So "available only" is 191 trials here and 224 in section 4.2. Each failed requirement in each failed trial is classed by where its information was:
 
 - **available:** stated in the prompt or derivable from the task's own data and tools;
 - **notes only:** absent from the task, but this arm's notes cover it fully;
@@ -600,7 +646,7 @@ The data fit a simple model:
 
 1. A task is a conjunction of requirements, and a trial passes only if all of them pass.
 2. Each requirement needs some piece of information and the work to act on it. The information comes from the prompt, from the task's own data and tools, from memory, or from nowhere the agent can see.
-3. Memory carries information from earlier runs to the agent through three filters: what the writer reads, what it keeps, and whether the agent sees the result. In this study the first filter removed most of what the task did not already give.
+3. Memory carries information from earlier runs to the agent through three filters: what the writer reads, what it keeps, and whether the agent sees the result. In this study the first two filters removed most of what the task did not already give: of the 19 failed requirements the task does not give, run 1's and run 4's notes lack 12 each and run 3's 17.
 4. Memory changes the outcome through requirements whose information it contains, to the degree that the content reaches the agent, by exposure or by a search the agent chooses to make.
 5. A wrong or one-sided rule in memory can lower the pass rate on the requirement it addresses. This is observed on single tasks; no average harm is detectable here.
 
@@ -620,12 +666,12 @@ None of these is a large-sample test. The model is a hypothesis this data suppor
 | H1. Memory acts through the requirements its content covers | Supported on three tasks (4.5) | The same contrast on more tasks, with content labelled blind and before the runs |
 | H2. With content fixed, the effect grows with exposure | Presence against absence on two tasks; the gradient on DAPT alone (4.5) | Exposure arms on more tasks, content fixed and pre-labelled |
 | H3. Strict pass rates understate memory effects because tasks are conjunctions | Shown descriptively (4.9) | Pre-register requirement-level outcomes next to strict passes |
-| H4. In notes arms, the largest upstream loss of information is at the writer's reading, not in the experience | Traced, not tested. The corpus holds the information fully for 62% and partly for 33% of failed requirements, and 51–78% never reached a writer (4.3, 4.4). Better notes alone could flip at most 57 of 227 failed notes-arm trials, because the rest also missed something the task gave (4.2) | Rerun the writer with a reader that sees every turn and every format, same model and budget; measure coverage of the 73 requirements, then rerun the task arms |
+| H4. In notes arms, the largest upstream loss of information is at the writer's reading, not in the experience | Traced, not tested. The corpus holds the information fully for 32 and partly for 20 of the 57 failed requirements. Of the 19 the task does not give, 7 never reached run 1's and run 4's writers and 14 run 3's (4.3, 4.4). Supplying everything the task lacks could raise an arm to at most 13 to 19 passes of 45, control included (4.2) | Rerun the writer with a reader that sees every turn and every format, same model and budget; measure coverage of the 73 requirements, then rerun the task arms |
 | H5. Supplying the lost conventions flips the never-met requirements | Untested; the conventions exist in the corpus (4.3) | An oracle-note arm: add the release-tier rule, the runnable-example preference and the Teams `source` lesson to run 1's notes; measure those requirements and strict passes |
 | H6. Self-generated notes capture contract facts but not conventions or pointers | Holds for these three generations (4.10) | Compare generated notes with the benchmark's reference skill files; test a writer prompted to record conventions and where information sits |
 | H7. Wrong rules in memory hurt the requirements they address | Mechanisms on single tasks; partly the model's default (4.6) | Swap in a corrected rule for the same task and measure the same requirement |
 | H8. Pointer notes fix search failures on requirements the task's files answer | Consistent with the APEX passes, untested. 268 failed trial-requirements needed a search (4.7) | Arms that add only the benchmark's reference pointers |
-| H9. Agents under-use partial notes they have read | 30 failures with a partly covering or misleading note opened; DAPT's notes warned against the port-scan inference the agents made (4.2, 4.6) | Pair each partial note with a version that states the rule in full, on the same requirement |
+| H9. Agents under-use partial notes they have read | A partly covering or misleading note was read and the requirement still failed in 30 of 89 exposures; DAPT's notes warned against the port-scan inference the agents made (4.2, 4.6) | Pair each partial note with a version that states the rule in full, on the same requirement |
 
 The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H4 needs only the writer step to be rerun.
 
@@ -635,9 +681,9 @@ The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H
 - **Few covered requirements.** The positive effect rests mainly on Word2Vec and DAPT. The direction holds without either, but the size is poorly estimated.
 - **Which requirements are covered is observed, not assigned.** The arm contrast is valid for those requirements. Generalising to "memory content causes the effect" assumes nothing else about them interacts with the arms.
 - **The writer stages are a trace, not a contrast.** They say where information stopped, observed directly in the writers' sessions. They do not show that supplying it would have changed the outcome; H5 tests that.
-- **"Present in the corpus" is a judgement made in hindsight.** The tracers searched knowing the requirement. For 269 failed trial-requirements the evidence comes only from other tasks, such as a release-tier rule in another repository, where tier 7 is interpolated from tiers 6 and 8. One cattrs tracer note records a counter-signal ("keep changelog/release-note files untouched unless I explicitly ask") and still rates the convention present. The tracers rated their own confidence and logged their searches, and we and the reviewer reran the claims that change conclusions. A blind version would search the corpus with only the task prompt.
+- **"Present in the corpus" is a judgement made in hindsight.** The tracers searched knowing the requirement. For 12 of the 57 failed requirements (269 failed trial-requirements) the evidence comes only from other tasks, such as a release-tier rule in another repository, where tier 7 is interpolated from tiers 6 and 8. One cattrs tracer note records a counter-signal ("keep changelog/release-note files untouched unless I explicitly ask") and still rates the convention present. The tracers rated their own confidence and logged their searches, and we and the reviewer reran the claims that change conclusions. A blind version would search the corpus with only the task prompt.
 - **Labels.** The notes-content labels and the prompt labels are both outcome-blind. The prompt labels decide which stage a failure lands in, and the "derivable" call is a judgement: the explicit-only reading moves most of the in-task stage to the writer stage (section 4.2). The blind prompt labeller treated DAPT's analysis scripts as out of reach. Counting them as reachable would move five DAPT metric requirements into the task. The blend text was not blind-labelled and is excluded from content comparisons.
-- **Arm replication.** One generation's miss is counted once per trial that carries it, and run 1's content is in four arms. Section 4.2 also gives counts of distinct requirements.
+- **Pooling.** The arms are different treatments, run 1's content is in four of them, and the 742 failed trial-requirements come from 57 requirements, a few of which fail in nearly every trial. Stages are therefore given per arm, and per distinct requirement and generation for the writer stages (section 4.2); pooled counts are reference only. Comparisons between tasks with different mixes are made within task (section 4.2's partial-notes table). The 3 attempts per arm and task are treated as exchangeable within the cell; the permutation and bootstrap resample whole trials.
 - **Exposure arms differ in more than exposure.** All shown adds about 16,000 tokens per request and runs 9% longer; read-first adds an instruction. The seat-surplus difference (3 of 3 reaching the data against 1 of 3) could come from prompt length or framing rather than the notes' pointer. The placebo, the only length-matched control, reached the data 1 of 3 times.
 - **The evidence arm** is seen only through trajectories: we know what was staged and what the agent opened, not what it took from it.
 - **Judges.** An LLM judge grades the APEX criteria, and its rationales are saved (`grade_details.json`). The rationales we read match the arithmetic, and the market-share and seat-surplus passes line up exactly with the trials that read the defining files. The judge has not been tested on known-wrong answers. The ChatGPT proposal's CFO check appears to fail some trials that did what it asks; that is an auditor's judgment and is unverified.
@@ -679,6 +725,25 @@ The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H
 | Several per-trial labels in `traces/traces-all.json` | The auditors list about 20 trials whose label contradicts the verifier output, for example "functional passed" on trials that failed tests. Those labels are not used here |
 | Trial HJvLDqW (cattrs 77/77) is a counted control pass (`results/pipeline-audit.md` line 11) | It is in the pilot job; the counted control has no cattrs pass. The audit file is not yet corrected |
 
+**Pooling across arms and requirements (v3, corrected Nov 23).** The owner pointed out that the v3 headline pooled all ten arms, which are different treatments. An independent audit then checked every number for the same kind of error (`causal/aggregation.py`, `out/aggregation.json`):
+
+| v3 claim (pooled) | Corrected |
+|---|---|
+| One stage table summed over all ten arms | Stages given per arm, and per distinct requirement and generation for the experience and writer stages (short version, 4.2). The pooled table is kept as reference |
+| The writer lost 145 of 164 | Of the 19 failed requirements the task does not give, run 1's and run 4's notes lack 12 each, run 3's 17. The 145 counts run 1's content in four arms |
+| 51–78% of failed requirements never reached a writer; 2–9% were in the notes | Those percentages read all 742 failures, in-task ones and other arms' included, against each generation. Of the 19 not in the task, 7, 14 and 7 never reached the writers and 6, 1 and 6 are in the notes |
+| The corpus holds 463 fully, 246 partly, 33 not | Per distinct failed requirement: 32, 20 and 5 of 57 |
+| Opened partial or misleading notes failed mostly in all shown (12) and read-first (8) | Those arms had more exposures. Per exposure: all shown 12 of 36, read-first 8 of 25, run 1 6 of 14 |
+| Partial notes met 35 of 53 opened vs 40 of 100 not opened | The not-opened pool held tasks where nobody opened. Within task the gap is larger: DAPT 19 of 24 vs 12 of 33, partnership 4 of 12 vs 0 of 6 |
+| Memory arms meet covered requirements +0.39 more often | Averaged over arms with different exposure. Indexed arms only: +0.31 (p = 0.006). By arm: +0.07 (none shown) to +0.67 (read-first, all shown) |
+| Partly covered: +0.01, no effect | The tasks cancel: partnership −0.38, marketing −0.21, DAPT +0.15 |
+| Perfect notes could flip at most 57 of 227 failed notes-arm trials | Per arm, the ceiling is 13 to 19 passes of 45, and control's is 17: the bound describes the tasks, not the notes |
+| Even in control, most of what was missing was in no set of notes (against run 1's notes only) | Against all three generations, 25 of 70 are in some notes and 45 in none |
+| Arms missed in-task information "about equally" | True against control (every interval overlaps). Raw records and blend differ from each other, on AutomationBench |
+| Section 4.11's "available only" 191 | Uses the auditors' labels; 224 with the blind labels |
+
+The first draft of this correction also said "memory did not reduce in-task misses" was invalid because it counted failed trials only. That was wrong: no passing trial fails any requirement, so failed-only and all-trial counts are the same.
+
 **From the verification pass:**
 
 - **DAPT.** The reference computes the port-scan answer with a detector rather than hard-coding it.
@@ -716,9 +781,10 @@ The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H
   - `checks.py`: check-level outcomes from the verifier output.
   - `access.py`: memory reads from trajectories.
   - `analysis.py`: requirement table, content test, exposure ladder, access table, failure classes.
-  - `stages.py`: the stage of every failed trial-requirement, from the corpus trace, under blind, auditor and explicit-only prompt labels.
+  - `stages.py`: the stage of every failed trial-requirement, from the corpus trace, under blind, auditor and explicit-only prompt labels, pooled and per arm.
+  - `aggregation.py`: the stage counts per arm with all-trial denominators, per distinct requirement and generation, the content test by arm and task, and the other corrections to pooled figures in section 8.
   - `figures.py` and `stage_figures.py`: the figures in `figures/v2/` (`stage_figures.py` draws fig6 to fig8).
-- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json` and `stages.json` hold every number in this report, with no raw task, memory or corpus text.
+- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json`, `stages.json` and `aggregation.json` hold every number in this report, with no raw task, memory or corpus text.
 - **Private, not in git.** Under `~/fm-extract-20261116/`:
   - the trial data;
   - the per-task audit files with quotes (`causal/audit/`);
@@ -738,5 +804,6 @@ python3 analysis.py PRIVATE out/requirement-analysis-blind-labels.json PRIVATE/c
 python3 analysis.py PRIVATE out/requirement-analysis-auditor-labels.json
 python3 stages.py PRIVATE PRIVATE/causal/blind-labels.json out/stages.json "PRIVATE/causal/blind-prompt/labels-*.json"
 python3 figures.py out/requirement-analysis-blind-labels.json ../figures/v2
-python3 stage_figures.py out/stages.json ../figures/v2
+python3 aggregation.py PRIVATE PRIVATE/causal/blind-labels.json "PRIVATE/causal/blind-prompt/labels-*.json" out/requirement-analysis-blind-labels.json out/aggregation.json
+python3 stage_figures.py out/stages.json ../figures/v2 out/aggregation.json
 ```

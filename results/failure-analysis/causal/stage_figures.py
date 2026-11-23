@@ -1,6 +1,6 @@
 """Draw the stage figures from stages.json.
 
-Usage: python3 stage_figures.py stages.json OUT_DIR
+Usage: python3 stage_figures.py stages.json OUT_DIR aggregation.json
 """
 import json, sys, os, textwrap
 import matplotlib
@@ -16,35 +16,40 @@ UP = [("experience_missing", "No earlier run holds it", MUTED),
       ("in_notes", "In the notes", BLUE)]
 
 
-def main(src, out):
+def main(src, out, agg_src):
     d = json.load(open(src))
+    agg = json.load(open(agg_src))
     os.makedirs(out, exist_ok=True)
 
-    per = d["all_failed_trial_requirements_by_upstream_stage_per_generation"]
+    per = agg["generation_stage_distinct"]
     gens = [("run1", "Run 1 writer"), ("run3", "Run 3 writer"), ("run4", "Run 4 writer")]
-    total = sum(per["run1"].values())
-    fig, ax = plt.subplots(figsize=(10, 3.4), facecolor=SURF)
-    for y, (g, name) in enumerate(gens):
-        left = 0
-        for k, _, col in UP:
-            v = per[g].get(k, 0)
-            if v:
-                ax.barh(y, v, left=left, color=col, height=0.62, edgecolor=SURF, linewidth=2)
-                if v >= 25:
-                    ax.text(left + v / 2, y, str(v), ha="center", va="center", fontsize=8, color="white")
-            left += v
-    ax.set_yticks(range(len(gens)), [n for _, n in gens], fontsize=8.5)
-    ax.invert_yaxis()
-    ax.set_xlim(0, total)
-    ax.set_xticks([0, 200, 400, 600, total])
-    ax.xaxis.grid(True, color=GRID, linewidth=0.8)
-    ax.set_axisbelow(True)
-    style(ax)
+    panels = [("scored_not_in_task", "19 failed requirements the task does not give"), ("scored_requirements", "All 72 scored requirements")]
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.4), facecolor=SURF, gridspec_kw={"width_ratios": [1, 1.6]})
+    for ax, (key, title) in zip(axes, panels):
+        total = sum(per["run1"][key].values())
+        for y, (g, name) in enumerate(gens):
+            left = 0
+            for k, _, col in UP:
+                v = per[g][key].get(k, 0)
+                if v:
+                    ax.barh(y, v, left=left, color=col, height=0.62, edgecolor=SURF, linewidth=2)
+                    if v >= (2 if total < 30 else 5):
+                        ax.text(left + v / 2, y, str(v), ha="center", va="center", fontsize=8, color="white")
+                left += v
+        ax.set_yticks(range(len(gens)), [n for _, n in gens] if ax is axes[0] else [""] * 3, fontsize=8.5)
+        ax.invert_yaxis()
+        ax.set_xlim(0, total)
+        ax.set_xticks(list(range(0, total, 5 if total < 30 else 10)) + [total])
+        ax.set_title(title, fontsize=8.5, color=INK2, loc="left")
+        ax.xaxis.grid(True, color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        style(ax)
     handles = [plt.Rectangle((0, 0), 1, 1, color=c) for _, _, c in UP]
-    ax.legend(handles, [l for _, l, _ in UP], ncol=3, fontsize=7.5, frameon=False, loc="upper left", bbox_to_anchor=(0, -0.12))
-    fig.text(0.01, 0.97, f"Where the information for each failed requirement stopped, all {total} failed trial-requirements", fontsize=10, color=INK, va="top")
-    fig.text(0.01, 0.91, "Traced through the earlier-run corpus and each note-writer's session; same failures, read against each generation of notes", fontsize=8, color=INK2, va="top")
-    fig.tight_layout(rect=(0, 0, 1, 0.86))
+    axes[0].legend(handles, [l for _, l, _ in UP], ncol=3, fontsize=7.5, frameon=False, loc="upper left", bbox_to_anchor=(0, -0.14))
+    fig.text(0.01, 0.97, "Where the information for each requirement stopped, by generation of notes", fontsize=10, color=INK, va="top")
+    fig.text(0.01, 0.91, "One unit per distinct requirement; traced through the earlier-run corpus and each note-writer's session", fontsize=8, color=INK2, va="top")
+    fig.tight_layout(rect=(0, 0.04, 1, 0.86))
+    fig.subplots_adjust(wspace=0.06)
     fig.savefig(os.path.join(out, "fig6-where-information-stopped.png"), dpi=160)
     plt.close(fig)
 
@@ -120,4 +125,4 @@ def main(src, out):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])

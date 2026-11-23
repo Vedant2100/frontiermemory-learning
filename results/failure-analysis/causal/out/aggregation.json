@@ -1,0 +1,744 @@
+{
+ "failed_requirements_in_passing_trials": 0,
+ "units": {
+  "failed_trial_requirements": 742,
+  "distinct_failed_requirements": 57,
+  "scored_requirements": 72,
+  "top8_requirements_share": 233,
+  "by_task": {
+   "dapt-intrusion-detection-workflo": 124,
+   "automationbench-sales-partnershi": 123,
+   "customer-delivery-contextual-pre": 77,
+   "automationbench-sales-chatgpt-pr": 66,
+   "cookie-store-compositional-chang": 66,
+   "awilix-release-tier-explicit": 46,
+   "awilix-release-tier-implicit": 43,
+   "cattrs-compositional-changelog": 33,
+   "apex-eurogrid-curtailment": 30,
+   "enterpriseops-teams-2725d17f": 28,
+   "apex-brightpath-seat-surplus": 27,
+   "automationbench-marketing-conten": 26,
+   "apex-brightpath-market-share": 25,
+   "build-word2vec-pipeline": 17,
+   "enterpriseops-csm-26d1b04a": 11
+  },
+  "distinct_failed_in_task": 38,
+  "distinct_failed_not_in_task": 19
+ },
+ "corpus_distinct_failed_requirements": {
+  "status": {
+   "partial": 20,
+   "present": 32,
+   "absent": 5
+  },
+  "status_and_kind": {
+   "absent|none": 5,
+   "partial|other_tasks_only": 3,
+   "partial|same_task_failing_hint_only": 14,
+   "partial|same_task_pass_or_feedback": 3,
+   "present|other_tasks_only": 9,
+   "present|same_task_failing_hint_only": 3,
+   "present|same_task_pass_or_feedback": 20
+  }
+ },
+ "miss_rates_by_arm_all_trials": {
+  "control": {
+   "in_task_cells": 159,
+   "in_task_missed": 43,
+   "in_task_miss_rate": 0.27,
+   "in_task_missed_95": [
+    34,
+    52
+   ],
+   "not_in_task_cells": 51,
+   "not_in_task_missed": 33,
+   "not_in_task_miss_rate": 0.647
+  },
+  "run1": {
+   "in_task_cells": 159,
+   "in_task_missed": 46,
+   "in_task_miss_rate": 0.289,
+   "in_task_missed_95": [
+    40,
+    53
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 30,
+   "not_in_task_miss_rate": 0.526
+  },
+  "run3": {
+   "in_task_cells": 157,
+   "in_task_missed": 50,
+   "in_task_miss_rate": 0.318,
+   "in_task_missed_95": [
+    43,
+    57
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 31,
+   "not_in_task_miss_rate": 0.544
+  },
+  "run4": {
+   "in_task_cells": 157,
+   "in_task_missed": 46,
+   "in_task_miss_rate": 0.293,
+   "in_task_missed_95": [
+    40,
+    52
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 29,
+   "not_in_task_miss_rate": 0.509
+  },
+  "placebo": {
+   "in_task_cells": 159,
+   "in_task_missed": 49,
+   "in_task_miss_rate": 0.308,
+   "in_task_missed_95": [
+    42,
+    56
+   ],
+   "not_in_task_cells": 51,
+   "not_in_task_missed": 37,
+   "not_in_task_miss_rate": 0.725
+  },
+  "readfirst": {
+   "in_task_cells": 157,
+   "in_task_missed": 43,
+   "in_task_miss_rate": 0.274,
+   "in_task_missed_95": [
+    39,
+    47
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 20,
+   "not_in_task_miss_rate": 0.351
+  },
+  "allshown": {
+   "in_task_cells": 159,
+   "in_task_missed": 41,
+   "in_task_miss_rate": 0.258,
+   "in_task_missed_95": [
+    34,
+    49
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 22,
+   "not_in_task_miss_rate": 0.386
+  },
+  "noneshown": {
+   "in_task_cells": 157,
+   "in_task_missed": 46,
+   "in_task_miss_rate": 0.293,
+   "in_task_missed_95": [
+    42,
+    50
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 32,
+   "not_in_task_miss_rate": 0.561
+  },
+  "evidence": {
+   "in_task_cells": 159,
+   "in_task_missed": 37,
+   "in_task_miss_rate": 0.233,
+   "in_task_missed_95": [
+    31,
+    44
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 25,
+   "not_in_task_miss_rate": 0.439
+  },
+  "blend": {
+   "in_task_cells": 159,
+   "in_task_missed": 54,
+   "in_task_miss_rate": 0.34,
+   "in_task_missed_95": [
+    47,
+    60
+   ],
+   "not_in_task_cells": 57,
+   "not_in_task_missed": 28,
+   "not_in_task_miss_rate": 0.491
+  }
+ },
+ "not_in_task_miss_by_arm_excluding_word2vec": {
+  "control": {
+   "cells": 48,
+   "missed": 30,
+   "rate": 0.625,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 3,
+    "customer-delivery-contextual-pre": 5,
+    "dapt-intrusion-detection-workflo": 16
+   }
+  },
+  "run1": {
+   "cells": 48,
+   "missed": 29,
+   "rate": 0.604,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 5,
+    "customer-delivery-contextual-pre": 6,
+    "dapt-intrusion-detection-workflo": 12
+   }
+  },
+  "run3": {
+   "cells": 48,
+   "missed": 29,
+   "rate": 0.604,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 1,
+    "customer-delivery-contextual-pre": 5,
+    "dapt-intrusion-detection-workflo": 17
+   }
+  },
+  "run4": {
+   "cells": 48,
+   "missed": 27,
+   "rate": 0.562,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 4,
+    "customer-delivery-contextual-pre": 6,
+    "dapt-intrusion-detection-workflo": 11
+   }
+  },
+  "placebo": {
+   "cells": 48,
+   "missed": 34,
+   "rate": 0.708,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 5,
+    "customer-delivery-contextual-pre": 7,
+    "dapt-intrusion-detection-workflo": 16
+   }
+  },
+  "readfirst": {
+   "cells": 48,
+   "missed": 20,
+   "rate": 0.417,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 3,
+    "customer-delivery-contextual-pre": 6,
+    "dapt-intrusion-detection-workflo": 5
+   }
+  },
+  "allshown": {
+   "cells": 48,
+   "missed": 21,
+   "rate": 0.438,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cattrs-compositional-changelog": 1,
+    "cookie-store-compositional-chang": 3,
+    "customer-delivery-contextual-pre": 5,
+    "dapt-intrusion-detection-workflo": 6
+   }
+  },
+  "noneshown": {
+   "cells": 48,
+   "missed": 30,
+   "rate": 0.625,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 1,
+    "customer-delivery-contextual-pre": 7,
+    "dapt-intrusion-detection-workflo": 16
+   }
+  },
+  "evidence": {
+   "cells": 48,
+   "missed": 25,
+   "rate": 0.521,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 4,
+    "customer-delivery-contextual-pre": 7,
+    "dapt-intrusion-detection-workflo": 8
+   }
+  },
+  "blend": {
+   "cells": 48,
+   "missed": 25,
+   "rate": 0.521,
+   "missed_by_task": {
+    "awilix-release-tier-explicit": 3,
+    "awilix-release-tier-implicit": 3,
+    "cookie-store-compositional-chang": 5,
+    "customer-delivery-contextual-pre": 7,
+    "dapt-intrusion-detection-workflo": 7
+   }
+  }
+ },
+ "partial_or_misleading_note_opened_or_pasted_by_arm": {
+  "run1": {
+   "exposures": 14,
+   "failed": 6
+  },
+  "readfirst": {
+   "exposures": 25,
+   "failed": 8
+  },
+  "allshown": {
+   "exposures": 36,
+   "failed": 12
+  },
+  "noneshown": {
+   "exposures": 3,
+   "failed": 2
+  },
+  "run3": {
+   "exposures": 3,
+   "failed": 1
+  },
+  "run4": {
+   "exposures": 8,
+   "failed": 1
+  }
+ },
+ "partial_notes_met_by_task": {
+  "apex-brightpath-seat-surplus": {
+   "none": "0/11",
+   "opened_other": "0/1",
+   "opened": "1/3",
+   "pasted": "1/3"
+  },
+  "automationbench-marketing-conten": {
+   "opened_other": "2/2",
+   "none": "14/19",
+   "pasted": "2/3",
+   "opened": "0/0"
+  },
+  "automationbench-sales-chatgpt-pr": {
+   "opened_other": "2/2",
+   "none": "1/1",
+   "opened": "0/0"
+  },
+  "automationbench-sales-partnershi": {
+   "opened": "4/12",
+   "pasted": "3/6",
+   "none": "0/6"
+  },
+  "build-word2vec-pipeline": {
+   "opened": "11/14",
+   "opened_other": "2/4",
+   "pasted": "2/3"
+  },
+  "cattrs-compositional-changelog": {
+   "opened_other": "0/1",
+   "none": "1/2",
+   "opened": "0/0"
+  },
+  "cookie-store-compositional-chang": {
+   "none": "3/4",
+   "opened_other": "1/2",
+   "opened": "0/0"
+  },
+  "dapt-intrusion-detection-workflo": {
+   "none": "12/33",
+   "opened": "19/24",
+   "pasted": "12/15"
+  },
+  "enterpriseops-teams-2725d17f": {
+   "none": "9/24",
+   "pasted": "4/6",
+   "opened": "0/0"
+  }
+ },
+ "partial_notes_not_opened_in_tasks_with_an_open": [
+  12,
+  50
+ ],
+ "control_placebo_not_in_task_by_generation": {
+  "run1": {
+   "writer_never_saw": 35,
+   "in_notes": 19,
+   "writer_saw_dropped": 3,
+   "writer_saw_partial": 13
+  },
+  "run3": {
+   "writer_never_saw": 61,
+   "in_notes": 6,
+   "writer_saw_partial": 3
+  },
+  "run4": {
+   "writer_never_saw": 29,
+   "in_notes": 25,
+   "writer_saw_partial": 16
+  },
+  "in_any_generation": 25
+ },
+ "generation_stage_distinct": {
+  "run1": {
+   "scored_requirements": {
+    "writer_never_saw": 43,
+    "writer_saw_partial": 10,
+    "experience_missing": 9,
+    "writer_saw_dropped": 2,
+    "writer_misled": 2,
+    "in_notes": 6
+   },
+   "scored_not_in_task": {
+    "writer_never_saw": 7,
+    "in_notes": 6,
+    "writer_saw_partial": 4,
+    "experience_missing": 1,
+    "writer_saw_dropped": 1
+   }
+  },
+  "run3": {
+   "scored_requirements": {
+    "writer_never_saw": 50,
+    "writer_saw_partial": 7,
+    "experience_missing": 9,
+    "in_notes": 4,
+    "writer_saw_dropped": 2
+   },
+   "scored_not_in_task": {
+    "writer_never_saw": 14,
+    "in_notes": 1,
+    "writer_saw_partial": 3,
+    "experience_missing": 1
+   }
+  },
+  "run4": {
+   "scored_requirements": {
+    "writer_never_saw": 36,
+    "writer_saw_partial": 12,
+    "experience_missing": 9,
+    "writer_saw_dropped": 8,
+    "in_notes": 7
+   },
+   "scored_not_in_task": {
+    "writer_never_saw": 7,
+    "in_notes": 6,
+    "writer_saw_partial": 5,
+    "experience_missing": 1
+   }
+  }
+ },
+ "notes_arms_failed_trial_requirements_by_own_generation": {
+  "run1": {
+   "in_task": 176,
+   "writer_never_saw": 65,
+   "writer_saw_partial": 23,
+   "writer_saw_dropped": 3,
+   "in_notes": 12,
+   "experience_missing": 1
+  },
+  "run3": {
+   "in_task": 50,
+   "writer_never_saw": 28,
+   "writer_saw_partial": 3
+  },
+  "run4": {
+   "in_task": 46,
+   "writer_never_saw": 17,
+   "writer_saw_partial": 6,
+   "in_notes": 6
+  }
+ },
+ "content_test_breakdown": {
+  "yes": {
+   "by_task": {
+    "build-word2vec-pipeline": [
+     6,
+     1.0
+    ],
+    "dapt-intrusion-detection-workflo": [
+     22,
+     0.303
+    ],
+    "enterpriseops-csm-26d1b04a": [
+     3,
+     -0.222
+    ]
+   },
+   "by_arm": {
+    "run1": [
+     5,
+     0.467
+    ],
+    "readfirst": [
+     5,
+     0.667
+    ],
+    "allshown": [
+     5,
+     0.667
+    ],
+    "noneshown": [
+     5,
+     0.067
+    ],
+    "run3": [
+     4,
+     0.083
+    ],
+    "run4": [
+     7,
+     0.333
+    ]
+   },
+   "requirement_x_generation_units": 16,
+   "requirement_x_generation_mean": 0.312
+  },
+  "partial": {
+   "by_task": {
+    "apex-brightpath-seat-surplus": [
+     6,
+     0.111
+    ],
+    "automationbench-marketing-conten": [
+     8,
+     -0.208
+    ],
+    "automationbench-sales-chatgpt-pr": [
+     1,
+     0.0
+    ],
+    "automationbench-sales-partnershi": [
+     8,
+     -0.375
+    ],
+    "cattrs-compositional-changelog": [
+     1,
+     0.333
+    ],
+    "cookie-store-compositional-chang": [
+     2,
+     0.0
+    ],
+    "dapt-intrusion-detection-workflo": [
+     24,
+     0.153
+    ],
+    "enterpriseops-teams-2725d17f": [
+     10,
+     0.033
+    ]
+   },
+   "by_arm": {
+    "run1": [
+     11,
+     -0.091
+    ],
+    "readfirst": [
+     11,
+     0.091
+    ],
+    "allshown": [
+     11,
+     0.152
+    ],
+    "noneshown": [
+     11,
+     -0.121
+    ],
+    "run3": [
+     5,
+     -0.067
+    ],
+    "run4": [
+     11,
+     0.03
+    ]
+   },
+   "requirement_x_generation_units": 27,
+   "requirement_x_generation_mean": 0.003
+  },
+  "no": {
+   "by_task": {
+    "apex-brightpath-market-share": [
+     6,
+     0.167
+    ],
+    "apex-eurogrid-curtailment": [
+     18,
+     0.0
+    ],
+    "automationbench-marketing-conten": [
+     16,
+     0.063
+    ],
+    "automationbench-sales-chatgpt-pr": [
+     41,
+     0.008
+    ],
+    "automationbench-sales-partnershi": [
+     28,
+     -0.25
+    ],
+    "awilix-release-tier-explicit": [
+     24,
+     -0.174
+    ],
+    "awilix-release-tier-implicit": [
+     24,
+     -0.132
+    ],
+    "cattrs-compositional-changelog": [
+     41,
+     0.057
+    ],
+    "cookie-store-compositional-chang": [
+     28,
+     0.0
+    ],
+    "customer-delivery-contextual-pre": [
+     60,
+     0.078
+    ],
+    "dapt-intrusion-detection-workflo": [
+     20,
+     0.067
+    ],
+    "enterpriseops-csm-26d1b04a": [
+     21,
+     0.016
+    ],
+    "enterpriseops-teams-2725d17f": [
+     2,
+     0.0
+    ]
+   },
+   "by_arm": {
+    "run1": [
+     54,
+     -0.019
+    ],
+    "readfirst": [
+     54,
+     -0.003
+    ],
+    "allshown": [
+     54,
+     -0.006
+    ],
+    "noneshown": [
+     54,
+     0.019
+    ],
+    "run3": [
+     61,
+     -0.019
+    ],
+    "run4": [
+     52,
+     -0.032
+    ]
+   },
+   "requirement_x_generation_units": 167,
+   "requirement_x_generation_mean": -0.018
+  },
+  "yes_indexed_arms_run1_run3_run4": {
+   "diff": 0.312,
+   "p": 0.006
+  }
+ },
+ "ladder_task_balanced": {
+  "control": 0.208,
+  "placebo": 0.25,
+  "noneshown": 0.625,
+  "run1": 0.875,
+  "readfirst": 1.0,
+  "allshown": 1.0
+ },
+ "fully_covered_opened_or_pasted": {
+  "cells": 60,
+  "trials": 25,
+  "requirements": 8,
+  "by_arm": {
+   "run1|met": 9,
+   "run3|met": 2,
+   "run4|met": 9,
+   "readfirst|met": 17,
+   "allshown|met": 18,
+   "noneshown|met": 5
+  }
+ },
+ "pass_ceiling_by_arm": {
+  "control": {
+   "trials": 45,
+   "passes": 6,
+   "failed_no_in_task_miss": 11,
+   "ceiling_if_all_not_in_task_info_supplied": 17
+  },
+  "run1": {
+   "trials": 45,
+   "passes": 7,
+   "failed_no_in_task_miss": 9,
+   "ceiling_if_all_not_in_task_info_supplied": 16
+  },
+  "run3": {
+   "trials": 45,
+   "passes": 4,
+   "failed_no_in_task_miss": 9,
+   "ceiling_if_all_not_in_task_info_supplied": 13
+  },
+  "run4": {
+   "trials": 45,
+   "passes": 8,
+   "failed_no_in_task_miss": 8,
+   "ceiling_if_all_not_in_task_info_supplied": 16
+  },
+  "placebo": {
+   "trials": 45,
+   "passes": 4,
+   "failed_no_in_task_miss": 9,
+   "ceiling_if_all_not_in_task_info_supplied": 13
+  },
+  "readfirst": {
+   "trials": 45,
+   "passes": 8,
+   "failed_no_in_task_miss": 10,
+   "ceiling_if_all_not_in_task_info_supplied": 18
+  },
+  "allshown": {
+   "trials": 45,
+   "passes": 7,
+   "failed_no_in_task_miss": 11,
+   "ceiling_if_all_not_in_task_info_supplied": 18
+  },
+  "noneshown": {
+   "trials": 45,
+   "passes": 9,
+   "failed_no_in_task_miss": 10,
+   "ceiling_if_all_not_in_task_info_supplied": 19
+  },
+  "evidence": {
+   "trials": 45,
+   "passes": 9,
+   "failed_no_in_task_miss": 10,
+   "ceiling_if_all_not_in_task_info_supplied": 19
+  },
+  "blend": {
+   "trials": 45,
+   "passes": 3,
+   "failed_no_in_task_miss": 13,
+   "ceiling_if_all_not_in_task_info_supplied": 16
+  }
+ },
+ "auditor_vs_blind_in_task_failed_trial_requirements": {
+  "auditor_True|blind_True": 406,
+  "auditor_False|blind_True": 49,
+  "auditor_False|blind_False": 286,
+  "auditor_True|blind_False": 1
+ }
+}
