@@ -25,7 +25,8 @@ Stages of one failed trial-requirement, in the order information flows:
   had it pasted in.
 A prompt mode decides "in the task": "auditor" uses the auditors' labels
 (explicit or derivable), "explicit_only" counts only explicit, "blind" uses the
-outcome-blind prompt labels (explicit or derivable).
+outcome-blind prompt labels (explicit or derivable), and "blind_strict" also
+drops blind labels of low confidence and two the reviewer judged too generous.
 """
 import json, os, sys, glob, collections
 
@@ -77,7 +78,13 @@ def load_blind_prompt(path):
     for f in sorted(glob.glob(path)):
         for b in json.load(open(f)):
             out[(b["task"][:32], b["req_id"])] = str(b["label"]).lower()
+            if str(b.get("confidence", "")).lower() == "low":
+                out[("low_confidence", b["task"][:32], b["req_id"])] = True
     return out
+
+
+STRICT_OUT = {("enterpriseops-teams-2725d17f", "R2_audio_call_source_james_target_alice"),
+              ("automationbench-sales-partnershi", "R4_single_envelope")}
 
 
 def in_task(r, mode, blind_prompt):
@@ -85,6 +92,10 @@ def in_task(r, mode, blind_prompt):
         return r["prompt"] == "explicit"
     if mode == "blind":
         return blind_prompt.get((r["task"], r["id"])) in ("explicit", "derivable")
+    if mode == "blind_strict":
+        k = (r["task"], r["id"])
+        return (blind_prompt.get(k) in ("explicit", "derivable") and not blind_prompt.get(("low_confidence",) + k)
+                and k not in STRICT_OUT)
     return r["prompt"] in ("explicit", "derivable")
 
 
@@ -195,7 +206,7 @@ def main(private, blind, out_path, blind_prompt_glob=None):
             lv = r["memory"].get(gen)
             mis = misled.get((r["task"], r["id"]), {}).get(gen)
             how = opened_relevant(t, r, gen, access)
-            primary = stage_of(t, r, trace.get((r["task"], r["id"])), access, misled.get((r["task"], r["id"]), {}), "auditor", blind_prompt)
+            primary = stage_of(t, r, trace.get((r["task"], r["id"])), access, misled.get((r["task"], r["id"]), {}), "blind" if blind_prompt else "auditor", blind_prompt)
             if how and (lv in ("partial", "yes") or mis):
                 opened_partial[("misleading" if mis else lv, how, primary)] += 1
             if primary == "in_task_missed" and lv in ("yes", "partial"):
@@ -227,7 +238,7 @@ def main(private, blind, out_path, blind_prompt_glob=None):
                           "corpus_kinds": (q.get("corpus") or {}).get("kinds"), "stage": q.get("stage"),
                           "misleading": misled.get((r["task"], r["id"])), "unstated_spec": (q.get("unstated_spec") or {}).get("value")})
 
-    modes = ["auditor", "explicit_only"] + (["blind"] if blind_prompt else [])
+    modes = ["auditor", "explicit_only"] + (["blind", "blind_strict"] if blind_prompt else [])
     out = {
         "failed_trials": len(failed),
         "failed_trial_requirements": sum(1 for t in failed for r in reqs if r["task"] == t["task"] and D.out[(t["trial"], r["key"])] == 0),
@@ -239,6 +250,7 @@ def main(private, blind, out_path, blind_prompt_glob=None):
         "all_failed_trial_requirements_by_corpus_status_and_kind": {f"{a}|{b}": v for (a, b), v in sorted(kind_all.items())},
         "all_failed_trial_requirements_by_upstream_stage_per_generation": {g: dict(c) for g, c in upstream_all.items()},
         "prompt_label_agreement_auditor_vs_blind": dict(collections.Counter((r["prompt"], blind_prompt.get((r["task"], r["id"]))) for r in reqs)) if blind_prompt else None,
+        "notes_also_cover_mode": "blind" if blind_prompt else "auditor",
         "requirements": req_level,
         "untraced_requirements": sorted({f"{r['task']}:{r['id']}" for r in reqs if (r["task"], r["id"]) not in trace}),
     }

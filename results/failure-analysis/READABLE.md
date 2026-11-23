@@ -53,7 +53,7 @@ Then we compared conditions. Reading a trajectory tells you what the agent did. 
 
 The rest are trials in conditions without generated notes.
 
-The split between the first and third rows depends on what counts as "the task gives it". If only what the prompt states outright counts, the first row shrinks to 51 and the writer row grows to 267. Our labellers, and separately the auditors who built the requirements, judged that a method in a mail thread or the newer of two emails is something the task gives. Both put most of it in the first row.
+The split between the first and third rows depends on what counts as "the task gives it". If only what the prompt states outright counts, the first row shrinks to 51 and the writer row grows from 145 to 387. A stricter reading of our labels, which drops the ones the labeller was unsure of, gives 357 and 198. Our labellers, and separately the auditors who built the requirements, judged that a method in a mail thread or the newer of two emails is something the task gives. Both put most of it in the first row.
 
 ## The agent missed what its task gave it
 
@@ -62,7 +62,7 @@ The split between the first and third rows depends on what counts as "the task g
 - **Market share.** All 5 passes read the mail thread that defines the method, and no failure did. Most failures reached the data, but they searched mail for "market share" and the subject line says "market-share".
 - **Seat surplus.** All 3 passes read the meeting notes that carve out one customer, and no failure did. 14 of the 27 failures never reached the task data, and 14 ran under three minutes.
 - **Older over newer.** On the contract, marketing and proposal tasks, agents trusted an older message over a newer one.
-- **Teams.** Agents skipped the call's `source` field, which the tool schema calls optional.
+- **Teams.** Agents skipped the call's `source` field, which the tool schema calls optional. Whether the task really gives this one is arguable: the prompt names the caller but not the field.
 
 The benchmark ships reference notes for its business tasks that say exactly where to look: read the 11_20 meeting notes, check the method notes, search the mail. Our writers' notes said only that the data lives behind the file tools.
 
@@ -157,7 +157,7 @@ The writers' sessions show where the notes' content stopped: first-message extra
 The follow-up questions, in order:
 
 1. **Rerun the writer with a reader that sees every turn and every log format**, same model and budget, and measure how many of the 73 requirements the new notes cover.
-2. **Add the lost conventions by hand** (the release-tier rule, the runnable example, the `source` field) and rerun. If the never-met requirements start passing, the writer was the bottleneck for those tasks.
+2. **Add the lost conventions by hand** (the release-tier rule, the runnable example, the `source` field) and rerun. If the never-met requirements start passing, the missing content was what held those tasks back, and the writer is where it was lost.
 3. **Test pointer notes** on tasks whose answers sit in the task's own files, which is where most failures were.
 4. **Test whether agents act on partial notes** by pairing each with a version that states the rule in full.
 5. **Report requirement-level effects** alongside strict passes, with content labelled before the runs.

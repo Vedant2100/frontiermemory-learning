@@ -244,10 +244,11 @@ Each of those still needed the convention or verdict that no notes held.
 | Labels deciding "in the task" | In the task, missed | Never reached the writer | Writer saw, kept part, dropped or misled | Notes arms: trials better notes could flip |
 |---|---|---|---|---|
 | Blind (primary) | 455 | 110 | 35 | 57 of 227 |
+| Blind, strict: low-confidence labels, Teams `source` and partnership's single envelope count as not in the task | 357 | 138 | 60 | 84 of 227 |
 | Auditors (saw outcomes) | 407 | 129 | 42 | 74 of 227 |
 | Explicit only (derivable counts as not in the task) | 51 | 267 | 120 | 202 of 227 |
 
-The explicit-only row is the extreme reading. It treats a method in a mail thread, or the newer of two conflicting emails, as information the task does not give. Under it, the writer stage dominates. The blind and auditor labels agree that most of this information was reachable in the task. The cost was search: 268 of the 455 needed a search or a choice between sources.
+The strict row drops the four blind labels rated low confidence (CSM's entitlement, partnership's description field, the ChatGPT proposal's override, cookie store's docs mention; 62 failures between them). It also drops two the reviewer judged too generous. Teams' `source` is labelled stated in the prompt, but the prompt never names the field the checker reads. Partnership's single envelope rests on "the contract" being singular. The explicit-only row is the extreme reading. It treats a method in a mail thread, or the newer of two conflicting emails, as information the task does not give. Under it, the writer stage dominates. The blind and auditor labels agree that most of this information was reachable in the task. The cost was search: 268 of the 455 needed a search or a choice between sources.
 
 **Counting distinct requirements.** One generation's miss repeats across every trial and arm that carries it, and run 1's content is in four arms. Counted as distinct requirements in notes arms, the never-reached-the-writer stage covers 7 requirements for run 1, 12 for run 3 and 7 for run 4. The in-task stage covers 32, 23 and 24. Three conventions (the awilix bump in both variants and customer delivery's runnable example) account for 54 of the 110 never-reached trial-requirements.
 
@@ -422,12 +423,12 @@ Notes that covered a requirement only partly, or misled, were a different matter
 
 The largest group. With the blind labels, 224 failed trials missed only requirements their own task made available, and 285 missed at least one. Of the 455 failed trial-requirements here, the blind labeller rated the information this way:
 
-- 72 stated in the prompt;
+- 72 stated in the prompt (28 of them Teams' `source` field, which is at best derivable: the prompt names the caller but not the field);
 - 40 in a source the prompt points to;
 - 75 in one obvious place;
 - 268 findable only by searching mail or files, or by choosing between conflicting sources.
 
-These are mostly search and selection failures, not capability limits:
+For 66 of the 455, the arm's own notes also covered the requirement, fully in 3 (run 3's CSM entitlement, never opened) and partly in 63. These are mostly search and selection failures, not capability limits:
 
 - **Not opening the defining file.** On the three APEX tasks the benchmark ships its own reference skill files, which agents never see. They say exactly where to look: read the 11_20 meeting notes, check the method notes in `Brainstorming.docx`, search mail before computing an ambiguous metric. The trials that passed were the ones that happened to look:
   - all 5 market-share passes read the mail thread that defines the method, and no failing trial did. 23 of the 25 failures reached the chart and workbook, but mail searches for "market share" returned nothing because the subject is hyphenated ("market-share");
@@ -551,7 +552,7 @@ By arm, with the never-met count shown separately because it overlaps the other 
 | Task | Strict passes (of 30) | Requirement that decides it | What memory did | Where the information stopped |
 |---|---|---|---|---|
 | CSM | 19 | Upgrade entitlement 31 to premium, 24x7 | Failures changed the wrong entitlement or set "enterprise". The checker does not read the monthly cap or price despite the check names. Run 3's notes hold the answer, unopened | Four passing earlier runs show it; only run 3's writer looked |
-| Marketing | 15 | Follow the newer Slack method over an older email (17 of 30) | Nothing measurable; control passes 2 of 3. Blend lost the restricted-topics requirement 0 of 3 | Three passing earlier runs show the answer; parsers hid them from all writers |
+| Marketing | 15 | Follow the newer Slack method over an older email (17 of 30) | Nothing measurable; control passes 2 of 3. Blend lost the restricted-topics requirement 0 of 3 | Three passing earlier runs show the answer. Runs 1 and 3 never parsed them; run 4 opened one but dropped the email that held the answer |
 | Word2Vec | 14 | Path and signature (absent from the prompt), then empty input | Notes and records supplied the path and signature in every arm that had them; the empty-input test remained | Path in the notes; the empty-input fallback cut off by the writers' prints |
 | Market share | 5 | Use the method defined in a mail thread (risk-adjusted ARR) | Passes are exactly the trials that read the thread. Notes point to mail only generically | No earlier run of this task; a transferable lesson no writer read |
 | cattrs | 4 | A documented, runnable example (absent from the prompt) | No note covers it. The 26 failures had no Python example block. The reference solution is code-only and fails this check | The preference in other repos' maintainer turns; never reached the writers |
