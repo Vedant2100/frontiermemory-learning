@@ -65,6 +65,20 @@ What counts as "the task gives it" is a judgement. If only what the prompt state
 
 With 45 trials per condition, differences of a few failures are noise. The comparisons that test memory causally are the content test and the exposure ladder below.
 
+## Where the successes came from
+
+![Where each arm's passing trials got their information](figures/v2/fig9-passes-by-arm.png)
+
+The same question for the 65 passes:
+
+- **45 were on tasks where the task gives every requirement:** CSM, marketing, market share, seat surplus, Teams and partnership. Every condition has 1 to 6 of these, the control 5. They came from finding what the task gave; on market share and seat surplus every pass read the file that defines the method, and no failure did. None needed memory.
+- **14 needed information the task does not give, and got it from memory.** All are Word2Vec, and every one of them opened the notes or the raw records, or had the notes pasted in. Without memory, Word2Vec passed 0 of 6 times.
+- **6 needed outside information and met it with no memory covering it:** cattrs and cookie store, where the conventions they want are what the model does anyway. The control passed cookie store once.
+
+At the level of single requirements, the pattern repeats. When the agent read a note that fully covered a requirement, it met it every time: 59 of 59. When the notes said nothing about a requirement, the agent met it 36% of the time, the same as with no memory (35%). Requirements the prompt states were met 83 to 92% of the time in every condition; requirements that need a search, 21 to 41%. Every memory condition except raw records met fewer of the search requirements than the control, by 2 to 8, but none by more than chance would give on its own.
+
+Three requirements were met only with memory: Word2Vec's file path, and two of DAPT's counting rules.
+
 ## The agent missed what its task gave it
 
 In every condition, 20 to 27 of the 45 trials failed only on things their own task told them, in its prompt, files, mail or tools. Most of these are search failures, not skill failures:

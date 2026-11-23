@@ -56,6 +56,8 @@ Each is out of 48 requirement-trials. Read-first and all shown miss 10 and 9 few
 
 Section 4.2 gives the full split by arm, and the pooled trial-requirement counts for reference.
 
+**The successes, the same way (section 4.13).** Of the 65 passes, 45 are on tasks where the task gives every requirement, and every arm has 1 to 6 of them. 14 needed information the task does not give and got it from notes or records the agent read, all on Word2Vec; control and placebo passed Word2Vec 0 of 6 times. The other 6 (cattrs, cookie store) met their outside requirements without any covering source, from the model's own defaults. A fully covering note that was read was met 59 of 59 times; notes silent on a requirement left it at control's rate (0.36 against 0.35).
+
 The story the stages tell:
 
 - **The experience was mostly there.** Of the 57 requirements that ever failed, the corpus holds the information fully for 32 and partly for 20. For 23 the evidence is a same-task passing run or verifier feedback. That includes conventions behind requirements no trial ever met. Earlier maintainers had said "this one's internal release tier is 6" and later "bump the minor version", which is consistent with the rule the awilix test enforces. They had asked for "one runnable failure or cancellation example", which customer delivery's hidden preference wants. The tracers who judged this knew the requirement they were looking for (section 7).
@@ -633,6 +635,71 @@ By arm, with the never-met count shown separately because it overlaps the other 
 | DAPT | 0 | Port-scan verdict from unstated thresholds | Notes supplied every metric they cover; the verdict stayed out of reach | Only by comparing feedback across runs |
 | Eurogrid | 0 | Method in a notes file no trial read; rubric inconsistent at the second decimal | Nothing | A transferable "read the team notes" lesson no writer read |
 
+### 4.13 Where the successes came from
+
+The mirror of section 4.2: for each of the 65 passing trials, and for every requirement met in any trial, where the information came from. The same units apply. Each arm's 45 trials are the denominator, requirements are counted per distinct requirement where the question is about the requirement, and pooled figures are labelled. Outcome-blind labels decide what the task gives (`causal/successes.py`, `out/successes.json`).
+
+**The passes, by arm.**
+
+![Where each arm's passing trials got their information](figures/v2/fig9-passes-by-arm.png)
+
+| Arm | Passes (of 45) | Task gave every requirement | Needed outside information: from notes or records the agent read | Needed outside information: met with no covering source read |
+|---|---|---|---|---|
+| Control | 6 | 5 | – | 1 (cookie store) |
+| Placebo | 4 | 4 | – | 0 |
+| Raw records | 9 | 6 | 3 (Word2Vec, records opened) | 0 |
+| Blend | 3 | 3 | – | 0 |
+| Run 1 notes | 7 | 5 | 2 (Word2Vec) | 0 |
+| Run 3 notes | 4 | 1 | 1 (Word2Vec) | 2 (cattrs, Word2Vec) |
+| Run 4 notes | 8 | 6 | 1 (Word2Vec) | 1 (cattrs) |
+| Read-first | 8 | 5 | 3 (Word2Vec) | 0 |
+| All shown | 7 | 5 | 2 (Word2Vec) | 0 |
+| None shown | 9 | 5 | 1 (Word2Vec) | 3 (cattrs 2, cookie store) |
+
+Of the 65 passes, 45 are on six tasks where the task gives every scored requirement: CSM 19, marketing 15, market share 5, seat surplus 3, Teams 2 and partnership 1. The other 20 are on the three tasks with a requirement the task does not give and that some trial met: Word2Vec 14, cattrs 4 and cookie store 2.
+
+- **Word2Vec is where memory produced passes.** All 14 Word2Vec passes come from trials that opened the notes or the raw records, or had the notes pasted in. In 10 of the 11 passes in notes arms the agent opened, or was handed, the file covering the path or the signature; the eleventh, in run 3, opened other memory files. The 3 raw-records passes opened records. Control and placebo passed Word2Vec 0 of 6 times and never met its file-path requirement; every other arm met it 3 of 3 times, blend included. Blend still passed 0 of 3, on the empty-input test (section 4.6). "Part from notes read" in the figure means the agent opened the file covering one Word2Vec requirement and met the other from a different file in the same notes.
+- **The cattrs and cookie-store passes are the model's own defaults.** Their outside requirements are a convention no notes cover: calling `default_factory` once per call (met in 29 of 30 trials, control 3 of 3) and cookie store's runnable example and clean working tree. Control passed cookie store once without any memory.
+- **The 45 passes on fully specified tasks came from finding what the task gave.** On market share and seat surplus, every pass read the file that defines the method and no failing trial did (section 4.7). Every arm has 1 to 6 of these (control 5, placebo 4, run 3 1). None of them needed memory, and the notes arms have about as many as control (1 to 6, against control's 5).
+
+So of the 65 passes, 14 depended on information the agent got from memory or records, all on one task. The other 51 would have needed no memory.
+
+**Requirements met, by arm, where the task gives them.** The blind labeller also rated how the task gives each requirement. Met per arm, out of all requirement-trials:
+
+| Arm | Stated in the prompt | Prompt points to the source | One obvious place | Only by searching or choosing between sources |
+|---|---|---|---|---|
+| Control | 53 of 60 | 13 of 18 | 34 of 42 | 16 of 39 |
+| Placebo | 53 of 60 | 14 of 18 | 30 of 42 | 13 of 39 |
+| Raw records | 54 of 60 | 17 of 18 | 35 of 42 | 16 of 39 |
+| Blend | 51 of 60 | 12 of 18 | 33 of 42 | 9 of 39 |
+| Run 1 | 53 of 60 | 12 of 18 | 36 of 42 | 12 of 39 |
+| Run 3 | 49 of 59 | 15 of 18 | 35 of 41 | 8 of 39 |
+| Run 4 | 51 of 59 | 13 of 18 | 34 of 41 | 13 of 39 |
+| Read-first | 53 of 59 | 16 of 18 | 33 of 41 | 12 of 39 |
+| All shown | 55 of 60 | 15 of 18 | 34 of 42 | 14 of 39 |
+| None shown | 52 of 59 | 13 of 18 | 37 of 41 | 9 of 39 |
+
+Stated requirements are met 83 to 92% of the time in every arm. Requirements that need a search are met 21 to 41% of the time. Of the 13 distinct search requirements, none was met in every trial and one was never met (Eurogrid's average). Every memory arm except raw records met fewer search requirements than control, by 2 to 8, but no single arm differs significantly (within-task permutation: run 3's −8 has p = 0.14, every other arm p ≥ 0.27). The control is shared by all nine comparisons, so they are not independent. Whether notes draw the agent away from searching its own task's files is a question for the follow-up, not a finding.
+
+**Requirements met, by arm, where the task does not give them.** By what the arm's memory held and whether the agent read it:
+
+| Arm | Notes fully cover, read | Notes fully cover, not read | Notes partly cover, read | Notes partly cover, not read | Notes silent |
+|---|---|---|---|---|---|
+| Run 1 | 9 of 9 | 6 of 9 | 4 of 6 | 0 of 6 | 8 of 27 |
+| Run 3 | 2 of 2 | 1 of 1 | 2 of 2 | 4 of 7 | 17 of 45 |
+| Run 4 | 8 of 8 | 4 of 10 | 5 of 6 | 4 of 9 | 7 of 24 |
+| Read-first | 17 of 17 | 1 of 1 | 9 of 12 | – | 10 of 27 |
+| All shown | 18 of 18 | – | 8 of 12 | – | 9 of 27 |
+| None shown | 5 of 5 | 4 of 13 | 1 of 3 | 3 of 9 | 12 of 27 |
+
+For comparison, control met 18 of 51 and placebo 14 of 51 (0.35 and 0.27). Raw records met 26 of 35 when the agent opened records and 6 of 22 when it did not. Blend met 29 of 57; its notes are not blind-labelled.
+
+- **A fully covering note that was read was met every time:** 59 of 59, in every arm.
+- **Notes that say nothing leave the agent at the no-memory rate.** Summed over the six notes arms they were met 63 of 177 times (0.36), against control's 0.35. In each arm the rate is 0.29 to 0.44.
+- **Read partial notes sit between:** 29 of 41 met, against 11 of 31 unread. That comparison is observational, and it mixes tasks; section 4.2 gives it within task.
+
+**Per distinct requirement.** Of the 19 requirements the task does not give, 10 were met at least once without memory (in control or placebo), 3 were met only with memory or records (Word2Vec's file path, and DAPT's bidirectional-pair and minute-bucket rules), 4 were never met in any arm (the two awilix version bumps, customer delivery's runnable example, DAPT's port-scan verdict), and 2 are not measured in control (Word2Vec's signature and empty-input requirements). Every requirement that memory alone made reachable was on Word2Vec or DAPT, the same two tasks that carry the content test and the ladder.
+
 ## 5. Model of the failures
 
 The data fit a simple model:
@@ -776,9 +843,10 @@ The first draft of this correction also said "memory did not reduce in-task miss
   - `access.py`: memory reads from trajectories.
   - `analysis.py`: requirement table, content test, exposure ladder, access table, failure classes.
   - `stages.py`: the stage of every failed trial-requirement, from the corpus trace, under blind, auditor and explicit-only prompt labels, pooled and per arm.
+  - `successes.py`: where the 65 passes and every met requirement got their information, per arm and per distinct requirement (section 4.13).
   - `aggregation.py`: the stage counts per arm with all-trial denominators, per distinct requirement and generation, the content test by arm and task, arm-minus-control permutation tests on missed requirements, and the other corrections to pooled figures in section 8.
-  - `figures.py` and `stage_figures.py`: the figures in `figures/v2/` (`stage_figures.py` draws fig6 to fig8).
-- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json`, `stages.json` and `aggregation.json` hold every number in this report, with no raw task, memory or corpus text.
+  - `figures.py` and `stage_figures.py`: the figures in `figures/v2/` (`stage_figures.py` draws fig6 to fig9).
+- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json`, `stages.json`, `aggregation.json` and `successes.json` hold every number in this report, with no raw task, memory or corpus text.
 - **Private, not in git.** Under `~/fm-extract-20261116/`:
   - the trial data;
   - the per-task audit files with quotes (`causal/audit/`);
@@ -799,5 +867,6 @@ python3 analysis.py PRIVATE out/requirement-analysis-auditor-labels.json
 python3 stages.py PRIVATE PRIVATE/causal/blind-labels.json out/stages.json "PRIVATE/causal/blind-prompt/labels-*.json"
 python3 figures.py out/requirement-analysis-blind-labels.json ../figures/v2
 python3 aggregation.py PRIVATE PRIVATE/causal/blind-labels.json "PRIVATE/causal/blind-prompt/labels-*.json" out/requirement-analysis-blind-labels.json out/aggregation.json
-python3 stage_figures.py out/stages.json ../figures/v2 out/aggregation.json
+python3 successes.py PRIVATE PRIVATE/causal/blind-labels.json "PRIVATE/causal/blind-prompt/labels-*.json" out/successes.json
+python3 stage_figures.py out/stages.json ../figures/v2 out/aggregation.json out/successes.json
 ```

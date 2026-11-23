@@ -1,6 +1,6 @@
 """Draw the stage figures from stages.json.
 
-Usage: python3 stage_figures.py stages.json OUT_DIR aggregation.json
+Usage: python3 stage_figures.py stages.json OUT_DIR aggregation.json [successes.json]
 """
 import json, sys, os, textwrap
 import matplotlib
@@ -16,7 +16,7 @@ UP = [("experience_missing", "No earlier run holds it", MUTED),
       ("in_notes", "In the notes", BLUE)]
 
 
-def main(src, out, agg_src):
+def main(src, out, agg_src, succ_src=None):
     d = json.load(open(src))
     agg = json.load(open(agg_src))
     os.makedirs(out, exist_ok=True)
@@ -121,8 +121,41 @@ def main(src, out, agg_src):
     fig.tight_layout(rect=(0, 0, 1, 0.89))
     fig.savefig(os.path.join(out, "fig8-stages-by-arm.png"), dpi=160)
     plt.close(fig)
+    if succ_src:
+        sc = json.load(open(succ_src))["passes_by_arm"]
+        classes = [("task_gave_everything", "Task gave every requirement", AQUA),
+                   ("outside_info_all_from_notes_read", "Needed outside information; all of it from notes the agent read", BLUE),
+                   ("outside_info_partly_from_notes_read", "Needed outside information; part from notes read", VIOLET),
+                   ("raw_records_opened", "Needed outside information; raw records opened", ORANGE),
+                   ("outside_info_met_without_reading_a_covering_source", "Needed outside information; met without reading a covering source", MUTED)]
+        fig, ax = plt.subplots(figsize=(10, 4.4), facecolor=SURF)
+        for y, (a, name) in enumerate(arm_names):
+            left = 0
+            for k, _, col in classes:
+                v = sc[a]["by_class"].get(k, 0)
+                if v:
+                    ax.barh(y, v, left=left, color=col, height=0.62, edgecolor=SURF, linewidth=2)
+                    if v >= 2:
+                        ax.text(left + v / 2, y, str(v), ha="center", va="center", fontsize=7.5, color="white")
+                left += v
+            ax.text(left + 0.15, y, f"{sc[a]['passes']}/{sc[a]['of']}", va="center", fontsize=7.5, color=INK2)
+        ax.set_yticks(range(len(arm_names)), [n for _, n in arm_names], fontsize=8.5)
+        ax.axhline(3.5, color=INK2, linewidth=0.6)
+        ax.invert_yaxis()
+        ax.set_xlim(0, 11)
+        ax.set_xticks(range(0, 11, 2))
+        ax.xaxis.grid(True, color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        style(ax)
+        handles = [plt.Rectangle((0, 0), 1, 1, color=c) for _, _, c in classes]
+        ax.legend(handles, [l for _, l, _ in classes], ncol=2, fontsize=7.5, frameon=False, loc="upper left", bbox_to_anchor=(0, -0.08))
+        fig.text(0.01, 0.97, "Where each arm's passing trials got their information", fontsize=10, color=INK, va="top")
+        fig.text(0.01, 0.92, "Passes of 45 trials per arm. 'Outside information': requirements the task does not give (outcome-blind labels). Arms above the line had no generated notes.", fontsize=8, color=INK2, va="top")
+        fig.tight_layout(rect=(0, 0, 1, 0.89))
+        fig.savefig(os.path.join(out, "fig9-passes-by-arm.png"), dpi=160)
+        plt.close(fig)
     print("stage figures written to", out)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+    main(*sys.argv[1:5])
