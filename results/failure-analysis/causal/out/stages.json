@@ -1,0 +1,1302 @@
+{
+ "failed_trials": 385,
+ "failed_trial_requirements": 742,
+ "trial_requirements_by_stage": {
+  "writer_never_saw": 129,
+  "writer_saw_dropped": 3,
+  "writer_saw_partial": 39,
+  "harness_not_exposed": 9,
+  "agent_did_not_open": 9,
+  "in_task_missed": 407,
+  "no_memory_arm": 82,
+  "raw_records_arm": 30,
+  "blend_arm": 34
+ },
+ "of_which_unstated_spec": {
+  "writer_never_saw": 125,
+  "writer_saw_dropped": 3,
+  "writer_saw_partial": 39,
+  "harness_not_exposed": 9,
+  "agent_did_not_open": 9,
+  "in_task_missed": 28,
+  "no_memory_arm": 81,
+  "raw_records_arm": 29,
+  "blend_arm": 32
+ },
+ "trial_requirements_by_arm_and_stage": {
+  "control": {
+   "in_task_missed": 36,
+   "no_memory_arm": 40
+  },
+  "run1": {
+   "writer_never_saw": 21,
+   "writer_saw_dropped": 2,
+   "writer_saw_partial": 10,
+   "agent_did_not_open": 3,
+   "in_task_missed": 40
+  },
+  "run3": {
+   "writer_never_saw": 30,
+   "writer_saw_partial": 5,
+   "in_task_missed": 46
+  },
+  "run4": {
+   "writer_never_saw": 21,
+   "writer_saw_partial": 7,
+   "agent_did_not_open": 6,
+   "in_task_missed": 41
+  },
+  "placebo": {
+   "in_task_missed": 44,
+   "no_memory_arm": 42
+  },
+  "readfirst": {
+   "writer_never_saw": 19,
+   "writer_saw_dropped": 1,
+   "writer_saw_partial": 3,
+   "in_task_missed": 40
+  },
+  "allshown": {
+   "writer_never_saw": 20,
+   "writer_saw_partial": 4,
+   "in_task_missed": 39
+  },
+  "noneshown": {
+   "writer_never_saw": 18,
+   "writer_saw_partial": 10,
+   "harness_not_exposed": 9,
+   "in_task_missed": 41
+  },
+  "evidence": {
+   "in_task_missed": 32,
+   "raw_records_arm": 30
+  },
+  "blend": {
+   "in_task_missed": 48,
+   "blend_arm": 34
+  }
+ },
+ "trials_with_any_failure_at_stage": {
+  "writer_never_saw": 95,
+  "writer_saw_dropped": 3,
+  "writer_saw_partial": 24,
+  "harness_not_exposed": 3,
+  "agent_did_not_open": 4,
+  "in_task_missed": 255,
+  "no_memory_arm": 42,
+  "raw_records_arm": 19,
+  "blend_arm": 23
+ },
+ "trials_whose_failures_are_all_one_stage": {
+  "writer_never_saw": 53,
+  "writer_saw_partial": 9,
+  "in_task_missed": 191,
+  "no_memory_arm": 28,
+  "raw_records_arm": 13,
+  "blend_arm": 15
+ },
+ "trials_with_mixed_stages": 76,
+ "waterfall_upstream_first": [
+  {
+   "stage": "writer_never_saw",
+   "trials": 95
+  },
+  {
+   "stage": "writer_saw_dropped",
+   "trials": 0
+  },
+  {
+   "stage": "writer_saw_partial",
+   "trials": 15
+  },
+  {
+   "stage": "harness_not_exposed",
+   "trials": 0
+  },
+  {
+   "stage": "agent_did_not_open",
+   "trials": 0
+  },
+  {
+   "stage": "in_task_missed",
+   "trials": 219
+  },
+  {
+   "stage": "no_memory_arm",
+   "trials": 28
+  },
+  {
+   "stage": "raw_records_arm",
+   "trials": 13
+  },
+  {
+   "stage": "blend_arm",
+   "trials": 15
+  },
+  {
+   "stage": "other_or_none",
+   "trials": 0
+  }
+ ],
+ "waterfall_downstream_first": [
+  {
+   "stage": "blend_arm",
+   "trials": 23
+  },
+  {
+   "stage": "raw_records_arm",
+   "trials": 19
+  },
+  {
+   "stage": "no_memory_arm",
+   "trials": 42
+  },
+  {
+   "stage": "in_task_missed",
+   "trials": 227
+  },
+  {
+   "stage": "agent_did_not_open",
+   "trials": 3
+  },
+  {
+   "stage": "harness_not_exposed",
+   "trials": 3
+  },
+  {
+   "stage": "writer_saw_partial",
+   "trials": 15
+  },
+  {
+   "stage": "writer_saw_dropped",
+   "trials": 0
+  },
+  {
+   "stage": "writer_never_saw",
+   "trials": 53
+  },
+  {
+   "stage": "other_or_none",
+   "trials": 0
+  }
+ ],
+ "all_failed_trial_requirements_by_corpus_status": {
+  "partial": 246,
+  "present": 463,
+  "absent": 33
+ },
+ "all_failed_trial_requirements_by_upstream_stage_per_generation": {
+  "run1": {
+   "writer_never_saw": 444,
+   "writer_saw_partial": 179,
+   "writer_saw_dropped": 39,
+   "in_notes": 47,
+   "experience_missing": 33
+  },
+  "run3": {
+   "writer_never_saw": 581,
+   "writer_saw_partial": 111,
+   "in_notes": 17,
+   "experience_missing": 33
+  },
+  "run4": {
+   "writer_never_saw": 379,
+   "writer_saw_partial": 150,
+   "writer_saw_dropped": 112,
+   "in_notes": 68,
+   "experience_missing": 33
+  }
+ },
+ "requirements": [
+  {
+   "key": "apex-brightpath-market-share:R1-risk-adjusted-within-industry-ARR-mix",
+   "prompt": "derivable",
+   "failed_trials": 25,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "apex-brightpath-seat-surplus:R1-notes-defined-seat-method",
+   "prompt": "derivable",
+   "failed_trials": 27,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R1-lowest-ratio-pair",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R2-causes-of-curtailment",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R3-average-avoided-curtailment-MWh",
+   "prompt": "derivable",
+   "failed_trials": 30,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-marketing-conten:R1_report_sent_all_stages",
+   "prompt": "explicit",
+   "failed_trials": 1,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-marketing-conten:R2_call_out_customer_referral_program",
+   "prompt": "derivable",
+   "failed_trials": 4,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-marketing-conten:R3_follow_newer_slack_methodology_and_code",
+   "prompt": "derivable",
+   "failed_trials": 13,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-marketing-conten:R4_do_not_mention_restricted_topics",
+   "prompt": "derivable",
+   "failed_trials": 8,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-marketing-conten:R5_no_external_or_marketing_recipients",
+   "prompt": "derivable",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R1_save_strategy_with_chatgpt",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R2_no_cross_account_injection",
+   "prompt": "derivable",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R3_cfo_cost_roi_focus_not_growth",
+   "prompt": "derivable",
+   "failed_trials": 14,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R4_cio_security_soc2_encryption",
+   "prompt": "derivable",
+   "failed_trials": 7,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R5_retail_supply_chain",
+   "prompt": "derivable",
+   "failed_trials": 2,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R6_roi_sized_by_linkedin_12000",
+   "prompt": "derivable",
+   "failed_trials": 16,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R7_c_level_override_partnership_not_competitive",
+   "prompt": "derivable",
+   "failed_trials": 27,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R1_signer_emily_not_mark",
+   "prompt": "derivable",
+   "failed_trials": 28,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_dropped",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R2_subject_format_with_750k",
+   "prompt": "derivable",
+   "failed_trials": 27,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R3_kickoff_event_type_for_500k_plus",
+   "prompt": "derivable",
+   "failed_trials": 27,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R4_single_envelope",
+   "prompt": "absent",
+   "failed_trials": 8,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R5_stage_contract_sent",
+   "prompt": "derivable",
+   "failed_trials": 15,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "automationbench-sales-partnershi:R6_description_contains_750k",
+   "prompt": "derivable",
+   "failed_trials": 18,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-explicit:R1_release_tier_version_bump",
+   "prompt": "absent",
+   "failed_trials": 30,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "awilix-release-tier-explicit:R2_initialize_rejects_never_throws_synchronously",
+   "prompt": "derivable",
+   "failed_trials": 5,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-explicit:R3_core_async_initialization_behaviour_and_types",
+   "prompt": "explicit",
+   "failed_trials": 2,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-explicit:R4_full_functional_gate",
+   "prompt": "derivable",
+   "failed_trials": 9,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-implicit:R1_release_tier_version_bump",
+   "prompt": "absent",
+   "failed_trials": 30,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "awilix-release-tier-implicit:R2_initialize_rejects_never_throws_synchronously",
+   "prompt": "derivable",
+   "failed_trials": 4,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-implicit:R3_core_async_initialization_behaviour_and_types",
+   "prompt": "explicit",
+   "failed_trials": 1,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "awilix-release-tier-implicit:R4_full_functional_gate",
+   "prompt": "derivable",
+   "failed_trials": 8,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "build-word2vec-pipeline:R1-artifact-path-and-entrypoint",
+   "prompt": "absent",
+   "failed_trials": 6,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "in_notes",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "build-word2vec-pipeline:R2-task_func-signature-preprocessing-min_count",
+   "prompt": "absent",
+   "failed_trials": 1,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "build-word2vec-pipeline:R3-empty-input-returns-Word2Vec",
+   "prompt": "absent",
+   "failed_trials": 10,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "cattrs-compositional-changelog:R1_core_partial_structuring_api",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R2_regression_error_pickling",
+   "prompt": "absent",
+   "failed_trials": 0,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R3_nested_partial_value_propagation",
+   "prompt": "explicit",
+   "failed_trials": 2,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R4_errors_populated_under_detailed_validation",
+   "prompt": "derivable",
+   "failed_trials": 2,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R5_refine_preserves_structured_fields",
+   "prompt": "explicit",
+   "failed_trials": 2,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R6_default_factory_called_once_per_call",
+   "prompt": "derivable",
+   "failed_trials": 1,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cattrs-compositional-changelog:R7_user_preference_docs_example_changelog",
+   "prompt": "absent",
+   "failed_trials": 26,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "cookie-store-compositional-chang:R1_functional_cookie_semantics",
+   "prompt": "explicit",
+   "failed_trials": 26,
+   "corpus": "absent",
+   "corpus_kinds": [],
+   "stage": {
+    "run1": "experience_missing",
+    "run3": "experience_missing",
+    "run4": "experience_missing"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "cookie-store-compositional-chang:R2_docs_mention_CookieStore",
+   "prompt": "absent",
+   "failed_trials": 6,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "cookie-store-compositional-chang:R3_runnable_CookieStore_example",
+   "prompt": "absent",
+   "failed_trials": 23,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "cookie-store-compositional-chang:R4_mocked_network_tests",
+   "prompt": "absent",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "cookie-store-compositional-chang:R5_no_stray_artifacts",
+   "prompt": "absent",
+   "failed_trials": 11,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_saw_dropped",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R0_existing_behaviour_and_build",
+   "prompt": "derivable",
+   "failed_trials": 0,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R1_level_ordering_concurrency_metrics",
+   "prompt": "explicit",
+   "failed_trials": 1,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R2_resolution_gating",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R3_rollback_on_failure",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R4_initializer_semantics_idempotence_scopes",
+   "prompt": "explicit",
+   "failed_trials": 1,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R5_reinit_after_failure_rejects",
+   "prompt": "explicit",
+   "failed_trials": 6,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R6_cycle_rejects_and_is_retryable",
+   "prompt": "explicit",
+   "failed_trials": 8,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R7_pref_runnable_failure_example",
+   "prompt": "absent",
+   "failed_trials": 30,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R8_pref_structured_error_context",
+   "prompt": "absent",
+   "failed_trials": 26,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R9_pref_monotonic_timing",
+   "prompt": "absent",
+   "failed_trials": 5,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R1-basic-counts-sizes-entropy-degree",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R2-timestamps-duration-iat",
+   "prompt": "explicit",
+   "failed_trials": 1,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R3-ipv4-only-ip-scoped-metrics",
+   "prompt": "absent",
+   "failed_trials": 8,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R4-protocol_udp-includes-ipv6",
+   "prompt": "absent",
+   "failed_trials": 5,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R5-five-tuple-flows-ipv4-only",
+   "prompt": "absent",
+   "failed_trials": 9,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R6-bidirectional-pairs-counted-once",
+   "prompt": "absent",
+   "failed_trials": 18,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "in_notes",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R7-minute-buckets-anchored-at-first-packet",
+   "prompt": "absent",
+   "failed_trials": 22,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_never_saw",
+    "run4": "in_notes"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R8-unique-port-counts",
+   "prompt": "absent",
+   "failed_trials": 11,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R9-port-scan-false-and-benign-true",
+   "prompt": "absent",
+   "failed_trials": 30,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_verifier_feedback",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R10-dos-false",
+   "prompt": "absent",
+   "failed_trials": 11,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "same_task_verifier_feedback",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R11-beaconing-false",
+   "prompt": "absent",
+   "failed_trials": 9,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_verifier_feedback"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_never_saw",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R1_location_rename_plot",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "in_notes",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R2_installed_product_repair_warranty",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "in_notes",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R3_entitlement_31_premium_24x7",
+   "prompt": "derivable",
+   "failed_trials": 11,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "in_notes",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R4_contract_10_end_date",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "same_task_passing_run"
+   ],
+   "stage": {
+    "run1": "writer_never_saw",
+    "run3": "writer_saw_dropped",
+    "run4": "writer_never_saw"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "enterpriseops-teams-2725d17f:R1_private_channel_with_both_members",
+   "prompt": "explicit",
+   "failed_trials": 0,
+   "corpus": "present",
+   "corpus_kinds": [
+    "transferable_other_task",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_saw_dropped",
+    "run4": "writer_saw_dropped"
+   },
+   "unstated_spec": false
+  },
+  {
+   "key": "enterpriseops-teams-2725d17f:R2_audio_call_source_james_target_alice",
+   "prompt": "derivable",
+   "failed_trials": 28,
+   "corpus": "partial",
+   "corpus_kinds": [
+    "transferable_other_task",
+    "same_task_failing_run_hint"
+   ],
+   "stage": {
+    "run1": "writer_saw_partial_kept",
+    "run3": "writer_saw_partial_kept",
+    "run4": "writer_saw_partial_kept"
+   },
+   "unstated_spec": true
+  }
+ ],
+ "untraced_requirements": []
+}
