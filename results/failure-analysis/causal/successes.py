@@ -180,6 +180,68 @@ def main(private, blind, prompt_glob, out_path):
 
     out["search_or_choice_met_arm_minus_control"] = {a: perm(a) for a in ARMS if a != "control"}
 
+    ctrl_rate = {}
+    for r in reqs:
+        c = D.cell(r["key"], "control")
+        if c:
+            ctrl_rate[r["key"]] = sum(c) / len(c)
+    obs = exp = n = 0
+    for t in D.trials:
+        if t["arm"] not in S.NOTES_ARMS:
+            continue
+        for r in scored_in(t):
+            if intask(r) or source(t, r) != "notes_silent" or r["key"] not in ctrl_rate:
+                continue
+            obs += D.out[(t["trial"], r["key"])]
+            exp += ctrl_rate[r["key"]]
+            n += 1
+    out["notes_silent_matched_to_control"] = {"cells": n, "met": obs, "expected_at_control_rate": round(exp, 1)}
+
+    cover = collections.Counter()
+    for t in D.trials:
+        for r in scored_in(t):
+            if not intask(r) and source(t, r) == "notes_cover_read":
+                cover[r["key"]] += 1
+    out["notes_cover_read_cells_by_requirement"] = dict(cover)
+
+    def fisher_one_sided(a, b, c, d):
+        from math import comb
+        n1, n2, k = a + b, c + d, a + c
+        tot = comb(n1 + n2, k)
+        return sum(comb(n1, x) * comb(n2, k - x) for x in range(a, min(n1, k) + 1)) / tot
+
+    mem_only = {}
+    for k, d in dist.items():
+        base = [d[a] for a in ("control", "placebo") if a in d]
+        if not base or sum(int(x.split("/")[0]) for x in base):
+            continue
+        mm = [d[a] for a in d if a not in ("control", "placebo")]
+        m1, n1 = sum(int(x.split("/")[0]) for x in mm), sum(int(x.split("/")[1]) for x in mm)
+        n0 = sum(int(x.split("/")[1]) for x in base)
+        if m1:
+            mem_only[k] = {"memory_arms": f"{m1}/{n1}", "control_placebo": f"0/{n0}",
+                           "fisher_one_sided_p": round(fisher_one_sided(m1, n1 - m1, 0, n0), 3)}
+    out["met_only_with_memory_or_records_tests"] = mem_only
+
+    avail = collections.Counter()
+    for t in passes:
+        if any(not intask(r) for r in scored_in(t)):
+            continue
+        a = t["arm"]
+        acc = access.get(t["trial"], {})
+        if a in ("allshown", "blend"):
+            avail["memory_pasted"] += 1
+        elif a not in ("control", "placebo") and acc.get("opened"):
+            avail["memory_opened"] += 1
+        else:
+            avail["no_memory_read"] += 1
+        if a in S.NOTES_ARMS:
+            gen = MEMORY_OF[a]
+            if any(r["memory"].get(gen) in ("yes", "partial") and S.opened_relevant(t, r, gen, access) for r in scored_in(t) if intask(r)):
+                avail["read_notes_covering_an_in_task_requirement"] += 1
+                avail["read_covering|" + t["task"]] += 1
+    out["fully_specified_task_passes_memory_availability"] = dict(avail)
+
     json.dump(out, open(out_path, "w"), indent=1)
     print(json.dumps({k: v for k, v in out.items() if k not in ("not_in_task_requirements_met_per_arm",)}, indent=1))
 

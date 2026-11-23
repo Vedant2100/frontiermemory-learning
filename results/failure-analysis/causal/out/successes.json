@@ -699,5 +699,45 @@
    "diff": -7,
    "perm_p_two_sided": 0.272
   }
+ },
+ "notes_silent_matched_to_control": {
+  "cells": 174,
+  "met": 62,
+  "expected_at_control_rate": 64.0
+ },
+ "notes_cover_read_cells_by_requirement": {
+  "build-word2vec-pipeline:R1-artifact-path-and-entrypoint": 14,
+  "build-word2vec-pipeline:R2-task_func-signature-preprocessing-min_count": 12,
+  "dapt-intrusion-detection-workflo:R3-ipv4-only-ip-scoped-metrics": 8,
+  "dapt-intrusion-detection-workflo:R4-protocol_udp-includes-ipv6": 8,
+  "dapt-intrusion-detection-workflo:R5-five-tuple-flows-ipv4-only": 8,
+  "dapt-intrusion-detection-workflo:R6-bidirectional-pairs-counted-once": 8,
+  "dapt-intrusion-detection-workflo:R7-minute-buckets-anchored-at-first-packet": 1
+ },
+ "met_only_with_memory_or_records_tests": {
+  "build-word2vec-pipeline:R1-artifact-path-and-entrypoint": {
+   "memory_arms": "24/24",
+   "control_placebo": "0/6",
+   "fisher_one_sided_p": 0.0
+  },
+  "dapt-intrusion-detection-workflo:R6-bidirectional-pairs-counted-once": {
+   "memory_arms": "12/24",
+   "control_placebo": "0/6",
+   "fisher_one_sided_p": 0.031
+  },
+  "dapt-intrusion-detection-workflo:R7-minute-buckets-anchored-at-first-packet": {
+   "memory_arms": "8/24",
+   "control_placebo": "0/6",
+   "fisher_one_sided_p": 0.126
+  }
+ },
+ "fully_specified_task_passes_memory_availability": {
+  "no_memory_read": 31,
+  "memory_opened": 6,
+  "read_notes_covering_an_in_task_requirement": 4,
+  "read_covering|apex-brightpath-seat-surplus": 2,
+  "memory_pasted": 8,
+  "read_covering|automationbench-marketing-conten": 1,
+  "read_covering|enterpriseops-teams-2725d17f": 1
  }
 }

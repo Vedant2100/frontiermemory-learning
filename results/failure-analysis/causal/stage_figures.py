@@ -124,10 +124,10 @@ def main(src, out, agg_src, succ_src=None):
     if succ_src:
         sc = json.load(open(succ_src))["passes_by_arm"]
         classes = [("task_gave_everything", "Task gave every requirement", AQUA),
-                   ("outside_info_all_from_notes_read", "Needed outside information; all of it from notes the agent read", BLUE),
-                   ("outside_info_partly_from_notes_read", "Needed outside information; part from notes read", VIOLET),
-                   ("raw_records_opened", "Needed outside information; raw records opened", ORANGE),
-                   ("outside_info_met_without_reading_a_covering_source", "Needed outside information; met without reading a covering source", MUTED)]
+                   ("outside_info_all_from_notes_read", "Needed outside information; read the covering notes file for all of it", BLUE),
+                   ("outside_info_partly_from_notes_read", "Needed outside information; read the covering notes file for part of it", VIOLET),
+                   ("raw_records_opened", "Needed outside information; opened raw records", ORANGE),
+                   ("outside_info_met_without_reading_a_covering_source", "Needed outside information; no covering source read", MUTED)]
         fig, ax = plt.subplots(figsize=(10, 4.4), facecolor=SURF)
         for y, (a, name) in enumerate(arm_names):
             left = 0

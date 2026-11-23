@@ -56,7 +56,7 @@ Each is out of 48 requirement-trials. Read-first and all shown miss 10 and 9 few
 
 Section 4.2 gives the full split by arm, and the pooled trial-requirement counts for reference.
 
-**The successes, the same way (section 4.13).** Of the 65 passes, 45 are on tasks where the task gives every requirement, and every arm has 1 to 6 of them. 14 needed information the task does not give and got it from notes or records the agent read, all on Word2Vec; control and placebo passed Word2Vec 0 of 6 times. The other 6 (cattrs, cookie store) met their outside requirements without any covering source, from the model's own defaults. A fully covering note that was read was met 59 of 59 times; notes silent on a requirement left it at control's rate (0.36 against 0.35).
+**The successes, the same way (section 4.13).** Of the 65 passes, 45 are on tasks where the task gives every requirement, and every arm has 1 to 6 of them; 14 of those 45 had memory in front of them anyway. The 14 Word2Vec passes all opened the notes or the raw records, or had the notes pasted in; in 13 the file read is the one the labels name as covering the requirement. Control and placebo passed Word2Vec 0 of 6 times, failing at the file path. The other 6 passes (cattrs, cookie store) met their outside requirements with no covering source read. A fully covering note that was read was met every time (59 cells, 7 requirements on Word2Vec and DAPT); notes silent on a requirement left it where control's rate on the same requirements puts it (62 met against 64 expected).
 
 The story the stages tell:
 
@@ -643,7 +643,7 @@ The mirror of section 4.2: for each of the 65 passing trials, and for every requ
 
 ![Where each arm's passing trials got their information](figures/v2/fig9-passes-by-arm.png)
 
-| Arm | Passes (of 45) | Task gave every requirement | Needed outside information: from notes or records the agent read | Needed outside information: met with no covering source read |
+| Arm | Passes (of 45) | Task gave every requirement | Needed outside information: the covering notes file, or records, read | Needed outside information: no covering source read |
 |---|---|---|---|---|
 | Control | 6 | 5 | – | 1 (cookie store) |
 | Placebo | 4 | 4 | – | 0 |
@@ -658,11 +658,11 @@ The mirror of section 4.2: for each of the 65 passing trials, and for every requ
 
 Of the 65 passes, 45 are on six tasks where the task gives every scored requirement: CSM 19, marketing 15, market share 5, seat surplus 3, Teams 2 and partnership 1. The other 20 are on the three tasks with a requirement the task does not give and that some trial met: Word2Vec 14, cattrs 4 and cookie store 2.
 
-- **Word2Vec is where memory produced passes.** All 14 Word2Vec passes come from trials that opened the notes or the raw records, or had the notes pasted in. In 10 of the 11 passes in notes arms the agent opened, or was handed, the file covering the path or the signature; the eleventh, in run 3, opened other memory files. The 3 raw-records passes opened records. Control and placebo passed Word2Vec 0 of 6 times and never met its file-path requirement; every other arm met it 3 of 3 times, blend included. Blend still passed 0 of 3, on the empty-input test (section 4.6). "Part from notes read" in the figure means the agent opened the file covering one Word2Vec requirement and met the other from a different file in the same notes.
-- **The cattrs and cookie-store passes are the model's own defaults.** Their outside requirements are a convention no notes cover: calling `default_factory` once per call (met in 29 of 30 trials, control 3 of 3) and cookie store's runnable example and clean working tree. Control passed cookie store once without any memory.
-- **The 45 passes on fully specified tasks came from finding what the task gave.** On market share and seat surplus, every pass read the file that defines the method and no failing trial did (section 4.7). Every arm has 1 to 6 of these (control 5, placebo 4, run 3 1). None of them needed memory, and the notes arms have about as many as control (1 to 6, against control's 5).
+- **Word2Vec is where memory produced passes.** All 14 Word2Vec passes come from trials that opened the notes or the raw records, or had the notes pasted in. In 10 of the 11 passes in notes arms the agent opened, or was handed, the file the labels name as covering the path or the signature. The eleventh, in run 3, opened other memory files and is counted in the table as "no covering source read"; the labels record one covering file per requirement, and since no control or placebo trial ever met the path, another file probably covers it too. The 3 raw-records passes opened records; whether those records hold the path is not checked, since the records are not in the extract. Control and placebo passed Word2Vec 0 of 6 times. In those six trials the tests failed at collection, so only the file-path requirement is measured, and it was never met; every other arm met it 3 of 3 times, blend included. Blend still passed 0 of 3, on the empty-input test (section 4.6). "Part from notes read" in the figure means the agent read the file covering one outside requirement and met the others without reading a file that covers them (for run 4's pass, the empty-input requirement, which its notes do not cover).
+- **The cattrs and cookie-store passes met their outside requirements with no covering source.** Cattrs' is calling `default_factory` once per call, which the model does almost always (29 of 30 trials, control 3 of 3). Cookie store's runnable example (met in 7 of 30 trials, control 1 of 3) and clean working tree (19 of 30) are not defaults; the two passes are the trials that happened to meet both. Control passed cookie store once without any memory.
+- **The 45 passes on fully specified tasks came from finding what the task gave.** On market share and seat surplus, every pass read the file that defines the method and no failing trial did (section 4.7). Every arm has 1 to 6 of these (control 5, placebo 4, run 3 1); no arm differs significantly from control (the largest gap is run 3's 1 of 18 trials on these six tasks against control's 5 of 18, Fisher p = 0.18). The task gave every requirement, but memory was not absent: 14 of these 45 passes had memory in front of them (8 pasted in, 6 opened), and in 4 the agent read notes that cover, fully or partly, a requirement the task gives (seat surplus 2, marketing 1, Teams 1). Whether those notes helped cannot be separated from the task here; section 9 notes the seat-surplus pointer.
 
-So of the 65 passes, 14 depended on information the agent got from memory or records, all on one task. The other 51 would have needed no memory.
+So 14 of the 65 passes needed information the task does not give and opened memory or records to get it, all on Word2Vec. The other 51 needed nothing beyond the task, which does not mean memory played no part in them.
 
 **Requirements met, by arm, where the task gives them.** The blind labeller also rated how the task gives each requirement. Met per arm, out of all requirement-trials:
 
@@ -692,13 +692,13 @@ Stated requirements are met 83 to 92% of the time in every arm. Requirements tha
 | All shown | 18 of 18 | – | 8 of 12 | – | 9 of 27 |
 | None shown | 5 of 5 | 4 of 13 | 1 of 3 | 3 of 9 | 12 of 27 |
 
-For comparison, control met 18 of 51 and placebo 14 of 51 (0.35 and 0.27). Raw records met 26 of 35 when the agent opened records and 6 of 22 when it did not. Blend met 29 of 57; its notes are not blind-labelled.
+For comparison, control met 18 of 51 and placebo 14 of 51 (0.35 and 0.27). Raw records are not split by opened and not opened here: "opened" means any record, not one covering the requirement, and the two groups are different tasks (opened: Word2Vec, DAPT, cookie store; not opened: awilix, cattrs, customer delivery, cookie store), so the comparison would measure the tasks. Blend met 29 of 57; its notes are not blind-labelled.
 
-- **A fully covering note that was read was met every time:** 59 of 59, in every arm.
-- **Notes that say nothing leave the agent at the no-memory rate.** Summed over the six notes arms they were met 63 of 177 times (0.36), against control's 0.35. In each arm the rate is 0.29 to 0.44.
+- **A fully covering note that was read was met every time:** 59 of 59 requirement-trials in every arm, but these are only 7 requirements, on Word2Vec (path 14, signature 12) and DAPT (four metric rules at 8 each, minute buckets 1), and control also meets some of them (DAPT's UDP rule 3 of 3). The agent chose whether to read, so this is observational.
+- **Notes that say nothing leave the agent at the no-memory rate.** Over the six notes arms they were met 63 of 177 times. Matched by requirement, where control is measured: 62 met against 64.0 expected at control's rate on the same requirements (174 cells). In each arm the rate is 0.29 to 0.44.
 - **Read partial notes sit between:** 29 of 41 met, against 11 of 31 unread. That comparison is observational, and it mixes tasks; section 4.2 gives it within task.
 
-**Per distinct requirement.** Of the 19 requirements the task does not give, 10 were met at least once without memory (in control or placebo), 3 were met only with memory or records (Word2Vec's file path, and DAPT's bidirectional-pair and minute-bucket rules), 4 were never met in any arm (the two awilix version bumps, customer delivery's runnable example, DAPT's port-scan verdict), and 2 are not measured in control (Word2Vec's signature and empty-input requirements). Every requirement that memory alone made reachable was on Word2Vec or DAPT, the same two tasks that carry the content test and the ladder.
+**Per distinct requirement.** Of the 19 requirements the task does not give, 10 were met at least once without memory (in control or placebo), 3 were met only in arms with memory or records: Word2Vec's file path (24 of 24 against 0 of 6 in control and placebo, Fisher one-sided p < 0.001), DAPT's bidirectional-pair rule (12 of 24 against 0 of 6, p = 0.03 one-sided, 0.06 two-sided) and its minute-bucket rule (8 of 24 against 0 of 6, p = 0.13, not significant); 4 were never met in any arm (the two awilix version bumps, customer delivery's runnable example, DAPT's port-scan verdict), and 2 are not measured in control (Word2Vec's signature and empty-input requirements). Only Word2Vec's path is clearly a requirement memory alone made reachable; the DAPT pair are suggestive, and both tasks are the ones that carry the content test and the ladder.
 
 ## 5. Model of the failures
 
@@ -804,6 +804,18 @@ The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H
 | Section 4.11's "available only" 191 | Uses the auditors' labels; 224 with the blind labels |
 
 The first draft of this correction also said "memory did not reduce in-task misses" was invalid because it counted failed trials only. That was wrong: no passing trial fails any requirement, so failed-only and all-trial counts are the same.
+
+**Successes section, first version (3507d98), corrected the same day after review:**
+
+| First version | Corrected |
+|---|---|
+| 14 passes got outside information from notes or records read, 6 met it with no covering source | 13 and 7 by the table's classification; the 14th Word2Vec pass opened other memory files, not the labelled one |
+| The other 51 passes "would have needed no memory" | 14 of the 45 fully specified passes had memory in front of them, and 4 read notes covering an in-task requirement |
+| Raw records met 26 of 35 when opened, 6 of 22 when not | Dropped: the two groups are different tasks, and "opened" means any record |
+| Fully covering notes read: 59 of 59 | 59 requirement-trials on 7 requirements, two tasks; observational |
+| Silent notes 0.36 against control 0.35 | Matched by requirement: 62 met against 64.0 expected |
+| Three requirements met only with memory | Word2Vec's path (p < 0.001); DAPT's pair rule p = 0.03 one-sided, its bucket rule not significant |
+| Cattrs and cookie-store passes are the model's defaults | True for cattrs; cookie store's two conventions are met in 7 and 19 of 30 trials |
 
 **From the verification pass:**
 

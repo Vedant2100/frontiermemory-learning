@@ -71,13 +71,13 @@ With 45 trials per condition, differences of a few failures are noise. The compa
 
 The same question for the 65 passes:
 
-- **45 were on tasks where the task gives every requirement:** CSM, marketing, market share, seat surplus, Teams and partnership. Every condition has 1 to 6 of these, the control 5. They came from finding what the task gave; on market share and seat surplus every pass read the file that defines the method, and no failure did. None needed memory.
-- **14 needed information the task does not give, and got it from memory.** All are Word2Vec, and every one of them opened the notes or the raw records, or had the notes pasted in. Without memory, Word2Vec passed 0 of 6 times.
-- **6 needed outside information and met it with no memory covering it:** cattrs and cookie store, where the conventions they want are what the model does anyway. The control passed cookie store once.
+- **45 were on tasks where the task gives every requirement:** CSM, marketing, market share, seat surplus, Teams and partnership. Every condition has 1 to 6 of these, the control 5. They came from finding what the task gave; on market share and seat surplus every pass read the file that defines the method, and no failure did. Memory was there in 14 of them, and in 4 the agent read notes that partly cover a requirement, so we cannot say memory played no part.
+- **14 needed information the task does not give, and opened memory to get it.** All are Word2Vec, and every one of them opened the notes or the raw records, or had the notes pasted in. Without memory, Word2Vec passed 0 of 6 times: those agents never put the file where the tests look for it, so the other tests never ran.
+- **6 needed outside information and met it with no memory covering it:** cattrs, whose convention the model follows almost always, and cookie store, where the two passes are the trials that happened to meet two conventions most trials miss. The control passed cookie store once.
 
-At the level of single requirements, the pattern repeats. When the agent read a note that fully covered a requirement, it met it every time: 59 of 59. When the notes said nothing about a requirement, the agent met it 36% of the time, the same as with no memory (35%). Requirements the prompt states were met 83 to 92% of the time in every condition; requirements that need a search, 21 to 41%. Every memory condition except raw records met fewer of the search requirements than the control, by 2 to 8, but none by more than chance would give on its own.
+At the level of single requirements, the pattern repeats. When the agent read a note that fully covered a requirement, it met it every time (seven requirements, on Word2Vec and DAPT). When the notes said nothing about a requirement, the agent met it as often as the control did on the same requirements (62 times against 64 expected). Requirements the prompt states were met 83 to 92% of the time in every condition; requirements that need a search, 21 to 41%. Every memory condition except raw records met fewer of the search requirements than the control, by 2 to 8, but none by more than chance would give on its own.
 
-Three requirements were met only with memory: Word2Vec's file path, and two of DAPT's counting rules.
+One requirement was clearly met only with memory: Word2Vec's file path, 24 of 24 times with memory or records and 0 of 6 without. Two of DAPT's counting rules were also never met without memory, but in too few trials to be sure.
 
 ## The agent missed what its task gave it
 
