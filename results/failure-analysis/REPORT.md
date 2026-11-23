@@ -1,35 +1,59 @@
-# FrontierMemory failure analysis: requirements, content and exposure (450 trials)
+# FrontierMemory failure analysis: where 385 failures broke (450 trials)
 
-This report replaces `REPORT-v1.md`, which is kept as the record of the earlier analysis, and the two blog drafts built from it. It keeps what still holds from them and corrects what does not; section 8 lists every correction. `READABLE.md` is a shorter version for a general technical reader.
+This is the third version of the analysis. It replaces the v2 report (commit 9c4d3cc) and `REPORT-v1.md`, which is kept as the record of the first analysis. It also replaces the two Craft blog drafts and the Claude Docs blog. Every claim in those documents was checked against the data (561 claims, `claim-ledger` in section 10). What was correct is kept here; what was wrong is listed in section 8. `READABLE.md` is the shorter version.
 
 **Terms used throughout.**
 
 - **Hermes:** the agent harness.
-- **Memory, notes:** a skill file plus reference files that the model wrote from records of earlier runs. They are listed for the agent as a *skill index* in the system prompt.
-- **Corpus:** those earlier-run records. It is a gated dataset we did not read.
+- **Corpus:** 750 records of earlier agent runs (corpus v1.1), each one attempt at some task, sometimes with verifier feedback or a maintainer's follow-up instructions. It is gated material. For this version the owner authorised reading it, read-only; no corpus text is in this repository.
+- **Writer, notes:** the model read the corpus in a separate session and wrote notes: a skill file plus reference files. Three sessions produced three generations (runs 1, 3 and 4). The notes are listed to the agent as a *skill index* in the system prompt.
 - **Check:** one verifier test or rubric criterion.
-- **Requirement:** a group of checks that fail together for one reason.
-- **Trial-requirement:** one requirement in one trial.
-- **Auditors and the blind labeller:** LLM agents (Claude) given written briefs. Section 3 says how their work was checked.
+- **Requirement:** a group of checks that fail together for one reason. There are 73, 72 of them scored.
+- **Trial-requirement:** one requirement in one trial. The 385 failed trials contain 742 failed trial-requirements.
+- **Auditors, blind labeller, tracers:** LLM agents (Claude) given written briefs. Section 3 says how their work was checked.
 - **Task families:**
   - APEX: business analysis over a company's files and mail, graded by an LLM judge (market share, seat surplus, Eurogrid).
   - AutomationBench: workflow tasks graded by assertions on the end state (marketing, ChatGPT proposal, partnership).
   - EnterpriseOps: office-tool tasks graded by database checks (CSM, Teams).
   - DAPT: network-capture analysis.
   - Coding tasks: graded by hidden tests and preference checks (awilix, cattrs, cookie store, customer delivery, Word2Vec).
-- **Forced-open follow-up:** an exploratory rerun with notes pasted into the prompt (`REPORT-v1.md` section 10).
+- **Forced-open follow-up:** an exploratory rerun with notes pasted into the prompt (section 4.9).
 
-**Short version.** We ran one local model (Qwen 27B in Hermes) on 15 FrontierMemory tasks, 3 attempts per task under 10 arms, 450 trials. Strict passes barely moved: 6 of 45 without memory, 3 to 9 of 45 with it. The earlier analysis gave each of the 385 failed trials one label, in a fixed order that asked about the task and grader first. The order decided much of the answer, and the labels came from reading trajectories, which cannot show what a different arm would have done.
+## Short version
 
-Here the unit is the requirement (73 in all). For each requirement we recorded separately whether the prompt states it, whether it can be worked out from the task's own files and tools, and whether each set of notes contains it. The notes labels were made blind to outcomes. The arms then serve as the comparison:
+We ran one local model (Qwen 27B in Hermes) on 15 FrontierMemory tasks, 3 attempts per task under 10 arms, 450 trials. Strict passes barely moved: 6 of 45 without memory, 3 to 9 of 45 with it. We asked where each failure broke, along the path information takes from earlier runs to the agent's answer:
 
-1. **On requirements the arm's notes cover, memory arms meet the requirement more often than control:** +0.39 (31 requirement-by-arm units on 3 tasks; p = 0.002 permuting whole trials within task). On partly covered requirements the difference is +0.01, on uncovered ones −0.01, and the placebo scores −0.05. The covered set is small and concentrated: resampling tasks gives an interval of −0.22 to +1.00, and without Word2Vec the estimate is +0.24.
-2. **With run 1's notes held fixed, covered requirements rise with exposure.** The rate goes 0.33 without memory, 0.40 under the placebo, 0.50 with the notes on disk but unmentioned, 0.83 when indexed, and 1.00 with a read-first nudge or with the notes pasted into the prompt (trend p < 0.001). Uncovered requirements stay between 0.60 and 0.68 (trend p = 0.54). This rests on 6 requirements in 2 tasks.
-3. **Strict passes hide this, because a task passes only if every requirement does.** On DAPT, the arms that put run 1's notes in front of the agent met the four metric requirements the notes cover in 12 of 12 trial-requirements, against 5 of 12 without memory. Every DAPT trial still failed a port-scan verdict that depends on a threshold nobody states.
-4. **The generated notes recorded contract facts, not conventions.** All three generations recorded file paths, function signatures and metric definitions. None recorded the conventions that decided most strict failures: a release-tier version bump, documentation examples, or where in the task's own files the agreed method is written.
-5. **Five requirements, one each on five tasks, were never met in 450 trials.** They account for 150 of the 385 failures. Only one of them involves a checker defect (Eurogrid), and that defect did not decide any agent trial.
+1. Was the relevant experience missing from the earlier runs?
+2. Did the note-writer lose it?
+3. Did Hermes fail to show the notes?
+4. Did the agent ignore them?
+5. Did it misuse them?
+6. Did it execute badly with the information in hand?
+7. Did the verifier fail it unfairly?
 
-What this does not show: that memory could not help on the other tasks. Most failed requirements were ones no notes covered, and on those the experiment says nothing about what better notes would do.
+The earlier analysis answered this with one label per failed trial, assigned in a fixed order, and the order decided much of the answer (section 1). This version traces each of the 742 failed trial-requirements through every stage it passed. Arm contrasts test the stages the design can test.
+
+| Stage | Failed trial-requirements | How we know |
+|---|---|---|
+| 1. Experience missing | 33 of 742 (4%), all on requirements the prompt itself states | Corpus searched for each requirement, with a search log that can be rerun |
+| 2. Writer lost it (notes arms, information not in the task) | 171 of 189: 129 never reached the writer, 42 reached it and were dropped or cut down | Traced in each writer's session: what it ran, what it saw, what it wrote |
+| 3. Harness did not show it | 9, all in the arm built to show nothing | Delivery confirmed in every other trial. Arm contrast: covered requirements met 0.50 on disk unmentioned vs 0.83 indexed |
+| 4. Agent did not open it | 9 | Arm contrast: 0.83 indexed vs 1.00 with a read-first nudge or pasted in |
+| 5. Agent opened it and still failed | 0 | 60 of 60 met when the relevant file was opened or pasted in |
+| 6. Information was in the task, agent missed it | 407 (in 255 trials; the only failure in 191) | Descriptive; many are search failures |
+| 7. Verifier defect decided the outcome | 0 | The one rubric defect (Eurogrid) decided no agent trial |
+
+The other 146 failed trial-requirements are in arms without generated notes (control, placebo, raw records, blend), where the information was not in the task.
+
+The story the stages tell:
+
+- **The experience was there.** The corpus holds what 709 of the 742 failed trial-requirements needed, for 440 of them from earlier runs of the same task. That includes the conventions behind the requirements no trial ever met. Earlier maintainers had said "this one's internal release tier is 6" and later "bump the minor version", which is the rule the awilix test enforces. They had asked for "one runnable failure or cancellation example", which customer delivery's hidden preference wants.
+- **The writers lost most of it.** All three built their picture of the corpus from each run's first user message (run 4 also the last), so maintainer follow-ups never reached them. They printed excerpts cut at 150 to 500 characters and parsed two of the corpus's log formats wrongly, which hid every passing run of two tasks. Across the three generations, 51 to 78% of the failed trial-requirements had information that never reached the writer, and only 2 to 9% had it in the notes.
+- **What reached the notes worked.** On requirements the notes cover, memory arms meet the requirement 39 points more often than control (p = 0.002). With run 1's notes fixed, the rate climbs with exposure from 0.33 to 1.00 (trend p < 0.001). No agent that opened the relevant note failed the requirement.
+- **Strict passes hid this.** A task passes only if every requirement does, and notes that covered one requirement of three changed nothing on the scoreboard. Word2Vec, the one task where the notes covered nearly everything, is the one clear strict-pass gain.
+- **The largest single group is in the agent's own hands.** 191 failed trials missed only requirements their own task made available, and many of those are search failures: a mail thread not opened, an older message trusted over a newer one.
+
+What this does not show: that adding the lost conventions to the notes would have flipped those trials. The writer stages say where the information stopped. The causal evidence that putting information in front of the agent helps comes from the three tasks where the notes did cover a requirement. The direct test is a follow-up arm (section 6).
 
 ## 1. Problems with the earlier buckets
 
@@ -38,6 +62,7 @@ The earlier analysis asked four questions in a fixed order (could any memory hav
 - **The order decided the answer.** Task and grader causes came first, so a trial with both a hard task and a memory problem was filed as task-side. The "287 of 385 not caused by memory" figure measured that order.
 - **The unit was wrong.** A trial fails if any check fails. A trial that missed three requirements for three different reasons got one label.
 - **The labels came from reading, not comparing.** A trajectory shows what the agent did. It cannot show that a different note would have changed the outcome; only arm contrasts can.
+- **The first link was unobserved.** "The corpus has nothing for this task" rested on a prompt-similarity count, because the corpus was not read. Reading it reverses that link for most tasks (section 4.3).
 
 Two factual errors sat inside the buckets too. "Grader caps the score" (32 trials) used the reference solution's score as the test, and four reference solutions score 0 for setup reasons: the two EnterpriseOps solutions replay an empty call log, and the cattrs and cookie-store references are code-only patches that predate the documentation preference. Agents pass all four tasks. And "beyond the model" (135 trials) merged three things: requirements the prompt never states, information the agent could have found in its task files and did not, and plain coding errors.
 
@@ -48,26 +73,27 @@ No new trials were run for this analysis; everything comes from the counted runs
 | Arm | What the agent got |
 |---|---|
 | Control | No memory |
-| Run 1, run 3, run 4 | Notes the model wrote from earlier runs, three independent generations (run 2 timed out and exported nothing), listed as a skill index in the prompt |
+| Run 1, run 3, run 4 | Notes the model wrote from the corpus, three independent generations (run 2 timed out and exported nothing), listed as a skill index in the prompt. Run 1: one skill, 13 files, 62 KB. Run 3: 6 files, 40 KB. Run 4: 7 files, 38.5 KB. The index descriptions are generic |
 | Placebo | Run 1's file layout and sizes, with the text replaced by a novel |
-| None shown | Run 1's notes staged on disk at `/tmp/hermes/memories`, nothing in the prompt about them |
+| None shown | Run 1's notes staged on disk at `/tmp/hermes/memories`, nothing in the prompt about them (`/root/.hermes/memories` was an empty decoy) |
 | Read-first | Run 1's notes plus one sentence asking the agent to read memory first |
 | All shown | All 13 of run 1's files pasted into the system prompt |
-| Blend | The task description rewritten by a model to carry run 1's notes |
-| Evidence | Raw earlier-run records staged as files, no note-writing step |
+| Blend | The task description rewritten by a model to carry run 1's notes. The rewrite succeeded on 12 of 15 tasks: awilix explicit and cookie store came back unchanged, and the partnership rewrite failed twice, so 9 blend trials ran the original text. Much of the text added to APEX tasks was harness boilerplate |
+| Evidence | Raw corpus records staged as files, no note-writing step. 33 of 45 trials got records (none for awilix ×2, cattrs or customer delivery; one unrelated record for cookie store; the APEX records are mostly other tasks'). 27 of the 33 searched the records and 18 opened them |
 
 Model, harness, reasoning effort and grader are the same in every arm. The arms are not all one-factor variations of each other:
 
 - **Fixed content, varying delivery.** Placebo, none shown, run 1, read-first and all shown share run 1's content (the placebo shares only its form). They differ in how it is delivered; all shown pastes the files themselves, not the index.
 - **Varying content.** Run 3 and run 4 have different content. Blend has different content, because the rewrite added and dropped material. Evidence differs in both content and form.
 
-The content and exposure comparisons below use only what each design supports.
-
 Delivery was checked in every trial from the saved prompts and configs:
 
-- **Index and pasted files.** The skill index was in the prompt in every run 1, 3 and 4 trial. All 13 files were in the prompt in all 45 all-shown trials, about 16,000 extra tokens per request. The largest prompt was 189,152 of 262,144 tokens, with no overflow and two compactions.
+- **Index and pasted files.** The skill index was in the prompt in every run 1, 3 and 4 trial. All 13 files were in the prompt in all 45 all-shown trials, about 16,000 extra tokens per request: +8% input tokens and +9% agent time against control. The largest prompt was 189,152 of 262,144 tokens, with no overflow and two compactions.
 - **None shown and blend.** None shown injected zero bytes. The blend text was the first message in every blend trial.
-- **Read-first sentence.** It is in each trial's config but not in the saved prompt, because Hermes adds it at request time. Opens rose from 15 to 27 of 45, which suggests it arrived, but the saved files cannot prove it.
+- **Read-first sentence.** It is in each trial's config but not in the saved prompt, because Hermes adds it at request time. Opens rose from 15 to 27 of 45 (13 of them on the first turn), which suggests it arrived, but the saved files cannot prove it.
+- **Opens by arm** (trials that read a staged memory file): run 1 15, run 3 14, run 4 23, read-first 27, none shown 4, placebo 4, evidence 18, control 0, all out of 45.
+
+**Run hygiene.** All 450 counted trials finished without an exception or an unavailable model, and none hit its time limit. Ten all-shown trials that overlapped a model-server stall were rerun, among them the Teams pass FkfBJWA, as were one placebo and two none-shown trials; the counted trials are the clean reruns. The trial data were copied from the VM disk on Nov 16 with writes discarded, and the disk's fingerprint was identical before and after.
 
 ## 3. Method
 
@@ -78,6 +104,8 @@ Three details matter for scoring:
 - **Excluded assertions.** AutomationBench marks a "must not send" assertion EXCLUDED when nothing violated it; we count that as passed. The marketing task's four assertions that were excluded in every trial form a requirement that is never scored.
 - **Word2Vec without a solution file.** In six Word2Vec trials (control and placebo) the verifier could not load the solution. The file-path check counts as failed. The other five tests never ran, so those requirements are unmeasured in those trials.
 - **Awilix tests that did not compile.** In four awilix trials the hidden test file failed type-checking. Those trials fail the build requirement once, and the behaviours it would have tested are unmeasured.
+
+The old partial-credit files grouped DAPT's 37 verifier cases into 14 units; this analysis scores the 37 cases.
 
 **Requirements.** Three auditors, five tasks each, grouped every check into requirements: 73 in all, 72 scored. For each requirement they recorded, from the files:
 
@@ -92,13 +120,41 @@ The auditors could see outcomes while labelling, so the explicit/derivable/absen
 
 - It refuted none. Four claims were partly wrong and have been corrected (section 8).
 - It found a parser error of ours that added one failed check to every DAPT trial. We fixed it before computing anything here.
-- A fifth agent then reviewed this report against the outputs. Its corrections are included, among them the Word2Vec scoring above and the blend handling below.
+- A fifth agent then reviewed the v2 report against the outputs. Its corrections are included, among them the Word2Vec scoring above and the blend handling below.
 
 **Blind content labels.** A separate agent labelled all 73 requirements against run 1's, run 3's and run 4's notes, without access to any trial, outcome or audit. It agreed with the auditors on 198 of 219 labels (kappa 0.77); most disagreements are an auditor's "partial" becoming "no". The blind labels are primary.
 
 The blend text was not blind-labelled, so blend is left out of every comparison that depends on content. With the auditors' labels (blend included) the results agree: covered +0.35 (p = 0.001), partly covered −0.00, uncovered −0.03. Both sets of results are in `causal/out/`.
 
 **Memory access.** `causal/access.py` finds every read of a staged memory file in each trajectory. It reproduces the published access logs (run 1 15 of 45, read-first 27 of 45) and finds no reads in control.
+
+**Corpus and writer trace (new in this version).** Three tracers, five tasks each, answered four questions for every requirement:
+
+1. **Corpus:** does any corpus record hold information an agent could act on to meet it? Status is present, partial or absent. Kind is same-task verifier feedback, a same-task passing run, a hint in a same-task failing run, or a lesson from another task. Each verdict comes with quotes, and each "absent" with a log of search terms and hit counts that can be rerun.
+2. **Writer exposure, per generation:** did that information appear in what the writer actually saw, meaning the tool results in its session and any file it read? Where it did not, why not: filtered out, sampled away or truncated.
+3. **Stage, per generation:** experience missing / writer never saw / writer saw and dropped / writer saw and kept part / in the notes. The blind notes label decides the last three.
+4. **Unstated spec:** is the requirement known only to the hidden checker, neither stated nor derivable from the task?
+
+`causal/stages.py` then follows every failed trial-requirement downstream:
+
+- information in the task (explicit or derivable): *in the task, missed*;
+- otherwise, in a notes arm, the writer stage for that arm's generation;
+- if the notes hold it: the arm shows nothing and the agent did not find them (*harness did not show*); listed but the relevant file not opened (*not opened*); or opened or pasted in (*opened, still failed*).
+
+Control, placebo, evidence and blend have their own labels, because they have no generated notes or no blind labels.
+
+**Checking the tracers.** We reran the searches behind the claims that change conclusions directly against the corpus files:
+
+- the release-tier statements and bump instructions (t0397, t0667, t0254, t0202, t0263);
+- the runnable-failure-example request (t0720);
+- the only passing partnership run (t0618) and the failing run behind run 1's partnership rule (t0047);
+- Word2Vec's empty-input fallback in its only passing run (t0212);
+- the Teams `source` field in a passing variant (t0201);
+- the content-gap answer in the three passing runs (t0002, t0149, t0502);
+- the market-share method mail listed but unopened (t0491);
+- the absence of the Eurogrid answer value and of the market-share churn haircut.
+
+All held. "release tier" and "runnable" occur zero times in all three writer sessions, which confirms the writer-side claims for awilix and the documentation preferences.
 
 **Tests.**
 
@@ -117,23 +173,101 @@ We report four tests (three content levels and the trend) and make no correction
 
 Strict passes per arm, out of 45: control 6, placebo 4, none shown 9, run 1 7, read-first 8, all shown 7, blend 3, run 3 4, run 4 8, evidence 9.
 
-Averaged over the 15 tasks, runs 1, 3 and 4 against control change the pass rate by +0.01 (95% interval −0.12 to +0.14; `results/official/analysis.json`). Six tasks never pass in any arm: Eurogrid, the ChatGPT proposal, both awilix tasks, customer delivery and DAPT.
+Averaged over the 15 tasks, runs 1, 3 and 4 against control change the pass rate by +0.01 (95% interval −0.12 to +0.14, p = 0.50; `results/official/analysis.json`). The preregistered sensitivity checks agree: without the four tasks whose reference scores 0, +0.04 (−0.11 to +0.20, p = 0.34); without run 4, which replaced the timed-out run 2, −0.01 (−0.14 to +0.12, p = 0.63). Four tasks went up and four went down. Six tasks never pass in any arm: Eurogrid, the ChatGPT proposal, both awilix tasks, customer delivery and DAPT.
 
-### 4.2 Requirements no trial met
+Two arm totals are mostly not memory:
 
-| Requirement | Trials | Reference meets it? | What is going on |
+- **None shown's 9** (the joint highest) came mostly from trials that never opened the notes: 8 of its 9 passes. Its gains over control are cattrs +2, Word2Vec +1 and CSM +1, against partnership −1. The cattrs 2 of 3 (against 2 of 27 in all other arms; Fisher one-sided p ≈ 0.04, uncorrected) came with no opens, so it is noise or something other than the notes.
+- **Blend's 3** is a drop from run 1's 7 on the 14 tasks both ran. It is entirely marketing and Word2Vec, 2 of 3 to 0 of 3 each (section 4.6). Blend's hidden-test share is 0.667 against run 1's 0.681 and control's 0.584. It missed its preregistered bar on both halves.
+
+### 4.2 Where the failures broke
+
+![Following each failed requirement from earlier runs to the answer](figures/v2/fig7-stage-funnel.png)
+
+The 742 failed trial-requirements, followed from earlier runs to the answer (`causal/out/stages.json`):
+
+| Where the information stopped | Trial-requirements | Failed trials with at least one | Failed trials with only this |
 |---|---|---|---|
-| Awilix explicit: bump `package.json` to 12.1.0 for release tier 7 | 30 | Yes | The tier-to-version rule exists only in the hidden test. The prompt says "Internal release tier: 7" and nothing more. No trial edited `package.json`, and no note mentions tiers or version bumps |
-| Awilix implicit: the same, with the tier in a metadata file | 30 | Yes | As above |
-| Customer delivery: a runnable failure example in the docs | 30 | Yes | A preference stated only in the hidden test. Agents documented the success path. Run 1's notes and the blend text say to keep source changes minimal, which pushes the other way |
-| DAPT: `has_port_scan = false`, `is_traffic_benign = true` | 30 | Yes | The reference's detector uses fixed thresholds on entropy, SYN-only ratio and port count; no prompt or note states them. Agents read the capture as a SYN sweep and answered true |
-| Eurogrid: average avoided curtailment = 243,275.57 MWh | 30 | No | 29 trials reported 228,025.94 and one 228,033.33, from a different calculation about 6% lower. The agreed method is in a notes file in the task's own folders that no trial read. The rubric also asks for .57 while its negative criterion names .56. That inconsistency fails the reference (which says .56). It decided no agent trial: two run 3 trials computed .57 along the way and discarded it |
+| In the task (prompt, files, tools); the agent missed it | 407 | 255 | 191 |
+| Notes arm: never reached the writer | 129 | 95 | 53 |
+| Notes arm: writer saw it; notes hold part | 39 | 24 | 9 |
+| Notes arm: writer saw it; notes lack it | 3 | 3 | 0 |
+| Notes arm: in the notes; arm showed nothing, agent did not find them | 9 | 3 | 0 |
+| Notes arm: in the notes, listed, file not opened | 9 | 4 | 0 |
+| Notes arm: in the notes, opened or pasted in, still failed | 0 | 0 | 0 |
+| Control or placebo, information not in the task | 82 | 42 | 28 |
+| Evidence arm, information not in the task | 30 | 19 | 13 |
+| Blend arm, information not in the task | 34 | 23 | 15 |
 
-These five tasks account for 150 failed trials, 15 per arm. Whether a requirement is "never met" is defined by outcomes, so this table describes where the experiment could not move anything; it does not explain why. The explanations in the last column come from the files.
+76 failed trials mix stages. To give one label per trial anyway, the label depends on the order:
 
-The sixth never-passing task, the ChatGPT proposal, has no such requirement: every check was met by some trial. Trials miss different combinations of five content checks, most often the instruction in a senior email to drop the competitive section (met in 3 of 30).
+- **Writer stages first:** 95 trials go to "never reached the writer", 15 to "kept part", 219 to "in the task, missed" and 56 to the arms without generated notes.
+- **"In the task" first:** that class takes 227 and "never reached the writer" 53.
 
-### 4.3 Arm against control, by whether the notes cover the requirement
+Either way the two large groups are the same: information the agent had and missed, and information the writer never saw. The harness, the agent's use of notes it opened, and the verifier account for almost nothing.
+
+![Where the information stopped, by writer](figures/v2/fig6-where-information-stopped.png)
+
+The same 742 failures can be read against each generation's notes, whatever arm the trial was in. This asks how far the information got toward each set of notes:
+
+| Writer | No earlier run holds it | Never reached writer | Writer saw, notes lack it | Writer saw, notes hold part | In the notes |
+|---|---|---|---|---|---|
+| Run 1 | 33 | 444 | 39 | 179 | 47 |
+| Run 3 | 33 | 581 | 0 | 111 | 17 |
+| Run 4 | 33 | 379 | 112 | 150 | 68 |
+
+Sections 4.3 to 4.8 take the stages in order.
+
+### 4.3 Stage 1: was the experience there?
+
+For 709 of the 742 failed trial-requirements, yes:
+
+- **440** have evidence from earlier runs of the same task: a passing run's output, verifier feedback, or a failing run's visible mistake.
+- **269** have it only from other tasks. For the coding tasks these are maintainers' follow-up instructions in other repositories.
+- **33** have none. All 33 are functional requirements the prompt itself states (26 on cookie store's cookie semantics, 7 on cattrs); the corpus has no cattrs or cookie-store runs to learn the implementation from.
+
+So no failure was caused by missing experience alone. Every requirement whose information was absent from the task had something in the corpus.
+
+**The conventions that decided the never-met requirements are in the corpus:**
+
+- **Release tier.** Ten multi-turn maintainer runs state a tier ("this one's internal release tier is 6") and later say which bump to make: tier 2 none, tier 5 patch, tier 6 minor, tier 8 minor, tier 9 major. Tier 7 never appears, but both neighbours map to minor, which is the 12.0.5 → 12.1.0 the awilix test wants. Five of these runs keep the tier in `.changes/*.yaml`, as the implicit variant does. One corpus run (t0027) is the same awilix feature on the same base version; it failed, with a bare verdict.
+- **Documentation preferences.**
+  - A maintainer in t0720, with the same "contracting engagement" sentence as customer delivery, demanded "one runnable failure or cancellation example" and later `performance.now()`. Other runs asked for structured error context and a monotonic deadline.
+  - httpx runs asked for a "minimal copyable example … runs as-is", injected fetch in tests and a changelog entry. Three of them removed the stray `test` key-log file behind all 11 of cookie store's stray-artifact failures.
+- **DAPT.** All 35 earlier DAPT runs fail, and each ends with feedback for the next attempt. No feedback states a threshold or the expected flags. The 30 runs that answered `has_port_scan=true` got a port-scan sentence in their feedback; the five that answered false did not. So the verdict can be recovered only by comparing feedback across runs (status "partial"). The minute-bucket anchor rule appears in 7 feedbacks.
+- **Same-task answers.**
+  - Partnership has 22 earlier runs, and exactly one passes (t0618): Emily as signer, $750,000, the kickoff event, "Contract Sent".
+  - The content-gap task's three passing runs show the exact answer.
+  - CSM's four passing runs all update entitlement 31 to premium 24x7.
+  - Word2Vec's only passing run returns an untrained model when no tokens remain, which is the empty-input behaviour the hidden test wants.
+  - A Teams variant passes once, setting the call's `source` to the user.
+- **APEX.** None of the three tasks has an earlier run of its own. Lessons from other Brightpath tasks are there: "files and scope first" mails fix the method, and the 11_20 meeting notes hold task-specific method sections. One earlier run's mail search even lists the market-share task's own method mail by subject without opening it. The Eurogrid answer value and the market-share churn haircut appear nowhere.
+
+The every-record-a-bare-verdict finding matters too. Apart from DAPT's feedback lines, every judged verifier result in the corpus is PASS or FAIL with no reason. The lessons are in what passing agents did and what maintainers said, not in grader feedback.
+
+### 4.4 Stage 2: did the writer keep it?
+
+Mostly not. In notes arms, the information that was not in the task never reached the writer in 129 of 189 failed trial-requirements. It reached the writer and was cut down or dropped in 42. It was in the notes in 18. What went wrong is visible in the writers' sessions:
+
+- **First message only.** Run 1 and run 3 built their records from each file's first user message; run 4 kept the first and last. No writer printed a maintainer's follow-up turn from any multi-turn run, which is where every coding convention above lives.
+- **Format parsing.** The corpus mixes three log formats. Run 1's extractor returned empty text for one format and built the workflow family from another. Run 3's verdict parser marked 137 files unknown. Run 4 opened a passing content-gap run but filtered tool calls by the wrong type name, so the email body was dropped. Codex-format runs put their prompt after an environment turn, so run 1 and run 4 misgrouped partnership and reported "0/24" and "0/15 PASS"; the only passing partnership run was among them.
+- **Truncation and sampling.**
+  - Run 1 printed 3 examples per group cut at 500 characters, which missed DAPT's bucket rule; run 4 printed all 35 DAPT feedback lines and kept it.
+  - Run 1 opened Word2Vec's passing run, but its print stopped at 300 characters, before the empty-input fallback. So it learned only that empty input raises, from a failing run.
+  - Run 4 cut lines at 150 characters, so "…Slack composite scoring" reached it without the scores.
+- **Never looked.** No writer saw any Brightpath or Eurogrid trajectory content beyond prompts and tool-name counts. Run 3 wrote out the passing Teams variant's trajectory and never read it. Only run 3 looked at a CSM trajectory.
+- **Saw and dropped.**
+  - Run 4 saw a ChatGPT-proposal run's closing summary naming each executive's concerns (CFO: cost and ROI; CIO: SOC 2 and encryption; ROI for 12,000 employees), and none of it reached its notes.
+  - Runs 1 and 4 saw partnership's wrong-signer pattern.
+  - Run 1's "approval of record governs" rule came from the closing summary of t0047, a failing run that corrected $750,000 to $450,000 and routed the contract to Mark. The corpus's one passing run contradicts it.
+
+The notes therefore held contract facts that are easy to extract from a first message or a verifier line: Word2Vec's path and signature, DAPT's metric definitions, CSM's entitlement in run 3. They lacked conventions that live in later turns and pointers that live in trajectories (section 4.10).
+
+### 4.5 Stages 3 and 4: did the notes reach the agent, and did it open them?
+
+When the notes held the information, it mattered whether the agent saw it. Three analyses show this, the first two with arms as the comparison.
+
+**Arm against control, by whether the notes cover the requirement.**
 
 ![Content test](figures/v2/fig4-content-test.png)
 
@@ -150,7 +284,7 @@ Contested requirements are those some trial met and some trial failed.
 
 - **Leaving one task out.** Without Word2Vec the estimate is +0.24, without DAPT +0.59, without CSM +0.45.
 - **CSM goes the other way.** Run 3's notes name the right entitlement, and run 3 passed CSM 0 of 3 against control's 2 of 3. No run 3 trial opened the file that names it.
-- **Selection.** Coverage was not assigned at random: the covered requirements are contract facts from earlier runs of the same tasks. The comparison is between arms on the same requirement, which the randomized arm design supports. Which requirements end up covered is observed, so "coverage" could stand in for something else about those requirements.
+- **Selection.** Coverage was not assigned at random: the covered requirements are contract facts from earlier runs of the same tasks. The comparison is between arms on the same requirement, which the randomized arm design supports. Which requirements end up covered is observed, so "coverage" could stand in for something else about those requirements. Section 4.4 now says what decided coverage: whether the fact sat where the writers looked.
 
 **Regression to the mean.** Covered requirements start low in control, and anything that starts low has room to rise in any arm. We took only requirements control met at most 1 time in 3:
 
@@ -165,10 +299,10 @@ So about +0.08 of the rise is what any arm shows from a low start. On requiremen
 
 **Word2Vec, the clearest single case.** The prompt asks for "the callable interface and artifact layout used by prior implementations of this task" and never says what they are. The checker loads `/workspace/solution.py` and calls `task_func`. All three generations of notes record both. The file-path requirement was met:
 
-- in 0 of 6 control and placebo trials;
+- in 0 of 6 control and placebo trials (two placebo trials opened the novel and trained on it);
 - in 3 of 3 in every arm that carried notes or records, including none shown (all three of whose trials found the staged folder by searching) and evidence.
 
-### 4.4 Exposure ladder with run 1's notes fixed
+**Exposure ladder with run 1's notes fixed.**
 
 ![Exposure ladder](figures/v2/fig3-exposure-ladder.png)
 
@@ -184,23 +318,11 @@ Placebo, none shown, run 1, read-first and all shown carry the same content (the
 | All shown | 1.00 | 6/6 | 12/12 | 0.67 | 0.65 |
 | Trend p (one-sided) | < 0.001 | | | 0.02 | 0.54 |
 
-**DAPT shows the effect within one task.** No DAPT trial in none shown opened the staged notes, and that arm sits at or below control. Where the notes were in front of the agent, DAPT met every covered metric: IPv4-only scoping, UDP over IPv6, flow tuples and bidirectional pairs. Blend, whose content differs and is excluded here, also met them in 12 of 12.
+**DAPT shows the effect within one task.** No DAPT trial in none shown opened the staged notes, and that arm sits at or below control. Where the notes were in front of the agent, DAPT met every covered metric: IPv4-only scoping, UDP over IPv6, flow tuples and bidirectional pairs. Blend, whose content differs and is excluded here, also met them in 12 of 12. The evidence arm's raw records, which carry the same verifier feedback, gave similar metric gains (one trial is seen reading the feedback rules and applying them).
 
-**What the ladder supports.** It is the evidence the earlier analysis lacked. That analysis compared trials that opened memory with trials that did not, within arms where the agent chooses when to open, and found nothing. The ladder rests on two tasks, and Word2Vec saturates as soon as the notes are reachable at all. What it shows is that exposure matters for content the notes contain and not for content they lack. It does not give the shape of a dose-response curve.
+**What the ladder supports.** It is the evidence the earlier analysis lacked. That analysis compared trials that opened memory with trials that did not, within arms where the agent chooses when to open, and found nothing. The ladder rests on two tasks, and Word2Vec saturates as soon as the notes are reachable at all. Exposure clearly matters for content the notes contain. It also shows a weaker rise on partly covered requirements (trend p = 0.02) and none on content they lack. It does not give the shape of a dose-response curve.
 
-### 4.5 From requirements to strict passes
-
-A trial passes only if every requirement passes, so memory raises strict passes only when it covers every requirement the agent would otherwise miss.
-
-- **DAPT.** In read-first and all shown, the agent met every metric run 1's notes cover, and every trial failed the port-scan requirement in 4.2. The forced-open follow-up shows the same at the requirement level. Of six trials with notes pasted in, one failed only the port-scan requirement. The run 1 trials also failed the minute-bucket rule, which run 1's notes lack and run 4's contain.
-- **Word2Vec.** Once the path and signature were supplied, the remaining failure was a hidden test: input made only of stop words must return an empty model. It was met in 14 of the 24 trials where tests ran. The blend text told agents they could raise an error there, and all three blend trials failed it.
-- **Seat surplus and Teams.** In the follow-up, pasting run 1's notes did not supply the meeting-notes carve-out (seat surplus) or the call's `source` field (Teams). The notes state neither specifically.
-
-Strict Word2Vec passes: 0 of 3 in control, 5 of 9 across runs 1, 3 and 4, 6 of 12 across the four other arms carrying run 1's notes (none shown 1, read-first 3, all shown 2, blend 0), and 3 of 3 with raw records.
-
-### 4.6 Opening the notes (observational)
-
-On requirements the arm's notes fully cover (blind labels, blend excluded), the requirement was met:
+**Opening the notes (observational).** On requirements the arm's notes fully cover (blind labels, blend excluded), the requirement was met:
 
 | What the agent did | Met |
 |---|---|
@@ -212,42 +334,92 @@ On requirements the arm's notes fully cover (blind labels, blend excluded), the 
 The agent decides whether to open, so this table is observational: trials that open may differ in other ways.
 
 - **Matching.** It matches a read to the file named in the label by file name, which is unambiguous within one set of notes.
-- **Consistency with the ladder.** It agrees with 4.4, which varies exposure by design.
-- **Partial credit.** The earlier within-task comparison of partial credit (`REPORT-v1.md` section 3: opened trials 0.085 lower, p = 0.90) pooled all requirements, most of them uncovered, so it could not show this.
+- **Consistency with the ladder.** It agrees with the ladder, which varies exposure by design.
+- **Partial credit and strict passes.** The earlier within-task comparisons pooled all requirements, most of them uncovered, so they could not show this. Partial credit: opened trials 0.085 lower, p = 0.90. Strict passes: 6 of 42 opened against 9 of 48 not opened.
+- **Where agents opened.** Opens follow the task family: analysis notes on APEX, workflow notes on AutomationBench, repository notes on the coding tasks, capture notes on DAPT. Run 1's notes were never opened on six tasks (awilix ×2, customer delivery, cookie store, Teams, CSM). Hermes' prompt tells the agent to load a skill only for knowledge it lacks, and the index descriptions are generic.
 
-### 4.7 Contents of the generated notes
+### 4.6 Stage 5: did the agent misuse what it read?
+
+No agent that opened the note covering a requirement, or had it pasted in, failed that requirement (60 of 60). Where opened notes hurt, the content was wrong, which is a writer failure, not misuse. The trajectories show specific cases on single tasks. Averaged over uncovered requirements there is no detectable harm (section 4.5).
+
+- **Partnership.** The checker wants the newest email: Emily as signer, $750,000. Run 1's notes say the "approval of record governs", which points to a CRM note with $450,000 and Mark. All three read-first trials followed it, and the blind labeller flagged the passage as misleading without seeing any outcome. The rule came from a failing earlier run (section 4.4). It is not the only cause, though. The wrong signer also appears without real memory: control met the signer requirement 1 of 3 times, placebo 0 of 3, and blend, which ran the original text on this task, 0 of 3. The note reinforced a mistake the model makes anyway. In the evidence arm, trial QVYnEg9 first sent the correct envelope and then reversed it after reading failed records.
+- **Marketing.** Run 1's "follow the written policy exactly" rule led the one run 1 marketing trial that opened it (6zkyYb4) to the older email, against the newer Slack method the checker wants.
+- **ChatGPT proposal.** The blend text added "the SOP governs on any conflict", and agents used it to discard the newer email the checker wants followed.
+- **Word2Vec empty input.** The blend text's either-or guard sentence let agents raise an error where the hidden test needs a model returned; all three blend trials failed it. The failure is not blend's alone: run 1, run 4, none shown and all shown trials fail the same test, and the other memory and record arms meet it in 14 of 21. Run 1's own guard sentence is vague in the same way, because its writer's print stopped before the passing run's fallback (section 4.4).
+- **Teams.** Run 3's stored lesson blames the call's "establishing" state. The checker fails on the missing `source` field, which all three run 3 trials omitted. Blend's caller-identity rule reached all three blend trials, and none set `source`.
+- **Blend on marketing.** Blend lost marketing on one requirement, "do not mention restricted topics": met 0 of 3 against 3 of 3 in control and run 1. No blend sentence concerns exclusions, so the mechanism is unknown.
+
+### 4.7 Stage 6: the information was in the task
+
+The largest group. 191 failed trials missed only requirements their own task made available, and 255 missed at least one. These are not all capability limits. Many are search and selection failures:
+
+- **Not opening the defining file.** On the three APEX tasks the benchmark ships its own reference skill files, which agents never see. They say exactly where to look: read the 11_20 meeting notes, check the method notes in `Brainstorming.docx`, search mail before computing an ambiguous metric. The trials that passed were the ones that happened to look:
+  - all 5 market-share passes read the mail thread that defines the method, and no failing trial did. 23 of the 25 failures reached the chart and workbook, but mail searches for "market share" returned nothing because the subject is hyphenated ("market-share");
+  - all 3 seat-surplus passes read the carve-out in the meeting notes, and no failing trial did. 14 failures never reached the task data behind the file tools; 14 of 27 failures ran under 3 minutes against 11 to 18 minutes for the passes;
+  - the Eurogrid method is in a notes file in the task's own folders that no trial read.
+- **Older over newer.** Agents resolved two conflicting sources toward the older one on partnership, marketing and the ChatGPT proposal.
+- **An optional-looking field.** Teams' tool schema calls `source` optional, and 28 of 30 trials left it out. The tracer for Teams rates this requirement unstated rather than derivable: this prompt drops the "from my account" sentence its passing earlier variant had. If that reading is right, its 28 failures move from this stage to the writer stage.
+- **Near misses.** On Eurogrid, Teams, CSM and most awilix and cattrs failures, the trial misses exactly one requirement, and customer delivery and cattrs failures score 0.92 or more of checks. A control awilix agent called "tier 7" "not actionable".
+
+For 374 of this stage's 407 failed trial-requirements the corpus also holds the information, fully for 177 and partly for 197 (section 4.3), so notes could have helped here too. Pointer notes ("read the 11_20 notes", "search mail before computing") are the obvious test.
+
+### 4.8 Stage 7: the verifier and requirements nobody states
+
+Five requirements were never met in 450 trials. They sink five tasks outright and account for 150 failed trials, 15 per arm:
+
+| Requirement | Trials | Reference meets it? | Task | Corpus | Writers |
+|---|---|---|---|---|---|
+| Awilix explicit: bump `package.json` to 12.1.0 for release tier 7 | 30 | Yes | The prompt says "Internal release tier: 7" and nothing more; the task metadata calls it a release-tier preference transfer. No trial edited `package.json` | The tier-to-bump convention in 10 maintainer runs (section 4.3) | Never saw it |
+| Awilix implicit: the same, with the tier in a metadata file | 30 | Yes | As above | As above, 5 runs with the tier in `.changes/*.yaml` | Never saw it |
+| Customer delivery: a runnable failure example in the docs | 30 | Yes | A preference only the hidden test states. Agents documented the success path. Run 1's notes and the blend text say to keep source changes minimal, which pushes the other way | Requested nearly verbatim in t0720 | Never saw it |
+| DAPT: `has_port_scan = false`, `is_traffic_benign = true` | 30 | Yes | The reference's detector uses fixed thresholds on entropy, SYN-only ratio and port count; the test file's comment says ">500 ports on single target". Agents read the capture as a SYN sweep and answered true | Recoverable only by comparing feedback across 35 failing runs | Runs 1 and 4 saw partial feedback; run 3 none |
+| Eurogrid: average avoided curtailment = 243,275.57 MWh | 30 | No | 29 trials reported 228,025.94 and one 228,033.33, from a different calculation about 6% lower. The agreed method is in a notes file in the task's own folders that no trial read | A transferable "read the team's data-reading notes" lesson; the value itself absent | Never saw it |
+
+Three counted DAPT trials (run 4 h2eaBBf, read-first ihjGXpp, evidence s7EZzRz) failed only the port-scan requirement. Everything else in the task was right.
+
+**Unstated, but not unlearnable.** Four of the five are conventions the prompt never states: the release-tier rule, the runnable example and the DAPT verdict, plus Eurogrid's method, which sits in the task's own files. FrontierMemory is built so that conventions like these are learnable from earlier runs, and the corpus bears that out for three of them. The earlier analysis's "the corpus has no related run, so no memory could have supplied it" is withdrawn for awilix and customer delivery. The tracers rate 355 failed trial-requirements as unstated specs. In notes arms, 125 of them never reached the writer, 42 reached it and were cut down or dropped, and 18 were in the notes but not seen. The rest are in arms without generated notes, plus Teams' `source` field (section 4.7).
+
+**Verifier defects.** One: the Eurogrid rubric asks for .57 while its negative criterion names .56, which fails the reference (it reports .56). It decided no agent trial. Two run 3 trials computed .57 along the way and discarded it, and every agent's figure was about 6% off on the method. The four reference solutions that score 0 are setup artefacts, not grader caps (section 1). The APEX judge was Claude Opus 5.5, where the documentation names GPT-5.6 Sol and the task config names Gemini 2.5 Flash. It completed in all 90 APEX trials, so no zero comes from a failed judge.
+
+### 4.9 From requirements to strict passes
+
+A trial passes only if every requirement passes, so memory raises strict passes only when it covers every requirement the agent would otherwise miss.
+
+- **DAPT.** In read-first and all shown, the agent met every metric run 1's notes cover, and every trial failed the port-scan requirement. Three counted trials failed on that alone (section 4.8). The run 1 trials also failed the minute-bucket rule, which run 1's notes lack and run 4's contain.
+- **Word2Vec.** Once the path and signature were supplied, the remaining failure was a hidden test: input made only of stop words must return an empty model. It was met in 14 of the 24 trials where tests ran. The passing earlier run held the answer; the writers' prints cut it off.
+- **Seat surplus and Teams.** In the forced-open follow-up, pasting run 1's notes did not supply the meeting-notes carve-out (seat surplus) or the call's `source` field (Teams). The notes state neither specifically.
+
+Strict Word2Vec passes: 0 of 3 in control, 5 of 9 across runs 1, 3 and 4, 6 of 12 across the four other arms carrying run 1's notes (none shown 1, read-first 3, all shown 2, blend 0), and 3 of 3 with raw records.
+
+**The forced-open follow-up** (exploratory, `REPORT-v1.md` section 10). Run 1's skill plus the matching reference, or all of run 4's files, were pasted into the prompt on three tasks each, three attempts:
+
+| | Seat surplus | DAPT | Teams | Marketing | Total | Same tasks, original arm |
+|---|---|---|---|---|---|---|
+| Run 1 notes pasted | 1/3 | 0/3 | 0/3 | | 1/9 | 0/9 |
+| Run 4 notes pasted | 1/3 | 0/3 | | 2/3 | 4/9 | 2/9 |
+
+These are inside the spread between arms on those tasks; marketing alone runs from 0 of 3 to 3 of 3. Of the six DAPT trials, one failed only the port-scan requirement.
+
+### 4.10 Contents of the generated notes
 
 From the blind labels, run 1's notes cover 6 of 73 requirements fully and 12 partly, run 3's 4 and 7, run 4's 7 and 12.
 
-- **What is covered.** Contract facts: Word2Vec's path and signature; DAPT's metric definitions, which runs 1 and 4 carry from verifier feedback on earlier pcap runs; and CSM's values in run 3.
+- **What is covered.** Contract facts: Word2Vec's path and signature; DAPT's metric definitions, which runs 1 and 4 carry from verifier feedback on earlier capture runs; and CSM's values in run 3.
 - **What is not.** No generation covers market share, Eurogrid, cattrs, cookie store, customer delivery or awilix.
 
 Two kinds of information are missing throughout:
 
-- **Conventions the checker enforces and the prompt never states.** The awilix version bump; documentation examples for cattrs, cookie store and customer delivery; and DAPT's port-scan thresholds.
-- **Pointers to where the answer is in the task's own files.** For the APEX tasks the benchmark ships reference skill files in `solution/skills/`, which agents never see. They say exactly this: read the 11_20 meeting notes, check the method notes in `Brainstorming.docx`, search mail before computing an ambiguous metric. The generated notes say only that data lives behind the file tools.
+- **Conventions the checker enforces and the prompt never states.** The awilix version bump; documentation examples for cattrs, cookie store and customer delivery; DAPT's port-scan verdict. Section 4.3 answers the question the earlier versions left open: the earlier runs held the first two, in maintainer follow-up turns. The writers never read those turns.
+- **Pointers to where the answer is in the task's own files.** The benchmark's reference skills for the APEX tasks give exactly these. The generated notes say only that data lives behind the file tools. The corpus holds the transferable form of these pointers ("files and scope first", the 11_20 notes), and no writer looked at a Brightpath trajectory.
 
-The passing APEX trials are the ones that found those files. All 5 market-share passes read the mail thread that defines the method, and all 3 seat-surplus passes read the carve-out in the meeting notes. No failing trial did either.
+### 4.11 Failure classes by where the information was
 
-We could not read the gated corpus, so we cannot say whether the earlier runs held these conventions and the note-writer dropped them, or whether they were never there.
-
-### 4.8 Misleading notes
-
-No average harm is detectable (4.3). The trajectories do show specific notes pointing the wrong way on single tasks:
-
-- **Partnership.** The checker wants the newest email: Emily as signer, $750,000. Run 1's notes say the "approval of record governs", which points to a CRM note with $450,000 and Mark. All three read-first trials followed it, and the blind labeller flagged the passage as misleading without seeing any outcome.
-- **ChatGPT proposal.** The blend text added "the SOP governs on any conflict", and agents used it to discard the newer email the checker wants followed.
-- **Word2Vec, blend.** An either-or guard sentence let agents raise an error where the hidden test needs a model returned. That cost 0 of 3 on the empty-input requirement.
-- **Teams, run 3.** The stored lesson blames the call's "establishing" state. The checker fails on the missing `source` field, which all three run 3 trials omitted.
-
-### 4.9 Failure classes
-
-This part is descriptive. Each failed requirement in each failed trial is classed by where its information was:
+This is the coarser, earlier view of section 4.2, kept because it needs no corpus reading. Each failed requirement in each failed trial is classed by where its information was:
 
 - **available:** stated in the prompt or derivable from the task's own data and tools;
 - **notes only:** absent from the task, but this arm's notes cover it fully;
 - **notes partial:** absent from the task, and this arm's notes cover it partly;
-- **absent:** in neither the task nor this arm's notes. For the evidence arm, whose records we can see only through trajectories, this reads "absent or in unread records".
+- **absent:** in neither the task nor this arm's notes. For the evidence arm, whose records we see only through trajectories, this reads "absent or in unread records".
 
 A requirement counts as available if the task supplies it, whatever the notes say.
 
@@ -260,9 +432,11 @@ A requirement counts as available if the task supplies it, whatever the notes sa
 | Of the rest: missed one the notes fully covered | 0 | 7 |
 | The rest: every missed requirement was available in the task | 191 | 191 |
 
-No failed trial missed only requirements its notes fully covered. All 7 trials that missed such a requirement also missed one the notes did not cover.
+No failed trial missed only requirements its notes fully covered. Each of the 7 trials that missed such a requirement also missed one the notes did not fully cover: for 3 of them it was uncovered, for 4 only partly covered.
 
-By arm, with the never-met count (4.2) shown separately because it overlaps the other columns:
+"Absent" here means absent from the task and from the notes. Section 4.3 shows it is rarely absent from the corpus: the 179 trials are mostly the writer-stage trials of section 4.2 plus the arms without generated notes.
+
+By arm, with the never-met count shown separately because it overlaps the other columns:
 
 | Arm | Absent | Notes partial | Available only | Of which a never-met requirement |
 |---|---|---|---|---|
@@ -277,32 +451,24 @@ By arm, with the never-met count (4.2) shown separately because it overlaps the 
 | Evidence | 19 | 0 | 17 | 15 |
 | Blend (not blind-labelled; counted as absent) | 23 | 0 | 19 | 15 |
 
-**The largest class is "available only".** 191 failed trials missed only requirements the task itself made available. These are not all capability limits. Many are search and selection failures:
+### 4.12 Task by task
 
-- the agent did not open the mail or meeting notes (APEX);
-- it resolved two conflicting sources toward the older one (partnership, marketing, ChatGPT proposal);
-- it skipped a field that a tool's description calls optional (Teams).
-
-The benchmark's reference skills target exactly this kind of failure with pointers. The derivable/absent split behind this class was made by auditors who could see outcomes (section 7).
-
-### 4.10 Task by task
-
-| Task | Strict passes (of 30) | Requirement that decides it | What memory did |
-|---|---|---|---|
-| CSM | 19 | Upgrade entitlement 31 to premium, 24x7 | Failures changed the wrong entitlement or set "enterprise". The checker does not read the monthly cap or price despite the check names. Run 3's notes hold the answer, unopened |
-| Marketing | 15 | Follow the newer Slack method over an older email (17 of 30) | Nothing measurable; control passes 2 of 3 |
-| Word2Vec | 14 | Path and signature (absent from the prompt), then empty input | Notes and records supplied the path and signature in every arm that had them; the empty-input test remained |
-| Market share | 5 | Use the method defined in a mail thread (risk-adjusted ARR) | Passes are exactly the trials that read the thread. Notes point to mail only generically |
-| cattrs | 4 | A documented, runnable example (absent from the prompt) | No note covers it. The 26 failures had no Python example block. The reference solution is code-only and fails this check |
-| Seat surplus | 3 | The carve-out in the 11_20 meeting notes | Passes are exactly the trials that read it. 14 failures never reached the task data |
-| Teams | 2 | The call's `source` must be the requester | The tool schema calls `source` optional. The one evidence trial that read a record with it passed |
-| Cookie store | 2 | Header parsing (18 fail the comma-combined Set-Cookie test) and a runnable example | No note covers either |
-| Partnership | 1 | Newest email wins: Emily, $750,000 | Run 1's "approval of record" rule points to the wrong source |
-| ChatGPT proposal | 0 | Five content checks, failed in different combinations | Blend's "SOP governs" line hurt |
-| Awilix explicit, implicit | 0 | Release-tier version bump | Nothing anywhere states the rule |
-| Customer delivery | 0 | Runnable failure example | Nothing states it; the notes' "minimal changes" advice works against it |
-| DAPT | 0 | Port-scan verdict from unstated thresholds | Notes supplied every metric they cover; the verdict stayed out of reach |
-| Eurogrid | 0 | Method in a notes file no trial read; rubric inconsistent at the second decimal | Nothing |
+| Task | Strict passes (of 30) | Requirement that decides it | What memory did | Where the information stopped |
+|---|---|---|---|---|
+| CSM | 19 | Upgrade entitlement 31 to premium, 24x7 | Failures changed the wrong entitlement or set "enterprise". The checker does not read the monthly cap or price despite the check names. Run 3's notes hold the answer, unopened | Four passing earlier runs show it; only run 3's writer looked |
+| Marketing | 15 | Follow the newer Slack method over an older email (17 of 30) | Nothing measurable; control passes 2 of 3. Blend lost the restricted-topics requirement 0 of 3 | Three passing earlier runs show the answer; parsers hid them from all writers |
+| Word2Vec | 14 | Path and signature (absent from the prompt), then empty input | Notes and records supplied the path and signature in every arm that had them; the empty-input test remained | Path in the notes; the empty-input fallback cut off by the writers' prints |
+| Market share | 5 | Use the method defined in a mail thread (risk-adjusted ARR) | Passes are exactly the trials that read the thread. Notes point to mail only generically | No earlier run of this task; a transferable lesson no writer read |
+| cattrs | 4 | A documented, runnable example (absent from the prompt) | No note covers it. The 26 failures had no Python example block. The reference solution is code-only and fails this check | The preference in other repos' maintainer turns; never reached the writers |
+| Seat surplus | 3 | The carve-out in the 11_20 meeting notes | Passes are exactly the trials that read it. In run 1, run 4 and read-first, the one trial per arm that opened the notes is the only one that reached the task data; all shown, evidence and blend reached it in 3 of 3, every other arm in 1 of 3. Run 3 is the exception | A transferable pointer to the 11_20 notes, seen only as a family summary |
+| Teams | 2 | The call's `source` must be the requester | The tool schema calls `source` optional. The one evidence trial that read a record with it passed, and so did one all-shown rerun | A passing variant sets it; run 3 wrote it out and never read it |
+| Cookie store | 2 | Header parsing (18 fail the comma-combined Set-Cookie test) and a runnable example | No note covers either | Example and stray-file conventions in httpx maintainer turns; header semantics absent from the corpus |
+| Partnership | 1 | Newest email wins: Emily, $750,000 | Run 1's "approval of record" rule points the wrong way, as does the model's own default (control 1 of 3, placebo 0 of 3) | One passing earlier run, hidden by format parsing; the rule came from a failing run |
+| ChatGPT proposal | 0 | Five content checks, failed in different combinations | Blend's "SOP governs" line hurt | Run 4 saw the executives' concerns and dropped them |
+| Awilix explicit, implicit | 0 | Release-tier version bump | No note states the rule | The rule in 10 maintainer runs; never reached the writers |
+| Customer delivery | 0 | Runnable failure example | No note states it; the notes' "minimal changes" advice works against it | Requested nearly verbatim in an earlier run; never reached the writers |
+| DAPT | 0 | Port-scan verdict from unstated thresholds | Notes supplied every metric they cover; the verdict stayed out of reach | Only by comparing feedback across runs |
+| Eurogrid | 0 | Method in a notes file no trial read; rubric inconsistent at the second decimal | Nothing | A transferable "read the team notes" lesson no writer read |
 
 ## 5. Model of the failures
 
@@ -310,40 +476,45 @@ The data fit a simple model:
 
 1. A task is a conjunction of requirements, and a trial passes only if all of them pass.
 2. Each requirement needs some piece of information and the work to act on it. The information comes from the prompt, from the task's own data and tools, from memory, or from nowhere the agent can see.
-3. Memory changes the outcome through requirements whose information it contains, to the degree that the content reaches the agent, by exposure or by a search the agent chooses to make.
-4. A wrong or one-sided rule in memory can lower the pass rate on the requirement it addresses. This is observed on single tasks; no average harm is detectable here.
+3. Memory carries information from earlier runs to the agent through three filters: what the writer reads, what it keeps, and whether the agent sees the result. In this study the first filter removed most of it.
+4. Memory changes the outcome through requirements whose information it contains, to the degree that the content reaches the agent, by exposure or by a search the agent chooses to make.
+5. A wrong or one-sided rule in memory can lower the pass rate on the requirement it addresses. This is observed on single tasks; no average harm is detectable here.
 
-Three of the model's predictions can be checked in this data:
+Four of the model's predictions can be checked in this data:
 
-- **Arms differ on covered requirements, not on uncovered ones.** Consistent with 4.3, on three tasks.
-- **With content fixed, covered requirements rise with exposure and uncovered ones do not.** Consistent with 4.4, on two tasks.
-- **Strict passes move only where the notes cover every requirement the agent would otherwise miss.** Among these 15 tasks that happened only on Word2Vec, and it is the only task with a clear strict-pass gain (4.5).
+- **Arms differ on covered requirements, not on uncovered ones.** Consistent with section 4.5, on three tasks.
+- **With content fixed, covered requirements rise with exposure and uncovered ones do not.** Consistent with section 4.5, on two tasks.
+- **Strict passes move only where the notes cover every requirement the agent would otherwise miss.** Among these 15 tasks that happened only on Word2Vec, and it is the only task with a clear strict-pass gain (section 4.9).
+- **What the writer keeps depends on where the information sits in a record, not on how useful it is.** Contract facts in first messages and verifier lines were kept. Conventions in follow-up turns and answers in unparsed formats were not (section 4.4).
 
 None of these is a large-sample test. The model is a hypothesis this data supports, to be tested on more tasks.
-
-What the model leaves open is the size of the opportunity. In this study most failed requirements were either absent everywhere or available in the task and missed. Whether a memory system can supply conventions and pointers, not just contract facts, is the question for the follow-up.
 
 ## 6. Hypotheses for a follow-up paper
 
 | Hypothesis | Evidence here | What would test it |
 |---|---|---|
-| H1. Memory acts through the requirements its content covers | Supported on three tasks (4.3) | The same contrast on more tasks, with content labelled blind and before the runs |
-| H2. With content fixed, the effect grows with exposure | Supported on two tasks (4.4) | Exposure arms on more tasks, content fixed and pre-labelled |
-| H3. Strict pass rates understate memory effects because tasks are conjunctions | Shown descriptively (4.5) | Pre-register requirement-level outcomes next to strict passes |
-| H4. Self-generated notes capture contract facts but not conventions or pointers | Holds for these three generations (4.7) | Compare generated notes with the benchmark's reference skill files; test a writer prompted to record conventions and where information sits |
-| H5. Wrong or one-sided rules in memory cause harm on the requirements they address | Mechanisms on single tasks (4.8) | Swap in a corrected rule for the same task and measure the same requirement |
-| H6. Pointer notes ("read the 11_20 notes") fix search failures on requirements the task's files answer | Consistent with the APEX passes, untested | Arms that add only the benchmark's reference pointers |
+| H1. Memory acts through the requirements its content covers | Supported on three tasks (4.5) | The same contrast on more tasks, with content labelled blind and before the runs |
+| H2. With content fixed, the effect grows with exposure | Supported on two tasks (4.5) | Exposure arms on more tasks, content fixed and pre-labelled |
+| H3. Strict pass rates understate memory effects because tasks are conjunctions | Shown descriptively (4.9) | Pre-register requirement-level outcomes next to strict passes |
+| H4. The binding constraint is the writer's reading, not the experience | The corpus holds 96% of what failed requirements needed; 51–78% never reached a writer (4.3, 4.4) | Rerun the writer with a reader that sees every turn and every format, same model and budget; measure coverage of the 73 requirements, then rerun the task arms |
+| H5. Supplying the lost conventions flips the never-met requirements | Untested; the conventions exist in the corpus (4.3) | An oracle-note arm: add the release-tier rule, the runnable-example preference and the Teams `source` lesson to run 1's notes; measure those requirements and strict passes |
+| H6. Self-generated notes capture contract facts but not conventions or pointers | Holds for these three generations (4.10) | Compare generated notes with the benchmark's reference skill files; test a writer prompted to record conventions and where information sits |
+| H7. Wrong rules in memory hurt the requirements they address | Mechanisms on single tasks; partly the model's default (4.6) | Swap in a corrected rule for the same task and measure the same requirement |
+| H8. Pointer notes fix search failures on requirements the task's files answer | Consistent with the APEX passes, untested (4.7) | Arms that add only the benchmark's reference pointers |
 
-The existing harness can run all six. H4 and H6 need no new tasks.
+The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H4 needs only the writer step to be rerun.
 
 ## 7. Threats to validity
 
 - **Three attempts per cell.** Pooling over requirements and permuting whole trials give the content and exposure results what power they have. Single-task differences in strict passes (most of what the earlier blogs read into the heatmap beyond Word2Vec) are within noise.
 - **Few covered requirements.** The positive effect rests mainly on Word2Vec and DAPT. The direction holds without either, but the size is poorly estimated.
-- **Which requirements are covered is observed, not assigned.** Covered requirements are contract facts from earlier runs of the same task. The arm contrast is valid for those requirements, but generalising to "memory content causes the effect" assumes nothing else about them interacts with the arms.
-- **Labels.** The memory-content labels were redone blind. The explicit/derivable/absent prompt labels were not, and they drive the classes in 4.9; the verifier checked the claims among them that would change conclusions. The blend text was not blind-labelled and is excluded from content comparisons.
-- **Unreadable sources.** We did not read the gated corpus, and we saw the evidence arm's records only through trajectories. "Absent" means absent from what the agent could see, not from the earlier runs.
+- **Which requirements are covered is observed, not assigned.** The arm contrast is valid for those requirements. Generalising to "memory content causes the effect" assumes nothing else about them interacts with the arms.
+- **The writer stages are a trace, not a contrast.** They say where information stopped, observed directly in the writers' sessions. They do not show that supplying it would have changed the outcome; H5 tests that.
+- **"Present in the corpus" is a judgement.** For 269 failed trial-requirements the evidence comes from other tasks, such as a release-tier rule in another repository. A different reader might call some of those "partial". The tracers rated their own confidence and logged their searches; we rechecked the claims that change conclusions (section 3).
+- **Labels.** The memory-content labels were redone blind. The explicit/derivable/absent prompt labels were not, and they decide which stage a failure lands in. They disagree with a tracer on one requirement (Teams `source`, 28 failures; section 4.7). The blend text was not blind-labelled and is excluded from content comparisons.
+- **The evidence arm** is seen only through trajectories: we know what was staged and what the agent opened, not what it took from it.
 - **Judges.** An LLM judge grades the APEX criteria, and its rationales are saved (`grade_details.json`). The rationales we read match the arithmetic, and the market-share and seat-surplus passes line up exactly with the trials that read the defining files. The judge has not been tested on known-wrong answers. The ChatGPT proposal's CFO check appears to fail some trials that did what it asks; that is an auditor's judgment and is unverified.
+- **One harness artefact.** In read-first seat-surplus trial QVfNmrb, an injected user turn at step 42 replaced the step-41 answer as the final reply.
 - **One model, one harness.** Everything here is Qwen 27B in Hermes.
 
 ## 8. Corrections to earlier write-ups
@@ -351,17 +522,29 @@ The existing harness can run all six. H4 and H6 need no new tasks.
 | Earlier claim | What the files show |
 |---|---|
 | 287 of 385 failures were not caused by memory; memory was involved in 98 | An artefact of the label order. Withdrawn (also in `REPORT-v1.md`, Nov 22) |
+| "The corpus has no related run" for awilix, cattrs and customer delivery, "so no generated memory could have supplied it" (v1) | The corpus has no run of these tasks, but it holds the conventions their hidden checks enforce, in other repositories' maintainer turns. The writers never read those turns (4.3, 4.4) |
+| "Nothing anywhere states the release-tier rule"; "the rule exists only in the hidden test" (v2) | The rule is in 10 corpus runs, and the task metadata names it a release-tier preference transfer |
+| "We cannot say whether the earlier runs held these conventions and the writer dropped them" (v2) | They held the release-tier and documentation conventions; the writers never read them. DAPT's verdict is recoverable only across runs |
 | 32 trials were capped by the grader; Eurogrid is "the cleanest case" | The Eurogrid rubric is inconsistent at the second decimal, which fails the reference. Agents failed on the method, about 6% away, so the inconsistency decided no agent trial |
 | A reference score of 0 marks a grader cap (four tasks) | Setup artefacts. The two EnterpriseOps references replay an empty call log; the cattrs and cookie-store references are code-only patches. Agents pass all four tasks |
 | DAPT never passes because of a grader cap (follow-up write-up) | DAPT never passes because of the port-scan verdict, which comes from unstated thresholds that the reference meets |
 | Teams failures: the call had Alice as the only target | All 28 failures omitted the `source` field; the target was right in every trial |
 | CSM failures: the monthly cap was missing | The checker does not read the cap. Failures changed the wrong entitlement or set the wrong level |
 | Seat surplus: two trials had rounding errors | 22.76 rounds to 23 correctly; the expected 22 comes from the meeting-notes carve-out |
+| Seat surplus: in run 3, trials that did not open the notes gave up (Craft blog) | In run 1, run 4 and read-first the one trial that opened the notes is the only one that reached the data. Run 3 is the exception: its opener never reached the data, and a non-opener did |
+| Run 3 opened its notes in 11 of 45 trials | 14 of 45 |
+| Partnership fails because of run 1's "approval of record" rule (v2) | The rule pushes the wrong way, but the wrong signer also appears in control (met 1 of 3), placebo (0 of 3) and blend (0 of 3) |
+| Records hurt DAPT (v1) | Not supported. Records helped DAPT's metrics; they hurt partnership (trial QVYnEg9) |
+| Word2Vec's empty-input failures come from blend's guard sentence (v2) | Blend failed it 3 of 3, but run 1, run 4, none shown and all shown trials fail it too |
+| Blend rewrote every task (v2 setup) | 12 of 15; 9 blend trials ran the original text |
+| Read-first or pasting "made no measurable difference elsewhere" (v2 readable) | On partly covered requirements the rate also rose with exposure (trend p = 0.02); on uncovered requirements it did not |
+| All 7 trials that missed a fully covered requirement also missed an uncovered one (v2) | 3 missed an uncovered one; 4 missed only partly covered ones besides |
 | "We cannot say what the run 1 memory says" | The notes were recovered with the trajectories and read for this report |
 | The APEX judge's reasoning is not saved | It is saved per criterion in `verifier/grade_details.json` |
-| Opening memory made no difference (within-cell comparison) | That comparison pooled uncovered requirements and was confounded by choice. With exposure set by design, covered requirements rise with exposure (4.4) |
+| Opening memory made no difference (within-cell comparison) | That comparison pooled uncovered requirements and was confounded by choice. With exposure set by design, covered requirements rise with exposure (4.5) |
 | Run 3's CSM zero, "without run 3's memory text" | Run 3's notes name the right entitlement, and no run 3 trial opened them. Noise remains the likeliest reading of the 0 of 3 |
 | Several per-trial labels in `traces/traces-all.json` | The auditors list about 20 trials whose label contradicts the verifier output, for example "functional passed" on trials that failed tests. Those labels are not used here |
+| Trial HJvLDqW (cattrs 77/77) is a counted control pass (`results/pipeline-audit.md` line 11) | It is in the pilot job; the counted control has no cattrs pass. The audit file is not yet corrected |
 
 **From the verification pass:**
 
@@ -370,17 +553,17 @@ The existing harness can run all six. H4 and H6 need no new tasks.
 - **Cookie store.** Of 18 trials failing the comma-combined header test, 16 show the semicolon-splitting sign.
 - **Marketing.** The task's four always-excluded assertions are never scored.
 
-**From the review of this report:**
+**From the review of the v2 report:**
 
 - The first draft scored the Word2Vec tests that never ran as failures. That inflated the "partly covered" effect to +0.14; it is +0.01.
 - The first draft let blend's labels, which are not blind, into the blind analysis.
 
 ## 9. Still open
 
+- Whether supplying the lost conventions flips the never-met requirements (H5). This needs new trials.
 - Whether the read-first sentence reached the model. It is in the config, not the saved prompt; opens rose from 15 to 27 of 45.
-- Whether the earlier runs held the conventions the notes lack. Answering it needs the gated corpus.
 - How the APEX judge treats near-miss and wrong answers. That needs a test on known-wrong answers.
-- Why some seat-surplus and Teams trials stop within minutes. On seat surplus, 14 failed trials never reached the task data behind the file tools; why the agent gave up instead of using them is not visible in the trajectories.
+- Why some seat-surplus and Teams trials stop within minutes. On seat surplus, the arms that put the notes or records in front of the agent reached the task data more often (3 of 3 against 1 of 3), which suggests the notes' pointer to the file tools helps. Why the other trials gave up is not visible in the trajectories.
 - How far any of this carries over to other models and memory systems.
 
 ## 10. Files
@@ -389,9 +572,16 @@ The existing harness can run all six. H4 and H6 need no new tasks.
   - `checks.py`: check-level outcomes from the verifier output.
   - `access.py`: memory reads from trajectories.
   - `analysis.py`: requirement table, content test, exposure ladder, access table, failure classes.
-  - `figures.py`: the figures in `figures/v2/`.
-- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary) and `requirement-analysis-auditor-labels.json` hold every number in this report, with no raw task or memory text.
-- **Private, not in git.** The trial data, the per-task audit files with quotes, the verification file and the blind labels are under `~/fm-extract-20261116/` (`causal/audit/`, `causal/verification.json`, `causal/blind-labels.json`). They contain gated task material.
+  - `stages.py`: the stage of every failed trial-requirement, from the corpus trace.
+  - `figures.py` and `stage_figures.py`: the figures in `figures/v2/`.
+- **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json` and `stages.json` hold every number in this report, with no raw task, memory or corpus text.
+- **Private, not in git.** Under `~/fm-extract-20261116/`:
+  - the trial data;
+  - the per-task audit files with quotes (`causal/audit/`);
+  - the corpus trace per task, with quotes and search logs (`causal/stages/`);
+  - the verification file and the blind labels.
+
+  The corpus itself is in `data/corpus/v1.1/` (git-ignored). The claim ledger, which records the fate of all 561 claims in the earlier documents and the evidence checked for each, is kept with the private files because it quotes trial data.
 - **The earlier analysis**, kept as a record: `REPORT-v1.md`, `TAXONOMY.md`, `traces/`.
 
 To reproduce, run these from `causal/`. JOBS is the extracted jobs directory and PRIVATE is `~/fm-extract-20261116`.
@@ -401,5 +591,7 @@ python3 checks.py JOBS PRIVATE/checks.jsonl
 python3 access.py JOBS PRIVATE/access.jsonl
 python3 analysis.py PRIVATE out/requirement-analysis-blind-labels.json PRIVATE/causal/blind-labels.json
 python3 analysis.py PRIVATE out/requirement-analysis-auditor-labels.json
+python3 stages.py PRIVATE PRIVATE/causal/blind-labels.json out/stages.json
 python3 figures.py out/requirement-analysis-blind-labels.json ../figures/v2
+python3 stage_figures.py out/stages.json ../figures/v2
 ```
