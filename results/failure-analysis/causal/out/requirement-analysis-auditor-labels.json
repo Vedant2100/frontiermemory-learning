@@ -1,0 +1,2770 @@
+{
+ "labels": "auditor",
+ "requirements": [
+  {
+   "key": "apex-brightpath-market-share:R1-risk-adjusted-within-industry-ARR-mix",
+   "task": "apex-brightpath-market-share",
+   "id": "R1-risk-adjusted-within-industry-ARR-mix",
+   "n_checks": 3,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 5,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "1/3",
+    "run3": "0/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "apex-brightpath-seat-surplus:R1-notes-defined-seat-method",
+   "task": "apex-brightpath-seat-surplus",
+   "id": "R1-notes-defined-seat-method",
+   "n_checks": 2,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 3,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "1/3",
+    "placebo": "1/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R1-lowest-ratio-pair",
+   "task": "apex-eurogrid-curtailment",
+   "id": "R1-lowest-ratio-pair",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R2-causes-of-curtailment",
+   "task": "apex-eurogrid-curtailment",
+   "id": "R2-causes-of-curtailment",
+   "n_checks": 4,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "apex-eurogrid-curtailment:R3-average-avoided-curtailment-MWh",
+   "task": "apex-eurogrid-curtailment",
+   "id": "R3-average-avoided-curtailment-MWh",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "never_met",
+   "met": 0,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-marketing-conten:R1_report_sent_all_stages",
+   "task": "automationbench-marketing-conten",
+   "id": "R1_report_sent_all_stages",
+   "n_checks": 6,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 29,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "automationbench-marketing-conten:R2_call_out_customer_referral_program",
+   "task": "automationbench-marketing-conten",
+   "id": "R2_call_out_customer_referral_program",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 26,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "automationbench-marketing-conten:R3_follow_newer_slack_methodology_and_code",
+   "task": "automationbench-marketing-conten",
+   "id": "R3_follow_newer_slack_methodology_and_code",
+   "n_checks": 4,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 17,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "1/3",
+    "run4": "1/3",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "2/3",
+    "evidence": "2/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "automationbench-marketing-conten:R4_do_not_mention_restricted_topics",
+   "task": "automationbench-marketing-conten",
+   "id": "R4_do_not_mention_restricted_topics",
+   "n_checks": 3,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 22,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "1/3",
+    "run4": "3/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-marketing-conten:R5_no_external_or_marketing_recipients",
+   "task": "automationbench-marketing-conten",
+   "id": "R5_no_external_or_marketing_recipients",
+   "n_checks": 4,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "never_scored",
+   "met": 0,
+   "measured": 0,
+   "by_arm": {
+    "control": "0/0",
+    "run1": "0/0",
+    "run3": "0/0",
+    "run4": "0/0",
+    "placebo": "0/0",
+    "readfirst": "0/0",
+    "allshown": "0/0",
+    "noneshown": "0/0",
+    "evidence": "0/0",
+    "blend": "0/0"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R1_save_strategy_with_chatgpt",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R1_save_strategy_with_chatgpt",
+   "n_checks": 3,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R2_no_cross_account_injection",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R2_no_cross_account_injection",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R3_cfo_cost_roi_focus_not_growth",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R3_cfo_cost_roi_focus_not_growth",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 16,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "1/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "3/3",
+    "readfirst": "1/3",
+    "allshown": "1/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R4_cio_security_soc2_encryption",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R4_cio_security_soc2_encryption",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 23,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "1/3",
+    "readfirst": "2/3",
+    "allshown": "3/3",
+    "noneshown": "2/3",
+    "evidence": "3/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R5_retail_supply_chain",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R5_retail_supply_chain",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 28,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "2/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R6_roi_sized_by_linkedin_12000",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R6_roi_sized_by_linkedin_12000",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 14,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "1/3",
+    "run3": "2/3",
+    "run4": "1/3",
+    "placebo": "2/3",
+    "readfirst": "1/3",
+    "allshown": "2/3",
+    "noneshown": "0/3",
+    "evidence": "3/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-chatgpt-pr:R7_c_level_override_partnership_not_competitive",
+   "task": "automationbench-sales-chatgpt-pr",
+   "id": "R7_c_level_override_partnership_not_competitive",
+   "n_checks": 2,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 3,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "1/3",
+    "run3": "0/3",
+    "run4": "1/3",
+    "placebo": "0/3",
+    "readfirst": "1/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R1_signer_emily_not_mark",
+   "task": "automationbench-sales-partnershi",
+   "id": "R1_signer_emily_not_mark",
+   "n_checks": 3,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 2,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R2_subject_format_with_750k",
+   "task": "automationbench-sales-partnershi",
+   "id": "R2_subject_format_with_750k",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 3,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "1/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R3_kickoff_event_type_for_500k_plus",
+   "task": "automationbench-sales-partnershi",
+   "id": "R3_kickoff_event_type_for_500k_plus",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 3,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "1/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R4_single_envelope",
+   "task": "automationbench-sales-partnershi",
+   "id": "R4_single_envelope",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 22,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "3/3",
+    "run3": "1/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "2/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R5_stage_contract_sent",
+   "task": "automationbench-sales-partnershi",
+   "id": "R5_stage_contract_sent",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 15,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "1/3",
+    "run3": "2/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "0/3",
+    "evidence": "3/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "automationbench-sales-partnershi:R6_description_contains_750k",
+   "task": "automationbench-sales-partnershi",
+   "id": "R6_description_contains_750k",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 12,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "1/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "2/3",
+    "allshown": "3/3",
+    "noneshown": "0/3",
+    "evidence": "1/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-explicit:R1_release_tier_version_bump",
+   "task": "awilix-release-tier-explicit",
+   "id": "R1_release_tier_version_bump",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "never_met",
+   "met": 0,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-explicit:R2_initialize_rejects_never_throws_synchronously",
+   "task": "awilix-release-tier-explicit",
+   "id": "R2_initialize_rejects_never_throws_synchronously",
+   "n_checks": 2,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 24,
+   "measured": 29,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "2/3",
+    "readfirst": "1/2",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-explicit:R3_core_async_initialization_behaviour_and_types",
+   "task": "awilix-release-tier-explicit",
+   "id": "R3_core_async_initialization_behaviour_and_types",
+   "n_checks": 21,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 27,
+   "measured": 29,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "2/3",
+    "run4": "2/3",
+    "placebo": "3/3",
+    "readfirst": "2/2",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-explicit:R4_full_functional_gate",
+   "task": "awilix-release-tier-explicit",
+   "id": "R4_full_functional_gate",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 21,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "2/3",
+    "run4": "0/3",
+    "placebo": "2/3",
+    "readfirst": "1/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-implicit:R1_release_tier_version_bump",
+   "task": "awilix-release-tier-implicit",
+   "id": "R1_release_tier_version_bump",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "never_met",
+   "met": 0,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-implicit:R2_initialize_rejects_never_throws_synchronously",
+   "task": "awilix-release-tier-implicit",
+   "id": "R2_initialize_rejects_never_throws_synchronously",
+   "n_checks": 2,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 23,
+   "measured": 27,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "1/2",
+    "run4": "2/2",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "2/2",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-implicit:R3_core_async_initialization_behaviour_and_types",
+   "task": "awilix-release-tier-implicit",
+   "id": "R3_core_async_initialization_behaviour_and_types",
+   "n_checks": 21,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 26,
+   "measured": 27,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "2/3",
+    "run3": "2/2",
+    "run4": "2/2",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "2/2",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "awilix-release-tier-implicit:R4_full_functional_gate",
+   "task": "awilix-release-tier-implicit",
+   "id": "R4_full_functional_gate",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 22,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "2/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "2/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "build-word2vec-pipeline:R1-artifact-path-and-entrypoint",
+   "task": "build-word2vec-pipeline",
+   "id": "R1-artifact-path-and-entrypoint",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "yes",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 24,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "0/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "build-word2vec-pipeline:R2-task_func-signature-preprocessing-min_count",
+   "task": "build-word2vec-pipeline",
+   "id": "R2-task_func-signature-preprocessing-min_count",
+   "n_checks": 4,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 23,
+   "measured": 24,
+   "by_arm": {
+    "control": "0/0",
+    "run1": "3/3",
+    "run3": "2/3",
+    "run4": "3/3",
+    "placebo": "0/0",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "build-word2vec-pipeline:R3-empty-input-returns-Word2Vec",
+   "task": "build-word2vec-pipeline",
+   "id": "R3-empty-input-returns-Word2Vec",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "partial",
+    "run3": "partial",
+    "run4": "no",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 14,
+   "measured": 24,
+   "by_arm": {
+    "control": "0/0",
+    "run1": "2/3",
+    "run3": "2/3",
+    "run4": "1/3",
+    "placebo": "0/0",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R1_core_partial_structuring_api",
+   "task": "cattrs-compositional-changelog",
+   "id": "R1_core_partial_structuring_api",
+   "n_checks": 60,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R2_regression_error_pickling",
+   "task": "cattrs-compositional-changelog",
+   "id": "R2_regression_error_pickling",
+   "n_checks": 7,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R3_nested_partial_value_propagation",
+   "task": "cattrs-compositional-changelog",
+   "id": "R3_nested_partial_value_propagation",
+   "n_checks": 3,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 28,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R4_errors_populated_under_detailed_validation",
+   "task": "cattrs-compositional-changelog",
+   "id": "R4_errors_populated_under_detailed_validation",
+   "n_checks": 3,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 28,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "2/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R5_refine_preserves_structured_fields",
+   "task": "cattrs-compositional-changelog",
+   "id": "R5_refine_preserves_structured_fields",
+   "n_checks": 2,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 28,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R6_default_factory_called_once_per_call",
+   "task": "cattrs-compositional-changelog",
+   "id": "R6_default_factory_called_once_per_call",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 29,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "cattrs-compositional-changelog:R7_user_preference_docs_example_changelog",
+   "task": "cattrs-compositional-changelog",
+   "id": "R7_user_preference_docs_example_changelog",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "partial",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 4,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "1/3",
+    "run4": "1/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "2/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "cookie-store-compositional-chang:R1_functional_cookie_semantics",
+   "task": "cookie-store-compositional-chang",
+   "id": "R1_functional_cookie_semantics",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 4,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "1/3",
+    "evidence": "1/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "cookie-store-compositional-chang:R2_docs_mention_CookieStore",
+   "task": "cookie-store-compositional-chang",
+   "id": "R2_docs_mention_CookieStore",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "partial",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 24,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "3/3",
+    "run4": "1/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "cookie-store-compositional-chang:R3_runnable_CookieStore_example",
+   "task": "cookie-store-compositional-chang",
+   "id": "R3_runnable_CookieStore_example",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "partial",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 7,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "0/3",
+    "run3": "3/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "1/3",
+    "allshown": "0/3",
+    "noneshown": "2/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "cookie-store-compositional-chang:R4_mocked_network_tests",
+   "task": "cookie-store-compositional-chang",
+   "id": "R4_mocked_network_tests",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "partial",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "cookie-store-compositional-chang:R5_no_stray_artifacts",
+   "task": "cookie-store-compositional-chang",
+   "id": "R5_no_stray_artifacts",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 19,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "1/3",
+    "run3": "2/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "2/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R0_existing_behaviour_and_build",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R0_existing_behaviour_and_build",
+   "n_checks": 162,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R1_level_ordering_concurrency_metrics",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R1_level_ordering_concurrency_metrics",
+   "n_checks": 9,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 29,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R2_resolution_gating",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R2_resolution_gating",
+   "n_checks": 4,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R3_rollback_on_failure",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R3_rollback_on_failure",
+   "n_checks": 5,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R4_initializer_semantics_idempotence_scopes",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R4_initializer_semantics_idempotence_scopes",
+   "n_checks": 3,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 29,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "2/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R5_reinit_after_failure_rejects",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R5_reinit_after_failure_rejects",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 24,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "2/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "2/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R6_cycle_rejects_and_is_retryable",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R6_cycle_rejects_and_is_retryable",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 22,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "2/3",
+    "noneshown": "2/3",
+    "evidence": "2/3",
+    "blend": "1/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R7_pref_runnable_failure_example",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R7_pref_runnable_failure_example",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "never_met",
+   "met": 0,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R8_pref_structured_error_context",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R8_pref_structured_error_context",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 4,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "0/3",
+    "run3": "1/3",
+    "run4": "1/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "customer-delivery-contextual-pre:R9_pref_monotonic_timing",
+   "task": "customer-delivery-contextual-pre",
+   "id": "R9_pref_monotonic_timing",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 25,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "2/3",
+    "evidence": "2/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R1-basic-counts-sizes-entropy-degree",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R1-basic-counts-sizes-entropy-degree",
+   "n_checks": 15,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "yes",
+    "run3": "partial",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R2-timestamps-duration-iat",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R2-timestamps-duration-iat",
+   "n_checks": 3,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "yes",
+    "run3": "partial",
+    "run4": "partial",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 29,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R3-ipv4-only-ip-scoped-metrics",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R3-ipv4-only-ip-scoped-metrics",
+   "n_checks": 6,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 22,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "3/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R4-protocol_udp-includes-ipv6",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R4-protocol_udp-includes-ipv6",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 25,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "2/3",
+    "run4": "3/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "2/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R5-five-tuple-flows-ipv4-only",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R5-five-tuple-flows-ipv4-only",
+   "n_checks": 2,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 21,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "2/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "2/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R6-bidirectional-pairs-counted-once",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R6-bidirectional-pairs-counted-once",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 12,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "1/3",
+    "run3": "0/3",
+    "run4": "1/3",
+    "placebo": "0/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "0/3",
+    "evidence": "1/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R7-minute-buckets-anchored-at-first-packet",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R7-minute-buckets-anchored-at-first-packet",
+   "n_checks": 3,
+   "prompt": "absent",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 8,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "1/3",
+    "run3": "1/3",
+    "run4": "1/3",
+    "placebo": "0/3",
+    "readfirst": "1/3",
+    "allshown": "0/3",
+    "noneshown": "2/3",
+    "evidence": "2/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R8-unique-port-counts",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R8-unique-port-counts",
+   "n_checks": 2,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 19,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "1/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "2/3",
+    "evidence": "2/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R9-port-scan-false-and-benign-true",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R9-port-scan-false-and-benign-true",
+   "n_checks": 2,
+   "prompt": "absent",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "never_met",
+   "met": 0,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "0/3",
+    "noneshown": "0/3",
+    "evidence": "0/3",
+    "blend": "0/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R10-dos-false",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R10-dos-false",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 19,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "1/3",
+    "run3": "1/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "dapt-intrusion-detection-workflo:R11-beaconing-false",
+   "task": "dapt-intrusion-detection-workflo",
+   "id": "R11-beaconing-false",
+   "n_checks": 1,
+   "prompt": "absent",
+   "memory": {
+    "run1": "yes",
+    "run3": "no",
+    "run4": "yes",
+    "blend": "yes"
+   },
+   "status": "contested",
+   "met": 21,
+   "measured": 30,
+   "by_arm": {
+    "control": "1/3",
+    "run1": "1/3",
+    "run3": "3/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "1/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R1_location_rename_plot",
+   "task": "enterpriseops-csm-26d1b04a",
+   "id": "R1_location_rename_plot",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "yes",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R2_installed_product_repair_warranty",
+   "task": "enterpriseops-csm-26d1b04a",
+   "id": "R2_installed_product_repair_warranty",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "yes",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R3_entitlement_31_premium_24x7",
+   "task": "enterpriseops-csm-26d1b04a",
+   "id": "R3_entitlement_31_premium_24x7",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "yes",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "contested",
+   "met": 19,
+   "measured": 30,
+   "by_arm": {
+    "control": "2/3",
+    "run1": "2/3",
+    "run3": "0/3",
+    "run4": "2/3",
+    "placebo": "1/3",
+    "readfirst": "2/3",
+    "allshown": "2/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "2/3"
+   }
+  },
+  {
+   "key": "enterpriseops-csm-26d1b04a:R4_contract_10_end_date",
+   "task": "enterpriseops-csm-26d1b04a",
+   "id": "R4_contract_10_end_date",
+   "n_checks": 1,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "no",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "enterpriseops-teams-2725d17f:R1_private_channel_with_both_members",
+   "task": "enterpriseops-teams-2725d17f",
+   "id": "R1_private_channel_with_both_members",
+   "n_checks": 3,
+   "prompt": "explicit",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "no",
+    "blend": "no"
+   },
+   "status": "always_met",
+   "met": 30,
+   "measured": 30,
+   "by_arm": {
+    "control": "3/3",
+    "run1": "3/3",
+    "run3": "3/3",
+    "run4": "3/3",
+    "placebo": "3/3",
+    "readfirst": "3/3",
+    "allshown": "3/3",
+    "noneshown": "3/3",
+    "evidence": "3/3",
+    "blend": "3/3"
+   }
+  },
+  {
+   "key": "enterpriseops-teams-2725d17f:R2_audio_call_source_james_target_alice",
+   "task": "enterpriseops-teams-2725d17f",
+   "id": "R2_audio_call_source_james_target_alice",
+   "n_checks": 1,
+   "prompt": "derivable",
+   "memory": {
+    "run1": "partial",
+    "run3": "no",
+    "run4": "partial",
+    "blend": "partial"
+   },
+   "status": "contested",
+   "met": 2,
+   "measured": 30,
+   "by_arm": {
+    "control": "0/3",
+    "run1": "0/3",
+    "run3": "0/3",
+    "run4": "0/3",
+    "placebo": "0/3",
+    "readfirst": "0/3",
+    "allshown": "1/3",
+    "noneshown": "0/3",
+    "evidence": "1/3",
+    "blend": "0/3"
+   }
+  }
+ ],
+ "content_test": {
+  "yes": {
+   "units": 57,
+   "tasks": [
+    "build-word2vec-pipeline",
+    "dapt-intrusion-detection-workflo",
+    "enterpriseops-csm-26d1b04a"
+   ],
+   "mean_diff": 0.351,
+   "p_one_sided_trial_perm": 0.001,
+   "ci95_task_boot": [
+    -0.222,
+    1.0
+   ],
+   "contested_only_mean_diff": 0.526,
+   "contested_only_units": 38,
+   "leave_one_task_out": {
+    "build-word2vec-pipeline": 0.26,
+    "dapt-intrusion-detection-workflo": 0.633,
+    "enterpriseops-csm-26d1b04a": 0.383
+   }
+  },
+  "partial": {
+   "units": 77,
+   "tasks": [
+    "apex-brightpath-market-share",
+    "apex-brightpath-seat-surplus",
+    "apex-eurogrid-curtailment",
+    "automationbench-marketing-conten",
+    "automationbench-sales-chatgpt-pr",
+    "automationbench-sales-partnershi",
+    "awilix-release-tier-implicit",
+    "cattrs-compositional-changelog",
+    "cookie-store-compositional-chang",
+    "dapt-intrusion-detection-workflo",
+    "enterpriseops-csm-26d1b04a",
+    "enterpriseops-teams-2725d17f"
+   ],
+   "mean_diff": -0.004,
+   "p_one_sided_trial_perm": 0.5217,
+   "ci95_task_boot": [
+    -0.108,
+    0.096
+   ],
+   "contested_only_mean_diff": -0.009,
+   "contested_only_units": 38,
+   "leave_one_task_out": {
+    "apex-brightpath-market-share": -0.024,
+    "apex-brightpath-seat-surplus": -0.014,
+    "apex-eurogrid-curtailment": -0.005,
+    "automationbench-marketing-conten": 0.019,
+    "automationbench-sales-chatgpt-pr": -0.009,
+    "automationbench-sales-partnershi": 0.04,
+    "awilix-release-tier-implicit": -0.004,
+    "cattrs-compositional-changelog": -0.009,
+    "cookie-store-compositional-chang": -0.019,
+    "dapt-intrusion-detection-workflo": -0.005,
+    "enterpriseops-csm-26d1b04a": -0.009,
+    "enterpriseops-teams-2725d17f": -0.01
+   }
+  },
+  "no": {
+   "units": 356,
+   "tasks": [
+    "apex-eurogrid-curtailment",
+    "automationbench-marketing-conten",
+    "automationbench-sales-chatgpt-pr",
+    "automationbench-sales-partnershi",
+    "awilix-release-tier-explicit",
+    "awilix-release-tier-implicit",
+    "cattrs-compositional-changelog",
+    "cookie-store-compositional-chang",
+    "customer-delivery-contextual-pre",
+    "dapt-intrusion-detection-workflo",
+    "enterpriseops-csm-26d1b04a",
+    "enterpriseops-teams-2725d17f"
+   ],
+   "mean_diff": -0.033,
+   "p_one_sided_trial_perm": 0.8671,
+   "ci95_task_boot": [
+    -0.111,
+    0.021
+   ],
+   "contested_only_mean_diff": -0.072,
+   "contested_only_units": 163,
+   "leave_one_task_out": {
+    "apex-eurogrid-curtailment": -0.034,
+    "automationbench-marketing-conten": -0.035,
+    "automationbench-sales-chatgpt-pr": -0.035,
+    "automationbench-sales-partnershi": -0.007,
+    "awilix-release-tier-explicit": -0.023,
+    "awilix-release-tier-implicit": -0.026,
+    "cattrs-compositional-changelog": -0.044,
+    "cookie-store-compositional-chang": -0.03,
+    "customer-delivery-contextual-pre": -0.055,
+    "dapt-intrusion-detection-workflo": -0.039,
+    "enterpriseops-csm-26d1b04a": -0.035,
+    "enterpriseops-teams-2725d17f": -0.033
+   }
+  }
+ },
+ "placebo_vs_control": {
+  "units": 70,
+  "mean_diff": -0.048
+ },
+ "regression_to_mean_check": {
+  "control_met_at_most_1_of_3": {
+   "yes": {
+    "units": 37,
+    "mean_diff": 0.577
+   },
+   "partial": {
+    "units": 36,
+    "mean_diff": 0.13
+   },
+   "no": {
+    "units": 102,
+    "mean_diff": 0.049
+   },
+   "placebo": {
+    "units": 25,
+    "mean_diff": 0.08
+   }
+  },
+  "control_met_at_least_2_of_3": {
+   "yes": {
+    "units": 20,
+    "mean_diff": -0.067
+   },
+   "partial": {
+    "units": 41,
+    "mean_diff": -0.122
+   },
+   "no": {
+    "units": 254,
+    "mean_diff": -0.066
+   },
+   "placebo": {
+    "units": 45,
+    "mean_diff": -0.119
+   }
+  }
+ },
+ "exposure_ladder": {
+  "run1_yes": {
+   "requirements": 9,
+   "tasks": [
+    "build-word2vec-pipeline",
+    "dapt-intrusion-detection-workflo"
+   ],
+   "rates": {
+    "control": {
+     "rate": 0.417,
+     "n": 24
+    },
+    "placebo": {
+     "rate": 0.458,
+     "n": 24
+    },
+    "noneshown": {
+     "rate": 0.556,
+     "n": 27
+    },
+    "run1": {
+     "rate": 0.741,
+     "n": 27
+    },
+    "readfirst": {
+     "rate": 1.0,
+     "n": 27
+    },
+    "allshown": {
+     "rate": 1.0,
+     "n": 27
+    }
+   },
+   "trend_r": 0.437,
+   "trend_p_one_sided_trial_perm": 0.0005,
+   "per_task": {
+    "build-word2vec-pipeline": {
+     "control": "0/3",
+     "placebo": "0/3",
+     "noneshown": "6/6",
+     "run1": "6/6",
+     "readfirst": "6/6",
+     "allshown": "6/6"
+    },
+    "dapt-intrusion-detection-workflo": {
+     "control": "10/21",
+     "placebo": "11/21",
+     "noneshown": "9/21",
+     "run1": "14/21",
+     "readfirst": "21/21",
+     "allshown": "21/21"
+    }
+   }
+  },
+  "run1_partial": {
+   "requirements": 9,
+   "tasks": [
+    "apex-brightpath-market-share",
+    "apex-brightpath-seat-surplus",
+    "automationbench-marketing-conten",
+    "automationbench-sales-partnershi",
+    "build-word2vec-pipeline",
+    "dapt-intrusion-detection-workflo",
+    "enterpriseops-csm-26d1b04a",
+    "enterpriseops-teams-2725d17f"
+   ],
+   "rates": {
+    "control": {
+     "rate": 0.458,
+     "n": 24
+    },
+    "placebo": {
+     "rate": 0.25,
+     "n": 24
+    },
+    "noneshown": {
+     "rate": 0.296,
+     "n": 27
+    },
+    "run1": {
+     "rate": 0.407,
+     "n": 27
+    },
+    "readfirst": {
+     "rate": 0.481,
+     "n": 27
+    },
+    "allshown": {
+     "rate": 0.519,
+     "n": 27
+    }
+   },
+   "trend_r": 0.101,
+   "trend_p_one_sided_trial_perm": 0.1174,
+   "per_task": {
+    "apex-brightpath-market-share": {
+     "control": "0/3",
+     "placebo": "1/3",
+     "noneshown": "0/3",
+     "run1": "1/3",
+     "readfirst": "0/3",
+     "allshown": "0/3"
+    },
+    "apex-brightpath-seat-surplus": {
+     "control": "0/3",
+     "placebo": "1/3",
+     "noneshown": "0/3",
+     "run1": "0/3",
+     "readfirst": "0/3",
+     "allshown": "1/3"
+    },
+    "automationbench-marketing-conten": {
+     "control": "3/3",
+     "placebo": "2/3",
+     "noneshown": "3/3",
+     "run1": "3/3",
+     "readfirst": "3/3",
+     "allshown": "2/3"
+    },
+    "automationbench-sales-partnershi": {
+     "control": "4/6",
+     "placebo": "0/6",
+     "noneshown": "0/6",
+     "run1": "2/6",
+     "readfirst": "2/6",
+     "allshown": "3/6"
+    },
+    "build-word2vec-pipeline": {
+     "control": "0/0",
+     "placebo": "0/0",
+     "noneshown": "1/3",
+     "run1": "2/3",
+     "readfirst": "3/3",
+     "allshown": "2/3"
+    },
+    "dapt-intrusion-detection-workflo": {
+     "control": "2/3",
+     "placebo": "1/3",
+     "noneshown": "1/3",
+     "run1": "1/3",
+     "readfirst": "3/3",
+     "allshown": "3/3"
+    },
+    "enterpriseops-csm-26d1b04a": {
+     "control": "2/3",
+     "placebo": "1/3",
+     "noneshown": "3/3",
+     "run1": "2/3",
+     "readfirst": "2/3",
+     "allshown": "2/3"
+    },
+    "enterpriseops-teams-2725d17f": {
+     "control": "0/3",
+     "placebo": "0/3",
+     "noneshown": "0/3",
+     "run1": "0/3",
+     "readfirst": "0/3",
+     "allshown": "1/3"
+    }
+   }
+  },
+  "run1_no": {
+   "requirements": 34,
+   "tasks": [
+    "automationbench-marketing-conten",
+    "automationbench-sales-chatgpt-pr",
+    "automationbench-sales-partnershi",
+    "awilix-release-tier-explicit",
+    "awilix-release-tier-implicit",
+    "cattrs-compositional-changelog",
+    "cookie-store-compositional-chang",
+    "customer-delivery-contextual-pre",
+    "dapt-intrusion-detection-workflo"
+   ],
+   "rates": {
+    "control": {
+     "rate": 0.667,
+     "n": 102
+    },
+    "placebo": {
+     "rate": 0.608,
+     "n": 102
+    },
+    "noneshown": {
+     "rate": 0.68,
+     "n": 100
+    },
+    "run1": {
+     "rate": 0.627,
+     "n": 102
+    },
+    "readfirst": {
+     "rate": 0.66,
+     "n": 100
+    },
+    "allshown": {
+     "rate": 0.657,
+     "n": 102
+    }
+   },
+   "trend_r": -0.003,
+   "trend_p_one_sided_trial_perm": 0.5212,
+   "per_task": {
+    "automationbench-marketing-conten": {
+     "control": "7/9",
+     "placebo": "7/9",
+     "noneshown": "8/9",
+     "run1": "7/9",
+     "readfirst": "9/9",
+     "allshown": "7/9"
+    },
+    "automationbench-sales-chatgpt-pr": {
+     "control": "8/15",
+     "placebo": "9/15",
+     "noneshown": "6/15",
+     "run1": "7/15",
+     "readfirst": "8/15",
+     "allshown": "9/15"
+    },
+    "automationbench-sales-partnershi": {
+     "control": "6/12",
+     "placebo": "6/12",
+     "noneshown": "1/12",
+     "run1": "4/12",
+     "readfirst": "3/12",
+     "allshown": "5/12"
+    },
+    "awilix-release-tier-explicit": {
+     "control": "9/9",
+     "placebo": "7/9",
+     "noneshown": "9/9",
+     "run1": "9/9",
+     "readfirst": "4/7",
+     "allshown": "7/9"
+    },
+    "awilix-release-tier-implicit": {
+     "control": "9/9",
+     "placebo": "5/9",
+     "noneshown": "6/7",
+     "run1": "7/9",
+     "readfirst": "9/9",
+     "allshown": "7/9"
+    },
+    "cattrs-compositional-changelog": {
+     "control": "11/15",
+     "placebo": "11/15",
+     "noneshown": "14/15",
+     "run1": "12/15",
+     "readfirst": "11/15",
+     "allshown": "11/15"
+    },
+    "cookie-store-compositional-chang": {
+     "control": "6/12",
+     "placebo": "4/12",
+     "noneshown": "9/12",
+     "run1": "3/12",
+     "readfirst": "6/12",
+     "allshown": "7/12"
+    },
+    "customer-delivery-contextual-pre": {
+     "control": "12/18",
+     "placebo": "13/18",
+     "noneshown": "13/18",
+     "run1": "14/18",
+     "readfirst": "15/18",
+     "allshown": "14/18"
+    },
+    "dapt-intrusion-detection-workflo": {
+     "control": "0/3",
+     "placebo": "0/3",
+     "noneshown": "2/3",
+     "run1": "1/3",
+     "readfirst": "1/3",
+     "allshown": "0/3"
+    }
+   }
+  }
+ },
+ "access_when_notes_cover": {
+  "opened_relevant": {
+   "met": 56,
+   "n": 56,
+   "rate": 1.0
+  },
+  "opened_other": {
+   "met": 7,
+   "n": 7,
+   "rate": 1.0
+  },
+  "not_opened": {
+   "met": 34,
+   "n": 63,
+   "rate": 0.54
+  },
+  "in_prompt": {
+   "met": 60,
+   "n": 60,
+   "rate": 1.0
+  }
+ },
+ "failed_trial_class_combinations": {
+  "available": 191,
+  "absent": 90,
+  "absent+available": 55,
+  "absent_or_unread_records": 13,
+  "notes_partial": 12,
+  "absent+notes_partial": 9,
+  "absent_or_unread_records+available": 6,
+  "notes_only+notes_partial": 4,
+  "absent+notes_only+notes_partial": 2,
+  "available+notes_partial": 1,
+  "absent+available+notes_partial": 1,
+  "available+notes_only+notes_partial": 1
+ },
+ "cascade": [
+  {
+   "step": "absent",
+   "taken": 176,
+   "match_any_order": 176
+  },
+  {
+   "step": "partial",
+   "taken": 18,
+   "match_any_order": 30
+  },
+  {
+   "step": "notes_only",
+   "taken": 0,
+   "match_any_order": 7
+  },
+  {
+   "step": "available_only",
+   "taken": 191,
+   "match_any_order": 191
+  }
+ ],
+ "failed_trials_with_a_never_met_requirement": 150,
+ "per_arm_classes": {
+  "control": {
+   "available_only": 18,
+   "never_met": 15,
+   "absent": 21
+  },
+  "run1": {
+   "available_only": 19,
+   "never_met": 15,
+   "absent": 17,
+   "partial": 2
+  },
+  "run3": {
+   "available_only": 23,
+   "never_met": 15,
+   "absent": 14,
+   "partial": 4
+  },
+  "run4": {
+   "available_only": 18,
+   "never_met": 15,
+   "absent": 16,
+   "partial": 3
+  },
+  "placebo": {
+   "available_only": 20,
+   "never_met": 15,
+   "absent": 21
+  },
+  "readfirst": {
+   "available_only": 20,
+   "never_met": 15,
+   "absent": 16,
+   "partial": 1
+  },
+  "allshown": {
+   "available_only": 19,
+   "never_met": 15,
+   "absent": 18,
+   "partial": 1
+  },
+  "noneshown": {
+   "available_only": 18,
+   "never_met": 15,
+   "absent": 14,
+   "partial": 4
+  },
+  "evidence": {
+   "available_only": 17,
+   "never_met": 15,
+   "absent": 19
+  },
+  "blend": {
+   "available_only": 19,
+   "never_met": 15,
+   "absent": 20,
+   "partial": 3
+  }
+ },
+ "strict_passes": {
+  "apex-brightpath-market-share": {
+   "control": 0,
+   "run1": 1,
+   "run3": 0,
+   "run4": 2,
+   "placebo": 1,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 1
+  },
+  "apex-brightpath-seat-surplus": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 1,
+   "placebo": 1,
+   "readfirst": 0,
+   "allshown": 1,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "apex-eurogrid-curtailment": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "automationbench-marketing-conten": {
+   "control": 2,
+   "run1": 2,
+   "run3": 1,
+   "run4": 1,
+   "placebo": 1,
+   "readfirst": 3,
+   "allshown": 1,
+   "noneshown": 2,
+   "evidence": 2,
+   "blend": 0
+  },
+  "automationbench-sales-chatgpt-pr": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "automationbench-sales-partnershi": {
+   "control": 1,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "awilix-release-tier-explicit": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "awilix-release-tier-implicit": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "build-word2vec-pipeline": {
+   "control": 0,
+   "run1": 2,
+   "run3": 2,
+   "run4": 1,
+   "placebo": 0,
+   "readfirst": 3,
+   "allshown": 2,
+   "noneshown": 1,
+   "evidence": 3,
+   "blend": 0
+  },
+  "cattrs-compositional-changelog": {
+   "control": 0,
+   "run1": 0,
+   "run3": 1,
+   "run4": 1,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 2,
+   "evidence": 0,
+   "blend": 0
+  },
+  "cookie-store-compositional-chang": {
+   "control": 1,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 1,
+   "evidence": 0,
+   "blend": 0
+  },
+  "customer-delivery-contextual-pre": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "dapt-intrusion-detection-workflo": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 0,
+   "noneshown": 0,
+   "evidence": 0,
+   "blend": 0
+  },
+  "enterpriseops-csm-26d1b04a": {
+   "control": 2,
+   "run1": 2,
+   "run3": 0,
+   "run4": 2,
+   "placebo": 1,
+   "readfirst": 2,
+   "allshown": 2,
+   "noneshown": 3,
+   "evidence": 3,
+   "blend": 2
+  },
+  "enterpriseops-teams-2725d17f": {
+   "control": 0,
+   "run1": 0,
+   "run3": 0,
+   "run4": 0,
+   "placebo": 0,
+   "readfirst": 0,
+   "allshown": 1,
+   "noneshown": 0,
+   "evidence": 1,
+   "blend": 0
+  }
+ }
+}
