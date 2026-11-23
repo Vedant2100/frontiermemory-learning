@@ -1,195 +1,753 @@
 {
  "failed_trials": 385,
  "failed_trial_requirements": 742,
- "trial_requirements_by_stage": {
-  "writer_never_saw": 129,
-  "writer_saw_dropped": 3,
-  "writer_saw_partial": 39,
-  "harness_not_exposed": 9,
-  "agent_did_not_open": 9,
-  "in_task_missed": 407,
-  "no_memory_arm": 82,
-  "raw_records_arm": 30,
-  "blend_arm": 34
- },
- "of_which_unstated_spec": {
-  "writer_never_saw": 125,
-  "writer_saw_dropped": 3,
-  "writer_saw_partial": 39,
-  "harness_not_exposed": 9,
-  "agent_did_not_open": 9,
-  "in_task_missed": 28,
-  "no_memory_arm": 81,
-  "raw_records_arm": 29,
-  "blend_arm": 32
- },
- "trial_requirements_by_arm_and_stage": {
-  "control": {
-   "in_task_missed": 36,
-   "no_memory_arm": 40
+ "by_prompt_mode": {
+  "auditor": {
+   "prompt_mode": "auditor",
+   "trial_requirements_by_stage": {
+    "writer_never_saw": 129,
+    "writer_saw_dropped": 3,
+    "writer_saw_partial": 39,
+    "not_shown_by_design": 9,
+    "not_opened": 9,
+    "in_task_missed": 407,
+    "no_memory_arm": 82,
+    "raw_records_arm": 30,
+    "blend_arm": 34
+   },
+   "trials_with_any_failure_at_stage": {
+    "writer_never_saw": 95,
+    "writer_saw_dropped": 3,
+    "writer_saw_partial": 24,
+    "not_shown_by_design": 3,
+    "not_opened": 4,
+    "in_task_missed": 255,
+    "no_memory_arm": 42,
+    "raw_records_arm": 19,
+    "blend_arm": 23
+   },
+   "trials_whose_failures_are_all_one_stage": {
+    "writer_never_saw": 53,
+    "writer_saw_partial": 9,
+    "in_task_missed": 191,
+    "no_memory_arm": 28,
+    "raw_records_arm": 13,
+    "blend_arm": 15
+   },
+   "trials_with_mixed_stages": 76,
+   "waterfall_writer_first": [
+    {
+     "stage": "experience_missing",
+     "trials": 0
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 95
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 15
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 0
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "in_task_missed",
+     "trials": 219
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 28
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 13
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 15
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "waterfall_in_task_first": [
+    {
+     "stage": "in_task_missed",
+     "trials": 255
+    },
+    {
+     "stage": "experience_missing",
+     "trials": 0
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 61
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 13
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 0
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 28
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 13
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 15
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "notes_arm_failed_trials": 227,
+   "notes_arm_failed_trials_with_no_in_task_failure": 74,
+   "notes_arm_failed_trials_with_no_in_task_failure_by_task": {
+    "awilix-release-tier-explicit": 11,
+    "awilix-release-tier-implicit": 12,
+    "build-word2vec-pipeline": 7,
+    "cattrs-compositional-changelog": 12,
+    "customer-delivery-contextual-pre": 14,
+    "dapt-intrusion-detection-workflo": 17,
+    "cookie-store-compositional-chang": 1
+   },
+   "distinct_requirements_by_generation_and_stage": {
+    "run1": {
+     "in_task_missed": 29,
+     "writer_never_saw": 10,
+     "writer_saw_partial": 5,
+     "writer_saw_dropped": 1,
+     "not_opened": 2,
+     "not_shown_by_design": 4
+    },
+    "run3": {
+     "in_task_missed": 21,
+     "writer_never_saw": 13,
+     "writer_saw_partial": 4
+    },
+    "run4": {
+     "in_task_missed": 21,
+     "writer_never_saw": 9,
+     "writer_saw_partial": 5,
+     "not_opened": 4
+    }
+   },
+   "trial_requirements_by_arm_and_stage": {
+    "control": {
+     "in_task_missed": 36,
+     "no_memory_arm": 40
+    },
+    "run1": {
+     "writer_never_saw": 21,
+     "writer_saw_dropped": 2,
+     "writer_saw_partial": 10,
+     "not_opened": 3,
+     "in_task_missed": 40
+    },
+    "run3": {
+     "writer_never_saw": 30,
+     "writer_saw_partial": 5,
+     "in_task_missed": 46
+    },
+    "run4": {
+     "writer_never_saw": 21,
+     "writer_saw_partial": 7,
+     "not_opened": 6,
+     "in_task_missed": 41
+    },
+    "placebo": {
+     "in_task_missed": 44,
+     "no_memory_arm": 42
+    },
+    "readfirst": {
+     "writer_never_saw": 19,
+     "writer_saw_dropped": 1,
+     "writer_saw_partial": 3,
+     "in_task_missed": 40
+    },
+    "allshown": {
+     "writer_never_saw": 20,
+     "writer_saw_partial": 4,
+     "in_task_missed": 39
+    },
+    "noneshown": {
+     "writer_never_saw": 18,
+     "writer_saw_partial": 10,
+     "not_shown_by_design": 9,
+     "in_task_missed": 41
+    },
+    "evidence": {
+     "in_task_missed": 32,
+     "raw_records_arm": 30
+    },
+    "blend": {
+     "in_task_missed": 48,
+     "blend_arm": 34
+    }
+   }
   },
-  "run1": {
-   "writer_never_saw": 21,
-   "writer_saw_dropped": 2,
-   "writer_saw_partial": 10,
-   "agent_did_not_open": 3,
-   "in_task_missed": 40
+  "explicit_only": {
+   "prompt_mode": "explicit_only",
+   "trial_requirements_by_stage": {
+    "experience_missing": 2,
+    "writer_never_saw": 267,
+    "writer_misled": 17,
+    "writer_saw_dropped": 26,
+    "writer_saw_partial": 77,
+    "not_shown_by_design": 9,
+    "not_opened": 12,
+    "in_task_missed": 51,
+    "no_memory_arm": 150,
+    "raw_records_arm": 57,
+    "blend_arm": 74
+   },
+   "trials_with_any_failure_at_stage": {
+    "experience_missing": 2,
+    "writer_never_saw": 170,
+    "writer_misled": 12,
+    "writer_saw_dropped": 19,
+    "writer_saw_partial": 62,
+    "not_shown_by_design": 3,
+    "not_opened": 7,
+    "in_task_missed": 45,
+    "no_memory_arm": 80,
+    "raw_records_arm": 36,
+    "blend_arm": 42
+   },
+   "trials_whose_failures_are_all_one_stage": {
+    "writer_never_saw": 122,
+    "writer_saw_dropped": 1,
+    "writer_saw_partial": 43,
+    "not_opened": 3,
+    "in_task_missed": 4,
+    "no_memory_arm": 70,
+    "raw_records_arm": 32,
+    "blend_arm": 36
+   },
+   "trials_with_mixed_stages": 74,
+   "waterfall_writer_first": [
+    {
+     "stage": "experience_missing",
+     "trials": 2
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 168
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 1
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 49
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 3
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "in_task_missed",
+     "trials": 24
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 70
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 32
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 36
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "waterfall_in_task_first": [
+    {
+     "stage": "in_task_missed",
+     "trials": 45
+    },
+    {
+     "stage": "experience_missing",
+     "trials": 2
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 149
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 1
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 47
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 3
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 70
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 32
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 36
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "notes_arm_failed_trials": 227,
+   "notes_arm_failed_trials_with_no_in_task_failure": 202,
+   "notes_arm_failed_trials_with_no_in_task_failure_by_task": {
+    "apex-brightpath-market-share": 15,
+    "apex-brightpath-seat-surplus": 16,
+    "apex-eurogrid-curtailment": 18,
+    "automationbench-marketing-conten": 7,
+    "automationbench-sales-chatgpt-pr": 18,
+    "automationbench-sales-partnershi": 18,
+    "awilix-release-tier-explicit": 16,
+    "awilix-release-tier-implicit": 17,
+    "build-word2vec-pipeline": 7,
+    "cattrs-compositional-changelog": 14,
+    "customer-delivery-contextual-pre": 14,
+    "dapt-intrusion-detection-workflo": 17,
+    "enterpriseops-csm-26d1b04a": 7,
+    "enterpriseops-teams-2725d17f": 17,
+    "cookie-store-compositional-chang": 1
+   },
+   "distinct_requirements_by_generation_and_stage": {
+    "run1": {
+     "writer_never_saw": 26,
+     "writer_saw_partial": 8,
+     "writer_saw_dropped": 2,
+     "writer_misled": 2,
+     "in_task_missed": 5,
+     "not_opened": 2,
+     "experience_missing": 2,
+     "not_shown_by_design": 4
+    },
+    "run3": {
+     "writer_never_saw": 27,
+     "writer_saw_partial": 7,
+     "in_task_missed": 3,
+     "not_opened": 1
+    },
+    "run4": {
+     "writer_never_saw": 18,
+     "writer_saw_partial": 8,
+     "in_task_missed": 4,
+     "writer_saw_dropped": 5,
+     "not_opened": 4
+    }
+   },
+   "trial_requirements_by_arm_and_stage": {
+    "control": {
+     "in_task_missed": 7,
+     "no_memory_arm": 69
+    },
+    "run1": {
+     "writer_never_saw": 43,
+     "writer_misled": 4,
+     "writer_saw_dropped": 5,
+     "writer_saw_partial": 16,
+     "not_opened": 3,
+     "in_task_missed": 5
+    },
+    "run3": {
+     "writer_never_saw": 60,
+     "writer_saw_partial": 13,
+     "not_opened": 3,
+     "in_task_missed": 5
+    },
+    "run4": {
+     "writer_never_saw": 37,
+     "writer_saw_dropped": 12,
+     "writer_saw_partial": 14,
+     "not_opened": 6,
+     "in_task_missed": 6
+    },
+    "placebo": {
+     "in_task_missed": 5,
+     "no_memory_arm": 81
+    },
+    "readfirst": {
+     "experience_missing": 1,
+     "writer_never_saw": 42,
+     "writer_misled": 4,
+     "writer_saw_dropped": 4,
+     "writer_saw_partial": 9,
+     "in_task_missed": 3
+    },
+    "allshown": {
+     "experience_missing": 1,
+     "writer_never_saw": 44,
+     "writer_misled": 3,
+     "writer_saw_dropped": 2,
+     "writer_saw_partial": 9,
+     "in_task_missed": 4
+    },
+    "noneshown": {
+     "writer_never_saw": 41,
+     "writer_misled": 6,
+     "writer_saw_dropped": 3,
+     "writer_saw_partial": 16,
+     "not_shown_by_design": 9,
+     "in_task_missed": 3
+    },
+    "evidence": {
+     "in_task_missed": 5,
+     "raw_records_arm": 57
+    },
+    "blend": {
+     "in_task_missed": 8,
+     "blend_arm": 74
+    }
+   }
   },
-  "run3": {
-   "writer_never_saw": 30,
-   "writer_saw_partial": 5,
-   "in_task_missed": 46
-  },
-  "run4": {
-   "writer_never_saw": 21,
-   "writer_saw_partial": 7,
-   "agent_did_not_open": 6,
-   "in_task_missed": 41
-  },
-  "placebo": {
-   "in_task_missed": 44,
-   "no_memory_arm": 42
-  },
-  "readfirst": {
-   "writer_never_saw": 19,
-   "writer_saw_dropped": 1,
-   "writer_saw_partial": 3,
-   "in_task_missed": 40
-  },
-  "allshown": {
-   "writer_never_saw": 20,
-   "writer_saw_partial": 4,
-   "in_task_missed": 39
-  },
-  "noneshown": {
-   "writer_never_saw": 18,
-   "writer_saw_partial": 10,
-   "harness_not_exposed": 9,
-   "in_task_missed": 41
-  },
-  "evidence": {
-   "in_task_missed": 32,
-   "raw_records_arm": 30
-  },
-  "blend": {
-   "in_task_missed": 48,
-   "blend_arm": 34
+  "blind": {
+   "prompt_mode": "blind",
+   "trial_requirements_by_stage": {
+    "experience_missing": 1,
+    "writer_never_saw": 110,
+    "writer_saw_dropped": 3,
+    "writer_saw_partial": 32,
+    "not_shown_by_design": 9,
+    "not_opened": 9,
+    "in_task_missed": 455,
+    "no_memory_arm": 70,
+    "raw_records_arm": 25,
+    "blend_arm": 28
+   },
+   "trials_with_any_failure_at_stage": {
+    "experience_missing": 1,
+    "writer_never_saw": 79,
+    "writer_saw_dropped": 3,
+    "writer_saw_partial": 22,
+    "not_shown_by_design": 3,
+    "not_opened": 4,
+    "in_task_missed": 285,
+    "no_memory_arm": 35,
+    "raw_records_arm": 15,
+    "blend_arm": 18
+   },
+   "trials_whose_failures_are_all_one_stage": {
+    "writer_never_saw": 43,
+    "writer_saw_partial": 7,
+    "in_task_missed": 224,
+    "no_memory_arm": 20,
+    "raw_records_arm": 10,
+    "blend_arm": 13
+   },
+   "trials_with_mixed_stages": 68,
+   "waterfall_writer_first": [
+    {
+     "stage": "experience_missing",
+     "trials": 1
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 79
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 13
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 0
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "in_task_missed",
+     "trials": 249
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 20
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 10
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 13
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "waterfall_in_task_first": [
+    {
+     "stage": "in_task_missed",
+     "trials": 285
+    },
+    {
+     "stage": "experience_missing",
+     "trials": 0
+    },
+    {
+     "stage": "writer_never_saw",
+     "trials": 49
+    },
+    {
+     "stage": "writer_misled",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_dropped",
+     "trials": 0
+    },
+    {
+     "stage": "writer_saw_partial",
+     "trials": 8
+    },
+    {
+     "stage": "not_shown_by_design",
+     "trials": 0
+    },
+    {
+     "stage": "not_opened",
+     "trials": 0
+    },
+    {
+     "stage": "used_still_failed",
+     "trials": 0
+    },
+    {
+     "stage": "no_memory_arm",
+     "trials": 20
+    },
+    {
+     "stage": "raw_records_arm",
+     "trials": 10
+    },
+    {
+     "stage": "blend_arm",
+     "trials": 13
+    },
+    {
+     "stage": "other_or_none",
+     "trials": 0
+    }
+   ],
+   "notes_arm_failed_trials": 227,
+   "notes_arm_failed_trials_with_no_in_task_failure": 57,
+   "notes_arm_failed_trials_with_no_in_task_failure_by_task": {
+    "awilix-release-tier-explicit": 11,
+    "awilix-release-tier-implicit": 12,
+    "build-word2vec-pipeline": 7,
+    "customer-delivery-contextual-pre": 14,
+    "dapt-intrusion-detection-workflo": 12,
+    "cookie-store-compositional-chang": 1
+   },
+   "distinct_requirements_by_generation_and_stage": {
+    "run1": {
+     "in_task_missed": 32,
+     "writer_never_saw": 7,
+     "writer_saw_partial": 4,
+     "writer_saw_dropped": 1,
+     "not_opened": 2,
+     "experience_missing": 1,
+     "not_shown_by_design": 4
+    },
+    "run3": {
+     "in_task_missed": 23,
+     "writer_never_saw": 12,
+     "writer_saw_partial": 3
+    },
+    "run4": {
+     "in_task_missed": 24,
+     "writer_never_saw": 7,
+     "writer_saw_partial": 4,
+     "not_opened": 4
+    }
+   },
+   "trial_requirements_by_arm_and_stage": {
+    "control": {
+     "in_task_missed": 43,
+     "no_memory_arm": 33
+    },
+    "run1": {
+     "writer_never_saw": 17,
+     "writer_saw_dropped": 2,
+     "writer_saw_partial": 8,
+     "not_opened": 3,
+     "in_task_missed": 46
+    },
+    "run3": {
+     "writer_never_saw": 28,
+     "writer_saw_partial": 3,
+     "in_task_missed": 50
+    },
+    "run4": {
+     "writer_never_saw": 17,
+     "writer_saw_partial": 6,
+     "not_opened": 6,
+     "in_task_missed": 46
+    },
+    "placebo": {
+     "in_task_missed": 49,
+     "no_memory_arm": 37
+    },
+    "readfirst": {
+     "writer_never_saw": 16,
+     "writer_saw_dropped": 1,
+     "writer_saw_partial": 3,
+     "in_task_missed": 43
+    },
+    "allshown": {
+     "experience_missing": 1,
+     "writer_never_saw": 17,
+     "writer_saw_partial": 4,
+     "in_task_missed": 41
+    },
+    "noneshown": {
+     "writer_never_saw": 15,
+     "writer_saw_partial": 8,
+     "not_shown_by_design": 9,
+     "in_task_missed": 46
+    },
+    "evidence": {
+     "in_task_missed": 37,
+     "raw_records_arm": 25
+    },
+    "blend": {
+     "in_task_missed": 54,
+     "blend_arm": 28
+    }
+   }
   }
  },
- "trials_with_any_failure_at_stage": {
-  "writer_never_saw": 95,
-  "writer_saw_dropped": 3,
-  "writer_saw_partial": 24,
-  "harness_not_exposed": 3,
-  "agent_did_not_open": 4,
-  "in_task_missed": 255,
-  "no_memory_arm": 42,
-  "raw_records_arm": 19,
-  "blend_arm": 23
+ "opened_or_pasted_partial_or_misleading_and_failed": {
+  "misleading|opened|in_task_missed": 8,
+  "misleading|pasted|in_task_missed": 3,
+  "partial|opened|in_task_missed": 2,
+  "partial|opened|writer_saw_partial": 8,
+  "partial|pasted|in_task_missed": 5,
+  "partial|pasted|writer_saw_partial": 4
  },
- "trials_whose_failures_are_all_one_stage": {
-  "writer_never_saw": 53,
-  "writer_saw_partial": 9,
-  "in_task_missed": 191,
-  "no_memory_arm": 28,
-  "raw_records_arm": 13,
-  "blend_arm": 15
+ "opened_or_pasted_partial_or_misleading_and_failed_total": 30,
+ "in_task_missed_where_notes_also_cover": {
+  "partial": 56,
+  "yes": 3
  },
- "trials_with_mixed_stages": 76,
- "waterfall_upstream_first": [
-  {
-   "stage": "writer_never_saw",
-   "trials": 95
-  },
-  {
-   "stage": "writer_saw_dropped",
-   "trials": 0
-  },
-  {
-   "stage": "writer_saw_partial",
-   "trials": 15
-  },
-  {
-   "stage": "harness_not_exposed",
-   "trials": 0
-  },
-  {
-   "stage": "agent_did_not_open",
-   "trials": 0
-  },
-  {
-   "stage": "in_task_missed",
-   "trials": 219
-  },
-  {
-   "stage": "no_memory_arm",
-   "trials": 28
-  },
-  {
-   "stage": "raw_records_arm",
-   "trials": 13
-  },
-  {
-   "stage": "blend_arm",
-   "trials": 15
-  },
-  {
-   "stage": "other_or_none",
-   "trials": 0
-  }
- ],
- "waterfall_downstream_first": [
-  {
-   "stage": "blend_arm",
-   "trials": 23
-  },
-  {
-   "stage": "raw_records_arm",
-   "trials": 19
-  },
-  {
-   "stage": "no_memory_arm",
-   "trials": 42
-  },
-  {
-   "stage": "in_task_missed",
-   "trials": 227
-  },
-  {
-   "stage": "agent_did_not_open",
-   "trials": 3
-  },
-  {
-   "stage": "harness_not_exposed",
-   "trials": 3
-  },
-  {
-   "stage": "writer_saw_partial",
-   "trials": 15
-  },
-  {
-   "stage": "writer_saw_dropped",
-   "trials": 0
-  },
-  {
-   "stage": "writer_never_saw",
-   "trials": 53
-  },
-  {
-   "stage": "other_or_none",
-   "trials": 0
-  }
- ],
  "all_failed_trial_requirements_by_corpus_status": {
   "partial": 246,
   "present": 463,
   "absent": 33
  },
+ "all_failed_trial_requirements_by_corpus_status_and_kind": {
+  "absent|none": 33,
+  "partial|other_tasks_only": 82,
+  "partial|same_task_failing_hint_only": 115,
+  "partial|same_task_pass_or_feedback": 49,
+  "present|other_tasks_only": 187,
+  "present|same_task_failing_hint_only": 25,
+  "present|same_task_pass_or_feedback": 251
+ },
  "all_failed_trial_requirements_by_upstream_stage_per_generation": {
   "run1": {
    "writer_never_saw": 444,
-   "writer_saw_partial": 179,
+   "writer_saw_partial": 134,
    "writer_saw_dropped": 39,
+   "writer_misled": 45,
    "in_notes": 47,
    "experience_missing": 33
   },
@@ -207,10 +765,21 @@
    "experience_missing": 33
   }
  },
+ "prompt_label_agreement_auditor_vs_blind": {
+  "derivable|derivable": 23,
+  "explicit|derivable": 5,
+  "derivable|explicit": 3,
+  "explicit|explicit": 17,
+  "absent|explicit": 1,
+  "absent|absent": 18,
+  "absent|derivable": 5,
+  "derivable|absent": 1
+ },
  "requirements": [
   {
    "key": "apex-brightpath-market-share:R1-risk-adjusted-within-industry-ARR-mix",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 25,
    "corpus": "partial",
    "corpus_kinds": [
@@ -221,11 +790,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "apex-brightpath-seat-surplus:R1-notes-defined-seat-method",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 27,
    "corpus": "partial",
    "corpus_kinds": [
@@ -236,11 +811,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "apex-eurogrid-curtailment:R1-lowest-ratio-pair",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "derivable",
    "failed_trials": 0,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -248,12 +829,18 @@
     "run1": "experience_missing",
     "run3": "experience_missing",
     "run4": "experience_missing"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "apex-eurogrid-curtailment:R2-causes-of-curtailment",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "derivable",
    "failed_trials": 0,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -262,11 +849,17 @@
     "run3": "experience_missing",
     "run4": "experience_missing"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "apex-eurogrid-curtailment:R3-average-avoided-curtailment-MWh",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 30,
    "corpus": "partial",
    "corpus_kinds": [
@@ -277,11 +870,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-marketing-conten:R1_report_sent_all_stages",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "derivable",
    "failed_trials": 1,
    "corpus": "present",
    "corpus_kinds": [
@@ -293,11 +892,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-marketing-conten:R2_call_out_customer_referral_program",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 4,
    "corpus": "present",
    "corpus_kinds": [
@@ -309,11 +914,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-marketing-conten:R3_follow_newer_slack_methodology_and_code",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 13,
    "corpus": "present",
    "corpus_kinds": [
@@ -325,11 +936,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-marketing-conten:R4_do_not_mention_restricted_topics",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 8,
    "corpus": "present",
    "corpus_kinds": [
@@ -341,11 +958,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-marketing-conten:R5_no_external_or_marketing_recipients",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -357,11 +980,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R1_save_strategy_with_chatgpt",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -372,11 +1001,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R2_no_cross_account_injection",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -387,11 +1022,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R3_cfo_cost_roi_focus_not_growth",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 14,
    "corpus": "partial",
    "corpus_kinds": [
@@ -402,11 +1043,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R4_cio_security_soc2_encryption",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 7,
    "corpus": "present",
    "corpus_kinds": [
@@ -417,11 +1064,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R5_retail_supply_chain",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 2,
    "corpus": "present",
    "corpus_kinds": [
@@ -432,11 +1085,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R6_roi_sized_by_linkedin_12000",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 16,
    "corpus": "present",
    "corpus_kinds": [
@@ -447,11 +1106,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-chatgpt-pr:R7_c_level_override_partnership_not_competitive",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 27,
    "corpus": "partial",
    "corpus_kinds": [
@@ -462,11 +1127,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R1_signer_emily_not_mark",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 28,
    "corpus": "present",
    "corpus_kinds": [
@@ -478,11 +1149,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R2_subject_format_with_750k",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 27,
    "corpus": "present",
    "corpus_kinds": [
@@ -493,11 +1170,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": true,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R3_kickoff_event_type_for_500k_plus",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 27,
    "corpus": "present",
    "corpus_kinds": [
@@ -508,11 +1191,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R4_single_envelope",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "explicit",
    "failed_trials": 8,
    "corpus": "partial",
    "corpus_kinds": [
@@ -523,11 +1212,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R5_stage_contract_sent",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 15,
    "corpus": "present",
    "corpus_kinds": [
@@ -538,11 +1233,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "automationbench-sales-partnershi:R6_description_contains_750k",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 18,
    "corpus": "present",
    "corpus_kinds": [
@@ -553,11 +1254,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": true,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-explicit:R1_release_tier_version_bump",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 30,
    "corpus": "present",
    "corpus_kinds": [
@@ -568,11 +1275,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "awilix-release-tier-explicit:R2_initialize_rejects_never_throws_synchronously",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 5,
    "corpus": "partial",
    "corpus_kinds": [
@@ -583,11 +1296,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-explicit:R3_core_async_initialization_behaviour_and_types",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 2,
    "corpus": "partial",
    "corpus_kinds": [
@@ -598,11 +1317,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-explicit:R4_full_functional_gate",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 9,
    "corpus": "partial",
    "corpus_kinds": [
@@ -613,11 +1338,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-implicit:R1_release_tier_version_bump",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 30,
    "corpus": "present",
    "corpus_kinds": [
@@ -628,11 +1359,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "awilix-release-tier-implicit:R2_initialize_rejects_never_throws_synchronously",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 4,
    "corpus": "partial",
    "corpus_kinds": [
@@ -643,11 +1380,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-implicit:R3_core_async_initialization_behaviour_and_types",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 1,
    "corpus": "partial",
    "corpus_kinds": [
@@ -658,11 +1401,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "awilix-release-tier-implicit:R4_full_functional_gate",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 8,
    "corpus": "partial",
    "corpus_kinds": [
@@ -673,11 +1422,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "build-word2vec-pipeline:R1-artifact-path-and-entrypoint",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 6,
    "corpus": "present",
    "corpus_kinds": [
@@ -688,11 +1443,17 @@
     "run3": "in_notes",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "build-word2vec-pipeline:R2-task_func-signature-preprocessing-min_count",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 1,
    "corpus": "present",
    "corpus_kinds": [
@@ -703,11 +1464,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "build-word2vec-pipeline:R3-empty-input-returns-Word2Vec",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 10,
    "corpus": "present",
    "corpus_kinds": [
@@ -719,11 +1486,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "cattrs-compositional-changelog:R1_core_partial_structuring_api",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -731,12 +1504,18 @@
     "run1": "experience_missing",
     "run3": "experience_missing",
     "run4": "experience_missing"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R2_regression_error_pickling",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "derivable",
    "failed_trials": 0,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -745,11 +1524,17 @@
     "run3": "experience_missing",
     "run4": "experience_missing"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R3_nested_partial_value_propagation",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 2,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -757,12 +1542,18 @@
     "run1": "experience_missing",
     "run3": "experience_missing",
     "run4": "experience_missing"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R4_errors_populated_under_detailed_validation",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 2,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -770,12 +1561,18 @@
     "run1": "experience_missing",
     "run3": "experience_missing",
     "run4": "experience_missing"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R5_refine_preserves_structured_fields",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 2,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -784,11 +1581,17 @@
     "run3": "experience_missing",
     "run4": "experience_missing"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R6_default_factory_called_once_per_call",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "absent",
    "failed_trials": 1,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -797,11 +1600,17 @@
     "run3": "experience_missing",
     "run4": "experience_missing"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "cattrs-compositional-changelog:R7_user_preference_docs_example_changelog",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "derivable",
    "failed_trials": 26,
    "corpus": "present",
    "corpus_kinds": [
@@ -812,11 +1621,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "cookie-store-compositional-chang:R1_functional_cookie_semantics",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 26,
    "corpus": "absent",
    "corpus_kinds": [],
@@ -825,11 +1640,17 @@
     "run3": "experience_missing",
     "run4": "experience_missing"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "cookie-store-compositional-chang:R2_docs_mention_CookieStore",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "derivable",
    "failed_trials": 6,
    "corpus": "present",
    "corpus_kinds": [
@@ -840,11 +1661,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "cookie-store-compositional-chang:R3_runnable_CookieStore_example",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 23,
    "corpus": "present",
    "corpus_kinds": [
@@ -855,11 +1682,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "cookie-store-compositional-chang:R4_mocked_network_tests",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "derivable",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -870,11 +1703,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "cookie-store-compositional-chang:R5_no_stray_artifacts",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 11,
    "corpus": "present",
    "corpus_kinds": [
@@ -885,11 +1724,17 @@
     "run3": "writer_saw_partial_kept",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "customer-delivery-contextual-pre:R0_existing_behaviour_and_build",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 0,
    "corpus": "partial",
    "corpus_kinds": [
@@ -899,12 +1744,18 @@
     "run1": "writer_never_saw",
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R1_level_ordering_concurrency_metrics",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 1,
    "corpus": "partial",
    "corpus_kinds": [
@@ -914,12 +1765,18 @@
     "run1": "writer_never_saw",
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R2_resolution_gating",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "partial",
    "corpus_kinds": [
@@ -929,12 +1786,18 @@
     "run1": "writer_never_saw",
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R3_rollback_on_failure",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "partial",
    "corpus_kinds": [
@@ -945,11 +1808,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R4_initializer_semantics_idempotence_scopes",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 1,
    "corpus": "partial",
    "corpus_kinds": [
@@ -960,11 +1829,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R5_reinit_after_failure_rejects",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "derivable",
    "failed_trials": 6,
    "corpus": "partial",
    "corpus_kinds": [
@@ -975,11 +1850,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R6_cycle_rejects_and_is_retryable",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "derivable",
    "failed_trials": 8,
    "corpus": "partial",
    "corpus_kinds": [
@@ -990,11 +1871,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "customer-delivery-contextual-pre:R7_pref_runnable_failure_example",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 30,
    "corpus": "present",
    "corpus_kinds": [
@@ -1005,11 +1892,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "customer-delivery-contextual-pre:R8_pref_structured_error_context",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 26,
    "corpus": "present",
    "corpus_kinds": [
@@ -1020,11 +1913,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "customer-delivery-contextual-pre:R9_pref_monotonic_timing",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 5,
    "corpus": "present",
    "corpus_kinds": [
@@ -1035,11 +1934,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R1-basic-counts-sizes-entropy-degree",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -1050,11 +1955,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "dapt-intrusion-detection-workflo:R2-timestamps-duration-iat",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 1,
    "corpus": "partial",
    "corpus_kinds": [
@@ -1065,11 +1976,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "dapt-intrusion-detection-workflo:R3-ipv4-only-ip-scoped-metrics",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 8,
    "corpus": "present",
    "corpus_kinds": [
@@ -1080,11 +1997,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R4-protocol_udp-includes-ipv6",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 5,
    "corpus": "present",
    "corpus_kinds": [
@@ -1095,11 +2018,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R5-five-tuple-flows-ipv4-only",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 9,
    "corpus": "present",
    "corpus_kinds": [
@@ -1110,11 +2039,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R6-bidirectional-pairs-counted-once",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 18,
    "corpus": "present",
    "corpus_kinds": [
@@ -1125,11 +2060,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R7-minute-buckets-anchored-at-first-packet",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 22,
    "corpus": "present",
    "corpus_kinds": [
@@ -1140,11 +2081,17 @@
     "run3": "writer_never_saw",
     "run4": "in_notes"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R8-unique-port-counts",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 11,
    "corpus": "present",
    "corpus_kinds": [
@@ -1155,11 +2102,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R9-port-scan-false-and-benign-true",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 30,
    "corpus": "partial",
    "corpus_kinds": [
@@ -1171,11 +2124,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R10-dos-false",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "absent",
    "failed_trials": 11,
    "corpus": "partial",
    "corpus_kinds": [
@@ -1187,11 +2146,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "dapt-intrusion-detection-workflo:R11-beaconing-false",
-   "prompt": "absent",
+   "prompt_auditor": "absent",
+   "prompt_blind": "derivable",
    "failed_trials": 9,
    "corpus": "present",
    "corpus_kinds": [
@@ -1202,11 +2167,17 @@
     "run3": "writer_never_saw",
     "run4": "writer_saw_partial_kept"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": true
   },
   {
    "key": "enterpriseops-csm-26d1b04a:R1_location_rename_plot",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -1216,12 +2187,18 @@
     "run1": "writer_never_saw",
     "run3": "in_notes",
     "run4": "writer_never_saw"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": false
   },
   {
    "key": "enterpriseops-csm-26d1b04a:R2_installed_product_repair_warranty",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -1232,11 +2209,17 @@
     "run3": "in_notes",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "enterpriseops-csm-26d1b04a:R3_entitlement_31_premium_24x7",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "derivable",
    "failed_trials": 11,
    "corpus": "present",
    "corpus_kinds": [
@@ -1248,11 +2231,17 @@
     "run3": "in_notes",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "enterpriseops-csm-26d1b04a:R4_contract_10_end_date",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -1263,11 +2252,17 @@
     "run3": "writer_saw_dropped",
     "run4": "writer_never_saw"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "enterpriseops-teams-2725d17f:R1_private_channel_with_both_members",
-   "prompt": "explicit",
+   "prompt_auditor": "explicit",
+   "prompt_blind": "explicit",
    "failed_trials": 0,
    "corpus": "present",
    "corpus_kinds": [
@@ -1279,11 +2274,17 @@
     "run3": "writer_saw_dropped",
     "run4": "writer_saw_dropped"
    },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
+   },
    "unstated_spec": false
   },
   {
    "key": "enterpriseops-teams-2725d17f:R2_audio_call_source_james_target_alice",
-   "prompt": "derivable",
+   "prompt_auditor": "derivable",
+   "prompt_blind": "explicit",
    "failed_trials": 28,
    "corpus": "partial",
    "corpus_kinds": [
@@ -1294,6 +2295,11 @@
     "run1": "writer_saw_partial_kept",
     "run3": "writer_saw_partial_kept",
     "run4": "writer_saw_partial_kept"
+   },
+   "misleading": {
+    "run1": false,
+    "run3": false,
+    "run4": false
    },
    "unstated_spec": true
   }
