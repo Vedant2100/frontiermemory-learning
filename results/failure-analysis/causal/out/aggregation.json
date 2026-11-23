@@ -286,6 +286,165 @@
    }
   }
  },
+ "arm_minus_control_misses": {
+  "method": "missed requirement-trials, arm minus control; bootstrap resamples trials within task, permutation shuffles arm labels within task",
+  "in_task": {
+   "run1": {
+    "diff": 3,
+    "boot_95": [
+     -8,
+     15
+    ],
+    "perm_p_two_sided": 0.781
+   },
+   "run3": {
+    "diff": 7,
+    "boot_95": [
+     -4,
+     19
+    ],
+    "perm_p_two_sided": 0.469
+   },
+   "run4": {
+    "diff": 3,
+    "boot_95": [
+     -8,
+     14
+    ],
+    "perm_p_two_sided": 0.786
+   },
+   "placebo": {
+    "diff": 6,
+    "boot_95": [
+     -6,
+     17
+    ],
+    "perm_p_two_sided": 0.511
+   },
+   "readfirst": {
+    "diff": 0,
+    "boot_95": [
+     -10,
+     10
+    ],
+    "perm_p_two_sided": 1.0
+   },
+   "allshown": {
+    "diff": -2,
+    "boot_95": [
+     -13,
+     10
+    ],
+    "perm_p_two_sided": 0.886
+   },
+   "noneshown": {
+    "diff": 3,
+    "boot_95": [
+     -7,
+     13
+    ],
+    "perm_p_two_sided": 0.81
+   },
+   "evidence": {
+    "diff": -6,
+    "boot_95": [
+     -17,
+     5
+    ],
+    "perm_p_two_sided": 0.466
+   },
+   "blend": {
+    "diff": 11,
+    "boot_95": [
+     0,
+     23
+    ],
+    "perm_p_two_sided": 0.19
+   }
+  },
+  "not_in_task_excluding_word2vec": {
+   "run1": {
+    "diff": -1,
+    "boot_95": [
+     -10,
+     8
+    ],
+    "perm_p_two_sided": 1.0
+   },
+   "run3": {
+    "diff": -1,
+    "boot_95": [
+     -9,
+     8
+    ],
+    "perm_p_two_sided": 1.0
+   },
+   "run4": {
+    "diff": -3,
+    "boot_95": [
+     -14,
+     9
+    ],
+    "perm_p_two_sided": 0.806
+   },
+   "placebo": {
+    "diff": 4,
+    "boot_95": [
+     -4,
+     13
+    ],
+    "perm_p_two_sided": 0.539
+   },
+   "readfirst": {
+    "diff": -10,
+    "boot_95": [
+     -17,
+     -2
+    ],
+    "perm_p_two_sided": 0.199
+   },
+   "allshown": {
+    "diff": -9,
+    "boot_95": [
+     -15,
+     -2
+    ],
+    "perm_p_two_sided": 0.236
+   },
+   "noneshown": {
+    "diff": 0,
+    "boot_95": [
+     -8,
+     9
+    ],
+    "perm_p_two_sided": 1.0
+   },
+   "evidence": {
+    "diff": -5,
+    "boot_95": [
+     -13,
+     3
+    ],
+    "perm_p_two_sided": 0.501
+   },
+   "blend": {
+    "diff": -5,
+    "boot_95": [
+     -12,
+     3
+    ],
+    "perm_p_two_sided": 0.469
+   }
+  },
+  "in_task_raw_records_minus_blend": {
+   "diff": -17,
+   "boot_95": [
+    -26,
+    -8
+   ],
+   "perm_p_two_sided": 0.009
+  }
+ },
  "partial_or_misleading_note_opened_or_pasted_by_arm": {
   "run1": {
    "exposures": 14,

@@ -90,6 +90,43 @@ def main(private, blind, prompt_glob, req_json, out_path):
                  "missed_by_task": dict(collections.Counter(t["task"] for t, _ in miss))}
     out["not_in_task_miss_by_arm_excluding_word2vec"] = nw
 
+    def misses(t, want_in_task):
+        if want_in_task is False and "word2vec" in t["task"]:
+            return 0
+        return sum(1 for r in reqs if r["task"] == t["task"] and intask(r) == want_in_task and D.out[(t["trial"], r["key"])] == 0)
+
+    by_cell = collections.defaultdict(lambda: collections.defaultdict(list))
+    for t in D.trials:
+        by_cell[t["arm"]][t["task"]].append(t)
+
+    def contrast(a, b, want_in_task, seed=2, n=2000):
+        rng2 = random.Random(seed)
+        tasks = [k for k in by_cell[b] if by_cell[a].get(k)]
+        def total(arm, pick):
+            return sum(misses(t, want_in_task) for k in tasks for t in pick(by_cell[arm][k]))
+        obs = total(a, lambda v: v) - total(b, lambda v: v)
+        bs = []
+        for _ in range(n):
+            bs.append(total(a, lambda v: [rng2.choice(v) for _ in v]) - total(b, lambda v: [rng2.choice(v) for _ in v]))
+        bs.sort()
+        ge = 0
+        for _ in range(n):
+            s = 0
+            for k in tasks:
+                pool = by_cell[a][k] + by_cell[b][k]
+                rng2.shuffle(pool)
+                m = len(by_cell[a][k])
+                s += sum(misses(t, want_in_task) for t in pool[:m]) - sum(misses(t, want_in_task) for t in pool[m:])
+            ge += abs(s) >= abs(obs)
+        return {"diff": obs, "boot_95": [bs[int(0.025 * n)], bs[int(0.975 * n) - 1]], "perm_p_two_sided": round(ge / n, 3)}
+
+    out["arm_minus_control_misses"] = {
+        "method": "missed requirement-trials, arm minus control; bootstrap resamples trials within task, permutation shuffles arm labels within task",
+        "in_task": {a: contrast(a, "control", True) for a in ARMS if a != "control"},
+        "not_in_task_excluding_word2vec": {a: contrast(a, "control", False) for a in ARMS if a != "control"},
+        "in_task_raw_records_minus_blend": contrast("evidence", "blend", True),
+    }
+
     expo = {}
     for a in S.NOTES_ARMS:
         gen = MEMORY_OF[a]

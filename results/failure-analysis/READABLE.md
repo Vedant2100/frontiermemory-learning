@@ -45,23 +45,23 @@ The ten conditions are different treatments, so each count below is either per c
 | Where it broke | Result |
 |---|---|
 | No earlier run held the information | 5 of the 57 failed requirements; only 1 of those is one the task does not give |
-| The writer never saw it, or cut it down | Of the 19 failed requirements the task does not give, run 1's and run 4's notes lack 12 each and run 3's 17. Never reached the writer: 7, 7 and 14 |
+| The writer never saw it, or cut it down | Of the 19 failed requirements the task does not give, one has no earlier run. Of the other 18, run 1's and run 4's notes lack 12 each and run 3's 17. Never reached the writer: 7, 7 and 14 |
 | The notes had it, but the condition showed nothing | Only in the condition built for that: 9 failed requirement-trials |
 | The notes were listed, but the agent never opened them | Only in the run 1 and run 4 conditions: 3 and 6 |
 | The agent read a note that fully covered the requirement and still failed | Never: 60 of 60 met, on 8 requirements in Word2Vec and DAPT |
-| The agent read a note that partly covered it, or misled, and still failed | About a third of the time in each condition that showed many: all shown 12 of 36, read-first 8 of 25, run 1 6 of 14 |
-| The task gave the information and the agent missed it | 38 of the 57 failed requirements. Each condition missed 23% to 34% of these, control 27%; no condition differs from control beyond chance |
+| The agent read a note that partly covered it, or misled, and still failed | A third or more of the time in each condition that showed many: all shown 12 of 36, read-first 8 of 25, run 1 6 of 14 |
+| The task gave the information and the agent missed it | 38 of the 57 failed requirements. Each condition missed 23% to 34% of these, control 27%; no condition differs from control beyond chance (every p ≥ 0.19) |
 | The grader's one defect decided the outcome | Never |
 
-Where the conditions do differ is on what the task does not give. Leaving out Word2Vec, which the control does not measure, each condition missed this share of those requirement-trials:
+On what the task does not give, leaving out Word2Vec, which the control does not measure, each condition missed this share of those requirement-trials:
 
 | No memory | Placebo | Raw records | Rewritten task | Run 1 | Run 3 | Run 4 | On disk only | Read-first | Pasted in |
 |---|---|---|---|---|---|---|---|---|---|
 | 0.63 | 0.71 | 0.52 | 0.52 | 0.60 | 0.60 | 0.56 | 0.63 | 0.42 | 0.44 |
 
-Almost all of that difference is DAPT, which the control misses 16 times and the read-first and pasted-in conditions 5 and 6 times. The never-met conventions on awilix and customer delivery are missed in every condition.
+Read-first and pasted-in miss less, almost all on DAPT (control 16 misses, those two 5 and 6), but with three trials each that difference is not significant on its own (p = 0.20 and 0.24). The content test and exposure ladder below are the tests that hold up. The never-met conventions on awilix and customer delivery are missed in every condition.
 
-What counts as "the task gives it" is a judgement. If only what the prompt states outright counts, most of the in-task misses move to the writer: pooled over all conditions, 455 failed requirement-trials become 51, and the writer's share grows from 145 to 387. Our labellers, and separately the auditors who built the requirements, judged that a method in a mail thread or the newer of two emails is something the task gives.
+What counts as "the task gives it" is a judgement. If only what the prompt states outright counts, most of the in-task misses move to the writer: in the pooled counts (all conditions summed, so for reference only), 455 failed requirement-trials become 51, and the writer's share grows from 145 to 387. Our labellers, and separately the auditors who built the requirements, judged that a method in a mail thread or the newer of two emails is something the task gives.
 
 With 45 trials per condition, differences of a few failures are noise. The comparisons that test memory causally are the content test and the exposure ladder below.
 
@@ -80,7 +80,7 @@ This group also limits what notes of facts could have done. If every trial had b
 
 ## The earlier runs
 
-The first analysis said "the corpus has no related run" for the coding tasks that never pass. Reading the corpus, the tracers found the information fully for 32 of the 57 failed requirements and partly for 20; only 5 had nothing. They searched knowing what they were looking for, so these are upper bounds on what a writer could have found.
+The first analysis said "the corpus has no related run" for the coding tasks that never pass. Reading the corpus, the tracers found the information fully for 32 of the 57 failed requirements and partly for 20; only 5 had nothing. They searched knowing what they were looking for, so a writer searching without that knowledge might have found less.
 
 Some of it is from earlier runs of the same task. Partnership has 22 earlier runs and exactly one passes, with Emily as signer at $750,000, which is what the checker wants. The content-gap task's three passing runs show its exact answer. Word2Vec's one passing run returns an empty model when the input is all stop words; that hidden test tripped 10 of our 24 trials where it ran.
 
@@ -105,7 +105,7 @@ What survived was contract facts that sit in a first message or a verifier line:
 
 Compare each memory condition with no memory, one requirement at a time:
 
-- **The notes cover the requirement.** The memory conditions meet it 39 percentage points more often (p = 0.002 within these tasks). That averages conditions with different exposure: 67 points with the notes nudged or pasted in, 33 to 47 with runs 1 and 4 listed, 7 or 8 with the notes on disk only or run 3's, which were rarely opened. The three listed sets of notes alone give 31 points (p = 0.006). This rests on three tasks, mostly two, and resampling tasks gives a range from −22 to +100 points.
+- **The notes cover the requirement.** The memory conditions meet it 39 percentage points more often (p = 0.002 within these tasks). That averages conditions with different exposure: 67 points with the notes nudged or pasted in, 33 to 47 with runs 1 and 4 listed, 7 with the notes on disk only and 8 with run 3's, whose one covering note (CSM's) was never opened. The three listed sets of notes alone give 31 points (p = 0.006). This rests on three tasks, mostly two, and resampling tasks gives a range from −22 to +100 points.
 - **The notes partly cover it.** +1 point on average, but that is tasks cancelling: partnership −38 and marketing −21, the two tasks with the misleading rules described below, against DAPT +15.
 - **The notes say nothing about it.** No difference (−1 point).
 - **The placebo.** −5 points, within chance.
@@ -128,7 +128,7 @@ Requirements the notes cover partly rise more weakly, and that rise depends on w
 
 The climb past "notes present" comes from one task. DAPT, a network-capture analysis, needs 37 checks right, many under conventions the prompt never spells out: count only IPv4 for some metrics, include UDP over IPv6 for others, count each two-way flow once. Run 1's notes record these, from verifier feedback on earlier runs. On four of those metrics over three trials each, the agent met them 5 times in 12 with no memory. With the notes on disk and never opened, 3 of 12. Listed, 9 of 12. Nudged or pasted, 12 of 12.
 
-Every trial that opened a note fully covering a requirement, or had it pasted in, met that requirement: 60 of 60, all on Word2Vec and DAPT. Partial notes were another matter. Within each task, reading one helped: DAPT's partly covered requirements were met 19 of 24 times when opened against 12 of 33 when not, partnership's 4 of 12 against 0 of 6. But a read partial or misleading note still failed in 30 of 89 cases. DAPT is the clearest case. Its notes carried the earlier feedback "do not infer port scanning from … many destination ports alone", and every agent that had it in front of it still reported a port scan.
+Every trial that opened a note fully covering a requirement, or had it pasted in, met that requirement: 60 of 60, all on Word2Vec and DAPT. Partial notes were another matter. Within each task, reading one went with meeting the requirement more often (the agent chose what to read, so this is not a controlled comparison): DAPT's partly covered requirements were met 19 of 24 times when opened against 12 of 33 when not, partnership's 4 of 12 against 0 of 6. But a read partial or misleading note still failed in 30 of 89 cases. DAPT is the clearest case. Its notes carried the earlier feedback "do not infer port scanning from … many destination ports alone", and every agent that had it in front of it still reported a port scan.
 
 ## Why the scoreboard stayed flat
 
