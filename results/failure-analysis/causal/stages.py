@@ -170,6 +170,16 @@ def run(D, reqs, failed, trace, access, misled, mode, blind_prompt):
     notes_failed = [t for t in failed if t["arm"] in NOTES_ARMS]
     could_flip = [t for t in notes_failed if "in_task_missed" not in inst[t["trial"]]]
     present = [s for s in WRITER_FIRST if counts[s]] + sorted(s for s in counts if s not in WRITER_FIRST)
+    per_arm = {}
+    for a in ARMS:
+        ft = [t for t in failed if t["arm"] == a]
+        in_task_only = sum(1 for t in ft if set(inst[t["trial"]]) == {"in_task_missed"})
+        no_in_task = sum(1 for t in ft if "in_task_missed" not in inst[t["trial"]])
+        trials_any = collections.Counter(s for t in ft for s in set(inst[t["trial"]]))
+        per_arm[a] = {"trials": sum(1 for t in D.trials if t["arm"] == a), "failed_trials": len(ft),
+                      "failed_trial_requirements": sum(by_arm[a].values()),
+                      "failed_trials_all_in_task": in_task_only, "failed_trials_with_no_in_task_failure": no_in_task,
+                      "failed_trials_with_any_failure_at_stage": {s: trials_any[s] for s in present if trials_any[s]}}
     return {
         "prompt_mode": mode,
         "trial_requirements_by_stage": {s: counts[s] for s in present},
@@ -183,6 +193,7 @@ def run(D, reqs, failed, trace, access, misled, mode, blind_prompt):
         "notes_arm_failed_trials_with_no_in_task_failure_by_task": dict(collections.Counter(t["task"] for t in could_flip)),
         "distinct_requirements_by_generation_and_stage": {g: {s: len(v) for s, v in d.items()} for g, d in distinct.items()},
         "trial_requirements_by_arm_and_stage": {a: {s: by_arm[a][s] for s in present if by_arm[a][s]} for a in ARMS},
+        "per_arm": per_arm,
     }
 
 
@@ -196,6 +207,19 @@ def main(private, blind, out_path, blind_prompt_glob=None):
 
     opened_partial = collections.Counter()
     in_task_notes_cover = collections.Counter()
+    opened_partial_by_arm = collections.Counter()
+    no_notes_counterfactual = collections.defaultdict(collections.Counter)
+    pmode = "blind" if blind_prompt else "auditor"
+    for t in failed:
+        if t["arm"] in NOTES_ARMS:
+            continue
+        for r in reqs:
+            if r["task"] != t["task"] or D.out[(t["trial"], r["key"])] != 0:
+                continue
+            if in_task(r, pmode, blind_prompt):
+                continue
+            q = trace.get((r["task"], r["id"]))
+            no_notes_counterfactual[t["arm"]][upstream_of(q, "run1", misled.get((r["task"], r["id"]), {}))] += 1
     for t in failed:
         if t["arm"] not in NOTES_ARMS:
             continue
@@ -209,6 +233,7 @@ def main(private, blind, out_path, blind_prompt_glob=None):
             primary = stage_of(t, r, trace.get((r["task"], r["id"])), access, misled.get((r["task"], r["id"]), {}), "blind" if blind_prompt else "auditor", blind_prompt)
             if how and (lv in ("partial", "yes") or mis):
                 opened_partial[("misleading" if mis else lv, how, primary)] += 1
+                opened_partial_by_arm[t["arm"]] += 1
             if primary == "in_task_missed" and lv in ("yes", "partial"):
                 in_task_notes_cover[lv] += 1
 
@@ -246,6 +271,8 @@ def main(private, blind, out_path, blind_prompt_glob=None):
         "opened_or_pasted_partial_or_misleading_and_failed": {f"{k[0]}|{k[1]}|{k[2]}": v for k, v in sorted(opened_partial.items())},
         "opened_or_pasted_partial_or_misleading_and_failed_total": sum(opened_partial.values()),
         "in_task_missed_where_notes_also_cover": dict(in_task_notes_cover),
+        "opened_or_pasted_partial_or_misleading_and_failed_by_arm": dict(opened_partial_by_arm),
+        "arms_without_notes_not_in_task_by_run1_upstream_stage": {a: dict(c) for a, c in no_notes_counterfactual.items()},
         "all_failed_trial_requirements_by_corpus_status": dict(corpus_all),
         "all_failed_trial_requirements_by_corpus_status_and_kind": {f"{a}|{b}": v for (a, b), v in sorted(kind_all.items())},
         "all_failed_trial_requirements_by_upstream_stage_per_generation": {g: dict(c) for g, c in upstream_all.items()},

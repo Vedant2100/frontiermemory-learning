@@ -55,6 +55,20 @@ The rest are trials in conditions without generated notes.
 
 The split between the first and third rows depends on what counts as "the task gives it". If only what the prompt states outright counts, the first row shrinks to 51 and the writer row grows from 145 to 387. A stricter reading of our labels, which drops the ones the labeller was unsure of, gives 357 and 198. Our labellers, and separately the auditors who built the requirements, judged that a method in a mail thread or the newer of two emails is something the task gives. Both put most of it in the first row.
 
+### Condition by condition
+
+![Where each arm's failed requirements broke](figures/v2/fig8-stages-by-arm.png)
+
+The table above pools all ten conditions. Split by condition:
+
+- Every condition failed 36 to 42 of its 45 trials, and every one missed information its task gave about equally often (37 to 54 failed requirements). Memory did not change that part, which makes sense, since no condition changed the task.
+- In control and placebo, 70 failed requirements needed information the task did not give. Had those trials carried run 1's notes, only 19 of the 70 would have been in them; 35 never reached run 1's writer.
+- Among the conditions with notes, run 3's lost the most at the writer (28 failed requirements never reached it; the run 1 and run 4 conditions sit at 15 to 17).
+- Notes went unopened only in the run 1 and run 4 conditions (3 and 6), and were withheld only in the none-shown condition (9).
+- Opened notes that were partial or misleading failed mostly in the two conditions that put the notes in front of the agent: all shown (12) and read-first (8).
+
+With 45 trials per condition, differences of a few failures are noise. The comparisons that test memory causally are the content test and the exposure ladder below.
+
 ## The agent missed what its task gave it
 
 224 failed trials missed only things their own task told them, in its prompt, files, mail or tools. Most of these are search failures, not skill failures:

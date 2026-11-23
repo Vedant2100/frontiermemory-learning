@@ -227,6 +227,129 @@
      "in_task_missed": 48,
      "blend_arm": 34
     }
+   },
+   "per_arm": {
+    "control": {
+     "trials": 45,
+     "failed_trials": 39,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 18,
+     "failed_trials_with_no_in_task_failure": 15,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 24,
+      "no_memory_arm": 21
+     }
+    },
+    "run1": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 19,
+     "failed_trials_with_no_in_task_failure": 14,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 17,
+      "writer_saw_dropped": 2,
+      "writer_saw_partial": 4,
+      "not_opened": 2,
+      "in_task_missed": 24
+     }
+    },
+    "run3": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 81,
+     "failed_trials_all_in_task": 23,
+     "failed_trials_with_no_in_task_failure": 11,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 14,
+      "writer_saw_partial": 4,
+      "in_task_missed": 30
+     }
+    },
+    "run4": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 75,
+     "failed_trials_all_in_task": 18,
+     "failed_trials_with_no_in_task_failure": 11,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 16,
+      "writer_saw_partial": 4,
+      "not_opened": 2,
+      "in_task_missed": 26
+     }
+    },
+    "placebo": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 86,
+     "failed_trials_all_in_task": 20,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 28,
+      "no_memory_arm": 21
+     }
+    },
+    "readfirst": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 20,
+     "failed_trials_with_no_in_task_failure": 12,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 16,
+      "writer_saw_dropped": 1,
+      "writer_saw_partial": 3,
+      "in_task_missed": 25
+     }
+    },
+    "allshown": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 19,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 18,
+      "writer_saw_partial": 4,
+      "in_task_missed": 25
+     }
+    },
+    "noneshown": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 78,
+     "failed_trials_all_in_task": 18,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 14,
+      "writer_saw_partial": 5,
+      "not_shown_by_design": 3,
+      "in_task_missed": 23
+     }
+    },
+    "evidence": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 62,
+     "failed_trials_all_in_task": 17,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 23,
+      "raw_records_arm": 19
+     }
+    },
+    "blend": {
+     "trials": 45,
+     "failed_trials": 42,
+     "failed_trial_requirements": 82,
+     "failed_trials_all_in_task": 19,
+     "failed_trials_with_no_in_task_failure": 15,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 27,
+      "blend_arm": 23
+     }
+    }
    }
   },
   "explicit_only": {
@@ -482,6 +605,139 @@
      "in_task_missed": 8,
      "blend_arm": 74
     }
+   },
+   "per_arm": {
+    "control": {
+     "trials": 45,
+     "failed_trials": 39,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 34,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 5,
+      "no_memory_arm": 39
+     }
+    },
+    "run1": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 33,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 30,
+      "writer_misled": 3,
+      "writer_saw_dropped": 5,
+      "writer_saw_partial": 10,
+      "not_opened": 2,
+      "in_task_missed": 5
+     }
+    },
+    "run3": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 81,
+     "failed_trials_all_in_task": 2,
+     "failed_trials_with_no_in_task_failure": 36,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 26,
+      "writer_saw_partial": 12,
+      "not_opened": 3,
+      "in_task_missed": 5
+     }
+    },
+    "run4": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 75,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 31,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 27,
+      "writer_saw_dropped": 5,
+      "writer_saw_partial": 11,
+      "not_opened": 2,
+      "in_task_missed": 6
+     }
+    },
+    "placebo": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 86,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 36,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 5,
+      "no_memory_arm": 41
+     }
+    },
+    "readfirst": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 1,
+     "failed_trials_with_no_in_task_failure": 34,
+     "failed_trials_with_any_failure_at_stage": {
+      "experience_missing": 1,
+      "writer_never_saw": 29,
+      "writer_misled": 3,
+      "writer_saw_dropped": 4,
+      "writer_saw_partial": 9,
+      "in_task_missed": 3
+     }
+    },
+    "allshown": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 35,
+     "failed_trials_with_any_failure_at_stage": {
+      "experience_missing": 1,
+      "writer_never_saw": 33,
+      "writer_misled": 3,
+      "writer_saw_dropped": 2,
+      "writer_saw_partial": 9,
+      "in_task_missed": 3
+     }
+    },
+    "noneshown": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 78,
+     "failed_trials_all_in_task": 1,
+     "failed_trials_with_no_in_task_failure": 33,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 25,
+      "writer_misled": 3,
+      "writer_saw_dropped": 3,
+      "writer_saw_partial": 11,
+      "not_shown_by_design": 3,
+      "in_task_missed": 3
+     }
+    },
+    "evidence": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 62,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 32,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 4,
+      "raw_records_arm": 36
+     }
+    },
+    "blend": {
+     "trials": 45,
+     "failed_trials": 42,
+     "failed_trial_requirements": 82,
+     "failed_trials_all_in_task": 0,
+     "failed_trials_with_no_in_task_failure": 36,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 6,
+      "blend_arm": 42
+     }
+    }
    }
   },
   "blind": {
@@ -711,6 +967,130 @@
     "blend": {
      "in_task_missed": 54,
      "blend_arm": 28
+    }
+   },
+   "per_arm": {
+    "control": {
+     "trials": 45,
+     "failed_trials": 39,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 22,
+     "failed_trials_with_no_in_task_failure": 11,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 28,
+      "no_memory_arm": 17
+     }
+    },
+    "run1": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 22,
+     "failed_trials_with_no_in_task_failure": 9,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 14,
+      "writer_saw_dropped": 2,
+      "writer_saw_partial": 4,
+      "not_opened": 2,
+      "in_task_missed": 29
+     }
+    },
+    "run3": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 81,
+     "failed_trials_all_in_task": 27,
+     "failed_trials_with_no_in_task_failure": 9,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 12,
+      "writer_saw_partial": 2,
+      "in_task_missed": 32
+     }
+    },
+    "run4": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 75,
+     "failed_trials_all_in_task": 20,
+     "failed_trials_with_no_in_task_failure": 8,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 14,
+      "writer_saw_partial": 4,
+      "not_opened": 2,
+      "in_task_missed": 29
+     }
+    },
+    "placebo": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 86,
+     "failed_trials_all_in_task": 23,
+     "failed_trials_with_no_in_task_failure": 9,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 32,
+      "no_memory_arm": 18
+     }
+    },
+    "readfirst": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 23,
+     "failed_trials_with_no_in_task_failure": 10,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 13,
+      "writer_saw_dropped": 1,
+      "writer_saw_partial": 3,
+      "in_task_missed": 27
+     }
+    },
+    "allshown": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 21,
+     "failed_trials_with_no_in_task_failure": 11,
+     "failed_trials_with_any_failure_at_stage": {
+      "experience_missing": 1,
+      "writer_never_saw": 15,
+      "writer_saw_partial": 4,
+      "in_task_missed": 27
+     }
+    },
+    "noneshown": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 78,
+     "failed_trials_all_in_task": 21,
+     "failed_trials_with_no_in_task_failure": 10,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 11,
+      "writer_saw_partial": 5,
+      "not_shown_by_design": 3,
+      "in_task_missed": 26
+     }
+    },
+    "evidence": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 62,
+     "failed_trials_all_in_task": 21,
+     "failed_trials_with_no_in_task_failure": 10,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 26,
+      "raw_records_arm": 15
+     }
+    },
+    "blend": {
+     "trials": 45,
+     "failed_trials": 42,
+     "failed_trial_requirements": 82,
+     "failed_trials_all_in_task": 24,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 29,
+      "blend_arm": 18
+     }
     }
    }
   },
@@ -956,6 +1336,135 @@
      "in_task_missed": 42,
      "blend_arm": 40
     }
+   },
+   "per_arm": {
+    "control": {
+     "trials": 45,
+     "failed_trials": 39,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 13,
+     "failed_trials_with_no_in_task_failure": 15,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 24,
+      "no_memory_arm": 26
+     }
+    },
+    "run1": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 76,
+     "failed_trials_all_in_task": 15,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 17,
+      "writer_misled": 1,
+      "writer_saw_dropped": 2,
+      "writer_saw_partial": 7,
+      "not_opened": 2,
+      "in_task_missed": 25
+     }
+    },
+    "run3": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 81,
+     "failed_trials_all_in_task": 15,
+     "failed_trials_with_no_in_task_failure": 16,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 18,
+      "writer_saw_partial": 5,
+      "not_opened": 3,
+      "in_task_missed": 25
+     }
+    },
+    "run4": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 75,
+     "failed_trials_all_in_task": 11,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 17,
+      "writer_saw_dropped": 3,
+      "writer_saw_partial": 7,
+      "not_opened": 2,
+      "in_task_missed": 24
+     }
+    },
+    "placebo": {
+     "trials": 45,
+     "failed_trials": 41,
+     "failed_trial_requirements": 86,
+     "failed_trials_all_in_task": 12,
+     "failed_trials_with_no_in_task_failure": 15,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 26,
+      "no_memory_arm": 29
+     }
+    },
+    "readfirst": {
+     "trials": 45,
+     "failed_trials": 37,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 16,
+     "failed_trials_with_no_in_task_failure": 14,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 16,
+      "writer_misled": 1,
+      "writer_saw_dropped": 1,
+      "writer_saw_partial": 6,
+      "in_task_missed": 23
+     }
+    },
+    "allshown": {
+     "trials": 45,
+     "failed_trials": 38,
+     "failed_trial_requirements": 63,
+     "failed_trials_all_in_task": 15,
+     "failed_trials_with_no_in_task_failure": 15,
+     "failed_trials_with_any_failure_at_stage": {
+      "experience_missing": 1,
+      "writer_never_saw": 19,
+      "writer_saw_partial": 6,
+      "in_task_missed": 23
+     }
+    },
+    "noneshown": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 78,
+     "failed_trials_all_in_task": 12,
+     "failed_trials_with_no_in_task_failure": 13,
+     "failed_trials_with_any_failure_at_stage": {
+      "writer_never_saw": 16,
+      "writer_misled": 3,
+      "writer_saw_partial": 8,
+      "not_shown_by_design": 3,
+      "in_task_missed": 23
+     }
+    },
+    "evidence": {
+     "trials": 45,
+     "failed_trials": 36,
+     "failed_trial_requirements": 62,
+     "failed_trials_all_in_task": 14,
+     "failed_trials_with_no_in_task_failure": 16,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 20,
+      "raw_records_arm": 22
+     }
+    },
+    "blend": {
+     "trials": 45,
+     "failed_trials": 42,
+     "failed_trial_requirements": 82,
+     "failed_trials_all_in_task": 14,
+     "failed_trials_with_no_in_task_failure": 17,
+     "failed_trials_with_any_failure_at_stage": {
+      "in_task_missed": 25,
+      "blend_arm": 28
+     }
+    }
    }
   }
  },
@@ -971,6 +1480,39 @@
  "in_task_missed_where_notes_also_cover": {
   "partial": 63,
   "yes": 3
+ },
+ "opened_or_pasted_partial_or_misleading_and_failed_by_arm": {
+  "run1": 6,
+  "run3": 1,
+  "run4": 1,
+  "readfirst": 8,
+  "allshown": 12,
+  "noneshown": 2
+ },
+ "arms_without_notes_not_in_task_by_run1_upstream_stage": {
+  "control": {
+   "writer_never_saw": 16,
+   "in_notes": 10,
+   "writer_saw_dropped": 1,
+   "writer_saw_partial": 6
+  },
+  "placebo": {
+   "writer_never_saw": 19,
+   "in_notes": 9,
+   "writer_saw_dropped": 2,
+   "writer_saw_partial": 7
+  },
+  "evidence": {
+   "writer_never_saw": 17,
+   "writer_saw_dropped": 1,
+   "in_notes": 3,
+   "writer_saw_partial": 4
+  },
+  "blend": {
+   "writer_never_saw": 19,
+   "writer_saw_partial": 7,
+   "writer_saw_dropped": 2
+  }
  },
  "all_failed_trial_requirements_by_corpus_status": {
   "partial": 246,

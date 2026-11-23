@@ -43,7 +43,7 @@ The earlier analysis answered this with one label per failed trial, assigned in 
 | 6. Information was in the task, agent missed it | 455 (in 285 trials; the only failure in 224). For 268 the information had to be found by searching mail or files, or by choosing between conflicting sources | Descriptive |
 | 7. Verifier defect decided the outcome | 0 | The one rubric defect (Eurogrid) decided no agent trial |
 
-The other 123 failed trial-requirements are in arms without generated notes (control, placebo, raw records, blend), where the information was not in the task.
+The other 123 failed trial-requirements are in arms without generated notes (control, placebo, raw records, blend), where the information was not in the task. Section 4.2 splits the table by arm. Every arm failed 36 to 42 of its 45 trials, and every arm missed in-task information about equally often (37 to 54 trial-requirements). The arms differ in the remainder: run 3's notes lost the most at the writer, only none shown had notes withheld, and opened partial or misleading notes failed mostly in all shown and read-first.
 
 The story the stages tell:
 
@@ -263,6 +263,34 @@ The same 742 failures can be read against each generation's notes, whatever arm 
 | Run 4 | 33 | 379 | 0 | 112 | 150 | 68 |
 
 The misleading-rule column uses the blind labeller's flag: run 1's partnership rule.
+
+**Arm by arm.** The tables above pool the ten arms. Split by arm (blind labels, `per_arm` in `stages.json`):
+
+![Where each arm's failed requirements broke](figures/v2/fig8-stages-by-arm.png)
+
+| Arm | Failed trials (of 45) | Failed trial-reqs | In the task, missed | Not in the task: where it stopped | Failed trials, every miss in the task | Failed trials, no miss in the task | Opened or pasted a partial or misleading note, still failed |
+|---|---|---|---|---|---|---|---|
+| Control | 39 | 76 | 43 | 33, no notes | 22 | 11 | – |
+| Placebo | 41 | 86 | 49 | 37, no notes | 23 | 9 | – |
+| Raw records | 36 | 62 | 37 | 25, records only | 21 | 10 | – |
+| Blend | 42 | 82 | 54 | 28, blend notes (not traced) | 24 | 13 | – |
+| Run 1 notes | 38 | 76 | 46 | never reached writer 17, writer kept part or none 10, not opened 3 | 22 | 9 | 6 |
+| Run 3 notes | 41 | 81 | 50 | never reached writer 28, kept part 3 | 27 | 9 | 1 |
+| Run 4 notes | 37 | 75 | 46 | never reached writer 17, kept part 6, not opened 6 | 20 | 8 | 1 |
+| Read-first (run 1) | 37 | 63 | 43 | never reached writer 16, kept part or none 4 | 23 | 10 | 8 |
+| All shown (run 1) | 38 | 63 | 41 | no earlier run 1, never reached writer 17, kept part 4 | 21 | 11 | 12 |
+| None shown (run 1) | 36 | 78 | 46 | never reached writer 15, kept part 8, not shown 9 | 21 | 10 | 2 |
+
+What the split shows:
+
+- **The in-task misses are about the same in every arm**: 37 to 54 trial-requirements, and 20 to 27 failed trials whose every miss was in the task. Memory did not reduce them. This is expected, since no arm changes the task, and it means the pooled 455 is not one arm's doing.
+- **Arms without notes:** 70 control and placebo failures needed information the task did not give. Had those trials carried run 1's notes, 19 of the 70 would have been in the notes, 35 never reached run 1's writer, and 16 were kept only in part or dropped. For raw records the same split is 3 in run 1's notes, 17 never reached the writer, 5 kept part or dropped. Even in the control arm, most of what was missing was not in any set of notes.
+- **The writer stage differs by generation, not by arm.** Run 3's notes have the most failures that never reached the writer (28). The four run 1 arms sit at 15 to 17.
+- **Exposure:** not opened appears only in run 1 (3) and run 4 (6) notes arms, and not shown only in none shown (9).
+- **Acting on what was read:** failures after opening or being handed a partial or misleading note concentrate in all shown (12) and read-first (8), the two arms that put the notes in front of the agent. That is where the partnership and DAPT cases of section 4.2 sit.
+- **Better notes could flip** 8 to 11 failed trials per notes arm (57 in all), the "no miss in the task" column.
+
+Each arm has 45 trials, so a difference of a few failures between arms is within noise. The arm comparisons that carry causal weight are the content test and the exposure ladder in section 4.5; this table describes where each arm's failures sat.
 
 Sections 4.3 to 4.8 take the stages in order.
 
@@ -689,7 +717,7 @@ The existing harness can run all of them. H4, H5, H6 and H8 need no new tasks; H
   - `access.py`: memory reads from trajectories.
   - `analysis.py`: requirement table, content test, exposure ladder, access table, failure classes.
   - `stages.py`: the stage of every failed trial-requirement, from the corpus trace, under blind, auditor and explicit-only prompt labels.
-  - `figures.py` and `stage_figures.py`: the figures in `figures/v2/`.
+  - `figures.py` and `stage_figures.py`: the figures in `figures/v2/` (`stage_figures.py` draws fig6 to fig8).
 - **Outputs.** `causal/out/requirement-analysis-blind-labels.json` (primary), `requirement-analysis-auditor-labels.json` and `stages.json` hold every number in this report, with no raw task, memory or corpus text.
 - **Private, not in git.** Under `~/fm-extract-20261116/`:
   - the trial data;

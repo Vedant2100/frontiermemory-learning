@@ -77,6 +77,45 @@ def main(src, out):
     fig.tight_layout(rect=(0, 0, 1, 0.88))
     fig.savefig(os.path.join(out, "fig7-stage-funnel.png"), dpi=160)
     plt.close(fig)
+    bm = d["by_prompt_mode"]["blind"]
+    by_arm = bm["trial_requirements_by_arm_and_stage"]
+    pa = bm["per_arm"]
+    arm_names = [("control", "Control"), ("placebo", "Placebo notes"), ("evidence", "Raw records"), ("blend", "Blend"),
+                 ("run1", "Run 1 notes"), ("run3", "Run 3 notes"), ("run4", "Run 4 notes"),
+                 ("readfirst", "Read-first"), ("allshown", "All shown"), ("noneshown", "None shown")]
+    segs = [("In the task; agent missed it", AQUA, ("in_task_missed",)),
+            ("No notes in this arm", GRID, ("no_memory_arm", "raw_records_arm", "blend_arm")),
+            ("No earlier run holds it", MUTED, ("experience_missing",)),
+            ("Never reached the writer", ORANGE, ("writer_never_saw",)),
+            ("Writer saw it; notes hold part, none, or a misleading rule", VIOLET, ("writer_saw_partial", "writer_saw_dropped", "writer_misled")),
+            ("In the notes; not shown or not opened", RED, ("not_shown_by_design", "not_opened")),
+            ("In the notes; opened, still failed", BLUE, ("used_still_failed",))]
+    fig, ax = plt.subplots(figsize=(10, 4.6), facecolor=SURF)
+    xmax = max(sum(v.values()) for v in by_arm.values())
+    for y, (a, name) in enumerate(arm_names):
+        left = 0
+        for _, col, keys in segs:
+            v = sum(by_arm[a].get(k, 0) for k in keys)
+            if v:
+                ax.barh(y, v, left=left, color=col, height=0.62, edgecolor=SURF, linewidth=2)
+                if v >= 8:
+                    ax.text(left + v / 2, y, str(v), ha="center", va="center", fontsize=7.5, color=INK if col == GRID else "white")
+            left += v
+        ax.text(left + 1.5, y, f"{pa[a]['failed_trials']}/{pa[a]['trials']} trials failed", va="center", fontsize=7.5, color=INK2)
+    ax.set_yticks(range(len(arm_names)), [n for _, n in arm_names], fontsize=8.5)
+    ax.axhline(3.5, color=INK2, linewidth=0.6)
+    ax.invert_yaxis()
+    ax.set_xlim(0, xmax * 1.28)
+    ax.xaxis.grid(True, color=GRID, linewidth=0.8)
+    ax.set_axisbelow(True)
+    style(ax)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=c) for _, c, _ in segs]
+    ax.legend(handles, [l for l, _, _ in segs], ncol=3, fontsize=7.5, frameon=False, loc="upper left", bbox_to_anchor=(0, -0.08))
+    fig.text(0.01, 0.97, "Where each arm's failed requirements broke", fontsize=10, color=INK, va="top")
+    fig.text(0.01, 0.92, "Unit: one requirement failed in one trial. 'In the task' from outcome-blind labels. Arms above the line had no generated notes.", fontsize=8, color=INK2, va="top")
+    fig.tight_layout(rect=(0, 0, 1, 0.89))
+    fig.savefig(os.path.join(out, "fig8-stages-by-arm.png"), dpi=160)
+    plt.close(fig)
     print("stage figures written to", out)
 
 
