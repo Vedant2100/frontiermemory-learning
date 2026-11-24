@@ -817,7 +817,7 @@ The first draft of this correction also said "memory did not reduce in-task miss
 | Three requirements met only with memory | Word2Vec's path (p < 0.001); DAPT's pair rule p = 0.03 one-sided, its bucket rule not significant |
 | Cattrs and cookie-store passes are the model's defaults | True for cattrs; cookie store's two conventions are met in 7 and 19 of 30 trials |
 
-**The five never-met requirements, investigated (Nov 23).** An investigation of all 150 trial-requirements, the checkers, the reference solutions and the corpus (private: `causal/persistent/`) corrected v3:
+**The five never-met requirements, investigated (Nov 23).** An investigation of all 150 trial-requirements, the checkers, the reference solutions and the corpus (private: `causal/persistent/`) corrected v3. The investigation's results are in `NEVER-MET.md`, with per-trial classifications in `causal/out/never-met-trials.json`.
 
 | v3 claim | Corrected |
 |---|---|
