@@ -51,7 +51,7 @@ The ten conditions are different treatments, so each count below is either per c
 | The agent read a note that fully covered the requirement and still failed | Never: 60 of 60 met, on 8 requirements in Word2Vec and DAPT |
 | The agent read a note that partly covered it, or misled, and still failed | A third or more of the time in each condition that showed many: all shown 12 of 36, read-first 8 of 25, run 1 6 of 14 |
 | The task gave the information and the agent missed it | 38 of the 57 failed requirements. Each condition missed 23% to 34% of these, control 27%; no condition differs from control beyond chance (every p ≥ 0.19) |
-| The grader's one defect decided the outcome | Never |
+| A grader defect decided the outcome | Once: DAPT's port-scan question, whose expected answer contradicts the test's own definition of a scan |
 
 On what the task does not give, leaving out Word2Vec, which the control does not measure, each condition missed this share of those requirement-trials:
 
@@ -142,19 +142,19 @@ Requirements the notes cover partly rise more weakly, and that rise depends on w
 
 The climb past "notes present" comes from one task. DAPT, a network-capture analysis, needs 37 checks right, many under conventions the prompt never spells out: count only IPv4 for some metrics, include UDP over IPv6 for others, count each two-way flow once. Run 1's notes record these, from verifier feedback on earlier runs. On four of those metrics over three trials each, the agent met them 5 times in 12 with no memory. With the notes on disk and never opened, 3 of 12. Listed, 9 of 12. Nudged or pasted, 12 of 12.
 
-Every trial that opened a note fully covering a requirement, or had it pasted in, met that requirement: 60 of 60, all on Word2Vec and DAPT. Partial notes were another matter. Within each task, reading one went with meeting the requirement more often (the agent chose what to read, so this is not a controlled comparison): DAPT's partly covered requirements were met 19 of 24 times when opened against 12 of 33 when not, partnership's 4 of 12 against 0 of 6. But a read partial or misleading note still failed in 30 of 89 cases. DAPT is the clearest case. Its notes carried the earlier feedback "do not infer port scanning from … many destination ports alone", and every agent that had it in front of it still reported a port scan.
+Every trial that opened a note fully covering a requirement, or had it pasted in, met that requirement: 60 of 60, all on Word2Vec and DAPT. Partial notes were another matter. Within each task, reading one went with meeting the requirement more often (the agent chose what to read, so this is not a controlled comparison): DAPT's partly covered requirements were met 19 of 24 times when opened against 12 of 33 when not, partnership's 4 of 12 against 0 of 6. But a read partial or misleading note still failed in 22 of 81 cases, not counting DAPT's port-scan question. An earlier version of this write-up called DAPT the clearest case of agents ignoring their notes: the notes said not to infer a port scan from many destination ports alone, and every agent reported one anyway. The agents were right. The test's own comment defines a scan as more than 500 ports against one target, and the capture has a 1,000-port sweep against one target.
 
 ## Why the scoreboard stayed flat
 
 A task passes only if every requirement passes. Notes that fix one requirement of three change nothing on the scoreboard.
 
-DAPT also asks whether the traffic contains a port scan. The expected answer is "no", decided by a detector with fixed thresholds that no prompt or note states. Every agent saw what looked like a SYN sweep and answered "yes". All 30 trials failed that requirement in every condition, and three of them failed nothing else. The earlier runs held a hint: the 30 earlier runs that said "yes" were told not to infer a scan from port counts alone, and the five that said "no" were not. The notes kept the hint, and the agents did not act on it.
+DAPT also asks whether the traffic contains a port scan. The expected answer is "no", but that is a defect in the task. The capture holds a 1,000-port SYN sweep from one host against one target, almost all of it within one minute, and the test's own comment defines a scan as more than 500 ports against one target. The reference solution reaches "no" only because an unrelated SSH session from the same host dilutes its statistics, and the thresholds it uses were in skill files the task was built without. Every agent found the sweep and answered "yes". All 30 trials failed that requirement, and three of them failed nothing else. The earlier runs' feedback pushed toward "no", which taught the expected answer rather than a correct analysis.
 
 Five requirements were never met in 450 trials, and each sinks its task outright:
 
 - **Awilix, two tasks:** the release-tier version bump. A consistent rule is in the earlier runs; no writer read it.
-- **Customer delivery:** a runnable failure example in the docs. Also in the earlier runs; also never read.
-- **DAPT:** the port-scan verdict.
+- **Customer delivery:** a runnable failure example in the docs. Also in the earlier runs; also never read. 17 trials wrote exactly such a program, but in a scratch file instead of the docs.
+- **DAPT:** the port-scan verdict, a defect in the task (above).
 - **Eurogrid:** a value computed with a method written in a notes file in the task's own folders, which no agent opened. Every agent's figure was about 6% off. Two of them computed the right number along the way and threw it out. The rubric also contradicts itself at the second decimal, but that decided no trial.
 
 Word2Vec is the one task where the notes covered nearly everything the agent would otherwise miss, and it is the only clear gain in strict passes: 0 of 3 without notes, 5 of 9 with the three sets of notes listed, 3 of 3 with raw records. What remained was the empty-input test, and the earlier runs held the answer to that too.

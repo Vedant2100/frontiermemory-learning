@@ -1,6 +1,6 @@
 # Follow-up: where does the memory writer lose knowledge? (pre-registration, draft 2)
 
-Status: DRAFT, not yet frozen. Nothing in this folder has run. It is frozen when the owner approves. After that, every change goes in the amendments log at the end, dated, before the data it affects. Draft 1 (commit 1bc21f8) was revised after an independent methods review; section 12 lists what changed.
+Status: DRAFT, not yet frozen. Nothing in this folder has run, and nothing is scheduled: no GPUs are available now, and no session is queued until the owner says so. It is frozen when the owner approves. After that, every change goes in the amendments log at the end, dated, before the data it affects. Draft 1 (commit 1bc21f8) was revised after an independent methods review; section 12 lists what changed.
 
 ## 1. What this is, and what it is not
 
@@ -71,7 +71,7 @@ The primary set is the 19 scored requirements whose information the task does no
 | Word2Vec contract | R1 to R3 | yes |
 | Cookie store conventions | R3, R5 | yes |
 | Customer delivery preferences | R7 to R9 | yes |
-| DAPT metric and verdict rules | R3 to R10 | yes |
+| DAPT metric and verdict rules | R3 to R8, R10 | yes; R9, the port-scan verdict, is reported but not gainable: its expected answer is a specification defect (failure analysis, section 4.8) |
 | Cattrs `default_factory` | R6 | no: no corpus source; the model meets it in 29 of 30 trials anyway |
 
 The secondary set is the 34 requirements the task gives, that failed at least once in the main experiment, and for which the corpus holds evidence. These are mostly lessons from other tasks that say where to look. They are measured the same way.
@@ -139,7 +139,7 @@ Weighting by cluster stops DAPT's eight requirements, which rest on one kind of 
 
 **Test.** A one-sided exact permutation test over the 10 sessions. The smallest attainable p is 1/252. Report the difference in means with a bootstrap interval over sessions.
 
-**Power.** The study can detect only large effects. In the main experiment the three writers were exposed to 11, 4 and 11 of the 19 requirements (by the tracers' reading), a spread of about 4 around a mean of about 9. With 5 sessions per condition, one-sided α = 0.05 and 80% power, the smallest detectable difference is about 6 to 7 of 18 gainable requirements, about a third of the scale; on G_c that is about 1.5 of 5. A smaller difference is reported with its interval and not claimed.
+**Power.** The study can detect only large effects. In the main experiment the three writers were exposed to 11, 4 and 11 of the 19 requirements (by the tracers' reading), a spread of about 4 around a mean of about 9. With 5 sessions per condition, one-sided α = 0.05 and 80% power, the smallest detectable difference is about 6 to 7 of the 17 gainable requirements (19 less cattrs R6 and DAPT R9), about a third of the scale; on G_c that is about 1.5 of 5. A smaller difference is reported with its interval and not claimed.
 
 **Decision rules for what follows.** Each is a dated amendment before its data:
 
