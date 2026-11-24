@@ -1,5 +1,5 @@
 {
- "description": "Per trial, per never-met requirement: how the attempt failed. Labels only; derived from trial patches, verifier output and agent sessions. The private version with per-message evidence is in ~/fm-extract-20261116/causal/persistent/.",
+ "description": "Per trial, per never-met requirement: classification of the attempt. derived from trial artifacts in ~/fm-extract-20261116 (model.patch, verifier output, hermes-session, trajectory). Message indices refer to hermes-session messages; step ids to trajectory.json steps.",
  "n": 150,
  "generated": "2026-11-23",
  "trials": [
@@ -11,7 +11,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -21,7 +35,33 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 4,
+    "tier_mentioned_by_agent_msgs": [
+     18,
+     20,
+     128,
+     144
+    ],
+    "tier_linked_to_version_msgs": [
+     18,
+     128,
+     144
+    ],
+    "tier_dismissed_msgs": [
+     18,
+     20
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -31,7 +71,27 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     11
+    ],
+    "tier_linked_to_version_msgs": [
+     11
+    ],
+    "tier_dismissed_msgs": [
+     11
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -41,7 +101,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -51,7 +125,31 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 3,
+    "tier_mentioned_by_agent_msgs": [
+     15,
+     21,
+     23
+    ],
+    "tier_linked_to_version_msgs": [
+     15
+    ],
+    "tier_dismissed_msgs": [
+     15,
+     21,
+     23
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -61,7 +159,30 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     12,
+     109
+    ],
+    "tier_linked_to_version_msgs": [
+     12,
+     109
+    ],
+    "tier_dismissed_msgs": [
+     12,
+     109
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -71,7 +192,23 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     65
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -81,7 +218,26 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     14,
+     64
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     64
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -91,7 +247,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -101,7 +271,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -111,7 +295,34 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 6,
+    "tier_mentioned_by_agent_msgs": [
+     1,
+     4,
+     15,
+     20,
+     67,
+     156
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     1,
+     4,
+     15,
+     20,
+     156
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -121,7 +332,34 @@
    "met": false,
    "attempt": "no bump; CHANGELOG \"Unreleased\" entry, no version",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [
+     "CHANGELOG.md"
+    ],
+    "changelog_added_headings": [
+     "Unreleased"
+    ],
+    "functional_reward": "0",
+    "n_tier_mentions": 3,
+    "tier_mentioned_by_agent_msgs": [
+     18,
+     141,
+     192
+    ],
+    "tier_linked_to_version_msgs": [
+     141
+    ],
+    "tier_dismissed_msgs": [
+     18,
+     192
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -131,7 +369,35 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 4,
+    "tier_mentioned_by_agent_msgs": [
+     1,
+     13,
+     20,
+     161
+    ],
+    "tier_linked_to_version_msgs": [
+     1,
+     13,
+     20,
+     161
+    ],
+    "tier_dismissed_msgs": [
+     13,
+     20,
+     161
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -141,7 +407,32 @@
    "met": false,
    "attempt": "no bump; CHANGELOG \"Unreleased\" entry, no version",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [
+     "CHANGELOG.md"
+    ],
+    "changelog_added_headings": [
+     "Unreleased"
+    ],
+    "functional_reward": "0",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     1,
+     18
+    ],
+    "tier_linked_to_version_msgs": [
+     18
+    ],
+    "tier_dismissed_msgs": [
+     18
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -151,7 +442,26 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     15,
+     20
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     20
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -161,7 +471,29 @@
    "met": false,
    "attempt": "no bump; CHANGELOG \"Unreleased\" entry, no version",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [
+     "CHANGELOG.md"
+    ],
+    "changelog_added_headings": [
+     "Unreleased"
+    ],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     1
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     1
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -171,7 +503,28 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     7,
+     23
+    ],
+    "tier_linked_to_version_msgs": [
+     23
+    ],
+    "tier_dismissed_msgs": [
+     23
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -181,7 +534,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -191,7 +558,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -201,7 +582,26 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     16,
+     63
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     63
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -211,7 +611,27 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 3,
+    "tier_mentioned_by_agent_msgs": [
+     1,
+     22,
+     145
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     1
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -221,7 +641,26 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 2,
+    "tier_mentioned_by_agent_msgs": [
+     14,
+     20
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     20
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -231,7 +670,23 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     14
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -241,7 +696,29 @@
    "met": false,
    "attempt": "no bump; CHANGELOG heading v12.1.0, package.json untouched",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [
+     "CHANGELOG.md"
+    ],
+    "changelog_added_headings": [
+     "v12.1.0"
+    ],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     18
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     18
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -251,7 +728,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -261,7 +752,25 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     11
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     11
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -271,7 +780,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -281,7 +804,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -291,7 +828,25 @@
    "met": false,
    "attempt": "no bump; CHANGELOG \"Unreleased\" entry, no version",
    "context": "tier in prompt; never mentioned by agent",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [
+     "CHANGELOG.md"
+    ],
+    "changelog_added_headings": [
+     "Unreleased"
+    ],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-explicit",
@@ -301,7 +856,31 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier in prompt; agent reasoning mentions tier; linked tier to a version bump and rejected it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 4,
+    "tier_mentioned_by_agent_msgs": [
+     6,
+     15,
+     18,
+     22
+    ],
+    "tier_linked_to_version_msgs": [
+     22
+    ],
+    "tier_dismissed_msgs": [
+     15,
+     18
+    ],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -311,7 +890,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "yaml content displayed (tier 7 seen)",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": 145,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -321,7 +914,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -331,7 +938,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -341,7 +962,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -351,7 +986,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -361,7 +1010,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -371,7 +1034,23 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "yaml content displayed (tier 7 seen)",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     127
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": 126,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -381,7 +1060,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -391,7 +1084,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 3,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -401,7 +1108,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -411,7 +1132,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -421,7 +1156,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -431,7 +1180,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -441,7 +1204,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -451,7 +1228,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 3,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -461,7 +1252,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -471,7 +1276,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -481,7 +1300,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": true,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -491,7 +1324,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -501,7 +1348,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 32,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -511,7 +1372,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -521,7 +1396,25 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "yaml content displayed (tier 7 seen)",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "0",
+    "n_tier_mentions": 1,
+    "tier_mentioned_by_agent_msgs": [
+     18
+    ],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [
+     18
+    ],
+    "yaml_content_shown_msg": 17,
+    "changes_dir_seen_msg": 14,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -531,7 +1424,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -541,7 +1448,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -551,7 +1472,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -561,7 +1496,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -571,7 +1520,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -581,7 +1544,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -591,7 +1568,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": "tier never seen",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": null,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "awilix-release-tier-implicit",
@@ -601,7 +1592,21 @@
    "met": false,
    "attempt": "no bump; no version or changelog edit",
    "context": ".changes path appeared in tool output, content not displayed",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "versions_added": [],
+    "changelog_files": [],
+    "changelog_added_headings": [],
+    "functional_reward": "1",
+    "n_tier_mentions": 0,
+    "tier_mentioned_by_agent_msgs": [],
+    "tier_linked_to_version_msgs": [],
+    "tier_dismissed_msgs": [],
+    "yaml_content_shown_msg": null,
+    "changes_dir_seen_msg": 2,
+    "memory_opened": false,
+    "pref_msg": "[internal-release-tier-preference] FAIL (0/1): package.json version is '12.0.5', expected '12.1.0'; model patch does not change root package.json; model patch does not add version 12.1.0"
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -611,7 +1616,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/build/param-parser.js",
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 11,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -621,7 +1666,33 @@
    "met": false,
    "attempt": "A: no README/docs/example edit",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [],
+    "n_js_blocks_added": 0,
+    "doc_blocks_any_lang": 0,
+    "best_block_parts": null,
+    "missing_parts": [],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/awprobe/container.js",
+     "/tmp/awprobe/repro.js",
+     "/tmp/awprobe/resolvers.js",
+     "/tmp/awprobe/retry.js",
+     "/tmp/awprobe/trap.js"
+    ],
+    "n_customer_mentions": 7,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -631,7 +1702,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 6,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "PASS",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -641,7 +1751,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/errors-smoke.js",
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 5,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -651,7 +1801,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/debug-init.js",
+     "/tmp/hermes/cache/scratch/edge-cases.js"
+    ],
+    "n_customer_mentions": 3,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -661,7 +1851,45 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 1,
+    "doc_blocks_any_lang": 1,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "createContainer",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [],
+    "n_customer_mentions": 1,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -671,7 +1899,46 @@
    "met": false,
    "attempt": "B2: README success-path example that registers a disposer (no failure, no catch)",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 4,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": true,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": true,
+    "doc_block_with_catch": true,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/paths.js",
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": true,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -681,7 +1948,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": false,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "initialize(",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/spec-example.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -691,7 +1998,45 @@
    "met": false,
    "attempt": "B2: README success-path example that registers a disposer (no failure, no catch)",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": true,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": true,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke-initialization.js"
+    ],
+    "n_customer_mentions": 7,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "PASS",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -701,7 +2046,50 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": false,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/out/probe.js",
+     "/tmp/hermes/cache/scratch/pout/__scratch_probe.js",
+     "/tmp/hermes/cache/scratch/pout2/__scratch_probe.js",
+     "/tmp/hermes/cache/scratch/pout3/__scratch_dbg.js",
+     "/tmp/hermes/cache/scratch/probe.cjs"
+    ],
+    "n_customer_mentions": 6,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -711,7 +2099,43 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": false,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": true,
+     "throw/reject": false,
+     "catch": true,
+     "inspect": true
+    },
+    "missing_parts": [
+     "createContainer",
+     "initializer(",
+     "disposer(",
+     "throw/reject"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": true,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [],
+    "n_customer_mentions": 5,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "FAIL"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -721,7 +2145,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": false,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "initialize(",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke-initialize.js"
+    ],
+    "n_customer_mentions": 5,
+    "memory_opened": true,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "PASS",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -731,7 +2195,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 1,
+    "doc_blocks_any_lang": 1,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "createContainer",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/spec-check.js"
+    ],
+    "n_customer_mentions": 5,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -741,7 +2245,46 @@
    "met": false,
    "attempt": "C: README error-handling snippet without container/initializer/disposer",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": false,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": true,
+     "throw/reject": true,
+     "catch": true,
+     "inspect": false
+    },
+    "missing_parts": [
+     "createContainer",
+     "initializer(",
+     "disposer(",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": true,
+    "doc_block_with_throw": true,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/parse-check.js",
+     "/tmp/parsecheck/param-parser.js"
+    ],
+    "n_customer_mentions": 3,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "FAIL"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -751,7 +2294,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/repro.js",
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 5,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -761,7 +2344,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 1,
+    "doc_blocks_any_lang": 1,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "createContainer",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke-initialization.cjs"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": true,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -771,7 +2394,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 4,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": false,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "initialize(",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": false,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke-initialization.js"
+    ],
+    "n_customer_mentions": 3,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -781,7 +2444,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/artifact-check.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -791,7 +2493,46 @@
    "met": false,
    "attempt": "B2: README success-path example that registers a disposer (no failure, no catch)",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": true,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": true,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/repro.js",
+     "/tmp/hermes/cache/scratch/spec-verify.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -801,7 +2542,27 @@
    "met": false,
    "attempt": "A: no README/docs/example edit",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [],
+    "n_js_blocks_added": 0,
+    "doc_blocks_any_lang": 0,
+    "best_block_parts": null,
+    "missing_parts": [],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -811,7 +2572,47 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 3,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/edge-initialize.js",
+     "/tmp/smoke-initialize.js"
+    ],
+    "n_customer_mentions": 2,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "PASS",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -821,7 +2622,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -831,7 +2671,44 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 1,
+    "doc_blocks_any_lang": 1,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [],
+    "n_customer_mentions": 9,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "FAIL"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -841,7 +2718,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 4,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -851,7 +2767,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "no scratch failure program; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": false,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/e2e-init.js"
+    ],
+    "n_customer_mentions": 14,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -861,7 +2816,46 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 3,
+    "best_block_parts": {
+     "createContainer": true,
+     "initializer(": true,
+     "initialize(": true,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/smoke.js"
+    ],
+    "n_customer_mentions": 7,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "FAIL"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -871,7 +2865,49 @@
    "met": false,
    "attempt": "B1: README success-path example only",
    "context": "complete failure+disposer+cause program written only to scratch/terminal; failure+disposer+cause covered in jest tests",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [
+     "README.md"
+    ],
+    "n_js_blocks_added": 2,
+    "doc_blocks_any_lang": 2,
+    "best_block_parts": {
+     "createContainer": false,
+     "initializer(": true,
+     "initialize(": false,
+     "disposer(": false,
+     "cause|message": false,
+     "throw/reject": false,
+     "catch": false,
+     "inspect": false
+    },
+    "missing_parts": [
+     "createContainer",
+     "initialize(",
+     "disposer(",
+     "cause|message",
+     "throw/reject",
+     "catch",
+     "inspect"
+    ],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": true,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/hermes/cache/scratch/debug-init.js",
+     "/tmp/hermes/cache/scratch/spec-sanity.js"
+    ],
+    "n_customer_mentions": 1,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -881,7 +2917,30 @@
    "met": false,
    "attempt": "A: no README/docs/example edit",
    "context": "complete failure+disposer+cause program written only to scratch/terminal",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [],
+    "n_js_blocks_added": 0,
+    "doc_blocks_any_lang": 0,
+    "best_block_parts": null,
+    "missing_parts": [],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": false,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/debug_mixed.js",
+     "/tmp/repro_init.js"
+    ],
+    "n_customer_mentions": 1,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "FAIL"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -891,7 +2950,29 @@
    "met": false,
    "attempt": "A: no README/docs/example edit",
    "context": "complete failure+disposer+cause program written only to scratch/terminal",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [],
+    "n_js_blocks_added": 0,
+    "doc_blocks_any_lang": 0,
+    "best_block_parts": null,
+    "missing_parts": [],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": false,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/repro_init.js"
+    ],
+    "n_customer_mentions": 1,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "customer-delivery-contextual-preferences",
@@ -901,7 +2982,30 @@
    "met": false,
    "attempt": "A: no README/docs/example edit",
    "context": "complete failure+disposer+cause program written only to scratch/terminal",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "doc_files": [],
+    "n_js_blocks_added": 0,
+    "doc_blocks_any_lang": 0,
+    "best_block_parts": null,
+    "missing_parts": [],
+    "doc_block_with_disposer": false,
+    "doc_block_with_catch": false,
+    "doc_block_with_throw": false,
+    "wrote_failure_disposer_cause_code_in_tests": false,
+    "wrote_failure_disposer_cause_code_in_scratch": true,
+    "tmp_scripts": [
+     "/tmp/regex_check.js",
+     "/tmp/repro_init.js"
+    ],
+    "n_customer_mentions": 1,
+    "memory_opened": false,
+    "gates": {
+     "async_lifecycle_example": "FAIL",
+     "structured_error_context": "FAIL",
+     "monotonic_duration_timing": "PASS"
+    }
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -912,7 +3016,45 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 18,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     46,
+     48,
+     50,
+     54,
+     58
+    ],
+    "threshold_talk_msgs": [
+     58
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -923,7 +3065,47 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 17,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     14,
+     26,
+     30,
+     36
+    ],
+    "threshold_talk_msgs": [
+     10,
+     14,
+     26,
+     30,
+     36
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -934,7 +3116,31 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 6,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     32,
+     36,
+     42
+    ],
+    "threshold_talk_msgs": [
+     12
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -945,7 +3151,42 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 11,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_flow_metric[unique_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     114,
+     116,
+     118,
+     120,
+     122
+    ],
+    "threshold_talk_msgs": [
+     14,
+     34,
+     126
+    ],
+    "false_considered_msgs": [
+     116
+    ],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -956,7 +3197,34 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 7,
+    "failed_checks": [
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     18,
+     20,
+     26
+    ],
+    "threshold_talk_msgs": [
+     8
+    ],
+    "false_considered_msgs": [
+     12
+    ],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -967,7 +3235,36 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 46"
+   "rule_exposure": "shown in tool output, msg 46",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     42,
+     47,
+     51,
+     59
+    ],
+    "threshold_talk_msgs": [
+     47
+    ],
+    "false_considered_msgs": [
+     10
+    ],
+    "feedback_seen_msg": 46,
+    "memory_opened": true,
+    "memory_targets": [
+     "agent-evals/eval-task-families/SKILL.md",
+     "agent-evals/eval-task-families/references/family-pcap.md"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -978,7 +3275,44 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 17,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     18,
+     22,
+     26,
+     38,
+     42
+    ],
+    "threshold_talk_msgs": [
+     10
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -989,7 +3323,33 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_protocol_udp",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     12,
+     16,
+     22,
+     26,
+     34
+    ],
+    "threshold_talk_msgs": [
+     8,
+     12
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1000,7 +3360,44 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 16,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     42,
+     46,
+     48,
+     50,
+     52
+    ],
+    "threshold_talk_msgs": [
+     10,
+     50
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1011,7 +3408,48 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 20,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[duration_seconds]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[iat_mean]",
+     "test_temporal_metric[iat_cv]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     26,
+     41,
+     51
+    ],
+    "threshold_talk_msgs": [
+     8,
+     34,
+     41,
+     51
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1022,7 +3460,41 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep; failed only R9",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 6"
+   "rule_exposure": "shown in tool output, msg 6",
+   "details": {
+    "n_failed_checks": 2,
+    "failed_checks": [
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": true,
+    "sweep_identified_msgs": [
+     21,
+     25,
+     29,
+     33,
+     37
+    ],
+    "threshold_talk_msgs": [
+     9,
+     44
+    ],
+    "false_considered_msgs": [
+     9,
+     21,
+     25,
+     29,
+     37
+    ],
+    "feedback_seen_msg": null,
+    "memory_opened": true,
+    "memory_targets": [
+     "agenting/task-playbook/SKILL.md",
+     "agenting/task-playbook/references/contracts.md",
+     "agenting/task-playbook/references/failure-modes.md",
+     "agenting/task-playbook/references/family-cheatsheet.md"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1033,7 +3505,35 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 7,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     22,
+     29,
+     33,
+     37,
+     39
+    ],
+    "threshold_talk_msgs": [
+     29,
+     37
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1044,7 +3544,38 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 9,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     16,
+     18,
+     20,
+     34,
+     36
+    ],
+    "threshold_talk_msgs": [
+     10,
+     16,
+     20
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1055,7 +3586,47 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 18,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     26,
+     45,
+     53,
+     55,
+     57
+    ],
+    "threshold_talk_msgs": [
+     18,
+     45,
+     53
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1066,7 +3637,41 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 8,
+    "failed_checks": [
+     "test_protocol_udp",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     25,
+     27,
+     29,
+     31,
+     33
+    ],
+    "threshold_talk_msgs": [
+     10,
+     20,
+     25,
+     27,
+     29
+    ],
+    "false_considered_msgs": [
+     10
+    ],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1077,7 +3682,38 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 5"
+   "rule_exposure": "shown in tool output, msg 5",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     23,
+     30,
+     34,
+     36,
+     40
+    ],
+    "threshold_talk_msgs": [
+     8,
+     12,
+     34
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": 5,
+    "memory_opened": true,
+    "memory_targets": [
+     "agent-evals/eval-task-families/SKILL.md",
+     "agent-evals/eval-task-families/references/failure-modes.md",
+     "agent-evals/eval-task-families/references/family-pcap.md"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1088,7 +3724,35 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep; failed only R9",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 11"
+   "rule_exposure": "shown in tool output, msg 11",
+   "details": {
+    "n_failed_checks": 2,
+    "failed_checks": [
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": true,
+    "sweep_identified_msgs": [
+     27,
+     29,
+     33
+    ],
+    "threshold_talk_msgs": [
+     13,
+     21,
+     33
+    ],
+    "false_considered_msgs": [
+     29
+    ],
+    "feedback_seen_msg": 11,
+    "memory_opened": true,
+    "memory_targets": [
+     "agent-evals/eval-task-families/SKILL.md",
+     "agent-evals/eval-task-families/references/failure-modes.md",
+     "agent-evals/eval-task-families/references/family-pcap.md"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1099,7 +3763,41 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 13"
+   "rule_exposure": "shown in tool output, msg 13",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     19,
+     23,
+     27,
+     33
+    ],
+    "threshold_talk_msgs": [
+     10,
+     15,
+     19,
+     23,
+     27
+    ],
+    "false_considered_msgs": [
+     23
+    ],
+    "feedback_seen_msg": 13,
+    "memory_opened": true,
+    "memory_targets": [
+     "agent-evals/eval-task-families/SKILL.md",
+     "agent-evals/eval-task-families/references/failure-modes.md",
+     "agent-evals/eval-task-families/references/family-pcap.md"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1110,7 +3808,34 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "injected via config (run1 notes pasted)"
+   "rule_exposure": "injected via config (run1 notes pasted)",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     23,
+     35,
+     41,
+     45,
+     49
+    ],
+    "threshold_talk_msgs": [
+     1,
+     23,
+     49
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1121,7 +3846,31 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "injected via config (run1 notes pasted)"
+   "rule_exposure": "injected via config (run1 notes pasted)",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     14,
+     16,
+     20
+    ],
+    "threshold_talk_msgs": [
+     1,
+     14
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1132,7 +3881,31 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "injected via config (run1 notes pasted)"
+   "rule_exposure": "injected via config (run1 notes pasted)",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     15,
+     21,
+     23,
+     33
+    ],
+    "threshold_talk_msgs": [
+     3
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1143,7 +3916,35 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 7,
+    "failed_checks": [
+     "test_protocol_udp",
+     "test_flow_metric[unique_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     44,
+     52,
+     56,
+     60,
+     64
+    ],
+    "threshold_talk_msgs": [
+     4,
+     34
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1154,7 +3955,46 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 18,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_flow_metric[unique_flows]",
+     "test_flow_metric[udp_flows]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern",
+     "test_has_beaconing"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     22,
+     24,
+     28,
+     36,
+     38
+    ],
+    "threshold_talk_msgs": [
+     28,
+     38
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1165,7 +4005,39 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 10,
+    "failed_checks": [
+     "test_protocol_count[protocol_ip_total]",
+     "test_protocol_udp",
+     "test_graph_metric[num_nodes]",
+     "test_graph_metric[num_edges]",
+     "test_graph_metric[network_density]",
+     "test_temporal_metric[num_producers]",
+     "test_temporal_metric[num_consumers]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     19,
+     23,
+     27,
+     37,
+     47
+    ],
+    "threshold_talk_msgs": [
+     27,
+     37,
+     47
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1176,7 +4048,36 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 8,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_entropy_metric[unique_dst_ports]",
+     "test_entropy_metric[unique_src_ports]",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     37,
+     47
+    ],
+    "threshold_talk_msgs": [
+     27
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": true,
+    "memory_targets": [
+     "/tmp/hermes/records/t0010.jsonl",
+     "/tmp/hermes/records/t0528.jsonl",
+     "/tmp/hermes/records/t0707.jsonl"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1187,7 +4088,34 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": false,
-   "rule_exposure": null
+   "rule_exposure": null,
+   "details": {
+    "n_failed_checks": 4,
+    "failed_checks": [
+     "test_protocol_udp",
+     "test_bidirectional_flows",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     44,
+     46,
+     50,
+     60
+    ],
+    "threshold_talk_msgs": [
+     11
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": true,
+    "memory_targets": [
+     "/tmp/hermes/records/t0010.jsonl",
+     "/tmp/hermes/records/t0422.jsonl",
+     "/tmp/hermes/records/t0590.jsonl"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1198,7 +4126,39 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep; failed only R9",
    "rule_available_to_agent": true,
-   "rule_exposure": "shown in tool output, msg 31"
+   "rule_exposure": "shown in tool output, msg 31",
+   "details": {
+    "n_failed_checks": 2,
+    "failed_checks": [
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": true,
+    "sweep_identified_msgs": [
+     46,
+     52,
+     54,
+     56,
+     60
+    ],
+    "threshold_talk_msgs": [
+     34,
+     64
+    ],
+    "false_considered_msgs": [
+     30,
+     34,
+     46,
+     60
+    ],
+    "feedback_seen_msg": 31,
+    "memory_opened": true,
+    "memory_targets": [
+     "/tmp/hermes/records/t0010.jsonl",
+     "/tmp/hermes/records/t0046.jsonl",
+     "/tmp/hermes/records/t0528.jsonl"
+    ]
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1209,7 +4169,35 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "in blended prompt"
+   "rule_exposure": "in blended prompt",
+   "details": {
+    "n_failed_checks": 6,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan",
+     "test_has_dos_pattern"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     8,
+     10,
+     12,
+     29
+    ],
+    "threshold_talk_msgs": [
+     6,
+     8,
+     10,
+     12
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1220,7 +4208,33 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "in blended prompt"
+   "rule_exposure": "in blended prompt",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     21,
+     30,
+     34,
+     38,
+     40
+    ],
+    "threshold_talk_msgs": [
+     4,
+     38
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "dapt-intrusion-detection-workflow-learning",
@@ -1231,7 +4245,36 @@
    "attempt": "port_scan=true, benign=false",
    "context": "identified the 192.168.3.1->192.168.3.30 1,000-port SYN sweep",
    "rule_available_to_agent": true,
-   "rule_exposure": "in blended prompt"
+   "rule_exposure": "in blended prompt",
+   "details": {
+    "n_failed_checks": 5,
+    "failed_checks": [
+     "test_time_series_metric[packets_per_minute_avg]",
+     "test_time_series_metric[packets_per_minute_max]",
+     "test_time_series_metric[packets_per_minute_min]",
+     "test_is_traffic_benign",
+     "test_has_port_scan"
+    ],
+    "only_R9_failed": false,
+    "sweep_identified_msgs": [
+     18,
+     26,
+     30,
+     34,
+     46
+    ],
+    "threshold_talk_msgs": [
+     8,
+     18,
+     30,
+     34,
+     46
+    ],
+    "false_considered_msgs": [],
+    "feedback_seen_msg": null,
+    "memory_opened": false,
+    "memory_targets": []
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1241,7 +4284,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 10,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1251,7 +4306,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 9,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1261,7 +4328,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 7,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1271,7 +4350,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 8,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1281,7 +4372,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 11,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1291,7 +4394,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 12,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1301,7 +4416,21 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened; computed 243,275.57 as an alternative and discarded it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 7,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [
+     12
+    ],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1311,7 +4440,23 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output; computed 243,275.57 as an alternative and discarded it",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [
+     11
+    ],
+    "assistant_msgs_mentioning_243275": [
+     27
+    ],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1321,7 +4466,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1331,7 +4488,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 12,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1341,7 +4510,20 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94",
+     "228,033.33"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1351,7 +4533,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 8,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1361,7 +4555,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 10,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1371,7 +4577,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 5,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1381,7 +4599,17 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 9,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1391,7 +4619,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1401,7 +4641,20 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx: metadata call only, content never read",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 12,
+    "brainstorming_called_step": [
+     28,
+     "tool_call"
+    ],
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1411,7 +4664,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1421,7 +4686,19 @@
    "met": false,
    "attempt": "mean Curtailment_GWh x1000 (228,033.33)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,033.33"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 3,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1431,7 +4708,20 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94",
+     "228,033.33"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 5,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1441,7 +4731,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 3,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1451,7 +4753,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 9,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1461,7 +4775,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 14,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1471,7 +4797,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1481,7 +4819,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 7,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1491,7 +4841,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 9,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": true
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1501,7 +4863,20 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94",
+     "228,033.33"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 7,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1511,7 +4886,20 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx never in tool output",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.93",
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": null,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1521,7 +4909,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 4,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   },
   {
    "task": "apex-eurogrid-curtailment",
@@ -1531,7 +4931,19 @@
    "met": false,
    "attempt": "mean of per-year quotients (228,025.94)",
    "context": "Brainstorming.docx name seen in a listing, never opened",
-   "rule_available_to_agent": false
+   "rule_available_to_agent": false,
+   "details": {
+    "values_in_judge_evidence": [
+     "228,025.94"
+    ],
+    "other_checks_pass": 5,
+    "brainstorming_in_tool_output_step": 4,
+    "brainstorming_called_step": null,
+    "conventions_text_seen_step": null,
+    "steps_with_243275": [],
+    "assistant_msgs_mentioning_243275": [],
+    "memory_opened": false
+   }
   }
  ]
 }

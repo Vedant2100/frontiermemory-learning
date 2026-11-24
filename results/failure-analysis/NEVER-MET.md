@@ -2,7 +2,7 @@
 
 Five requirements were never met in any of their 30 trials (3 attempts × 10 arms), so five tasks could not pass in any arm. This note records what the checkers test, what every trial did, where the needed information was, and whether each is a fair test of memory. It was written on 2026-11-23 from an investigation of all 150 trial-requirements, the task checkers, the reference solutions and the earlier-run corpus. The corrections it forced in `REPORT.md` are listed in that report's section 8.
 
-The per-trial classifications are in `causal/out/never-met-trials.json` (150 rows: task, requirement, arm, trial, how the attempt failed, and whether a relevant rule was in front of the agent). The full version, with message-level evidence and corpus passages, is private (`~/fm-extract-20261116/causal/persistent/`), because the corpus is gated. No corpus text appears here.
+The per-trial classifications are in `causal/out/never-met-trials.json` (150 rows: task, requirement, arm, trial, how the attempt failed, and whether a relevant rule was in front of the agent). The full investigation, with corpus passages, task-file quotes and message-level evidence, is in `NEVER-MET-DETAILS.md`; the per-trial evidence is in the `details` field of the JSON.
 
 "Verified" means the file was read or the computation rerun. Where something is inferred, it says so.
 
